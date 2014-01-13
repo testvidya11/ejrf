@@ -1,5 +1,6 @@
 from django.test import TestCase
 from questionnaire.models.locations import LocationType
+from django.db import IntegrityError
 
 
 class LocationTypeTest(TestCase):
@@ -16,3 +17,8 @@ class LocationTypeTest(TestCase):
         self.failUnless(region.id)
         self.assertEqual(1, region.order)
         self.assertIsNone(region.description)
+
+    def test_unique_order(self):
+        region = LocationType.objects.create(name="Region", order=1)
+        another_region = LocationType(name="haha", order=1)
+        self.assertRaises(IntegrityError, another_region.save)
