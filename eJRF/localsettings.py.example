@@ -1,0 +1,37 @@
+import sys
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "ejrf",
+        "USER": "ejrf",
+        "PASSWORD": "",
+        "HOST": "localhost",
+    }
+}
+
+if ('test' in sys.argv) or ('harvest' in sys.argv):
+    LETTUCE_SERVER_PORT = 7000
+    LETTUCE_AVOID_APPS = (
+            'south',
+            'lettuce.django',
+            'django_extensions',
+            'rapidsms.contrib.locations',
+            'rapidsms.contrib.locations.nested',
+            'bootstrap_pagination',
+            'rapidsms.backends.database',
+            'rapidsms.contrib.httptester',
+    )
+
+    DATABASES = {
+       "default": {
+           "ENGINE": "django.db.backends.postgresql_psycopg2",
+           "NAME": "ejrf_test",
+           "USER": "ejrf",
+           "PASSWORD": "",
+           "HOST": "localhost",
+       }
+    }
+
+    import logging
+    south_logger=logging.getLogger('south')
+    south_logger.setLevel(logging.INFO)

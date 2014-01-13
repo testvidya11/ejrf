@@ -36,6 +36,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'south',
+    'django_extensions',
+    'bootstrap_pagination',
+    'questionnaire',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -80,3 +84,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Importing server specific settings
+from localsettings import *
