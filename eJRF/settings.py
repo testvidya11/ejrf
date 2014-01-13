@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_nose',
+    'lettuce.django',
     'south',
     'django_extensions',
     'bootstrap_pagination',
