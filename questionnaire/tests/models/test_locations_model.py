@@ -10,3 +10,9 @@ class LocationTypeTest(TestCase):
         self.assertEqual(6, len(fields))
         for field in ['id', 'created', 'modified', 'name', 'description', 'order']:
             self.assertIn(field, fields)
+
+    def test_store(self):
+        region = LocationType.objects.create(name="Region", order=1)
+        self.failUnless(region.id)
+        self.assertEqual(1, region.order)
+        self.assertIsNone(region.description)
