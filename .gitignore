@@ -2,3 +2,5 @@
 .idea
 .DS_STORE
 localsettings.py
+ghostdriver.log
+eJRF/testsettings.py
