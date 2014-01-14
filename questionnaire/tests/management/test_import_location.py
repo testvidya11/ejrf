@@ -3,14 +3,17 @@ from questionnaire.models import Region, Country
 from questionnaire.management.commands.import_location import Command
 from questionnaire.tests.base_test import BaseTest
 
+
 class FakeStdout(object):
     def write(self, msg):
-        return "haha %s"%msg
+        return "haha %s" % msg
+
 
 class FakeCommand(Command):
     def __init__(self):
         super(FakeCommand, self).__init__()
         self.stdout = FakeStdout()
+
 
 class ImportLocationTest(BaseTest):
     def setUp(self):
