@@ -1,4 +1,7 @@
 [run]
+source = questionnaire
+
+[report]
 omit =
         */site-packages/*
         */migrations/*

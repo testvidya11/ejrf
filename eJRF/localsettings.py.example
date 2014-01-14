@@ -15,11 +15,8 @@ if ('test' in sys.argv) or ('harvest' in sys.argv):
             'south',
             'lettuce.django',
             'django_extensions',
-            'rapidsms.contrib.locations',
-            'rapidsms.contrib.locations.nested',
             'bootstrap_pagination',
-            'rapidsms.backends.database',
-            'rapidsms.contrib.httptester',
+            'django_nose',
     )
 
     DATABASES = {
