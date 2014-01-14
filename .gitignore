@@ -6,3 +6,4 @@ ghostdriver.log
 eJRF/testsettings.py
 Vagrantfile
 .vagrant/
+ejrf_env/
