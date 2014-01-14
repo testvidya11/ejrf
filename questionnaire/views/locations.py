@@ -1,7 +1,7 @@
 from django.views.generic import ListView
-from questionnaire.models import LocationType
+from questionnaire.models import Region
 
 
-class ListLocationTypes(ListView):
-    model = LocationType
-    template_name = 'locations/type/index.html'
+class ListRegions(ListView):
+    model = Region
+    template_name = 'locations/region/index.html'

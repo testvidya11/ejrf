@@ -1,14 +1,14 @@
 from questionnaire.features.pages.base import PageObject
 
 
-class ListLocationTypesPage(PageObject):
-    url = '/locations/type/'
+class ListRegionsPage(PageObject):
+    url = '/locations/region/'
 
     def _assert_table_headers(self):
         pass
 
-    def validate_list_location_types(self, location_types):
+    def validate_region_list(self, regions):
         self._assert_table_headers()
-        for location_type in location_types:
-            for attribute in ['name', 'order']:
-                self.is_text_present(str(getattr(location_type, attribute)))
+        for region in regions:
+            for attribute in ['name', 'description']:
+                self.is_text_present(str(getattr(region, attribute)))

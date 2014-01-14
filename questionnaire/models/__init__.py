@@ -1,5 +1,5 @@
-from questionnaire.models.locations import LocationType
+from questionnaire.models.locations import Region
 
 __all__ = [
-    'LocationType',
+    'Region',
 ]

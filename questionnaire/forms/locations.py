@@ -1,7 +1,7 @@
 from django.forms import ModelForm
-from questionnaire.models import LocationType
+from questionnaire.models import Region
 
 
-class LocationTypeForm(ModelForm):
+class RegionForm(ModelForm):
     class Meta:
-        model = LocationType
+        model = Region

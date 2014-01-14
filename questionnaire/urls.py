@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
-from questionnaire.views.locations import ListLocationTypes
+from questionnaire.views.locations import ListRegions
 
 urlpatterns = patterns('',
-    url(r'^locations/type/', ListLocationTypes.as_view(), name='list_location_types_page'),
+    url(r'^locations/region/', ListRegions.as_view(), name='list_region_page'),
 )
