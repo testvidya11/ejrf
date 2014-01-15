@@ -20,3 +20,15 @@
     padding-top: 40px;
     margin-bottom: 0;
 }
+
+#top-nav-menu ul li a:hover{
+    border-bottom: 2px solid #0099ff;
+}
+.drop-down-menu{
+    padding: 0 0 !important;
+}
+
+.drop-down-menu li a{
+    border-bottom: 1px solid;
+    padding-top: 0px;
+}
