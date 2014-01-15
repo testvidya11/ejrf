@@ -33,3 +33,12 @@ def and_i_visit_the_list_countries_page_in_that_region(step):
 @step(u'Then I should see the list of countries in that region')
 def then_i_should_see_the_list_of_countries_in_that_region(step):
     world.page.validate_country_list([world.uganda, world.kenya])
+
+@step(u'When I click on the first region name')
+def when_i_click_on_the_first_region_name(step):
+    world.page.click_link_by_text(world.afro.name)
+
+@step(u'Then I should see the list country page')
+def then_i_should_see_the_list_country_page(step):
+    world.page = ListCountriesPage(world.browser, world.afro)
+    world.page.validate_url()

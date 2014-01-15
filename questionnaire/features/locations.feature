@@ -3,6 +3,8 @@ Feature: Location types
       Given I have two regions
       And I visit the list regions page
       Then I should see the list of regions
+      When I click on the first region name
+      Then I should see the list country page
 
     Scenario: List Countries
       Given I have two countries in a region
