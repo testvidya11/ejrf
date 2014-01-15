@@ -4,6 +4,7 @@ Installation:
 * create virtualenv and install pip-requirements.txt
 * run syncdb and migrate
 * run test and harvest
+==
 Done!! you're good to go :)
 
 Filenaming convention:

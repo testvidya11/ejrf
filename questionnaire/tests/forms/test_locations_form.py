@@ -1,12 +1,15 @@
 from django.test import TestCase
 from questionnaire.forms.locations import RegionForm
+from questionnaire.models import Organization
 
 
 class LocationTypeFormTest(TestCase):
     def setUp(self):
+        org = Organization.objects.create(name="WHO")
         self.form_data = {
             'name': 'AFRO',
             'description': 'All African countries',
+            'organization': org.id
         }
 
     def test_valid(self):

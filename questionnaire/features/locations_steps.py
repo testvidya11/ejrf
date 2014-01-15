@@ -1,12 +1,13 @@
 from lettuce import step, world
 from questionnaire.features.pages.locations import ListRegionsPage, ListCountriesPage
-from questionnaire.models.locations import Region, Country
+from questionnaire.models.locations import Region, Country, Organization
 
 
 @step(u'Given I have two regions')
 def given_i_have_two_regions(step):
-    world.afro = Region.objects.create(name="AFRO")
-    world.paho = Region.objects.create(name="PAHO")
+    world.org = Organization.objects.create(name="WHO")
+    world.afro = Region.objects.create(name="AFRO", organization=world.org)
+    world.paho = Region.objects.create(name="PAHO", organization=world.org)
 
 @step(u'And I visit the list regions page')
 def and_i_visit_the_list_regions_page(step):
