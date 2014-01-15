@@ -12,3 +12,14 @@ class ListRegionsPage(PageObject):
         for region in regions:
             for attribute in ['name', 'description']:
                 self.is_text_present(str(getattr(region, attribute)))
+
+class ListCountriesPage(PageObject):
+
+    def __init__(self, browser, region):
+        self.browser = browser
+        self.region = region
+        self.url = '/locations/region/%d/country/' % region.id
+
+    def validate_country_list(self, countries):
+        for country in countries:
+            self.is_text_present(country.name)
