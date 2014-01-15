@@ -1,6 +1,7 @@
-from questionnaire.models.locations import Region, Country
+from questionnaire.models.locations import Location, Region, Country
 
 __all__ = [
+    'Location',
     'Region',
     'Country',
 ]
