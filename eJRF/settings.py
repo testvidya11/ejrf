@@ -63,10 +63,10 @@ WSGI_APPLICATION = 'eJRF.wsgi.application'
 
 DATABASES = {
     'default': {
-           "ENGINE": "django.db.backends.",
-           "NAME": "ejrf_test",
+           "ENGINE": "django.db.backends.postgresql_psycopg2",
+           "NAME": "ejrf",
            "USER": "ejrf",
-           "PASSWORD": "",
+           "PASSWORD": "un1c3f3jrf",
            "HOST": "localhost",
     }
 }
