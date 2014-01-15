@@ -3,6 +3,6 @@
 .DS_STORE
 localsettings.py
 ghostdriver.log
-eJRF/testsettings.py
+testsettings.py
 Vagrantfile
 .vagrant/
