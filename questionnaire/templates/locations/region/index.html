@@ -1,9 +1,22 @@
 {% extends 'base/layout.html' %}
 
 {% block content %}
-    {% for region in region_list %}
-        <h1>{{ region.name }}</h1>
-        <p>{{ region.description }}</p>
-        <p>{{ region.order }}</p>
-    {% endfor %}
+    <div class="table-responsive">
+      <table class="table table-hover table-striped table-bordered">
+          <thead>
+            <th>Name</th>
+            <th>Organization</th>
+            <th>Description</th>
+          </thead>
+          <tbody>
+            {% for region in region_list %}
+                <tr>
+                    <td><a href="{% url 'list_country_page' region.id %}">{{ region.name }}</a></td>
+                    <td>{{ region.organization.name }}</td>
+                    <td>{{ region.description }}</td>
+                </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
 {% endblock %}

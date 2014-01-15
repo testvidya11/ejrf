@@ -4,6 +4,9 @@ from django.db import models
 class Organization(BaseModel):
     name = models.CharField(max_length=100, blank=False, null=True)
 
+    def __unicode__(self):
+        return "%s" % self.name
+
 class Location(BaseModel):
     name = models.CharField(max_length=100, blank=False, null=True)
 

@@ -17,9 +17,6 @@ class PageObject(object):
     def fill(self, name, value):
         self.browser.fill(name, value)
 
-    def is_text_present(self, text, status=True):
-        assert_equals(status, self.browser.is_text_present(text))
-
     def submit(self):
         self.browser.find_by_css("form button").first.click()
 
@@ -37,3 +34,11 @@ class PageObject(object):
 
     def click_by_name(self, name):
         self.browser.find_by_name(name).first.click()
+
+    def _is_text_present(self, text, status=True):
+        assert_equals(status, self.browser.is_text_present(text))
+
+    def is_text_present(self, *texts, **kwargs):
+        status = kwargs['status'] if 'status' in kwargs else True
+        for text in texts:
+            self._is_text_present(text, status)

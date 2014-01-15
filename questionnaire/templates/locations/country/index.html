@@ -1,7 +1,20 @@
 {% extends 'base/layout.html' %}
 
 {% block content %}
-    {% for country in country_list %}
-        <h1>{{ country.name }}</h1>
-    {% endfor %}
+    <div class="table-responsive">
+      <table class="table table-hover table-striped table-bordered">
+          <thead>
+            <th>Name</th>
+            <th>Region</th>
+          </thead>
+          <tbody>
+              {% for country in country_list %}
+                <tr>
+                    <td>{{ country.name }}</td>
+                    <td>{{ country.region.name }}</td>
+                </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
 {% endblock %}
