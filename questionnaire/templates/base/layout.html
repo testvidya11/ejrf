@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>
+        {% block title %}{% endblock %} | eJRF
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/application.css" type="text/css" media="screen">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+{% include 'base/header.html' %}
+
+<div id="content" class="container">
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    <ul>
+                        {{ message }}
+                    </ul>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div id="push"></div>
+</div>
+
+{% include 'base/footer.html' %}
+
+<script src="{{ STATIC_URL }}js/jquery-1.10.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+
+{% block javascripts %}
+{% endblock %}
+</body>
+</html>

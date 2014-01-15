@@ -1,5 +1,9 @@
-{% for region in region_list %}
-    <h1>{{ region.name }}</h1>
-    <p>{{ region.description }}</p>
-    <p>{{ region.order }}</p>
-{% endfor %}
+{% extends 'base/layout.html' %}
+
+{% block content %}
+    {% for region in region_list %}
+        <h1>{{ region.name }}</h1>
+        <p>{{ region.description }}</p>
+        <p>{{ region.order }}</p>
+    {% endfor %}
+{% endblock %}
