@@ -93,4 +93,7 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 STATIC_URL = '/static/'
 
 # Importing server specific settings
-from localsettings import *
+try:
+   from local_settings import *
+except ImportError, e:
+   pass
