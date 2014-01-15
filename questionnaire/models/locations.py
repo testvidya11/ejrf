@@ -19,6 +19,9 @@ class Region(Location):
     description = models.CharField(max_length=300, blank=True, null=True)
     organization = models.ForeignKey(Organization, blank=False, null=True, related_name="regions")
 
+    def __unicode__(self):
+        return "%s" % self.name
+
 
 class Country(Location):
-    region = models.ForeignKey(Region, blank=False, null=True, related_name="countries")
+    regions = models.ManyToManyField(Region, blank=False, null=True, related_name="countries")

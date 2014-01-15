@@ -11,7 +11,11 @@
               {% for country in country_list %}
                 <tr>
                     <td>{{ country.name }}</td>
-                    <td>{{ country.region.name }}</td>
+                    <td>
+                        {% for region in country.regions.all %}
+                            {{ region }} {% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
                 </tr>
             {% endfor %}
           </tbody>

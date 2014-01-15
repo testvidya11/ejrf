@@ -24,15 +24,18 @@ class CountryTest(TestCase):
     def test_country_fields(self):
         country = Country()
         fields = [str(item.attname) for item in country._meta.fields]
-        self.assertEqual(5, len(fields))
-        for field in ['id', 'created', 'modified', 'name', 'region_id']:
+        self.assertEqual(4, len(fields))
+        for field in ['id', 'created', 'modified', 'name']:
             self.assertIn(field, fields)
 
     def test_store(self):
         paho = Region.objects.create(name="PAHO")
-        country = Country.objects.create(name="Peru", region=paho)
+        country = Country.objects.create(name="Peru")
+        country.regions.add(paho)
         self.failUnless(country.id)
-        self.assertEqual(country.region, paho)
+        regions = country.regions.all()
+        self.assertEqual(1,regions.count() )
+        self.assertIn(paho,regions )
 
 
 class OrgTest(TestCase):

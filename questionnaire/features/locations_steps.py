@@ -22,8 +22,10 @@ def then_i_should_see_the_list_of_regions(step):
 def given_i_have_two_countries_in_a_region(step):
     world.org = Organization.objects.create(name="WHO")
     world.afro = Region.objects.create(name="AFRO", organization=world.org)
-    world.uganda = Country.objects.create(name="Uganda", region=world.afro)
-    world.kenya = Country.objects.create(name="Kenya", region=world.afro)
+    world.uganda = Country.objects.create(name="Uganda")
+    world.uganda.regions.add(world.afro)
+    world.kenya = Country.objects.create(name="Kenya")
+    world.kenya.regions.add(world.afro)
 
 @step(u'And I visit the list countries page in that region')
 def and_i_visit_the_list_countries_page_in_that_region(step):

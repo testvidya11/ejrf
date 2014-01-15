@@ -36,4 +36,4 @@ class ImportLocationTest(BaseTest):
         for locations in self.data[1:]:
             region = Region.objects.filter(name=locations[0], organization__name='UNICEF')
             self.failUnless(region)
-            self.failUnless(Country.objects.filter(name=locations[1], region=region[0]))
+            self.failUnless(Country.objects.filter(name=locations[1], regions=region[0]))

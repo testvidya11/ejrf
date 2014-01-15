@@ -26,8 +26,10 @@ class CountryViewTest(BaseTest):
     def test_get_region_list(self):
         region = Region.objects.create(name="AFRO")
         paho = Region.objects.create(name="PAHO")
-        uganda = Country.objects.create(name="Uganda", region=region)
-        brasil = Country.objects.create(name="Brasil", region=paho)
+        uganda = Country.objects.create(name="Uganda")
+        uganda.regions.add(region)
+        brasil = Country.objects.create(name="Brasil")
+        brasil.regions.add(paho)
         response = self.client.get('/locations/region/%d/country/' % region.id)
         self.assertEqual(200, response.status_code)
         templates = [template.name for template in response.templates]
