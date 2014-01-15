@@ -32,8 +32,8 @@ class ImportLocationTest(BaseTest):
         os.system("rm -rf %s"%self.filename)
 
     def test_should_create_regions_and_countries(self):
-        self.importer.handle(self.filename)
+        self.importer.handle(self.filename, 'UNICEF')
         for locations in self.data[1:]:
-            region = Region.objects.filter(name=locations[0])
+            region = Region.objects.filter(name=locations[0], organization__name='UNICEF')
             self.failUnless(region)
             self.failUnless(Country.objects.filter(name=locations[1], region=region[0]))
