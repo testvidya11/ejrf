@@ -7,6 +7,7 @@ class Organization(BaseModel):
     def __unicode__(self):
         return "%s" % self.name
 
+
 class Location(BaseModel):
     name = models.CharField(max_length=100, blank=False, null=True)
 
@@ -14,13 +15,13 @@ class Location(BaseModel):
         abstract = True
         app_label = 'questionnaire'
 
+    def __unicode__(self):
+        return "%s" % self.name
+
 
 class Region(Location):
     description = models.CharField(max_length=300, blank=True, null=True)
     organization = models.ForeignKey(Organization, blank=False, null=True, related_name="regions")
-
-    def __unicode__(self):
-        return "%s" % self.name
 
 
 class Country(Location):
