@@ -94,6 +94,6 @@ STATIC_URL = '/static/'
 
 # Importing server specific settings
 try:
-   from local_settings import *
+   from localsettings import *
 except ImportError, e:
    pass
