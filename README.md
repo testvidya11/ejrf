@@ -1,4 +1,3 @@
-
 Installation
 ------------
 * Postgres should be running and after cloning adjust localsettings accordingly for db setup 
@@ -21,7 +20,7 @@ Installation
         
 ==
 
-*run test and harvest
+* run test and harvest
 
 Done!! you're good to go :)
 
