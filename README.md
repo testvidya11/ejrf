@@ -1,6 +1,6 @@
 Installation
 ------------
-* Postgres should be running and after cloning adjust localsettings accordingly for db setup 
+* Postgres should be running and after cloning adjust localsettings.py accordingly for db setup 
 
 ##Git
 
