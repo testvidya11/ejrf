@@ -1,10 +1,28 @@
-Installation:
 
-* clone repository
-* create virtualenv and install pip-requirements.txt
-* run syncdb and migrate
-* run test and harvest
+Installation
+------------
+* Postgres should be running and after cloning adjust localsettings accordingly for db setup 
+
+##Git
+
+        git clone https://github.com/eJRF/ejrf.git
+
+        cd ejrf
+
+        mkvirtualenv ejrf
+
+        pip install -r pip-requirements.txt
+
+        python manage.py syncdb --noinput
+
+        python manage.py migrate
+
+        python manage.py runserver
+        
 ==
+
+*run test and harvest
+
 Done!! you're good to go :)
 
 Filenaming convention:
