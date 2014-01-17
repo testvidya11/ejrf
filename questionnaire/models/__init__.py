@@ -2,7 +2,7 @@ from questionnaire.models.answers import NumericalAnswer, Answer, TextAnswer, Da
 from questionnaire.models.grouped_questions import GroupedQuestion
 from questionnaire.models.locations import Location, Region, Country, Organization
 from questionnaire.models.questionnaires import Questionnaire
-from questionnaire.models.questions import Question
+from questionnaire.models.questions import Question, QuestionOption
 from questionnaire.models.sections import Section, SubSection
 
 
@@ -20,4 +20,5 @@ __all__ = [
     'GroupedQuestion',
     'TextAnswer',
     'DateAnswer',
+    'QuestionOption',
 ]
