@@ -1,7 +1,7 @@
 from datetime import date
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from questionnaire.models import Question, Country
+from questionnaire.models import Question, Country, QuestionOption, MultiChoiceAnswer
 from questionnaire.models.answers import Answer, NumericalAnswer, TextAnswer, DateAnswer
 
 
@@ -25,7 +25,7 @@ class NumericalAnswerTest(TestCase):
             self.assertIn(field, fields)
 
     def test_numerical_answer_store(self):
-        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Text')
+        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Number')
         country = Country.objects.create(name="Peru")
         answer = NumericalAnswer.objects.create(question=question, country=country, response=11.2)
         self.failUnless(answer.id)
@@ -34,7 +34,7 @@ class NumericalAnswerTest(TestCase):
         self.assertEqual(11.2, answer.response)
 
     def test_numerical_answer_cannot_be_text(self):
-        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Text')
+        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Number')
         country = Country.objects.create(name="Peru")
         answer = NumericalAnswer(question=question, country=country, response='not a decimal number')
         self.assertRaises(ValidationError, answer.save)
@@ -68,7 +68,7 @@ class DateAnswerTest(TestCase):
             self.assertIn(field, fields)
 
     def test_date_answer_store(self):
-        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Text')
+        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Date')
         country = Country.objects.create(name="Peru")
         some_date = date.today()
         answer = DateAnswer.objects.create(question=question, country=country, response= some_date)
@@ -78,9 +78,29 @@ class DateAnswerTest(TestCase):
         self.assertEqual(some_date, answer.response)
 
     def test_date_answer_can_only_be_date(self):
-        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Text')
+        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Date')
         country = Country.objects.create(name="Peru")
         not_date = 'hahaha'
         answer = DateAnswer(question=question, country=country, response=not_date)
         self.assertRaises(ValidationError, answer.save)
 
+
+class MultiChoiceAnswerTest(TestCase):
+
+    def test_mulitchoice_answer_fields(self):
+        answer = MultiChoiceAnswer()
+        fields = [str(item.attname) for item in answer._meta.fields]
+        self.assertEqual(6, len(fields))
+        for field in ['id', 'created', 'modified', 'question_id','country_id', 'response_id']:
+            self.assertIn(field, fields)
+
+    def test_mulitchoice_answer_store(self):
+        question = Question.objects.create(text='what do you drink?', UID='abc123', answer_type='MultiChoice')
+        country = Country.objects.create(name="Peru")
+        option = QuestionOption.objects.create(text="whisky", question=question)
+        some_date = date.today()
+        answer = MultiChoiceAnswer.objects.create(question=question, country=country, response= option)
+        self.failUnless(answer.id)
+        self.assertEqual(question, answer.question)
+        self.assertEqual(country, answer.country)
+        self.assertEqual(option, answer.response)
