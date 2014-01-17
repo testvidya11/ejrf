@@ -1,6 +1,7 @@
 from questionnaire.models.answers import NumericalAnswer, Answer, TextAnswer, DateAnswer, MultiChoiceAnswer
 from questionnaire.models.answers import NumericalAnswer, Answer
 from questionnaire.models.comments import Comment
+from questionnaire.models.grouped_answers import GroupedAnswer
 from questionnaire.models.grouped_questions import GroupedQuestion
 from questionnaire.models.locations import Location, Region, Country, Organization
 from questionnaire.models.questionnaires import Questionnaire
@@ -24,5 +25,6 @@ __all__ = [
     'DateAnswer',
     'QuestionOption',
     'MultiChoiceAnswer',
-    'Comment'
+    'Comment',
+    'GroupedAnswer',
 ]

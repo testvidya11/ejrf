@@ -14,8 +14,20 @@ class AnswerTest(TestCase):
         for field in ['id', 'created', 'modified', 'question_id', 'country_id']:
             self.assertIn(field, fields)
 
+    def test_answer_stores(self):
+        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Number')
+        country = Country.objects.create(name="Peru")
+        answer = Answer.objects.create(question=question, country=country)
+        self.failUnless(answer.id)
+        self.assertEqual(question, answer.question)
+        self.assertEqual(country, answer.country)
+
 
 class NumericalAnswerTest(TestCase):
+
+    def setUp(self):
+        self.question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Date')
+        self.country = Country.objects.create(name="Peru")
 
     def test_numerical_answer_fields(self):
         answer = NumericalAnswer()
@@ -25,18 +37,14 @@ class NumericalAnswerTest(TestCase):
             self.assertIn(field, fields)
 
     def test_numerical_answer_store(self):
-        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Number')
-        country = Country.objects.create(name="Peru")
-        answer = NumericalAnswer.objects.create(question=question, country=country, response=11.2)
+        answer = NumericalAnswer.objects.create(question=self.question, country=self.country, response=11.2)
         self.failUnless(answer.id)
-        self.assertEqual(question, answer.question)
-        self.assertEqual(country, answer.country)
+        self.assertEqual(self.question, answer.question)
+        self.assertEqual(self.country, answer.country)
         self.assertEqual(11.2, answer.response)
 
     def test_numerical_answer_cannot_be_text(self):
-        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Number')
-        country = Country.objects.create(name="Peru")
-        answer = NumericalAnswer(question=question, country=country, response='not a decimal number')
+        answer = NumericalAnswer(question=self.question, country=self.country, response='not a decimal number')
         self.assertRaises(ValidationError, answer.save)
 
 
@@ -61,6 +69,10 @@ class TextAnswerTest(TestCase):
 
 class DateAnswerTest(TestCase):
 
+    def setUp(self):
+        self.question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Date')
+        self.country = Country.objects.create(name="Peru")
+
     def test_date_answer_fields(self):
         answer = DateAnswer()
         fields = [str(item.attname) for item in answer._meta.fields]
@@ -69,20 +81,16 @@ class DateAnswerTest(TestCase):
             self.assertIn(field, fields)
 
     def test_date_answer_store(self):
-        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Date')
-        country = Country.objects.create(name="Peru")
         some_date = date.today()
-        answer = DateAnswer.objects.create(question=question, country=country, response=some_date)
+        answer = DateAnswer.objects.create(question=self.question, country=self.country, response=some_date)
         self.failUnless(answer.id)
-        self.assertEqual(question, answer.question)
-        self.assertEqual(country, answer.country)
+        self.assertEqual(self.question, answer.question)
+        self.assertEqual(self.country, answer.country)
         self.assertEqual(some_date, answer.response)
 
     def test_date_answer_can_only_be_date(self):
-        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Date')
-        country = Country.objects.create(name="Peru")
         not_date = 'hahaha'
-        answer = DateAnswer(question=question, country=country, response=not_date)
+        answer = DateAnswer(question=self.question, country=self.country, response=not_date)
         self.assertRaises(ValidationError, answer.save)
 
 
