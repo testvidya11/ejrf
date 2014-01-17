@@ -1,6 +1,7 @@
 from questionnaire.models.base import BaseModel
 from django.db import models
 
+
 class Organization(BaseModel):
     name = models.CharField(max_length=100, blank=False, null=True)
 
