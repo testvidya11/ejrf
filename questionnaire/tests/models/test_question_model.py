@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.test import TestCase
 from questionnaire.models.questions import Question
 
@@ -17,3 +18,8 @@ class QuestionTest(TestCase):
         self.assertEqual('Uganda Revision 2014 what what?', question.text)
         self.assertIsNone(question.instructions)
         self.assertEqual('abc123', question.UID)
+
+    def test_question_uid_is_unique(self):
+        a_question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Text')
+        question_with_same_uid = Question(text='haha', UID='abc123', answer_type='Text')
+        self.assertRaises(IntegrityError, question_with_same_uid.save)
