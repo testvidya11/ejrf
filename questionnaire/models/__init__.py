@@ -1,7 +1,9 @@
+from questionnaire.models.answers import NumericalAnswer, Answer
 from questionnaire.models.locations import Location, Region, Country, Organization
 from questionnaire.models.questionnaires import Questionnaire
 from questionnaire.models.questions import Question
 from questionnaire.models.sections import Section
+
 
 __all__ = [
     'Organization',
@@ -10,5 +12,7 @@ __all__ = [
     'Country',
     'Questionnaire',
     'Section',
-    'Question'
+    'Question',
+    'Answer',
+    'NumericalAnswer'
 ]
