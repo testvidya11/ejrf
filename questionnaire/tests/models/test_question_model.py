@@ -1,9 +1,9 @@
 from django.db import IntegrityError
-from django.test import TestCase
 from questionnaire.models.questions import Question
+from questionnaire.tests.base_test import BaseTest
 
 
-class QuestionTest(TestCase):
+class QuestionTest(BaseTest):
 
     def test_question_fields(self):
         question = Question()
