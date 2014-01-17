@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from questionnaire.models import Question, Country
-from questionnaire.models.answers import Answer, NumericalAnswer
+from questionnaire.models.answers import Answer, NumericalAnswer, TextAnswer
 
 
 class AnswerTest(TestCase):
@@ -37,3 +37,22 @@ class NumericalAnswerTest(TestCase):
         country = Country.objects.create(name="Peru")
         answer = NumericalAnswer(question=question, country=country, response='not a decimal number')
         self.assertRaises(ValidationError, answer.save)
+
+class TextAnswerTest(TestCase):
+
+    def test_text_answer_fields(self):
+        answer = TextAnswer()
+        fields = [str(item.attname) for item in answer._meta.fields]
+        self.assertEqual(6, len(fields))
+        for field in ['id', 'created', 'modified', 'question_id','country_id', 'response']:
+            self.assertIn(field, fields)
+
+    def test_text_answer_store(self):
+        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Text')
+        country = Country.objects.create(name="Peru")
+        answer = TextAnswer.objects.create(question=question, country=country, response="this is a text repsonse")
+        self.failUnless(answer.id)
+        self.assertEqual(question, answer.question)
+        self.assertEqual(country, answer.country)
+        self.assertEqual("this is a text repsonse", answer.response)
+
