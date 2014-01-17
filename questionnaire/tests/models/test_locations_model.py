@@ -1,8 +1,8 @@
-from django.test import TestCase
 from questionnaire.models.locations import Region, Country, Organization
+from questionnaire.tests.base_test import BaseTest
 
 
-class RegionTest(TestCase):
+class RegionTest(BaseTest):
 
     def test_region_fields(self):
         region = Region()
@@ -19,7 +19,7 @@ class RegionTest(TestCase):
         self.assertIsNone(region.description)
 
 
-class CountryTest(TestCase):
+class CountryTest(BaseTest):
 
     def test_country_fields(self):
         country = Country()
@@ -38,7 +38,7 @@ class CountryTest(TestCase):
         self.assertIn(paho,regions )
 
 
-class OrgTest(TestCase):
+class OrgTest(BaseTest):
 
     def test_org_fields(self):
         org = Organization()

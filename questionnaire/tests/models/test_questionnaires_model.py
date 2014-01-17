@@ -1,8 +1,8 @@
-from django.test import TestCase
 from questionnaire.models.questionnaires import Questionnaire
+from questionnaire.tests.base_test import BaseTest
 
 
-class QuestionnaireTest(TestCase):
+class QuestionnaireTest(BaseTest):
 
     def test_questionnaire_fields(self):
         questionnaire = Questionnaire()
