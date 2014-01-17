@@ -1,9 +1,9 @@
-from django.test import TestCase
 from questionnaire.forms.locations import RegionForm
 from questionnaire.models import Organization
+from questionnaire.tests.base_test import BaseTest
 
 
-class LocationTypeFormTest(TestCase):
+class LocationTypeFormTest(BaseTest):
     def setUp(self):
         org = Organization.objects.create(name="WHO")
         self.form_data = {
