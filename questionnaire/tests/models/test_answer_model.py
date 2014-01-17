@@ -10,8 +10,8 @@ class AnswerTest(TestCase):
     def test_answer_fields(self):
         answer = Answer()
         fields = [str(item.attname) for item in answer._meta.fields]
-        self.assertEqual(5, len(fields))
-        for field in ['id', 'created', 'modified', 'question_id', 'country_id']:
+        self.assertEqual(7, len(fields))
+        for field in ['id', 'created', 'modified', 'status', 'version', 'question_id', 'country_id']:
             self.assertIn(field, fields)
 
     def test_answer_stores(self):
@@ -32,7 +32,7 @@ class NumericalAnswerTest(TestCase):
     def test_numerical_answer_fields(self):
         answer = NumericalAnswer()
         fields = [str(item.attname) for item in answer._meta.fields]
-        self.assertEqual(7, len(fields))
+        self.assertEqual(9, len(fields))
         for field in ['id', 'created', 'modified', 'question_id', 'country_id', 'response']:
             self.assertIn(field, fields)
 
@@ -53,7 +53,7 @@ class TextAnswerTest(TestCase):
     def test_text_answer_fields(self):
         answer = TextAnswer()
         fields = [str(item.attname) for item in answer._meta.fields]
-        self.assertEqual(7, len(fields))
+        self.assertEqual(9, len(fields))
         for field in ['id', 'created', 'modified', 'question_id', 'country_id', 'response']:
             self.assertIn(field, fields)
 
@@ -76,7 +76,7 @@ class DateAnswerTest(TestCase):
     def test_date_answer_fields(self):
         answer = DateAnswer()
         fields = [str(item.attname) for item in answer._meta.fields]
-        self.assertEqual(7, len(fields))
+        self.assertEqual(9, len(fields))
         for field in ['id', 'created', 'modified', 'question_id','country_id', 'response']:
             self.assertIn(field, fields)
 
@@ -99,7 +99,7 @@ class MultiChoiceAnswerTest(TestCase):
     def test_mulitchoice_answer_fields(self):
         answer = MultiChoiceAnswer()
         fields = [str(item.attname) for item in answer._meta.fields]
-        self.assertEqual(7, len(fields))
+        self.assertEqual(9, len(fields))
         for field in ['id', 'created', 'modified', 'question_id', 'country_id', 'response_id']:
             self.assertIn(field, fields)
 
