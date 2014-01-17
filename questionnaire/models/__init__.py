@@ -1,9 +1,10 @@
-from questionnaire.models.answers import NumericalAnswer, Answer, TextAnswer
+from questionnaire.models.answers import NumericalAnswer, Answer, TextAnswer, DateAnswer
 from questionnaire.models.grouped_questions import GroupedQuestion
 from questionnaire.models.locations import Location, Region, Country, Organization
 from questionnaire.models.questionnaires import Questionnaire
 from questionnaire.models.questions import Question
 from questionnaire.models.sections import Section, SubSection
+
 
 __all__ = [
     'Organization',
@@ -18,4 +19,5 @@ __all__ = [
     'NumericalAnswer',
     'GroupedQuestion',
     'TextAnswer',
+    'DateAnswer',
 ]

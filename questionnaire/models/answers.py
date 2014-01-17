@@ -16,3 +16,6 @@ class NumericalAnswer(Answer):
 
 class TextAnswer(Answer):
     response = models.CharField(max_length=100, null=True)
+
+class DateAnswer(Answer):
+    response = models.DateField()
