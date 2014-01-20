@@ -6,4 +6,3 @@ ghostdriver.log
 testsettings.py
 Vagrantfile
 .vagrant/
-./static/
