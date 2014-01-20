@@ -132,8 +132,90 @@ QuestionGroupOrder.objects.create(question=question9, question_group=question_8_
 QuestionGroupOrder.objects.create(question=question10, question_group=question_8_11__group, order=3)
 QuestionGroupOrder.objects.create(question=question11, question_group=question_8_11__group, order=4)
 
+question12 = Question.objects.create(text='Is this part of a comprehensive school health program that delivers other '
+                                          'health intervention also?', UID='C00012', answer_type='MultiChoice')
+QuestionOption.objects.create(text="Yes", question=question12)
+QuestionOption.objects.create(text="No", question=question12)
+
+question_12_group = QuestionGroup.objects.create(subsection=sub_section_3, order=3)
+question_12_group.question.add(question12)
+
+QuestionGroupOrder.objects.create(question=question12, question_group=question_12_group, order=1)
+
+
+question13 = Question.objects.create(text='Which interventions are given in the school health program?',
+                                     UID='C00013', answer_type='MultiChoice')
+QuestionOption.objects.create(text="Yes", question=question13)
+QuestionOption.objects.create(text="No", question=question13)
+
+question_13_group = QuestionGroup.objects.create(subsection=sub_section_3, order=3)
+question_13_group.question.add(question13)
+
+QuestionGroupOrder.objects.create(question=question13, question_group=question_13_group, order=1)
+
+
 #################################### next sub
 sub_section_4 = SubSection.objects.create(order=2, section=section_2, title="Routine Immunization given at school"
-    "(please complete one row  for each grade level or age and vaccine", instructions="""
+    "(please complete one row  for each grade level or age and vaccine)", instructions="""
      Please complete the table by using one row for each vaccine and each target group. Examples: if TT and MR is given in grade 2 and TT in grade 8, use three rows (TT-grade 2; MR-grade 2; TT-grade 8); if TT and MR are given to children aged 8 years, and TT to children aged 14 years, use three rows (TT-8 years; MR-8 years; TT-14 years)
      """)
+
+question14 = Question.objects.create(text='Vaccine', UID='C00014', answer_type='Text')
+question15 = Question.objects.create(text='A. Grade/Level', UID='C00015', answer_type='Number',
+instructions="""
+"Grade / Level" indicates the class or grade that is targeted for
+the vaccine concerned. Complete this cell if children in school are targeted by class or grade,
+ regardless of their age. Please use the local gradation system, or use a class grading system of 1 to 12, where class 1
+  equals the first year in primary school, class 2 the second year of primary school, etc.  """)
+
+question16 = Question.objects.create(text='B. Age Group', UID='C00016', answer_type='Number',
+instructions="""
+"Age group" indicates the age groups that are targeted for the vaccine concerned. Complete this cell if children are
+ targeted according to their age rather than according to the class they are in.
+""")
+question17 = Question.objects.create(text='C. Sex', UID='C00017', answer_type='MultiChoice')
+QuestionOption.objects.create(text="Female", question=question17)
+QuestionOption.objects.create(text="Male", question=question17)
+QuestionOption.objects.create(text="Both", question=question17)
+
+question18 = Question.objects.create(text='D. Geographic Area', UID='C00018', answer_type='MultiChoice')
+QuestionOption.objects.create(text="Subnational", question=question18)
+QuestionOption.objects.create(text="National", question=question18)
+
+question19 = Question.objects.create(text='E. Number in target group', UID='C00019', answer_type='Number',
+instructions="""
+"Number targeted" is the number of children targeted through the school-based immunization for each dose.
+If school-based immunization is not given in all the areas of the country, the target is the number of children
+ in the areas where school-based immunization is being implemented
+""")
+
+question20 = Question.objects.create(text='F. Number of doses administered at school', UID='C00020', answer_type='Number',
+instructions="""
+"Number vaccinated in school": the number for children who received this dose in the areas where school-based
+immunization is being implemented.
+ """)
+
+question21 = Question.objects.create(text='G. Other interventions given with the vaccine', UID='C00021', answer_type='Text',
+instructions="""
+"Other intervention given with the vaccine":  Mention any other intervention (e.g. growth monitoring,
+ antihelmintics,…) that is given at the same time as the vaccination contact
+""")
+
+question22 = Question.objects.create(text='H. Does recorded on immunization or child death card', UID='C00022',
+                                     answer_type='MultiChoice')
+QuestionOption.objects.create(text="Yes", question=question22)
+QuestionOption.objects.create(text="No", question=question22)
+
+question_14_22_group = QuestionGroup.objects.create(subsection=sub_section_4, order=1)
+question_14_22_group.question.add(question14, question15, question16, question17, question18, question19,
+                                   question20, question21, question22)
+
+QuestionGroupOrder.objects.create(question=question14, question_group=question_14_22_group, order=1)
+QuestionGroupOrder.objects.create(question=question15, question_group=question_14_22_group, order=2)
+QuestionGroupOrder.objects.create(question=question16, question_group=question_14_22_group, order=3)
+QuestionGroupOrder.objects.create(question=question17, question_group=question_14_22_group, order=4)
+QuestionGroupOrder.objects.create(question=question18, question_group=question_14_22_group, order=5)
+QuestionGroupOrder.objects.create(question=question19, question_group=question_14_22_group, order=6)
+QuestionGroupOrder.objects.create(question=question20, question_group=question_14_22_group, order=7)
+QuestionGroupOrder.objects.create(question=question21, question_group=question_14_22_group, order=8)
+QuestionGroupOrder.objects.create(question=question22, question_group=question_14_22_group, order=9)
