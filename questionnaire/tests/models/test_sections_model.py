@@ -7,7 +7,8 @@ from questionnaire.tests.base_test import BaseTest
 class SectionBaseTest(BaseTest):
     def setUp(self):
         self.questionnaire = Questionnaire.objects.create(name="Uganda Revision 2014", description="some description")
-        self.section = Section.objects.create(title="Immunisation Coverage", order=1, questionnaire=self.questionnaire)
+        self.section = Section.objects.create(title="Immunisation Coverage", order=1,
+                                              questionnaire=self.questionnaire, name="im cover")
 
 
 class SectionTest(SectionBaseTest):
@@ -15,13 +16,14 @@ class SectionTest(SectionBaseTest):
     def test_section_fields(self):
         section = Section()
         fields = [str(item.attname) for item in section._meta.fields]
-        self.assertEqual(6, len(fields))
-        for field in ['id', 'created', 'modified', 'title', 'order', 'questionnaire_id']:
+        self.assertEqual(7, len(fields))
+        for field in ['id', 'created', 'modified', 'title', 'order', 'questionnaire_id', 'name']:
             self.assertIn(field, fields)
 
     def test_section_store(self):
         self.failUnless(self.section.id)
         self.assertEqual("Immunisation Coverage", self.section.title)
+        self.assertEqual("im cover", self.section.name)
         self.assertEqual(self.questionnaire, self.section.questionnaire)
 
 
