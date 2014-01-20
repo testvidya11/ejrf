@@ -8,3 +8,4 @@ class QuestionGroup(BaseModel):
     name = models.CharField(max_length=200, blank=False, null=True)
     instructions = models.TextField(blank=False, null=True)
     parent = models.ForeignKey("QuestionGroup", null=True)
+    order = models.PositiveIntegerField(null=True, blank=False)

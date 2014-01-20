@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from questionnaire.models import Questionnaire, Section, SubSection, Question
 from questionnaire.models.question_groups import QuestionGroup
 from questionnaire.tests.base_test import BaseTest
@@ -13,14 +14,15 @@ class GroupedQuestionsTest(BaseTest):
     def test_grouped_questions_field(self):
         grouped_question = QuestionGroup()
         fields = [str(item.attname) for item in grouped_question._meta.fields]
-        self.assertEqual(7, len(fields))
-        for field in ['id', 'created', 'modified','subsection_id', 'name', 'instructions', 'parent_id']:
+        self.assertEqual(8, len(fields))
+        for field in ['id', 'created', 'modified','subsection_id', 'name', 'instructions', 'parent_id', 'order']:
             self.assertIn(field, fields)
 
     def test_grouped_questions_store(self):
-        grouped_question = QuestionGroup.objects.create(subsection=self.sub_section)
+        grouped_question = QuestionGroup.objects.create(subsection=self.sub_section, order=1)
         grouped_question.question.add(self.question)
         self.failUnless(grouped_question.id)
+        self.assertEqual(1, grouped_question.order)
         self.assertEqual(self.sub_section, grouped_question.subsection)
         all_questions = grouped_question.question.all()
         self.assertEqual(1, all_questions.count())
@@ -29,8 +31,8 @@ class GroupedQuestionsTest(BaseTest):
         self.assertIsNone(grouped_question.instructions)
 
     def test_grouped_questions_store_parent(self):
-        parent_question = QuestionGroup.objects.create(subsection=self.sub_section)
-        grouped_question = QuestionGroup.objects.create(subsection=self.sub_section, parent=parent_question)
+        parent_question_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1)
+        grouped_question = QuestionGroup.objects.create(subsection=self.sub_section, parent=parent_question_group, order=2)
         grouped_question.question.add(self.question)
         self.failUnless(grouped_question.id)
-        self.assertEqual(parent_question, grouped_question.parent)
+        self.assertEqual(parent_question_group, grouped_question.parent)
