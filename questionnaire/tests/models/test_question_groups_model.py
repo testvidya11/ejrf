@@ -1,5 +1,5 @@
 from questionnaire.models import Questionnaire, Section, SubSection, Question
-from questionnaire.models.grouped_questions import GroupedQuestion
+from questionnaire.models.question_groups import QuestionGroup
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -11,14 +11,14 @@ class GroupedQuestionsTest(BaseTest):
         self.sub_section = SubSection.objects.create(title="Immunisation Extra Coverage", order=1, section=self.section)
 
     def test_grouped_questions_field(self):
-        grouped_question = GroupedQuestion()
+        grouped_question = QuestionGroup()
         fields = [str(item.attname) for item in grouped_question._meta.fields]
         self.assertEqual(5, len(fields))
         for field in ['id', 'created', 'modified','subsection_id', 'order']:
             self.assertIn(field, fields)
 
     def test_grouped_questions_store(self):
-        grouped_question = GroupedQuestion.objects.create(subsection=self.sub_section,  order=1)
+        grouped_question = QuestionGroup.objects.create(subsection=self.sub_section,  order=1)
         grouped_question.question.add(self.question)
         self.failUnless(grouped_question.id)
         self.assertEqual(1, grouped_question.order)

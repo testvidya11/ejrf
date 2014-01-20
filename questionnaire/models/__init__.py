@@ -1,13 +1,12 @@
 from questionnaire.models.answers import NumericalAnswer, Answer, TextAnswer, DateAnswer, MultiChoiceAnswer
 from questionnaire.models.answers import NumericalAnswer, Answer
 from questionnaire.models.comments import Comment
-from questionnaire.models.grouped_answers import GroupedAnswer
-from questionnaire.models.grouped_questions import GroupedQuestion
+from questionnaire.models.answer_groups import AnswerGroup
+from questionnaire.models.question_groups import QuestionGroup
 from questionnaire.models.locations import Location, Region, Country, Organization
 from questionnaire.models.questionnaires import Questionnaire
 from questionnaire.models.questions import Question, QuestionOption
 from questionnaire.models.sections import Section, SubSection
-
 
 __all__ = [
     'Organization',
@@ -20,11 +19,11 @@ __all__ = [
     'Question',
     'Answer',
     'NumericalAnswer',
-    'GroupedQuestion',
+    'QuestionGroup',
     'TextAnswer',
     'DateAnswer',
     'QuestionOption',
     'MultiChoiceAnswer',
     'Comment',
-    'GroupedAnswer',
+    'AnswerGroup',
 ]

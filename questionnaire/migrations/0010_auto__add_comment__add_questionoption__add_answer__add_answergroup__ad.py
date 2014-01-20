@@ -8,6 +8,106 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Adding model 'Comment'
+        db.create_table(u'questionnaire_comment', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('text', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+        ))
+        db.send_create_signal('questionnaire', ['Comment'])
+
+        # Adding M2M table for field answer on 'Comment'
+        db.create_table(u'questionnaire_comment_answer', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('comment', models.ForeignKey(orm['questionnaire.comment'], null=False)),
+            ('answer', models.ForeignKey(orm['questionnaire.answer'], null=False))
+        ))
+        db.create_unique(u'questionnaire_comment_answer', ['comment_id', 'answer_id'])
+
+        # Adding model 'QuestionOption'
+        db.create_table(u'questionnaire_questionoption', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('text', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('question', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['questionnaire.Question'])),
+        ))
+        db.send_create_signal('questionnaire', ['QuestionOption'])
+
+        # Adding model 'Answer'
+        db.create_table(u'questionnaire_answer', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('question', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['questionnaire.Question'], null=True)),
+            ('country', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['questionnaire.Country'], null=True)),
+            ('status', self.gf('django.db.models.fields.CharField')(default='Draft', max_length=15)),
+            ('version', self.gf('django.db.models.fields.IntegerField')(default=1, null=True)),
+        ))
+        db.send_create_signal('questionnaire', ['Answer'])
+
+        # Adding model 'AnswerGroup'
+        db.create_table(u'questionnaire_answergroup', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('answer', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['questionnaire.Answer'], null=True)),
+            ('grouped_question', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['questionnaire.QuestionGroup'], null=True)),
+            ('row', self.gf('django.db.models.fields.CharField')(max_length=6)),
+        ))
+        db.send_create_signal('questionnaire', ['AnswerGroup'])
+
+        # Adding model 'TextAnswer'
+        db.create_table(u'questionnaire_textanswer', (
+            (u'answer_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['questionnaire.Answer'], unique=True, primary_key=True)),
+            ('response', self.gf('django.db.models.fields.CharField')(max_length=100, null=True)),
+        ))
+        db.send_create_signal('questionnaire', ['TextAnswer'])
+
+        # Adding model 'MultiChoiceAnswer'
+        db.create_table(u'questionnaire_multichoiceanswer', (
+            (u'answer_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['questionnaire.Answer'], unique=True, primary_key=True)),
+            ('response', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['questionnaire.QuestionOption'])),
+        ))
+        db.send_create_signal('questionnaire', ['MultiChoiceAnswer'])
+
+        # Adding model 'QuestionGroup'
+        db.create_table(u'questionnaire_questiongroup', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('subsection', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['questionnaire.SubSection'])),
+            ('order', self.gf('django.db.models.fields.IntegerField')()),
+        ))
+        db.send_create_signal('questionnaire', ['QuestionGroup'])
+
+        # Adding M2M table for field question on 'QuestionGroup'
+        db.create_table(u'questionnaire_questiongroup_question', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('questiongroup', models.ForeignKey(orm['questionnaire.questiongroup'], null=False)),
+            ('question', models.ForeignKey(orm['questionnaire.question'], null=False))
+        ))
+        db.create_unique(u'questionnaire_questiongroup_question', ['questiongroup_id', 'question_id'])
+
+        # Adding model 'NumericalAnswer'
+        db.create_table(u'questionnaire_numericalanswer', (
+            (u'answer_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['questionnaire.Answer'], unique=True, primary_key=True)),
+            ('response', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
+        ))
+        db.send_create_signal('questionnaire', ['NumericalAnswer'])
+
+        # Adding model 'DateAnswer'
+        db.create_table(u'questionnaire_dateanswer', (
+            (u'answer_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['questionnaire.Answer'], unique=True, primary_key=True)),
+            ('response', self.gf('django.db.models.fields.DateField')()),
+        ))
+        db.send_create_signal('questionnaire', ['DateAnswer'])
+
+
+        # Changing field 'Question.answer_type'
+        db.alter_column(u'questionnaire_question', 'answer_type', self.gf('django.db.models.fields.CharField')(max_length=20))
         # Adding field 'Section.name'
         db.add_column(u'questionnaire_section', 'name',
                       self.gf('django.db.models.fields.CharField')(max_length=100, null=True),
@@ -15,6 +115,42 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
+        # Deleting model 'Comment'
+        db.delete_table(u'questionnaire_comment')
+
+        # Removing M2M table for field answer on 'Comment'
+        db.delete_table('questionnaire_comment_answer')
+
+        # Deleting model 'QuestionOption'
+        db.delete_table(u'questionnaire_questionoption')
+
+        # Deleting model 'Answer'
+        db.delete_table(u'questionnaire_answer')
+
+        # Deleting model 'AnswerGroup'
+        db.delete_table(u'questionnaire_answergroup')
+
+        # Deleting model 'TextAnswer'
+        db.delete_table(u'questionnaire_textanswer')
+
+        # Deleting model 'MultiChoiceAnswer'
+        db.delete_table(u'questionnaire_multichoiceanswer')
+
+        # Deleting model 'QuestionGroup'
+        db.delete_table(u'questionnaire_questiongroup')
+
+        # Removing M2M table for field question on 'QuestionGroup'
+        db.delete_table('questionnaire_questiongroup_question')
+
+        # Deleting model 'NumericalAnswer'
+        db.delete_table(u'questionnaire_numericalanswer')
+
+        # Deleting model 'DateAnswer'
+        db.delete_table(u'questionnaire_dateanswer')
+
+
+        # Changing field 'Question.answer_type'
+        db.alter_column(u'questionnaire_question', 'answer_type', self.gf('django.db.models.fields.CharField')(max_length=10))
         # Deleting field 'Section.name'
         db.delete_column(u'questionnaire_section', 'name')
 
@@ -66,6 +202,15 @@ class Migration(SchemaMigration):
             'status': ('django.db.models.fields.CharField', [], {'default': "'Draft'", 'max_length': '15'}),
             'version': ('django.db.models.fields.IntegerField', [], {'default': '1', 'null': 'True'})
         },
+        'questionnaire.answergroup': {
+            'Meta': {'object_name': 'AnswerGroup'},
+            'answer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['questionnaire.Answer']", 'null': 'True'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'grouped_question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['questionnaire.QuestionGroup']", 'null': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'row': ('django.db.models.fields.CharField', [], {'max_length': '6'})
+        },
         'questionnaire.comment': {
             'Meta': {'object_name': 'Comment'},
             'answer': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'comments'", 'symmetrical': 'False', 'to': "orm['questionnaire.Answer']"}),
@@ -87,24 +232,6 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'DateAnswer', '_ormbases': ['questionnaire.Answer']},
             u'answer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['questionnaire.Answer']", 'unique': 'True', 'primary_key': 'True'}),
             'response': ('django.db.models.fields.DateField', [], {})
-        },
-        'questionnaire.groupedanswer': {
-            'Meta': {'object_name': 'GroupedAnswer'},
-            'answer': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['questionnaire.Answer']", 'null': 'True'}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
-            'grouped_question': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['questionnaire.GroupedQuestion']", 'null': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
-            'row': ('django.db.models.fields.CharField', [], {'max_length': '6'})
-        },
-        'questionnaire.groupedquestion': {
-            'Meta': {'object_name': 'GroupedQuestion'},
-            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
-            'order': ('django.db.models.fields.IntegerField', [], {}),
-            'question': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questionnaire.Question']", 'symmetrical': 'False'}),
-            'subsection': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['questionnaire.SubSection']"})
         },
         'questionnaire.multichoiceanswer': {
             'Meta': {'object_name': 'MultiChoiceAnswer', '_ormbases': ['questionnaire.Answer']},
@@ -132,6 +259,15 @@ class Migration(SchemaMigration):
             'instructions': ('django.db.models.fields.TextField', [], {'null': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
             'text': ('django.db.models.fields.TextField', [], {})
+        },
+        'questionnaire.questiongroup': {
+            'Meta': {'object_name': 'QuestionGroup'},
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'order': ('django.db.models.fields.IntegerField', [], {}),
+            'question': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['questionnaire.Question']", 'symmetrical': 'False'}),
+            'subsection': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['questionnaire.SubSection']"})
         },
         'questionnaire.questionnaire': {
             'Meta': {'object_name': 'Questionnaire'},
