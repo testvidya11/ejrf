@@ -6,6 +6,8 @@ Feature: User management
         And I submit the form
         Then I should be redirected home page
         And I should see my username and the logout link
+        When I click the logout link
+        Then I should see the login page again
 
     Scenario: User login with invalid credentials
         Given I visit the login page

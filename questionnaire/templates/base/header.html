@@ -8,7 +8,7 @@
             <div class="row">
                 {% if user.is_authenticated %}
                 <div class="pull-right login-nav">
-                  Logged in as <a href="#">{{ user.get_username }}<b class="caret"></b></a> | <a href="#">Logout</a>
+                  Logged in as <a href="#">{{ user.get_username }}<b class="caret"></b></a> | <a href="{% url 'logout_page' %}">Logout</a>
                 </div>
                 {% endif %}
                 <br style="clear: both"/>
