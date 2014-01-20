@@ -2,6 +2,7 @@ from questionnaire.models.answers import NumericalAnswer, Answer, TextAnswer, Da
 from questionnaire.models.answers import NumericalAnswer, Answer
 from questionnaire.models.comments import Comment
 from questionnaire.models.answer_groups import AnswerGroup
+from questionnaire.models.question_group_orders import QuestionGroupOrder
 from questionnaire.models.question_groups import QuestionGroup
 from questionnaire.models.locations import Location, Region, Country, Organization
 from questionnaire.models.questionnaires import Questionnaire
@@ -26,4 +27,5 @@ __all__ = [
     'MultiChoiceAnswer',
     'Comment',
     'AnswerGroup',
+    'QuestionGroupOrder'
 ]
