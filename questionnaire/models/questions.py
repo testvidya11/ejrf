@@ -13,6 +13,7 @@ class Question(BaseModel):
 
     text = models.TextField(blank=False, null=False)
     instructions = models.TextField(blank=False, null=True)
+    short_instruction = models.CharField(max_length=250, blank=False, null=True)
     UID = models.CharField(blank=False, null=False, max_length=6, unique=True)
     answer_type = models.CharField(blank=False, null=False, max_length=20, choices=ANSWER_TYPES)
 
