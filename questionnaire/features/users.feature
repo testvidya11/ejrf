@@ -1,0 +1,14 @@
+Feature: User management
+    Scenario: User login
+        Given I am registered user
+        And I visit the login page
+        And I fill in the login credentials
+        And I submit the form
+        Then I should be redirected home page
+        And I should see my username and the logout link
+
+    Scenario: User login with invalid credentials
+        Given I visit the login page
+        And I fill in invalid user credentials
+        And I submit the form
+        Then I should see an error message
