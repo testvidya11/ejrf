@@ -9,7 +9,7 @@ class GroupedAnswerTest(BaseTest):
         self.questionnaire = Questionnaire.objects.create(name="Uganda Revision 2014", description="some description")
         self.section = Section.objects.create(title="Immunisation Coverage", order=1, questionnaire=self.questionnaire)
         self.sub_section = SubSection.objects.create(title="Immunisation Extra Coverage", order=1, section=self.section)
-        self.grouped_question = QuestionGroup.objects.create(subsection=self.sub_section,  order=1)
+        self.grouped_question = QuestionGroup.objects.create(subsection=self.sub_section)
         self.grouped_question.question.add(self.question)
         country = Country.objects.create(name="Peru")
         self.answer = Answer.objects.create(question=self.question, country=country)
