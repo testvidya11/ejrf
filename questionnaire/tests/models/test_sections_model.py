@@ -9,6 +9,8 @@ class SectionBaseTest(BaseTest):
         self.questionnaire = Questionnaire.objects.create(name="Uganda Revision 2014", description="some description")
         self.section = Section.objects.create(title="Immunisation Coverage", order=1,
                                               questionnaire=self.questionnaire, name="im cover" , description="section description")
+        self.sub_section = SubSection.objects.create(title="Infant Immunisation Coverage", order=1, section=self.section)
+        self.sub_section_1 = SubSection.objects.create(title="Infant Immunisation Coverage", order=2, section=self.section)
 
 
 class SectionTest(SectionBaseTest):
@@ -27,6 +29,12 @@ class SectionTest(SectionBaseTest):
         self.assertEqual("section description", self.section.description)
         self.assertEqual(self.questionnaire, self.section.questionnaire)
 
+
+    def test_gets_subsections(self):
+        sub_sections = self.section.get_sub_sections()
+        self.assertEqual(2, len(sub_sections))
+        self.assertIn(self.sub_section_1, sub_sections)
+        self.assertIn(self.sub_section, sub_sections)
 
 class SubSectionTest(SectionBaseTest):
 

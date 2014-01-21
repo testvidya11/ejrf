@@ -10,6 +10,8 @@ class Section(BaseModel):
     description = models.TextField(blank=True, null=True)
     questionnaire = models.ForeignKey(Questionnaire, blank=False, null=False, related_name="sections")
 
+    def get_sub_sections(self):
+        return list(self.sub_sections.all())
 
 class SubSection(BaseModel):
     title = models.CharField(max_length=256, blank=False, null=False)
