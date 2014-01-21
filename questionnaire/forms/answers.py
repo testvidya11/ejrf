@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from questionnaire.models import NumericalAnswer, TextAnswer
+from questionnaire.models import NumericalAnswer, TextAnswer, DateAnswer
 
 
 class NumericalAnswerForm(ModelForm):
@@ -9,3 +9,7 @@ class NumericalAnswerForm(ModelForm):
 class TextAnswerForm(ModelForm):
     class Meta:
         model = TextAnswer
+
+class DateAnswerForm(ModelForm):
+    class Meta:
+        model = DateAnswer
