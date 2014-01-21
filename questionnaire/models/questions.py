@@ -17,6 +17,9 @@ class Question(BaseModel):
     UID = models.CharField(blank=False, null=False, max_length=6, unique=True)
     answer_type = models.CharField(blank=False, null=False, max_length=20, choices=ANSWER_TYPES)
 
+    def all_answers(self):
+        return self.answers.order_by('created').select_subclasses()
+
 class QuestionOption(BaseModel):
     text = models.CharField(max_length=100, blank=False, null=False)
     question = models.ForeignKey(Question)

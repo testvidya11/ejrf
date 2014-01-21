@@ -10,5 +10,11 @@ class Questionnaire(BaseModel):
         subsections = []
         sections = self.sections.all()
         for section in sections:
-            subsections.extend(section.get_sub_sections())
+            subsections.extend(list(section.sub_sections.all()))
         return subsections
+
+    def get_all_questions(self):
+        all_questions = []
+        for subsection in self.sub_sections():
+            all_questions.extend(subsection.all_questions())
+        return all_questions

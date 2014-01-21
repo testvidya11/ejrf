@@ -1,6 +1,6 @@
 from django.test import TestCase
 from questionnaire.models.sections import Section, SubSection
-from questionnaire.models import Questionnaire
+from questionnaire.models import Questionnaire, QuestionGroup, Question
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -12,6 +12,8 @@ class SectionBaseTest(BaseTest):
         self.sub_section = SubSection.objects.create(title="Infant Immunisation Coverage", order=1, section=self.section)
         self.sub_section_1 = SubSection.objects.create(title="Infant Immunisation Coverage", order=2, section=self.section)
 
+        self.question1 = Question.objects.create(text='Uganda Revision 2014 what what?', UID='ab3123', answer_type='Text')
+        self.question2 = Question.objects.create(text='Uganda Revision 2014 what what?', UID='ab5123', answer_type='Text')
 
 class SectionTest(SectionBaseTest):
 
@@ -30,12 +32,6 @@ class SectionTest(SectionBaseTest):
         self.assertEqual(self.questionnaire, self.section.questionnaire)
 
 
-    def test_gets_subsections(self):
-        sub_sections = self.section.get_sub_sections()
-        self.assertEqual(2, len(sub_sections))
-        self.assertIn(self.sub_section_1, sub_sections)
-        self.assertIn(self.sub_section, sub_sections)
-
 class SubSectionTest(SectionBaseTest):
 
     def test_sub_section_fields(self):
@@ -46,7 +42,21 @@ class SubSectionTest(SectionBaseTest):
             self.assertIn(field, fields)
 
     def test_sub_section_store(self):
-        sub_section = SubSection.objects.create(title="Infant Immunisation Coverage", order=1, section=self.section)
         self.failUnless(self.section.id)
-        self.assertEqual("Infant Immunisation Coverage", sub_section.title)
-        self.assertEqual(self.section, sub_section.section)
+        self.assertEqual("Infant Immunisation Coverage", self.sub_section.title)
+        self.assertEqual(self.section, self.sub_section.section)
+
+    def test_subsection_can_get_its_questions_groups(self):
+        sub_group = QuestionGroup.objects.create(subsection=self.sub_section, name="Laboratory Investigation")
+        self.assertEqual(1, len(self.sub_section.all_question_groups()))
+        self.assertIn(sub_group, self.sub_section.all_question_groups())
+
+    def test_subsection_can_get_its_questions_from_its_groups(self):
+        sub_group = QuestionGroup.objects.create(subsection=self.sub_section, name="Laboratory Investigation")
+        sub_group.question.add(self.question1, self.question2)
+
+        questions = self.sub_section.all_questions()
+        print questions
+        self.assertEqual(2, len(questions))
+        self.assertIn(self.question1, questions)
+        self.assertIn(self.question2, questions)

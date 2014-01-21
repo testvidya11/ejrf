@@ -10,11 +10,18 @@ class Section(BaseModel):
     description = models.TextField(blank=True, null=True)
     questionnaire = models.ForeignKey(Questionnaire, blank=False, null=False, related_name="sections")
 
-    def get_sub_sections(self):
-        return list(self.sub_sections.all())
 
 class SubSection(BaseModel):
     title = models.CharField(max_length=256, blank=False, null=False)
     order = models.IntegerField(blank=False, null=False)
     section = models.ForeignKey(Section, blank=False, null=False, related_name="sub_sections")
     description = models.TextField(blank=True, null=True)
+
+    def all_question_groups(self):
+        return self.questiongroup_set.all()
+
+    def all_questions(self):
+        all_questions = []
+        for question_group in self.all_question_groups():
+            all_questions.extend(question_group.all_questions())
+        return all_questions

@@ -36,3 +36,11 @@ class GroupedQuestionsTest(BaseTest):
         grouped_question.question.add(self.question)
         self.failUnless(grouped_question.id)
         self.assertEqual(parent_question_group, grouped_question.parent)
+
+    def test_grouped_question_can_get_its_questions(self):
+        sub_group = QuestionGroup.objects.create(subsection=self.sub_section, name="Laboratory Investigation")
+        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='ab3123', answer_type='Text')
+        sub_group.question.add(self.question, question)
+        self.assertEqual(2, len(sub_group.all_questions()))
+        self.assertIn(self.question, sub_group.all_questions())
+        self.assertIn(question, sub_group.all_questions())
