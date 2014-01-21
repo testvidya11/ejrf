@@ -6,13 +6,16 @@ class NumericalAnswerForm(ModelForm):
     class Meta:
         model = NumericalAnswer
 
+
 class TextAnswerForm(ModelForm):
     class Meta:
         model = TextAnswer
 
+
 class DateAnswerForm(ModelForm):
     class Meta:
         model = DateAnswer
+
 
 class MultiChoiceAnswerForm(ModelForm):
     class Meta:

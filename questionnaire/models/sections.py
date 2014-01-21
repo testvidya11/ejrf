@@ -1,4 +1,4 @@
-from questionnaire.models import Questionnaire
+from questionnaire.models import Questionnaire, Question
 from questionnaire.models.base import BaseModel
 from django.db import models
 
@@ -10,6 +10,14 @@ class Section(BaseModel):
     description = models.TextField(blank=True, null=True)
     questionnaire = models.ForeignKey(Questionnaire, blank=False, null=False, related_name="sections")
 
+    def all_questions(self):
+        subsections = self.sub_sections.order_by('order')
+        questions = []
+        for subsection in subsections:
+            for group in subsection.question_group.order_by('order'):
+                questions.extend(group.question.values_list('id', flat=True))
+        return Question.objects.filter(id__in=questions)
+
 
 class SubSection(BaseModel):
     title = models.CharField(max_length=256, blank=False, null=False)
@@ -18,7 +26,7 @@ class SubSection(BaseModel):
     description = models.TextField(blank=True, null=True)
 
     def all_question_groups(self):
-        return self.questiongroup_set.all()
+        return self.question_group.all()
 
     def all_questions(self):
         all_questions = []
