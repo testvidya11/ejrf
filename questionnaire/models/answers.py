@@ -18,7 +18,7 @@ class Answer(BaseModel):
 
 
 class NumericalAnswer(Answer):
-    response = models.DecimalField(max_digits=5, decimal_places=2)
+    response = models.DecimalField(max_digits=9, decimal_places=2)
 
 
 class TextAnswer(Answer):
