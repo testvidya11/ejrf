@@ -1,4 +1,13 @@
 from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionOption, QuestionGroupOrder
+from django.core import serializers
+
+Questionnaire.objects.all().delete()
+Section.objects.all().delete()
+SubSection.objects.all().delete()
+Question.objects.all().delete()
+QuestionGroup.objects.all().delete()
+QuestionOption.objects.all().delete()
+QuestionGroupOrder.objects.all().delete()
 
 questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan")
 
@@ -143,8 +152,7 @@ question_12_group.question.add(question12)
 QuestionGroupOrder.objects.create(question=question12, question_group=question_12_group, order=1)
 
 
-question13 = Question.objects.create(text='Which interventions are given in the school health program?',
-                                     UID='C00013', answer_type='MultiChoice')
+question13 = Question.objects.create(text='Which interventions are given in the school health program?', UID='C00013', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Yes", question=question13)
 QuestionOption.objects.create(text="No", question=question13)
 
@@ -156,8 +164,11 @@ QuestionGroupOrder.objects.create(question=question13, question_group=question_1
 
 #################################### next sub
 sub_section_4 = SubSection.objects.create(order=2, section=section_2, title="Routine Immunization given at school"
-    "(please complete one row  for each grade level or age and vaccine)", instructions="""
-     Please complete the table by using one row for each vaccine and each target group. Examples: if TT and MR is given in grade 2 and TT in grade 8, use three rows (TT-grade 2; MR-grade 2; TT-grade 8); if TT and MR are given to children aged 8 years, and TT to children aged 14 years, use three rows (TT-8 years; MR-8 years; TT-14 years)
+    "(please complete one row  for each grade level or age and vaccine)", description="""
+     Please complete the table by using one row for each vaccine and each target group. Examples: if TT
+     and MR is given in grade 2 and TT in grade 8, use three rows (TT-grade 2; MR-grade 2; TT-grade 8);
+     if TT and MR are given to children aged 8 years, and TT to children aged 14 years, use three rows
+      (TT-8 years; MR-8 years; TT-14 years)
      """)
 
 question14 = Question.objects.create(text='Vaccine', UID='C00014', answer_type='Text')
@@ -195,11 +206,11 @@ instructions="""
 immunization is being implemented.
  """)
 
-question21 = Question.objects.create(text='G. Other interventions given with the vaccine', UID='C00021', answer_type='Text',
+question21 = Question.objects.create(text='G. Other interventions given with the vaccine', UID='C00021',
+                                     answer_type='Text',
 instructions="""
-"Other intervention given with the vaccine":  Mention any other intervention (e.g. growth monitoring,
- antihelmintics,…) that is given at the same time as the vaccination contact
-""")
+"Other intervention given with the vaccine":  Mention any other intervention
+(e.g. growth monitoring, antihelmintics,...) that is given at the same time as the vaccination contact """)
 
 question22 = Question.objects.create(text='H. Does recorded on immunization or child death card', UID='C00022',
                                      answer_type='MultiChoice')
@@ -219,3 +230,31 @@ QuestionGroupOrder.objects.create(question=question19, question_group=question_1
 QuestionGroupOrder.objects.create(question=question20, question_group=question_14_22_group, order=7)
 QuestionGroupOrder.objects.create(question=question21, question_group=question_14_22_group, order=8)
 QuestionGroupOrder.objects.create(question=question22, question_group=question_14_22_group, order=9)
+
+
+############################################ GENERATE FIXTURES
+questionnaires = Questionnaire.objects.all()
+sections = Section.objects.all()
+subsections = SubSection.objects.all()
+questions = Question.objects.all()
+question_groups = QuestionGroup.objects.all()
+options = QuestionOption.objects.all()
+orders = QuestionGroupOrder.objects.all()
+
+# data = serializers.serialize("json", [questionnaires])
+# print data
+
+# data = serializers.serialize("json", [sections])
+# print data
+
+# data = serializers.serialize("json", [subsections])
+# print data
+#
+# data = serializers.serialize("json", [questions])
+# print data
+#
+# data = serializers.serialize("json", [question_groups])
+# print data
+#
+# data = serializers.serialize("json", [options, orders])
+# print data
