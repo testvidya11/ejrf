@@ -27,3 +27,4 @@ class Region(Location):
 
 class Country(Location):
     regions = models.ManyToManyField(Region, blank=False, null=True, related_name="countries")
+    code = models.CharField(max_length=5, blank=False, null=True)

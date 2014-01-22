@@ -24,8 +24,8 @@ class CountryTest(BaseTest):
     def test_country_fields(self):
         country = Country()
         fields = [str(item.attname) for item in country._meta.fields]
-        self.assertEqual(4, len(fields))
-        for field in ['id', 'created', 'modified', 'name']:
+        self.assertEqual(5, len(fields))
+        for field in ['id', 'created', 'modified', 'name', 'code']:
             self.assertIn(field, fields)
 
     def test_store(self):

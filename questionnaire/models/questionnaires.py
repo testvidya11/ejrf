@@ -5,6 +5,7 @@ from django.db import models
 class Questionnaire(BaseModel):
     name = models.CharField(max_length=256, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
+    year = models.PositiveIntegerField(null=True, blank=True)
 
     def sub_sections(self):
         subsections = []
