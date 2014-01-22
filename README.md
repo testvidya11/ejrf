@@ -30,5 +30,5 @@ e.g: test_location_form.py, test_location_model.py, test_location_views.py
 
 ====
 
-[![Build Status](https://travis-ci.org/eJRF/ejrf.png?branch=master)](https://travis-ci.org/eJRF/ejrf)
+[![Build Status](https://snap-ci.com/nugDMDbuoqEhkrLFarm6FuwsT60surg6vsh0z4B8KT4/build_image)](https://snap-ci.com/projects/eJRF/ejrf/build_history)
 [![Coverage Status](https://coveralls.io/repos/eJRF/ejrf/badge.png)](https://coveralls.io/r/eJRF/ejrf)
