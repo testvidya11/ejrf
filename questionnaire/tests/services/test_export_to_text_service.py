@@ -1,5 +1,5 @@
 from questionnaire.models import Question, QuestionGroup, Questionnaire, SubSection, Section, Answer, Country, \
-    Organization, Region, NumericalAnswer
+    Organization, Region, NumericalAnswer, QuestionOption, MultiChoiceAnswer
 from questionnaire.services.export_data_service import ExportToTextService
 from questionnaire.tests.base_test import BaseTest
 
@@ -20,8 +20,8 @@ class ExportToTextServiceTest(BaseTest):
                                             instructions="Include only those cases found positive for the infectious agent.",
                                             UID='C00004', answer_type='Number')
 
-        parent = QuestionGroup.objects.create(subsection=self.sub_section, order=1)
-        parent.question.add(self.question1, self.question2)
+        self.parent = QuestionGroup.objects.create(subsection=self.sub_section, order=1)
+        self.parent.question.add(self.question1, self.question2)
         self.organisation = Organization.objects.create(name="WHO")
         self.regions = Region.objects.create(name="The Afro",organization=self.organisation)
         self.country = Country.objects.create(name="Uganda", code="UGX")
@@ -35,6 +35,28 @@ class ExportToTextServiceTest(BaseTest):
     def test_exports_questions_with_numeric_answers(self):
         expected_data = [["2013\tUGX\t%s\t%s" % (self.question1.UID, '23.00')],
                          ["2013\tUGX\t%s\t%s" % (self.question2.UID, '1.00')]]
+
+        export_to_text_service = ExportToTextService(self.questionnaire)
+        actual_data = export_to_text_service.get_formatted_responses()
+        self.assertEqual(len(expected_data), len(actual_data))
+        self.assertIn(expected_data[0], actual_data)
+        self.assertIn(expected_data[1], actual_data)
+
+    def test_exports_multichoice_answers_for_questionnaire(self):
+        question = Question.objects.create(text='what do you drink?', UID='abc123', answer_type='MultiChoice')
+        question1 = Question.objects.create(text='what do you drink at nite?', UID='abc125', answer_type='MultiChoice')
+        self.parent.question.add(question, question1)
+        country = Country.objects.create(name="Peru", code="PXR")
+        option1 = QuestionOption.objects.create(text="Diphteria", question=question)
+        QuestionOption.objects.create(text="Measles", question=question)
+        option3 = QuestionOption.objects.create(text="Neonatal tetanus (NT)", question=question1)
+        MultiChoiceAnswer.objects.create(question=question, country=country, response=option1)
+        MultiChoiceAnswer.objects.create(question=question1, country=country, response=option3)
+
+        expected_data = [["2013\tUGX\t%s\t%s" % (self.question1.UID, '23.00')],
+                         ["2013\tUGX\t%s\t%s" % (self.question2.UID, '1.00')],
+                         ["2013\tPXR\t%s\t%s" % (question.UID, option1.text)],
+                         ["2013\tPXR\t%s\t%s" % (question1.UID, option3.text)]]
 
         export_to_text_service = ExportToTextService(self.questionnaire)
         actual_data = export_to_text_service.get_formatted_responses()
