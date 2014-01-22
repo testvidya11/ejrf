@@ -1,8 +1,7 @@
-from time import sleep
 from lettuce import step, world
 from questionnaire.features.pages.extract import ExtractPage
-from questionnaire.features.pages.users import LoginPage
-from questionnaire.models import Questionnaire, SubSection, Section, QuestionGroup, NumericalAnswer, Region, Country, Organization, Answer, Question
+from questionnaire.models import Questionnaire, SubSection, Section, QuestionGroup, NumericalAnswer, Region, Country, \
+    Organization, Answer, Question
 
 
 @step(u'And I logged in the user')

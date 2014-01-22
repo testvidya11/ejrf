@@ -31,6 +31,7 @@ class ExportToTextViewTest(BaseTest):
                                                                status=Answer.SUBMITTED_STATUS,  response=23)
         self.question2_answer = NumericalAnswer.objects.create(question=self.question2, country=self.country,
                                                                status=Answer.SUBMITTED_STATUS, response=1)
+
     def test_get(self):
         response = self.client.get("/extract/")
         self.assertEqual(200, response.status_code)
@@ -45,3 +46,7 @@ class ExportToTextViewTest(BaseTest):
         self.assertEquals(200, response.status_code)
         self.assertEquals(response.get('Content-Type'), 'text/csv')
         self.assertEquals(response.get('Content-Disposition'), 'attachment; filename="%s"' % file_name)
+        row1 = ["2013\tUGX\t%s\t%s" % (self.question1.UID, '23.00')]
+        row2 = ["2013\tUGX\t%s\t%s" % (self.question2.UID, '1.00')]
+        contents = "%s\r\n%s\r\n" % ("".join(row1), "".join(row2))
+        self.assertEqual(contents, response.content)
