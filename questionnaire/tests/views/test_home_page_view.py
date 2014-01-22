@@ -1,16 +1,13 @@
 from urllib import quote
-from django.contrib.auth.models import User
 from django.test import Client
 from questionnaire.tests.base_test import BaseTest
 
 
 class HomePageViewTest(BaseTest):
     def setUp(self):
-        self.user = User.objects.create(username="user", email="user@mail.com")
-        self.user.set_password("pass")
-        self.user.save()
         self.client = Client()
-        self.client.login(username='user', password='pass')
+        self.user = self.create_user_with_no_permissions()
+        self.login_user()
 
     def test_get(self):
         response = self.client.get("/")

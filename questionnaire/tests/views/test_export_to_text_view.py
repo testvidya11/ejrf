@@ -1,5 +1,4 @@
 from urllib import quote
-from django.contrib.auth.models import User
 from django.test import Client
 from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, Organization, Region, Country, NumericalAnswer, Answer
 from questionnaire.tests.base_test import BaseTest
@@ -8,11 +7,10 @@ from questionnaire.tests.base_test import BaseTest
 class ExportToTextViewTest(BaseTest):
 
     def setUp(self):
-        self.user = User.objects.create(username="user", email="user@mail.com")
-        self.user.set_password("pass")
-        self.user.save()
         self.client = Client()
-        self.client.login(username='user', password='pass')
+        self.user = self.create_user_with_no_permissions()
+        self.login_user()
+
         self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan", year=2013)
         self.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
                                                       questionnaire=self.questionnaire, name="Reported Cases")
