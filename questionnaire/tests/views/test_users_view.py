@@ -13,7 +13,7 @@ class UsersViewTest(BaseTest):
         self.client.login(username='user', password='p62')
 
     def test_get_login(self):
-        response = self.client.get('/login/')
+        response = self.client.get('/accounts/login/')
         self.assertEqual(200, response.status_code)
         templates = [template.name for template in response.templates]
         self.assertIn('users/login.html', templates)

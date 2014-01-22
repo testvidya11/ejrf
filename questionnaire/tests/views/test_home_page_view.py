@@ -21,4 +21,4 @@ class HomePageViewTest(BaseTest):
     def test_login_required_for_home_get(self):
         self.client.logout()
         response = self.client.get("/")
-        self.assertRedirects(response, expected_url='/login/?next=%s' % quote('/'), status_code=302, target_status_code=200, msg_prefix='')
+        self.assertRedirects(response, expected_url='accounts/login/?next=%s' % quote('/'), status_code=302)

@@ -1,3 +1,5 @@
+from urllib import quote
+from django.contrib.auth.models import User
 from django.test import Client
 from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, Organization, Region, Country, NumericalAnswer, Answer
 from questionnaire.tests.base_test import BaseTest
@@ -6,7 +8,11 @@ from questionnaire.tests.base_test import BaseTest
 class ExportToTextViewTest(BaseTest):
 
     def setUp(self):
+        self.user = User.objects.create(username="user", email="user@mail.com")
+        self.user.set_password("pass")
+        self.user.save()
         self.client = Client()
+        self.client.login(username='user', password='pass')
         self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan", year=2013)
         self.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
                                                       questionnaire=self.questionnaire, name="Reported Cases")
@@ -38,6 +44,11 @@ class ExportToTextViewTest(BaseTest):
         templates = [template.name for template in response.templates]
         self.assertIn('home/extract.html', templates)
         self.assertIn(self.questionnaire, response.context['questionnaires'])
+
+    def test_login_required_for_home_get(self):
+        self.client.logout()
+        response = self.client.get("/extract/")
+        self.assertRedirects(response, expected_url='accounts/login/?next=%s' % quote('/extract/'), status_code=302)
 
     def test_post_export(self):
         form_data = {'questionnaire': self.questionnaire.id}

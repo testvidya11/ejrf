@@ -1,5 +1,7 @@
 import csv
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from questionnaire.models import Questionnaire
 from questionnaire.services.export_data_service import ExportToTextService
@@ -18,8 +20,11 @@ class ExportToTextView(TemplateView):
         formatted_responses = ExportToTextService(questionnaire).get_formatted_responses()
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="%s-%s.txt"'% (questionnaire.name, questionnaire.year)
-
         writer = csv.writer(response)
         for row in formatted_responses:
             writer.writerow(row)
         return response
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ExportToTextView, self).dispatch(*args, **kwargs)
