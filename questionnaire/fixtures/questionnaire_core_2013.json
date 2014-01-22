@@ -456,8 +456,8 @@
             "created": "2014-01-20T18:41:34.912Z",
             "question": [116],
             "modified": "2014-01-20T18:41:34.913Z",
-            "subsection": 22,
-            "order": 2,
+            "subsection": 23,
+            "order": 1,
             "instructions": null
         }
     },
@@ -470,8 +470,8 @@
             "created": "2014-01-20T18:41:34.947Z",
             "question": [117],
             "modified": "2014-01-20T18:41:34.947Z",
-            "subsection": 22,
-            "order": 3,
+            "subsection": 23,
+            "order": 2,
             "instructions": null
         }
     },
@@ -512,7 +512,7 @@
             "created": "2014-01-20T18:42:48.911Z",
             "question": [120, 121, 122, 119],
             "modified": "2014-01-20T18:42:48.912Z",
-            "subsection": 22,
+            "subsection": 24,
             "order": null,
             "instructions": null
         }

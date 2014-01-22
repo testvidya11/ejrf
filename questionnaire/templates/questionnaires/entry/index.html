@@ -1,1 +1,37 @@
 {% extends 'base/layout.html' %}
+{% block content %}
+{% load questionnaire_entry_tags %}
+    <h3>{{ section.title }}</h3>
+
+    <form class="form-horizontal" role="form">
+
+    {% for subsection in section.sub_sections.all %}
+        <h4> {{subsection.title}}</h4>
+        {% for group in subsection.parent_question_groups %}
+            {% if group.name %}
+                <h5> {{group.name}}</h5>
+            {% endif %}
+            {% for question, form in ordered_forms.ordered_forms.items %}
+                {% if question in group.and_sub_group_questions %}
+                    <div class="form-group">
+                        <label for="{{ form.visible_fields.0.id_for_label }}" class="col-sm-6 control-label">{{ question.text }}</label>
+                        <div class="col-sm-4">
+                                {{ form.visible_fields.0 }}
+                        </div>
+                    </div>
+               {% endif %}
+           {% endfor %}
+           <hr/>
+        {% endfor %}
+    {% endfor %}
+
+    <hr/>
+    <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-4 pull-right">
+      <button type="cancel" class="btn btn-default"> <span class="red bold"><i class="glyphicon glyphicon-remove"></i> CANCEL</span></button>
+      <button type="submit" class="btn btn-default"><span class="cyan bold"><i class="glyphicon glyphicon-floppy-disk"></i> SAVE</span></button>
+      <button type="submit" class="btn btn-default"><span class="green bold"><i class="glyphicon glyphicon-ok"></i> SUBMIT</span></button>
+    </div>
+  </div>
+    </form>
+{% endblock %}

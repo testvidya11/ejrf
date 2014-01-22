@@ -10,14 +10,18 @@ class Section(BaseModel):
     description = models.TextField(blank=True, null=True)
     questionnaire = models.ForeignKey(Questionnaire, blank=False, null=False, related_name="sections")
 
-    def all_questions(self):
+    def ordered_questions(self):
         subsections = self.sub_sections.order_by('order')
         questions = []
         for subsection in subsections:
             for group in subsection.question_group.order_by('order'):
-                questions.extend(group.question.values_list('id', flat=True))
+                questions.extend(group.orders.order_by('order').values_list('question', flat=True))
         return Question.objects.filter(id__in=questions)
 
+
+    class Meta:
+        ordering = ('order',)
+        app_label = 'questionnaire'
 
 class SubSection(BaseModel):
     title = models.CharField(max_length=256, blank=False, null=False)
@@ -33,3 +37,10 @@ class SubSection(BaseModel):
         for question_group in self.all_question_groups():
             all_questions.extend(question_group.all_questions())
         return all_questions
+
+    def parent_question_groups(self):
+        return self.question_group.filter(parent=None)
+
+    class Meta:
+        ordering = ('order',)
+        app_label = 'questionnaire'

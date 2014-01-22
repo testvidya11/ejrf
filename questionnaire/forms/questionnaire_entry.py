@@ -13,14 +13,18 @@ class QuestionnaireEntryForm(object):
 
     def __init__(self, section):
         self.section = section
-        self.questions = section.all_questions()
+        self.ordered_questions = section.ordered_questions()
         self.formsets = self._formsets()
 
     def _formsets(self):
-        _formsets =  {}
+        formsets =  {}
         for answer_type in ANSWER_FORM.keys():
-            count = self.questions.filter(answer_type=answer_type).count()
-            if count:
-                _formset_factory = formset_factory(ANSWER_FORM[answer_type], extra=count)
-                _formsets[answer_type] = _formset_factory()
-        return _formsets
+            questions = self.ordered_questions.filter(answer_type=answer_type)
+            if questions:
+                _formset_factory = formset_factory(ANSWER_FORM[answer_type], max_num=questions.count())
+                initial = self._get_initial(questions)
+                formsets[answer_type] = _formset_factory(initial=initial)
+        return formsets
+
+    def _get_initial(self, questions):
+        return [{'question': question} for question in questions]

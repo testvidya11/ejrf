@@ -6,3 +6,7 @@ class QuestionGroupOrder(BaseModel):
     question = models.ForeignKey("Question", blank=False, null=False)
     order = models.PositiveIntegerField(blank=False, null=False)
     question_group = models.ForeignKey("QuestionGroup", blank=False, null=True, related_name="orders")
+
+    class Meta:
+        ordering = ('order',)
+        app_label = 'questionnaire'

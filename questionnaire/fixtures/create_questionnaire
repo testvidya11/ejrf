@@ -65,7 +65,7 @@ sepsis or bacteremic pneumonia), in which suspected cases are confirmed by labor
 of the impact of vaccination against Hib and/or Pneumococcus?""",
                                       UID='C00005',
                                       answer_type='MultiChoice')
-question_5_group = QuestionGroup.objects.create(subsection=sub_section, order=2)
+question_5_group = QuestionGroup.objects.create(subsection=sub_section_2, order=1)
 question_5_group.question.add(question5)
 
 QuestionOption.objects.create(text="Yes", question=question5)
@@ -78,7 +78,7 @@ question6 = Question.objects.create(text="""Is there a surveillance system in pl
                                       UID='C00006',
                                       answer_type='MultiChoice')
 
-question_6_group = QuestionGroup.objects.create(subsection=sub_section, order=3)
+question_6_group = QuestionGroup.objects.create(subsection=sub_section_2, order=2)
 question_6_group.question.add(question6)
 
 QuestionOption.objects.create(text="Yes", question=question6)
@@ -131,7 +131,7 @@ QuestionOption.objects.create(text="Yes", question=question11)
 QuestionOption.objects.create(text="No", question=question11)
 
 question_8_11__group = QuestionGroup.objects.create(subsection=sub_section_3, order=2)
-sub_group_2 = QuestionGroup.objects.create(subsection=sub_section, parent=question_8_11__group, name="Which"
+sub_group_2 = QuestionGroup.objects.create(subsection=sub_section_3, parent=question_8_11__group, name="Which"
 "activities the EPI Program responsible for (and not the school staff per se ):")
 
 sub_group_2.question.add(question8, question9, question10, question11)

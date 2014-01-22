@@ -1,5 +1,5 @@
 from questionnaire.models.sections import Section, SubSection
-from questionnaire.models import Questionnaire, Question, QuestionGroup
+from questionnaire.models import Questionnaire, Question, QuestionGroup, QuestionGroupOrder
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -34,6 +34,14 @@ class SectionTest(BaseTest):
         self.question_group2.question.add(self.question4, self.question5)
         self.question_group3.question.add(self.question6)
 
+        QuestionGroupOrder.objects.create(question=self.question1, question_group=self.question_group, order=1)
+        QuestionGroupOrder.objects.create(question=self.question2, question_group=self.question_group, order=2)
+        QuestionGroupOrder.objects.create(question=self.question3, question_group=self.question_group, order=3)
+        QuestionGroupOrder.objects.create(question=self.question4, question_group=self.question_group2, order=1)
+        QuestionGroupOrder.objects.create(question=self.question5, question_group=self.question_group2, order=2)
+        QuestionGroupOrder.objects.create(question=self.question6, question_group=self.question_group3, order=1)
+
+
     def test_section_fields(self):
         section = Section()
         fields = [str(item.attname) for item in section._meta.fields]
@@ -48,14 +56,16 @@ class SectionTest(BaseTest):
         self.assertEqual("section description", self.section.description)
         self.assertEqual(self.questionnaire, self.section.questionnaire)
 
-    def test_should_know_questions(self):
-        self.assertEqual(6, len(self.section.all_questions()))
-        self.assertIn(self.question1, self.section.all_questions())
-        self.assertIn(self.question2, self.section.all_questions())
-        self.assertIn(self.question3, self.section.all_questions())
-        self.assertIn(self.question4, self.section.all_questions())
-        self.assertIn(self.question5, self.section.all_questions())
-        self.assertIn(self.question6, self.section.all_questions())
+    def test_should_order_questions(self):
+        questions = self.section.ordered_questions()
+        self.assertEqual(6, len(questions))
+        self.assertEqual(self.question1, questions[0])
+        self.assertEqual(self.question2, questions[1])
+        self.assertEqual(self.question3, questions[2])
+        self.assertEqual(self.question4, questions[3])
+        self.assertEqual(self.question5, questions[4])
+        self.assertEqual(self.question6, questions[5])
+
 
 class SubSectionTest(BaseTest):
     def setUp(self):
@@ -94,3 +104,16 @@ class SubSectionTest(BaseTest):
         self.assertEqual(2, len(questions))
         self.assertIn(self.question1, questions)
         self.assertIn(self.question2, questions)
+
+
+    def test_should_know_all_parent_groups(self):
+        group1 = QuestionGroup.objects.create(subsection=self.sub_section, name="group 1")
+        group2 = QuestionGroup.objects.create(subsection=self.sub_section, name="group 2")
+        sub_group = QuestionGroup.objects.create(subsection=self.sub_section, name="subgroup 1", parent=group1)
+
+        known_groups = self.sub_section.parent_question_groups()
+
+        self.assertEqual(2, len(known_groups))
+        self.assertIn(group1, known_groups)
+        self.assertIn(group2, known_groups)
+        self.assertNotIn(sub_group, known_groups)

@@ -6,3 +6,4 @@ ghostdriver.log
 testsettings.py
 Vagrantfile
 .vagrant/
+screenshots/

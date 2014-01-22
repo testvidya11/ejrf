@@ -11,9 +11,10 @@ class Entry(FormView):
         questionnaire = Questionnaire.objects.get(id=self.kwargs['questionnaire_id'])
         section = Section.objects.get(id=self.kwargs['section_id'])
         formsets = QuestionnaireEntryForm(section).formsets
+        ordered_forms = QuestionAnswerFormOrdering(section, formsets)
 
         context = {'questionnaire': questionnaire, 'section': section,
-                   'ordered_forms': QuestionAnswerFormOrdering(section, formsets)}
+                   'ordered_forms': ordered_forms}
 
         return self.render_to_response(context)
 

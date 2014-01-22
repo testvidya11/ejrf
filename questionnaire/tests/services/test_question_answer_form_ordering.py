@@ -62,18 +62,6 @@ class QuestionAnswerFormOrderingServiceTest(BaseTest):
                  'Date': self.date_form_set,
                  'MultiChoice': self.multichoice_form_set,}
 
-
-    def test_should_order_questions(self):
-        question_answer_ordering = QuestionAnswerFormOrdering(self.section1, self.formset)
-        questions = question_answer_ordering.get_ordered_questions()
-        self.assertEqual(6, len(questions))
-        self.assertEqual(self.question1, questions[0])
-        self.assertEqual(self.question2, questions[1])
-        self.assertEqual(self.question3, questions[2])
-        self.assertEqual(self.question4, questions[3])
-        self.assertEqual(self.question5, questions[4])
-        self.assertEqual(self.question6, questions[5])
-
     def test_should_order_forms(self):
         question_answer_ordering = QuestionAnswerFormOrdering(self.section1, self.formset)
         ordered_forms = question_answer_ordering.ordered_forms()
@@ -84,10 +72,3 @@ class QuestionAnswerFormOrderingServiceTest(BaseTest):
         self.assertIsInstance(ordered_forms[self.question4], MultiChoiceAnswerForm)
         self.assertIsInstance(ordered_forms[self.question5], NumericalAnswerForm)
         self.assertIsInstance(ordered_forms[self.question6], DateAnswerForm)
-
-        self.assertEqual(self.question1, ordered_forms[self.question1].initial['question'])
-        self.assertEqual(self.question2, ordered_forms[self.question2].initial['question'])
-        self.assertEqual(self.question3, ordered_forms[self.question3].initial['question'])
-        self.assertEqual(self.question4, ordered_forms[self.question4].initial['question'])
-        self.assertEqual(self.question5, ordered_forms[self.question5].initial['question'])
-        self.assertEqual(self.question6, ordered_forms[self.question6].initial['question'])

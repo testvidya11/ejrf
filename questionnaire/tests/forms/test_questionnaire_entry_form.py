@@ -1,6 +1,6 @@
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
 from questionnaire.forms.questionnaire_entry import QuestionnaireEntryForm
-from questionnaire.models import Questionnaire, Section, SubSection, QuestionGroup, Question
+from questionnaire.models import Questionnaire, Section, SubSection, QuestionGroup, Question, QuestionGroupOrder
 from questionnaire.tests.base_test import BaseTest
 
 class QuestionnaireEntryFormTest(BaseTest):
@@ -36,6 +36,14 @@ class QuestionnaireEntryFormTest(BaseTest):
         self.question_group2.question.add(self.question4, self.question5)
         self.question_group3.question.add(self.question6)
 
+        QuestionGroupOrder.objects.create(question=self.question1, question_group=self.question_group, order=1)
+        QuestionGroupOrder.objects.create(question=self.question2, question_group=self.question_group, order=2)
+        QuestionGroupOrder.objects.create(question=self.question3, question_group=self.question_group, order=3)
+        QuestionGroupOrder.objects.create(question=self.question4, question_group=self.question_group2, order=1)
+        QuestionGroupOrder.objects.create(question=self.question5, question_group=self.question_group2, order=2)
+        QuestionGroupOrder.objects.create(question=self.question6, question_group=self.question_group3, order=1)
+
+
 
 
     def test_questionnaire_entry_form_formset_size_per_answer_type_should_match_number_of_question_per_answer_type(self):
@@ -53,3 +61,15 @@ class QuestionnaireEntryFormTest(BaseTest):
         self.assertIsInstance(formsets['Text'][0], TextAnswerForm)
         self.assertIsInstance(formsets['Date'][0], DateAnswerForm)
         self.assertIsInstance(formsets['MultiChoice'][0], MultiChoiceAnswerForm)
+
+
+    def test_should_order_forms(self):
+        questionnaire_entry_form = QuestionnaireEntryForm(self.section1)
+        formsets = questionnaire_entry_form._formsets()
+
+        self.assertEqual(self.question1, formsets['MultiChoice'][0].initial['question'])
+        self.assertEqual(self.question2, formsets['Text'][0].initial['question'])
+        self.assertEqual(self.question3, formsets['Number'][0].initial['question'])
+        self.assertEqual(self.question4, formsets['MultiChoice'][1].initial['question'])
+        self.assertEqual(self.question5, formsets['Number'][1].initial['question'])
+        self.assertEqual(self.question6, formsets['Date'][0].initial['question'])

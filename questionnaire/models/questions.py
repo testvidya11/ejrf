@@ -20,7 +20,13 @@ class Question(BaseModel):
     def all_answers(self):
         return self.answers.order_by('created').select_subclasses()
 
+    def __unicode__(self):
+        return "%s" % self.text
+
 class QuestionOption(BaseModel):
     text = models.CharField(max_length=100, blank=False, null=False)
-    question = models.ForeignKey(Question)
+    question = models.ForeignKey(Question, related_name="options")
 
+
+    def __unicode__(self):
+        return "%s" % self.text
