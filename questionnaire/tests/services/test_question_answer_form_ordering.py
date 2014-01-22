@@ -31,7 +31,6 @@ class QuestionAnswerFormOrderingServiceTest(BaseTest):
         self.question5 = Question.objects.create(text='question 4', instructions="instruction 2",
                                                     UID='C00005', answer_type='Number')
 
-
         self.question6 = Question.objects.create(text='question 6', instructions="instruction 3",
                                             UID='C00006', answer_type='Date')
 
