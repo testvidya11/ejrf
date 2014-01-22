@@ -7,13 +7,16 @@
 {% block content %}
     <h3>EXTRACT RESPONSES DATA</h3>
     <hr/>
-    <form method="post"></form>
     {% for questionnaire in questionnaires %}
-        <p id="extract-question-list">
-        {{ questionnaire.name }}
-        <button type="submit" class="btn btn-sm btn-primary" id="export-data">Download (.txt)</button>
-        </p>
-        <br />
+        <form method="post">
+        {% csrf_token %}
+            <p id="extract-question-list">
+            {{ questionnaire.name }}
+            <input type="hidden" value="{{ questionnaire.id }}" name="questionnaire">
+            <button type="submit" class="btn btn-sm btn-primary" id="export-data">Download (.txt)</button>
+            </p>
+            <br />
+        </form>
     {% endfor %}
 
 {% endblock %}
