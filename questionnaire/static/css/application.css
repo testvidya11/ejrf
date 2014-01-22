@@ -87,3 +87,10 @@
     border-left: 1px solid  #ffffff;
     padding-bottom: 10px;
 }
+
+#extract-question-list {
+    margin-top: 3px ;
+}
+#extract-question-list button{
+    margin-left: 20px;
+}

@@ -1,0 +1,19 @@
+{% extends 'base/layout.html' %}
+
+{% block title %}
+    Extract responses data
+{% endblock %}
+
+{% block content %}
+    <h3>EXTRACT RESPONSES DATA</h3>
+    <hr/>
+    <form method="post"></form>
+    {% for questionnaire in questionnaires %}
+        <p id="extract-question-list">
+        {{ questionnaire.name }}
+        <button type="submit" class="btn btn-sm btn-primary" id="export-data">Download (.txt)</button>
+        </p>
+        <br />
+    {% endfor %}
+
+{% endblock %}
