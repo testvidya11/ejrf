@@ -1,11 +1,15 @@
+from time import sleep
 from lettuce import step, world
 from questionnaire.features.pages.extract import ExtractPage
+from questionnaire.features.pages.users import LoginPage
 from questionnaire.models import Questionnaire, SubSection, Section, QuestionGroup, NumericalAnswer, Region, Country, \
     Organization, Answer, Question
 
 
 @step(u'And I logged in the user')
 def and_i_logged_in_the_user(step):
+    world.page = LoginPage(world.browser)
+    world.page.visit()
     data = {'username': world.user.username,
             'password': "pass"}
     world.page.fill_form(data)
@@ -20,9 +24,6 @@ def and_i_visit_the_extract_page(step):
 def then_i_should_see_a_list_of_questionnaires(step):
     world.page.is_text_present(world.questionnaire.name)
 
-@step(u'When I click export data button')
-def when_i_click_export_data_button(step):
-    world.page.click_by_css("#export-data")
 
 @step(u'And I have a questionnaires')
 def and_i_have_two_questionnaires(step):
@@ -41,10 +42,18 @@ def and_i_have_questions_and_their_answers(step):
         world.question2 = Question.objects.create(text='what do you drink at nite?', UID='abc125', answer_type='MultiChoice')
         world.parent.question.add(world.question1, world.question2)
         world.organisation = Organization.objects.create(name="WHO")
-        world.regions = Region.objects.create(name="The Afro",organization=world.organisation)
+        world.regions = Region.objects.create(name="The Afro", organization=world.organisation)
         world.country = Country.objects.create(name="Uganda", code="UGX")
         world.regions.countries.add(world.country)
         world.question1_answer = NumericalAnswer.objects.create(question=world.question1, country=world.country,
-                                                               status=Answer.SUBMITTED_STATUS,  response=23)
+                                                                status=Answer.SUBMITTED_STATUS,  response=23)
         world.question2_answer = NumericalAnswer.objects.create(question=world.question2, country=world.country,
-                                                               status=Answer.SUBMITTED_STATUS, response=1)
+                                                                status=Answer.SUBMITTED_STATUS, response=1)
+
+@step(u'When I click the extract link')
+def when_i_click_the_extract_link(step):
+    world.page.click_by_css('#extract-link')
+
+@step(u'Then I should be able to click the export data button')
+def then_i_should_be_able_to_click_the_export_data_button(step):
+    world.page.click_by_css("#export-data")

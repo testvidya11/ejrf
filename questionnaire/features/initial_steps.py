@@ -19,9 +19,11 @@ def clear_screenshots():
         os.remove(screenshot)
     open_browser()
 
+
 def open_browser():
     world.browser = Browser("phantomjs")
-    world.browser.driver.maximize_window()
+    world.browser.driver.set_window_size(1024, 720)
+
 
 @after.each_scenario
 def take_screenshot(scenario):
