@@ -50,8 +50,13 @@ class ExportToTextServiceTest(BaseTest):
         option1 = QuestionOption.objects.create(text="Diphteria", question=question)
         QuestionOption.objects.create(text="Measles", question=question)
         option3 = QuestionOption.objects.create(text="Neonatal tetanus (NT)", question=question1)
-        MultiChoiceAnswer.objects.create(question=question, country=country, response=option1)
-        MultiChoiceAnswer.objects.create(question=question1, country=country, response=option3)
+        MultiChoiceAnswer.objects.create(question=question, country=country, response=option1,
+                                         status=Answer.SUBMITTED_STATUS)
+        MultiChoiceAnswer.objects.create(question=question1, country=country, response=option3,
+                                         status=Answer.SUBMITTED_STATUS)
+
+        MultiChoiceAnswer.objects.create(question=question1, country=country, response=option3,
+                                         status=Answer.DRAFT_STATUS)
 
         expected_data = [["2013\tUGX\t%s\t%s" % (self.question1.UID, '23.00')],
                          ["2013\tUGX\t%s\t%s" % (self.question2.UID, '1.00')],
