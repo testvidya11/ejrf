@@ -8,6 +8,7 @@ from questionnaire.models.locations import Location, Region, Country, Organizati
 from questionnaire.models.questionnaires import Questionnaire
 from questionnaire.models.questions import Question, QuestionOption
 from questionnaire.models.sections import Section, SubSection
+from questionnaire.models.users import UserProfile
 
 __all__ = [
     'Organization',
@@ -27,5 +28,6 @@ __all__ = [
     'MultiChoiceAnswer',
     'Comment',
     'AnswerGroup',
-    'QuestionGroupOrder'
+    'QuestionGroupOrder',
+    'UserProfile'
 ]
