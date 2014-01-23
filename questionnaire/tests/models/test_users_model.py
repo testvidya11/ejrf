@@ -9,13 +9,13 @@ class UserProfileTest(BaseTest):
     def test_user_fields(self):
         user_profile = UserProfile()
         fields = [str(item.attname) for item in user_profile._meta.fields]
-        self.assertEqual(5, len(fields))
-        for field in ['id', 'created', 'modified', 'user_id', 'location']:
+        self.assertEqual(6, len(fields))
+        for field in ['id', 'created', 'modified', 'user_id', 'country', 'region']:
             self.assertIn(field, fields)
 
     def test_answer_stores(self):
         user = User.objects.create()
         uganda = Country.objects.create(name="Uganda")
-        user_profile = UserProfile.objects.create(user=user, location=uganda)
+        user_profile = UserProfile.objects.create(user=user, country=uganda)
         self.failUnless(user_profile.id)
         self.assertEqual(user, user_profile.user)

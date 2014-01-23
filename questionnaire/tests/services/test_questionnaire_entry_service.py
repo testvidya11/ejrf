@@ -3,6 +3,7 @@ from questionnaire.services.questionnaire_entry_form_service import Questionnair
 from questionnaire.models import Questionnaire, Section, SubSection, QuestionGroup, Question, QuestionGroupOrder
 from questionnaire.tests.base_test import BaseTest
 
+
 class QuestionnaireEntryFormTest(BaseTest):
     def setUp(self):
         self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan")
@@ -43,9 +44,6 @@ class QuestionnaireEntryFormTest(BaseTest):
         QuestionGroupOrder.objects.create(question=self.question5, question_group=self.question_group2, order=2)
         QuestionGroupOrder.objects.create(question=self.question6, question_group=self.question_group3, order=1)
 
-
-
-
     def test_questionnaire_entry_form_formset_size_per_answer_type_should_match_number_of_question_per_answer_type(self):
         questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
         formsets = questionnaire_entry_form._formsets()
@@ -61,7 +59,6 @@ class QuestionnaireEntryFormTest(BaseTest):
         self.assertIsInstance(formsets['Text'][0], TextAnswerForm)
         self.assertIsInstance(formsets['Date'][0], DateAnswerForm)
         self.assertIsInstance(formsets['MultiChoice'][0], MultiChoiceAnswerForm)
-
 
     def test_should_order_forms(self):
         questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)

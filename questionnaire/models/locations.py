@@ -1,5 +1,5 @@
-from questionnaire.models.base import BaseModel
 from django.db import models
+from questionnaire.models.base import BaseModel
 
 
 class Organization(BaseModel):
