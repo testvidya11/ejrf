@@ -14,3 +14,8 @@ Feature: User management
         And I fill in invalid user credentials
         And I submit the form
         Then I should see an error message
+
+    Scenario: User accessing extract page without logging in
+        Given I visit the extract page
+        When I fill in the login credentials
+        Then I should see the extract page

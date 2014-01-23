@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from lettuce import step, world
+from questionnaire.features.pages.extract import ExtractPage
 from questionnaire.features.pages.home import HomePage
 from questionnaire.features.pages.users import LoginPage
 
@@ -57,3 +58,19 @@ def when_i_click_the_logout_link(step):
 def then_i_should_see_the_login_page_again(step):
     world.page = LoginPage(world.browser)
     world.page.validate_url()
+
+@step(u'Given I visit the extract page')
+def given_i_visit_the_extract_page(step):
+    world.page = ExtractPage(world.browser)
+    world.page.visit()
+
+@step(u'When I fill in the login credentials')
+def when_i_fill_in_the_login_credentials(step):
+    world.page = LoginPage(world.browser)
+    data = {'username': world.user.username,
+            'password': "pass"}
+    world.page.fill_form(data)
+
+@step(u'Then I should see the extract page')
+def then_i_should_see_the_extract_page(step):
+    world.page = ExtractPage(world.browser)
