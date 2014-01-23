@@ -1,13 +1,12 @@
 import csv
-from django.contrib.auth.decorators import login_required
+from braces.views import LoginRequiredMixin
 from django.http import HttpResponse
-from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from questionnaire.models import Questionnaire
 from questionnaire.services.export_data_service import ExportToTextService
 
 
-class ExportToTextView(TemplateView):
+class ExportToTextView(LoginRequiredMixin, TemplateView):
     template_name = "home/extract.html"
 
     def get_context_data(self, **kwargs):
@@ -24,7 +23,3 @@ class ExportToTextView(TemplateView):
         for row in formatted_responses:
             writer.writerow(row)
         return response
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ExportToTextView, self).dispatch(*args, **kwargs)
