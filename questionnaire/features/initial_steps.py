@@ -13,10 +13,10 @@ def flush_database(step):
     call_command('flush', interactive=False)
 
 @before.all
-def clear_screenshots():
-    screenshots = glob.glob('./screenshots/*.png')
-    for screenshot in screenshots:
-        os.remove(screenshot)
+def clear_screen_shots():
+    screen_shots = glob.glob('./screenshots/*.png')
+    for screen_shot in screen_shots:
+        os.remove(screen_shot)
     open_browser()
 
 
@@ -24,9 +24,8 @@ def open_browser():
     world.browser = Browser("phantomjs")
     world.browser.driver.set_window_size(1024, 720)
 
-
 @after.each_scenario
-def take_screenshot(scenario):
+def take_screen_shot(scenario):
     if scenario.failed:
         world.browser.driver.save_screenshot('screenshots/%s.png' % slugify(scenario.name))
 
