@@ -23,8 +23,11 @@
                         {% endif %}
                             <div class="form-group">
                                     <label class="col-sm-6 control-label">{{ question.text }}</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-5 lower">
                                             {{ question|get_form:formsets }}
+                                            {% if question.instructions %}
+                                                <a class="indent"><i class="glyphicon glyphicon-info-sign cyan"></i> instructions</a>
+                                            {% endif %}
                                     </div>
                             </div>
                         {% if question.group.parent and question.is_last_in_group %}
