@@ -5,10 +5,10 @@ from questionnaire.models.base import BaseModel
 class Question(BaseModel):
 
     ANSWER_TYPES = (
-        ("Date","Date"),
-        ("MultiChoice","MultiChoice"),
-        ("Number","Number"),
-        ("Text","Text"),
+        ("Date", "Date"),
+        ("MultiChoice", "MultiChoice"),
+        ("Number", "Number"),
+        ("Text", "Text"),
     )
 
     text = models.TextField(blank=False, null=False)

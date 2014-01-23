@@ -1,5 +1,5 @@
 from questionnaire.models import Question, QuestionGroup, Questionnaire, SubSection, Section, Answer, Country, \
-    Organization, Region, NumericalAnswer, QuestionOption, MultiChoiceAnswer
+    Organization, Region, NumericalAnswer, QuestionOption, MultiChoiceAnswer, AnswerGroup
 from questionnaire.services.export_data_service import ExportToTextService
 from questionnaire.tests.base_test import BaseTest
 

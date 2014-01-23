@@ -16,8 +16,8 @@ class CommentTest(BaseTest):
         self.sub_section = SubSection.objects.create(title="Immunisation Extra Coverage", order=1, section=self.section)
         self.grouped_question = QuestionGroup.objects.create(subsection=self.sub_section, order=1)
         self.answer = NumericalAnswer.objects.create(question=self.question, country=self.country, response=11.2)
-        self.answer_group = AnswerGroup.objects.create(answer=self.answer,
-                                                       grouped_question=self.grouped_question, row=1)
+        self.answer_group = AnswerGroup.objects.create(grouped_question=self.grouped_question, row=1)
+        self.answer_group.answer.add(self.answer)
 
     def test_comment_fields(self):
         comment = Comment()

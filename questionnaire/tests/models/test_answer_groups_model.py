@@ -14,17 +14,17 @@ class GroupedAnswerTest(BaseTest):
         country = Country.objects.create(name="Peru")
         self.answer = Answer.objects.create(question=self.question, country=country)
 
-
     def test_grouped_answers_fields(self):
         group_answer = AnswerGroup()
         fields = [str(item.attname) for item in group_answer._meta.fields]
-        self.assertEqual(6, len(fields))
-        for field in ['id', 'created', 'modified', 'answer_id', 'grouped_question_id', 'row']:
+        self.assertEqual(5, len(fields))
+        for field in ['id', 'created', 'modified', 'grouped_question_id', 'row']:
             self.assertIn(field, fields)
 
     def test_grouped_answers_store(self):
-        grouped_answers = AnswerGroup.objects.create(answer=self.answer, grouped_question=self.grouped_question, row=1)
+        grouped_answers = AnswerGroup.objects.create(grouped_question=self.grouped_question, row=1)
+        grouped_answers.answer.add(self.answer)
         self.failUnless(grouped_answers.id)
         self.assertEqual(1, grouped_answers.row)
-        self.assertEqual(self.answer, grouped_answers.answer)
+        self.assertEqual(self.answer, grouped_answers.answer.all()[0])
         self.assertEqual(self.grouped_question, grouped_answers.grouped_question)
