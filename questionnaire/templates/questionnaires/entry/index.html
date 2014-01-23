@@ -1,6 +1,12 @@
 {% extends 'base/layout.html' %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/wizzard.css" type="text/css" media="screen">
+{% endblock %}
 {% block content %}
 {% load questionnaire_entry_tags %}
+
+    {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
+
     <h3>{{ section.title }}</h3>
 
     <form class="form-horizontal" role="form">

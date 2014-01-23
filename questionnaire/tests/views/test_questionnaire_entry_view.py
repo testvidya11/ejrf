@@ -37,3 +37,13 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.assertEqual(self.questionnaire, response.context['questionnaire'])
         self.assertEqual(self.section_1, response.context['section'])
         self.assertIsInstance(response.context['formsets'], QuestionnaireEntryFormService)
+
+    def test_gets_ordered_sections_for_menu_breadcrumps_wizzard(self):
+        section2 = Section.objects.create(title="section 2", order=2, questionnaire=self.questionnaire)
+        section3 = Section.objects.create(title="section 3", order=3, questionnaire=self.questionnaire)
+        response = self.client.get('/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id))
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(3, response.context['ordered_sections'].count())
+        self.assertEqual(self.section_1, response.context['ordered_sections'][0])
+        self.assertEqual(section2, response.context['ordered_sections'][1])
+        self.assertEqual(section3, response.context['ordered_sections'][2])

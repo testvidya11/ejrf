@@ -12,7 +12,7 @@ class Entry(FormView):
         formsets = QuestionnaireEntryFormService(section)
 
         context = {'questionnaire': questionnaire, 'section': section,
-                   'formsets': formsets}
+                   'formsets': formsets, 'ordered_sections':Section.objects.order_by('order')}
 
         return self.render_to_response(context)
 
