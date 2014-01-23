@@ -1,5 +1,5 @@
 from django.db import IntegrityError
-from questionnaire.models import Questionnaire, Section, SubSection, Organization, Region, Country, QuestionGroup, NumericalAnswer, Answer
+from questionnaire.models import Questionnaire, Section, SubSection, Organization, Region, Country, QuestionGroup, NumericalAnswer, Answer, QuestionGroupOrder
 from questionnaire.models.questions import Question, QuestionOption
 from questionnaire.tests.base_test import BaseTest
 
@@ -18,8 +18,8 @@ class QuestionTest(BaseTest):
         self.question1 = Question.objects.create(text='B. Number of cases tested',
                                             instructions="Enter the total number of cases for which specimens were collected, and tested in laboratory",
                                             UID='C00003', answer_type='Number')
-        self.sub_group = QuestionGroup.objects.create(subsection=self.sub_section_1, name="Laboratory Investigation")
-        self.sub_group.question.add(self.question1)
+        self.parent_group = QuestionGroup.objects.create(subsection=self.sub_section_1, name="Laboratory Investigation")
+        self.parent_group.question.add(self.question1)
 
         self.question1_answer = NumericalAnswer.objects.create(question=self.question1, country=self.country,
                                                                status=Answer.SUBMITTED_STATUS,  response=23)
@@ -49,6 +49,35 @@ class QuestionTest(BaseTest):
         self.assertEqual(2, len(self.question1.all_answers()))
         self.assertIn(self.question1_answer, self.question1.all_answers())
         self.assertIn(self.question1_answer_2, self.question1.all_answers())
+
+    def test_question_knows_if_it_is_first_in_its_group(self):
+        question2 = Question.objects.create(text='question 2', UID='C00004', answer_type='Number')
+        question3 = Question.objects.create(text='question 3', UID='C00005', answer_type='Number')
+        self.sub_group = QuestionGroup.objects.create(subsection=self.sub_section_1, name="subgroup", parent=self.parent_group)
+        self.sub_group.question.add(question2, question3)
+
+        QuestionGroupOrder.objects.create(question=self.question1, question_group=self.parent_group, order=1)
+        QuestionGroupOrder.objects.create(question=question2, question_group=self.parent_group, order=2)
+        QuestionGroupOrder.objects.create(question=question3, question_group=self.parent_group, order=3)
+
+        self.assertTrue(self.question1.is_first_in_group())
+        self.assertTrue(question2.is_first_in_group())
+        self.assertFalse(question3.is_first_in_group())
+
+    def test_question_knows_if_it_is_last_in_its_group(self):
+        question2 = Question.objects.create(text='question 2', UID='C00004', answer_type='Number')
+        question3 = Question.objects.create(text='question 3', UID='C00005', answer_type='Number')
+        self.sub_group = QuestionGroup.objects.create(subsection=self.sub_section_1, name="subgroup", parent=self.parent_group)
+        self.sub_group.question.add(question2, question3)
+
+        QuestionGroupOrder.objects.create(question=self.question1, question_group=self.parent_group, order=1)
+        QuestionGroupOrder.objects.create(question=question2, question_group=self.parent_group, order=2)
+        QuestionGroupOrder.objects.create(question=question3, question_group=self.parent_group, order=3)
+
+        self.assertFalse(self.question1.is_last_in_group())
+        self.assertFalse(question2.is_last_in_group())
+        self.assertTrue(question3.is_last_in_group())
+
 
 
 class QuestionOptionTest(BaseTest):

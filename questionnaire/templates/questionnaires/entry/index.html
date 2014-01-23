@@ -8,24 +8,27 @@
     {% for subsection in section.sub_sections.all %}
         <h4> {{subsection.title}}</h4>
         {% for group in subsection.parent_question_groups %}
-            {% if group.name %}
-                <h5> {{group.name}}</h5>
-            {% endif %}
-            {% for question, form in ordered_forms.ordered_forms.items %}
-                {% if question in group.and_sub_group_questions %}
-                    <div class="form-group">
-                        <label for="{{ form.visible_fields.0.id_for_label }}" class="col-sm-6 control-label">{{ question.text }}</label>
-                        <div class="col-sm-4">
-                                {{ form.visible_fields.0 }}
-                        </div>
-                    </div>
-               {% endif %}
-           {% endfor %}
-           <hr/>
+            <div class="question-group indent">
+                {% for question in group.ordered_questions %}
+
+                        {% if question.is_first_in_group and question.group.name %}
+                            <hr/>
+                            <h5> {{question.group.name}}</h5>
+                        {% endif %}
+                            <div class="form-group">
+                                    <label class="col-sm-6 control-label">{{ question.text }}</label>
+                                    <div class="col-sm-4">
+                                            {{ question|get_form:formsets }}
+                                    </div>
+                            </div>
+                        {% if question.group.parent and question.is_last_in_group %}
+                            <hr/>
+                        {% endif %}
+               {% endfor %}
+            </div>
         {% endfor %}
     {% endfor %}
 
-    <hr/>
     <div class="form-group">
     <div class="col-sm-offset-2 col-sm-4 pull-right">
       <button type="cancel" class="btn btn-default"> <span class="red bold"><i class="glyphicon glyphicon-remove"></i> CANCEL</span></button>

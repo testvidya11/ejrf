@@ -100,7 +100,6 @@ class SubSectionTest(BaseTest):
         sub_group.question.add(self.question1, self.question2)
 
         questions = self.sub_section.all_questions()
-        print questions
         self.assertEqual(2, len(questions))
         self.assertIn(self.question1, questions)
         self.assertIn(self.question2, questions)

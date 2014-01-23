@@ -75,3 +75,36 @@ class GroupedQuestionsTest(BaseTest):
         self.assertIn(question, known_questions)
         self.assertIn(question2, known_questions)
 
+    def test_parent_group_ordered_questions(self):
+        sub_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1, parent=self.parent_question_group)
+        question = Question.objects.create(text='question', UID='ab3123', answer_type='Text')
+        question2 = Question.objects.create(text='question2', UID='c00001', answer_type='Text')
+        sub_group.question.add(question, question2)
+
+        QuestionGroupOrder.objects.create(question=self.question, question_group=self.parent_question_group, order=1)
+        QuestionGroupOrder.objects.create(question=question, question_group=self.parent_question_group, order=2)
+        QuestionGroupOrder.objects.create(question=question2, question_group=self.parent_question_group, order=3)
+
+        ordered_questions_including_those_of_sub_groups = self.parent_question_group.ordered_questions()
+
+        self.assertEqual(3, len(ordered_questions_including_those_of_sub_groups))
+        self.assertEqual(self.question, ordered_questions_including_those_of_sub_groups[0])
+        self.assertEqual(question, ordered_questions_including_those_of_sub_groups[1])
+        self.assertEqual(question2, ordered_questions_including_those_of_sub_groups[2])
+
+    def test_subgroups_ordered_questions(self):
+        sub_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1, parent=self.parent_question_group)
+        question = Question.objects.create(text='question', UID='ab3123', answer_type='Text')
+        question2 = Question.objects.create(text='question2', UID='c00001', answer_type='Text')
+        sub_group.question.add(question, question2)
+
+        QuestionGroupOrder.objects.create(question=self.question, question_group=self.parent_question_group, order=1)
+        QuestionGroupOrder.objects.create(question=question, question_group=self.parent_question_group, order=2)
+        QuestionGroupOrder.objects.create(question=question2, question_group=self.parent_question_group, order=3)
+
+        sub_group_ordered_questions = sub_group.ordered_questions()
+
+        self.assertEqual(2, len(sub_group_ordered_questions))
+        self.assertEqual(question, sub_group_ordered_questions[0])
+        self.assertEqual(question2, sub_group_ordered_questions[1])
+

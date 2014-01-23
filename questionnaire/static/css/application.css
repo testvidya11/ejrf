@@ -103,7 +103,6 @@
 }
 .green{
     color:#5E8E2E;
-    /*color:#8DC63F;*/
 }
 .cyan{
     color:#0099FF;
@@ -112,4 +111,12 @@
 .form-group label{
     text-align: left !important;
     font-weight: normal !important;
+}
+
+.indent{
+    padding-left: 40px;
+}
+
+.question-group{
+    border-bottom: 1px solid;
 }

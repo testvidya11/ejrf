@@ -23,6 +23,17 @@ class Question(BaseModel):
     def __unicode__(self):
         return "%s" % self.text
 
+    def group(self):
+        return self.question_group.all()[0]
+
+    def is_first_in_group(self):
+        questions = self.group().ordered_questions()
+        return self == questions[0]
+
+    def is_last_in_group(self):
+        questions = self.group().ordered_questions()
+        return self == questions[-1]
+
 
 class QuestionOption(BaseModel):
     text = models.CharField(max_length=100, blank=False, null=False)

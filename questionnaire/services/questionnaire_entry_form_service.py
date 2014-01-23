@@ -9,12 +9,22 @@ ANSWER_FORM ={
 }
 
 
-class QuestionnaireEntryForm(object):
+class QuestionnaireEntryFormService(object):
 
     def __init__(self, section):
         self.section = section
         self.ordered_questions = section.ordered_questions()
         self.formsets = self._formsets()
+        self.ANSWER_FORM_COUNTER = self._initialize_form_counter()
+
+    def next_ordered_form(self, question):
+        next_question_type_count = self.ANSWER_FORM_COUNTER[question.answer_type]
+        self.ANSWER_FORM_COUNTER[question.answer_type] += 1
+        return self.formsets[question.answer_type][next_question_type_count]
+
+    def _initialize_form_counter(self):
+        return {key: 0 for key in ANSWER_FORM.keys()}
+
 
     def _formsets(self):
         formsets =  {}

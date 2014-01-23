@@ -3,7 +3,7 @@ from django.db import models
 
 
 class QuestionGroup(BaseModel):
-    question = models.ManyToManyField("Question", blank=False, null=False)
+    question = models.ManyToManyField("Question", blank=False, null=False, related_name="question_group")
     subsection = models.ForeignKey("SubSection", blank=False, null=False, related_name="question_group")
     name = models.CharField(max_length=200, blank=False, null=True)
     instructions = models.TextField(blank=False, null=True)
@@ -21,6 +21,12 @@ class QuestionGroup(BaseModel):
         for sub_group in self.sub_groups():
             questions.extend(sub_group.all_questions())
         return questions
+
+    def ordered_questions(self):
+        if self.parent:
+            question_orders = self.parent.orders.order_by('order').filter(question__in=self.all_questions())
+            return [order.question for order in question_orders]
+        return [order.question for order in self.orders.order_by('order')]
 
 
     class Meta:

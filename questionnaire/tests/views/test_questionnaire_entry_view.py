@@ -1,6 +1,6 @@
 from django.test import Client
 from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup
-from questionnaire.services.question_answer_form_ordering import QuestionAnswerFormOrdering
+from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -36,4 +36,4 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.assertIn('questionnaires/entry/index.html', templates)
         self.assertEqual(self.questionnaire, response.context['questionnaire'])
         self.assertEqual(self.section_1, response.context['section'])
-        self.assertIsInstance(response.context['ordered_forms'], QuestionAnswerFormOrdering)
+        self.assertIsInstance(response.context['formsets'], QuestionnaireEntryFormService)

@@ -1,5 +1,5 @@
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
-from questionnaire.forms.questionnaire_entry import QuestionnaireEntryForm
+from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.models import Questionnaire, Section, SubSection, QuestionGroup, Question, QuestionGroupOrder
 from questionnaire.tests.base_test import BaseTest
 
@@ -47,7 +47,7 @@ class QuestionnaireEntryFormTest(BaseTest):
 
 
     def test_questionnaire_entry_form_formset_size_per_answer_type_should_match_number_of_question_per_answer_type(self):
-        questionnaire_entry_form = QuestionnaireEntryForm(self.section1)
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
         formsets = questionnaire_entry_form._formsets()
         self.assertEqual(2, len(formsets['Number']))
         self.assertEqual(1, len(formsets['Text']))
@@ -55,7 +55,7 @@ class QuestionnaireEntryFormTest(BaseTest):
         self.assertEqual(2, len(formsets['MultiChoice']))
 
     def test_questionnaire_entry_form_generates_all_answer_type_formsets(self):
-        questionnaire_entry_form = QuestionnaireEntryForm(self.section1)
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
         formsets = questionnaire_entry_form._formsets()
         self.assertIsInstance(formsets['Number'][0], NumericalAnswerForm)
         self.assertIsInstance(formsets['Text'][0], TextAnswerForm)
@@ -64,7 +64,7 @@ class QuestionnaireEntryFormTest(BaseTest):
 
 
     def test_should_order_forms(self):
-        questionnaire_entry_form = QuestionnaireEntryForm(self.section1)
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
         formsets = questionnaire_entry_form._formsets()
 
         self.assertEqual(self.question1, formsets['MultiChoice'][0].initial['question'])
@@ -73,3 +73,30 @@ class QuestionnaireEntryFormTest(BaseTest):
         self.assertEqual(self.question4, formsets['MultiChoice'][1].initial['question'])
         self.assertEqual(self.question5, formsets['Number'][1].initial['question'])
         self.assertEqual(self.question6, formsets['Date'][0].initial['question'])
+
+    def test_should_give_correct_form_for_question(self):
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
+
+        question_form = questionnaire_entry_form.next_ordered_form(self.question1)
+        self.assertIsInstance(question_form, MultiChoiceAnswerForm)
+        self.assertEqual(self.question1, question_form.initial['question'])
+
+        question_form = questionnaire_entry_form.next_ordered_form(self.question2)
+        self.assertIsInstance(question_form, TextAnswerForm)
+        self.assertEqual(self.question2, question_form.initial['question'])
+
+        question_form = questionnaire_entry_form.next_ordered_form(self.question3)
+        self.assertIsInstance(question_form, NumericalAnswerForm)
+        self.assertEqual(self.question3, question_form.initial['question'])
+
+        question_form = questionnaire_entry_form.next_ordered_form(self.question4)
+        self.assertIsInstance(question_form, MultiChoiceAnswerForm)
+        self.assertEqual(self.question4, question_form.initial['question'])
+
+        question_form = questionnaire_entry_form.next_ordered_form(self.question5)
+        self.assertIsInstance(question_form, NumericalAnswerForm)
+        self.assertEqual(self.question5, question_form.initial['question'])
+
+        question_form = questionnaire_entry_form.next_ordered_form(self.question6)
+        self.assertIsInstance(question_form, DateAnswerForm)
+        self.assertEqual(self.question6, question_form.initial['question'])
