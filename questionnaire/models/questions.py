@@ -18,7 +18,7 @@ class Question(BaseModel):
     answer_type = models.CharField(blank=False, null=False, max_length=20, choices=ANSWER_TYPES)
 
     def all_answers(self):
-        return self.answers.filter(status='Submitted').order_by('created').select_subclasses()
+        return self.answers.filter(status='Submitted').order_by('answergroup__id').select_subclasses()
 
     def __unicode__(self):
         return "%s" % self.text

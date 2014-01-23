@@ -31,6 +31,9 @@ class ExportToTextServiceTest(BaseTest):
                                                                status=Answer.SUBMITTED_STATUS,  response=23)
         self.question2_answer = NumericalAnswer.objects.create(question=self.question2, country=self.country,
                                                                status=Answer.SUBMITTED_STATUS, response=1)
+        self.answer_group1 = AnswerGroup.objects.create(grouped_question=self.parent, row=1)
+        self.answer_group1.answer.add(self.question1_answer)
+        self.answer_group1.answer.add(self.question2_answer)
 
     def test_exports_questions_with_numeric_answers(self):
         expected_data = [["2013\tUGX\t%s\t%s" % (self.question1.UID, '23.00')],
@@ -50,13 +53,17 @@ class ExportToTextServiceTest(BaseTest):
         option1 = QuestionOption.objects.create(text="Diphteria", question=question)
         QuestionOption.objects.create(text="Measles", question=question)
         option3 = QuestionOption.objects.create(text="Neonatal tetanus (NT)", question=question1)
-        MultiChoiceAnswer.objects.create(question=question, country=country, response=option1,
-                                         status=Answer.SUBMITTED_STATUS)
-        MultiChoiceAnswer.objects.create(question=question1, country=country, response=option3,
-                                         status=Answer.SUBMITTED_STATUS)
-
         MultiChoiceAnswer.objects.create(question=question1, country=country, response=option3,
                                          status=Answer.DRAFT_STATUS)
+        answer1 = MultiChoiceAnswer.objects.create(question=question, country=country, response=option1,
+                                                   status=Answer.SUBMITTED_STATUS)
+        answer2 = MultiChoiceAnswer.objects.create(question=question1, country=country, response=option3,
+                                                   status=Answer.SUBMITTED_STATUS)
+
+        answer_group1 = AnswerGroup.objects.create(grouped_question=self.parent, row=2)
+        answer_group1.answer.add(answer1)
+        answer_group1.answer.add(answer2)
+
 
         expected_data = [["2013\tUGX\t%s\t%s" % (self.question1.UID, '23.00')],
                          ["2013\tUGX\t%s\t%s" % (self.question2.UID, '1.00')],
