@@ -119,9 +119,15 @@
     border-bottom: 1px solid;
 }
 
-.lower{
-    margin-top: 5px;
-}
 .top-padding{
     padding-top: 10px;
+}
+.boundary{
+    border: 1px #efefef solid;
+    display: table;
+}
+.center-fields{
+    float:none;
+    display: inline-block;
+    vertical-align: middle;
 }

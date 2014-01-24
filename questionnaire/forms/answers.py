@@ -43,7 +43,7 @@ class MultiChoiceAnswerForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(MultiChoiceAnswerForm, self).__init__(*args, **kwargs)
         self.fields['response'].queryset = self._get_response_choices(kwargs)
-        self.fields['response'].empty_label = None
+        #self.fields['response'].empty_label = None
 
 
     def _get_response_choices(self, kwargs):

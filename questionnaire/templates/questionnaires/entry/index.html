@@ -22,8 +22,8 @@
                             <h5> {{question.group.name}}</h5>
                         {% endif %}
                             <div class="form-group">
-                                    <label class="col-sm-6 control-label">{{ question.text }}</label>
-                                    <div class="col-sm-5 lower">
+                                    <label class="col-sm-6 control-label center-fields">{{ question.text }}</label>
+                                    <div class="col-sm-5 center-fields">
                                             {{ question|get_form:formsets }}
                                             {% if question.instructions %}
                                                 <a class="indent"><i class="glyphicon glyphicon-info-sign cyan"></i> instructions</a>
