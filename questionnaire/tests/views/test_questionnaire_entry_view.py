@@ -26,8 +26,9 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.question_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1)
         self.question_group.question.add(self.question1, self.question3, self.question2)
 
-
         self.client = Client()
+        self.user = self.create_user_with_no_permissions()
+        self.login_user()
 
     def test_get_questionnaire_entry_view(self):
         response = self.client.get('/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id))
@@ -47,3 +48,6 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.assertEqual(self.section_1, response.context['ordered_sections'][0])
         self.assertEqual(section2, response.context['ordered_sections'][1])
         self.assertEqual(section3, response.context['ordered_sections'][2])
+
+    def test_login_required(self):
+        self.assert_login_required('/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id))

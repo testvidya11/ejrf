@@ -1,9 +1,10 @@
 from django.views.generic import FormView
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.models import Questionnaire, Section
+from braces.views import LoginRequiredMixin
 
 
-class Entry(FormView):
+class Entry(LoginRequiredMixin, FormView):
     template_name = 'questionnaires/entry/index.html'
 
     def get(self, request, *args, **kwargs):

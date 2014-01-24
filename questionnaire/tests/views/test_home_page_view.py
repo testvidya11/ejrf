@@ -1,5 +1,6 @@
 from urllib import quote
 from django.test import Client
+from questionnaire.models import Questionnaire, Section
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -15,7 +16,14 @@ class HomePageViewTest(BaseTest):
         templates = [template.name for template in response.templates]
         self.assertIn('home/index.html', templates)
 
-    def test_login_required_for_home_get(self):
-        self.client.logout()
+    def test_homepage_redirects_to_first_section_of_first_questionnaire_if_any(self):
+        questionnaire = Questionnaire.objects.create(name="JRF", description="bla")
+        section = Section.objects.create(title="section", order=1, questionnaire=questionnaire, name="section")
+        section2 = Section.objects.create(title="section2", order=2, questionnaire=questionnaire, name="section2")
+
         response = self.client.get("/")
-        self.assertRedirects(response, expected_url='accounts/login/?next=%s' % quote('/'), status_code=302)
+        expected_url = "/questionnaire/entry/%d/section/%d/" % (questionnaire.id, section.id)
+        self.assertRedirects(response, expected_url=expected_url)
+
+    def test_login_required_for_home_get(self):
+        self.assert_login_required('/')

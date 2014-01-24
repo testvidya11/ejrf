@@ -1,7 +1,7 @@
 import csv
 from django.contrib.auth.models import User
 from django.test import TestCase
-
+from urllib import quote
 
 class BaseTest(TestCase):
 
@@ -19,3 +19,9 @@ class BaseTest(TestCase):
 
     def login_user(self):
         self.client.login(username='user', password='pass')
+
+    def assert_login_required(self, url):
+        self.client.logout()
+        response = self.client.get(url)
+        self.assertRedirects(response, expected_url='/accounts/login/?next=%s'%quote(url),
+                             status_code=302, target_status_code=200, msg_prefix='')

@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, url
-from django.contrib.auth.decorators import login_required
-from django.views.generic import TemplateView
 from questionnaire.views.export_to_text import ExportToTextView
+from questionnaire.views.home import Home
 from questionnaire.views.locations import ListRegions, ListCountries
 from questionnaire.views.questionnaires import Entry
 from questionnaire.views.users import UsersList, CreateUser
@@ -13,7 +12,7 @@ urlpatterns = patterns('',
     url(r'^users/$', UsersList.as_view(), name="list_users_page"),
     url(r'^users/new/$', CreateUser.as_view(), name="create_user_page"),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/accounts/login/'}, name="logout_page"),
-    url(r'^$',  login_required(TemplateView.as_view(template_name="home/index.html")), name="home_page"),
+    url(r'^$',  Home.as_view(), name="home_page"),
     url(r'^questionnaire/entry/(?P<questionnaire_id>\d+)/section/(?P<section_id>\d+)/$',
         Entry.as_view(), name="questionnaire_entry_page"),
     url(r'^extract/$', ExportToTextView.as_view(), name="export_page")
