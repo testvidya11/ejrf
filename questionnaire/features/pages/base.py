@@ -42,3 +42,6 @@ class PageObject(object):
         status = kwargs['status'] if 'status' in kwargs else True
         for text in texts:
             self._is_text_present(text, status)
+
+    def validate_pagination(self):
+        self.click_link_by_text('2')

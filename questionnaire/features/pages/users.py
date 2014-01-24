@@ -6,3 +6,7 @@ class LoginPage(PageObject):
 
     def fill_form(self, data):
         self.browser.fill_form(data)
+
+
+class UserListingPage(PageObject):
+    url = '/users/'

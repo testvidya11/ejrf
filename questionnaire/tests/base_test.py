@@ -15,6 +15,7 @@ class BaseTest(TestCase):
         self.user = User.objects.create(username="user", email="user@mail.com")
         self.user.set_password("pass")
         self.user.save()
+        return self.user
 
     def login_user(self):
         self.client.login(username='user', password='pass')

@@ -71,6 +71,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'bootstrap_pagination.middleware.PaginationMiddleware',
 )
 
 ROOT_URLCONF = 'eJRF.urls'

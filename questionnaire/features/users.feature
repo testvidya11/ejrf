@@ -19,3 +19,10 @@ Feature: User management
         Given I visit the extract page
         When I fill in the login credentials
         Then I should see the extract page
+
+    Scenario: List users
+        Given I have a global admin user
+        And I have 100 other users
+        And I logged in the user
+        And I visit the user listing page
+        Then I should see the list of users paginated

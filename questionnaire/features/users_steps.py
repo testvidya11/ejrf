@@ -1,8 +1,11 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from lettuce import step, world
 from questionnaire.features.pages.extract import ExtractPage
 from questionnaire.features.pages.home import HomePage
-from questionnaire.features.pages.users import LoginPage
+from questionnaire.features.pages.users import LoginPage, UserListingPage
+from questionnaire.models import UserProfile
+
 
 @step(u'Given I am registered user')
 def given_i_am_registered_user(step):
@@ -74,3 +77,28 @@ def when_i_fill_in_the_login_credentials(step):
 @step(u'Then I should see the extract page')
 def then_i_should_see_the_extract_page(step):
     world.page = ExtractPage(world.browser)
+
+@step(u'Given I have a global admin user')
+def given_i_have_a_global_admin_user(step):
+    world.user = User.objects.create(username='user', email='rajni@kant.com')
+    world.user.set_password('pass')
+    world.user.save()
+    global_admin = Group.objects.create(name='Global Admin')
+    auth_content = ContentType.objects.get_for_model(Permission)
+    permission, out = Permission.objects.get_or_create(codename='is_global_admin', content_type=auth_content)
+    global_admin.permissions.add(permission)
+    global_admin.user_set.add(world.user)
+
+@step(u'And I have 100 other users')
+def and_i_have_100_other_users(step):
+    for i in range(0, 100):
+        User.objects.create(username='Rajni%s' % str(i), email='rajni@kant%s.com' % str(i), password='I_Rock')
+
+@step(u'And I visit the user listing page')
+def and_i_visit_the_user_listing_page(step):
+    world.page = UserListingPage(world.browser)
+    world.page.visit()
+
+@step(u'Then I should see the list of users paginated')
+def then_i_should_see_the_list_of_users_paginated(step):
+    world.page.validate_pagination()
