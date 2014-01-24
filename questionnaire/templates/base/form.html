@@ -1,0 +1,26 @@
+{% extends "base/layout.html" %}
+
+{% block content %}
+<h3>
+  {% block title %} {% endblock %}
+</h3>
+
+{%  block non_form_errors %}
+{% endblock %}
+
+{% block pre_form_content %}
+{% endblock %}
+
+<form action="{{ action }}" method="post" accept-charset="utf-8" id="{{ id }}" class="form-horizontal {{ class }}">
+  {% csrf_token %}
+
+  {% block display_form_fields %}{% endblock %}
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary" name="save_button" data-disabled-text="{{ loading_text }}">{{ btn_label }}</button>
+    <a href="#" class="btn btn-primary" name="cancel_button">Cancel</a>
+  </div>
+</form>
+
+{% block non_form_content %}{% endblock %}
+{% endblock %}

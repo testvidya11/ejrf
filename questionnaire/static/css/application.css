@@ -131,3 +131,23 @@
     display: inline-block;
     vertical-align: middle;
 }
+
+form p{
+    padding: 10px;
+}
+form p label{
+    width: 150px;
+    padding: 5px;
+}
+
+form p select, input[type='text'], input[type='password'] {
+    width: 250px;
+    padding: 5px;
+}
+.form-actions{
+    margin-left: 160px;
+    padding: 10px;
+}
+.form-actions a{
+    margin-left: 60px;
+}

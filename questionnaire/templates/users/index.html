@@ -5,6 +5,7 @@
     {% autopaginate users 50 %}
     {% load general_template_tags %}
     <div class="table-responsive">
+    <a href="{% url 'create_user_page' %}" id="add-new-user">Add user</a>
       <table class="table table-hover table-striped table-bordered">
           <thead>
           <tr>

@@ -45,3 +45,6 @@ class PageObject(object):
 
     def validate_pagination(self):
         self.click_link_by_text('2')
+
+    def fill_form(self, data):
+        self.browser.fill_form(data)

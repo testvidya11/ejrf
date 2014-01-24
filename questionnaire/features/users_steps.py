@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from lettuce import step, world
 from questionnaire.features.pages.extract import ExtractPage
 from questionnaire.features.pages.home import HomePage
-from questionnaire.features.pages.users import LoginPage, UserListingPage
+from questionnaire.features.pages.users import LoginPage, UserListingPage, CreateUserPage
 from questionnaire.models import UserProfile
 
 
@@ -80,7 +80,7 @@ def then_i_should_see_the_extract_page(step):
 
 @step(u'Given I have a global admin user')
 def given_i_have_a_global_admin_user(step):
-    world.user = User.objects.create(username='user', email='rajni@kant.com')
+    world.user = User.objects.create(username='user1', email='rajni@kant.com')
     world.user.set_password('pass')
     world.user.save()
     global_admin = Group.objects.create(name='Global Admin')
@@ -102,3 +102,30 @@ def and_i_visit_the_user_listing_page(step):
 @step(u'Then I should see the list of users paginated')
 def then_i_should_see_the_list_of_users_paginated(step):
     world.page.validate_pagination()
+
+@step(u'And I click an new user button')
+def and_i_click_an_new_user_button(step):
+    world.page.click_by_css("#add-new-user")
+    world.page = CreateUserPage(world.browser)
+
+@step(u'And I fill in the user information')
+def and_i_fill_in_the_user_information(step):
+    world.form_data = {
+        'username': 'rajni',
+        'password1': 'kant',
+        'password2': 'kant',
+        'email': 'raj@ni.kant'}
+    world.page.fill_form(world.form_data)
+
+@step(u'Then I should see that the user was successfully created')
+def then_i_should_see_that_the_user_was_successfully_created(step):
+    world.page.is_text_present("User created successfully.")
+
+@step(u'And I should see the user listed on the listing page')
+def and_i_should_see_the_user_listed_on_the_listing_page(step):
+    world.page.is_text_present(world.form_data['username'], world.form_data['email'])
+
+@step(u'And I have 10 other users')
+def and_i_have_10_other_users(step):
+    for i in range(0, 10):
+        User.objects.create(username='Rajni%s' % str(i), email='rajni@kant%s.com' % str(i), password='I_Rock')

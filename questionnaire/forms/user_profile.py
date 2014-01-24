@@ -5,8 +5,8 @@ from questionnaire.models import Region, Country, UserProfile
 
 
 class UserProfileForm(UserCreationForm):
-    region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=None)
-    country = forms.ModelChoiceField(queryset=Country.objects.all(), empty_label=None)
+    region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=None, required=False)
+    country = forms.ModelChoiceField(queryset=Country.objects.all(), empty_label=None, required=False)
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
@@ -35,12 +35,14 @@ class UserProfileForm(UserCreationForm):
         return self._clean_attribute(User, username=username)
 
     def clean_country(self):
-        country = self.cleaned_data['country']
-        region = self.cleaned_data['region']
-        if country not in region.countries.all():
-            del self.cleaned_data['country']
+        country = self.cleaned_data.get('country', None)
+        region = self.cleaned_data.get('region', None)
+        if (country and region) and country not in region.countries.all():
             message = "%s does not belong to region %s" % (country.name, region.name)
-            self._errors['country'] = self.error_class([message])
+            self._add_error_country_messages(message)
+        if country and not region:
+            message = "%s should belong to a region" % country.name
+            self._add_error_country_messages(message)
         return country
 
     def _clean_attribute(self, _class, **kwargs):
@@ -52,3 +54,7 @@ class UserProfileForm(UserCreationForm):
             self._errors[attribute_name] = self.error_class([message])
             del self.cleaned_data[attribute_name]
         return data_attr
+
+    def _add_error_country_messages(self, message):
+        del self.cleaned_data['country']
+        self._errors['country'] = self.error_class([message])
