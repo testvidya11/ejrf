@@ -131,6 +131,7 @@
     display: inline-block;
     vertical-align: middle;
 }
+<<<<<<< HEAD
 
 form p{
     padding: 10px;
@@ -150,4 +151,7 @@ form p select, input[type='text'], input[type='password'] {
 }
 .form-actions a{
     margin-left: 60px;
+}
+.popover{
+    width: 250px !important;
 }
