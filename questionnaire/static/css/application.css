@@ -17,7 +17,6 @@
     border-top: 1px solid #efefef;
     bottom: 0;
     margin-bottom: 0;
-    position: fixed;
 }
 #top-nav-menu{
     padding-top: 40px;
@@ -107,7 +106,6 @@
 .cyan{
     color:#0099FF;
 }
-
 .form-group label{
     text-align: left !important;
     font-weight: normal !important;
@@ -123,4 +121,7 @@
 
 .lower{
     margin-top: 5px;
+}
+.top-padding{
+    padding-top: 10px;
 }
