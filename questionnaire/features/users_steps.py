@@ -54,7 +54,7 @@ def then_i_should_see_an_error_message(step):
 
 @step(u'When I click the logout link')
 def when_i_click_the_logout_link(step):
-    world.page.click_link_by_partial_href("/logout/")
+    world.page.click_link_by_partial_href("/accounts/logout/")
 
 
 @step(u'Then I should see the login page again')
