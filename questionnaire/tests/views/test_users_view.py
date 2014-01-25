@@ -38,8 +38,8 @@ class UsersViewTest(BaseTest):
         templates = [template.name for template in response.templates]
         self.assertIn('users/new.html', templates)
         self.assertIsInstance(response.context['form'], UserProfileForm)
-        self.assertIn('Create', response.context['btn_label'])
-        self.assertIn('Add new user', response.context['title'])
+        self.assertIn('CREATE', response.context['btn_label'])
+        self.assertIn('Create new user', response.context['title'])
 
     def test_post_new_user(self):
         response = self.client.post('/users/new/', data=self.form_data)

@@ -36,5 +36,5 @@ class CreateUser(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateUser, self).get_context_data(**kwargs)
-        context.update({'btn_label': "Create", 'title': "Add new user"})
+        context.update({'btn_label': "CREATE", 'title': "Create new user"})
         return context
