@@ -1,9 +1,19 @@
+from django.contrib.auth.models import User
 from lettuce import step, world
 from questionnaire.features.pages.locations import ListRegionsPage, ListCountriesPage
+from questionnaire.features.pages.users import LoginPage
 from questionnaire.models.locations import Region, Country, Organization
 
 
-@step(u'Given I have two regions')
+@step(u'Given I am logged in')
+def given_i_am_logged_in(step):
+    password = 'I_Rock'
+    user = User.objects.create_user('Rajni', 'rajni@kant.com', password)
+    world.page = LoginPage(world.browser)
+    world.page.visit()
+    world.page.login(user, password)
+
+@step(u'And I have two regions')
 def given_i_have_two_regions(step):
     world.org = Organization.objects.create(name="WHO")
     world.afro = Region.objects.create(name="AFRO", organization=world.org)

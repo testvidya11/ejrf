@@ -1,6 +1,9 @@
 Feature: Location types
+    Background:
+      Given I am logged in
+
     Scenario: List Regions
-      Given I have two regions
+      And I have two regions
       And I visit the list regions page
       Then I should see the list of regions
       When I click on the first region name

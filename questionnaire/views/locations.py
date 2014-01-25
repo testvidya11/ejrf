@@ -1,13 +1,13 @@
 from django.views.generic import ListView
 from questionnaire.models import Region, Country
+from braces.views import LoginRequiredMixin
 
-
-class ListRegions(ListView):
+class ListRegions(LoginRequiredMixin, ListView):
     model = Region
     template_name = 'locations/region/index.html'
 
 
-class ListCountries(ListView):
+class ListCountries(LoginRequiredMixin, ListView):
     model = Country
     template_name = 'locations/country/index.html'
 
