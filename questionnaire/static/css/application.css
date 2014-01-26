@@ -154,3 +154,6 @@ form p select, input[type='text'], input[type='password'] {
 .popover{
     width: 250px !important;
 }
+.table-responsive a{
+  margin-bottom: 7px;
+}
