@@ -25,7 +25,6 @@ class QuestionnaireEntryFormService(object):
     def _initialize_form_counter(self):
         return {key: 0 for key in ANSWER_FORM.keys()}
 
-
     def _formsets(self):
         formsets =  {}
         for answer_type in ANSWER_FORM.keys():

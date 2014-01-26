@@ -8,6 +8,11 @@
     {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
 
     <h3>{{ section.title }}</h3>
+    {% if section.description %}
+        <div class="">
+            {{ section.description| safe }}
+        </div>
+    {% endif %}
 
     <form class="form-horizontal" role="form">
 
