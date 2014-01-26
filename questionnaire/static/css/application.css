@@ -141,19 +141,23 @@ form p label{
 }
 
 form p select, input[type='text'], input[type='password'] {
-    width: 250px;
-    padding: 5px;
+    width: 220px;
+    padding: 3px;
 }
 .form-actions{
-    margin-left: 160px;
+    margin-left: 140px;
     padding: 10px;
 }
 .form-actions a{
-    margin-left: 60px;
+    margin-left: 30px;
 }
 .popover{
     width: 250px !important;
 }
 .table-responsive a{
   margin-bottom: 7px;
+}
+label.error{
+  color: red;
+  width: 300px;
 }
