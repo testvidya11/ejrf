@@ -9,3 +9,21 @@ $('body').on('click', function (e) {
         }
     });
 });
+
+
+$('#add_more').click(function() {
+    cloneMore($(this).prev('.question-group'), 'service');
+});
+
+function cloneMore(selector, type) {
+    var newElement = $(selector).clone(true);
+    newElement.find(':input').each(function() {
+        // Reset cloned inputs
+        $(this).val('');
+        $(this).removeAttr('checked');
+        $(this).removeAttr('selected');
+    });
+
+    $(selector).after(newElement);
+    $(selector).after("<hr class='multiple-hr'/>");
+}

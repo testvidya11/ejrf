@@ -40,6 +40,10 @@
                         {% endif %}
                {% endfor %}
             </div>
+            {% if group.allow_multiples %}
+                <button type="button" id="add_more" href="#" class="btn btn-default"> <span class="cyan bold"><i class="glyphicon glyphicon-plus"></i> Add More</span></button>
+            {% endif %}
+            <hr class="group-hr"/>
         {% endfor %}
     {% endfor %}
 

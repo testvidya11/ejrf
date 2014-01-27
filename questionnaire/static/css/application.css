@@ -114,11 +114,12 @@
 .indent{
     padding-left: 40px;
 }
-
-.question-group{
-    border-bottom: 1px solid;
+.group-hr{
+    border: 1px solid #000;
 }
-
+.multiple-hr{
+    border: 1px dashed #000;
+}
 .top-padding{
     padding-top: 10px;
 }
