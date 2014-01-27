@@ -10,3 +10,12 @@ Feature: Questionnaire feature
     Then I should see the questions
     And I should see the answer fields
     And I should see the instructions
+
+    Scenario: Show questionnaire  group and sub-group
+      And I have a questionnaire with sections and subsections
+      And I have a question group and questions in that group
+      And i have a subgroup with questions in that group
+      And I set question orders for the group and subgroup
+      And I visit that questionnaires section page
+      Then I should see the group title and description
+      And I should see the subgroup title and description

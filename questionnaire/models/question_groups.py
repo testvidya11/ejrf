@@ -29,7 +29,6 @@ class QuestionGroup(BaseModel):
             return [order.question for order in question_orders]
         return [order.question for order in self.orders.order_by('order')]
 
-
     class Meta:
         ordering = ('order',)
         app_label = 'questionnaire'

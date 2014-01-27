@@ -24,7 +24,7 @@ def and_i_have_a_question_group_and_questions_in_that_group(step):
                                         instructions="Include only those cases found positive for the infectious agent.",
                                         UID='C00004', answer_type='Number')
 
-    world.question_group = QuestionGroup.objects.create(subsection=world.sub_section, order=1)
+    world.question_group = QuestionGroup.objects.create(subsection=world.sub_section, order=1, name="Immunization")
     world.question_group.question.add(world.question1, world.question3, world.question2)
 
 @step(u'And I set orders for the questions in the group')
@@ -49,3 +49,23 @@ def and_i_should_see_the_answer_fields(step):
 @step(u'And I should see the instructions')
 def and_i_should_see_the_instructions(step):
     world.page.validate_instructions(world.question2)
+
+@step(u'And i have a subgroup with questions in that group')
+def and_i_have_a_subgroup_with_questions_in_that_group(step):
+    world.question_1a = Question.objects.create(text='Disease', UID='C00021', answer_type='MultiChoice')
+
+    world.question_subgroup = QuestionGroup.objects.create(subsection=world.sub_section, order=1,
+                                                           parent=world.question_group, name="Immunization subgroup")
+    world.question_subgroup.question.add(world.question_1a)
+
+@step(u'And I set question orders for the group and subgroup')
+def and_i_set_question_orders_for_the_group_and_subgroup(step):
+    QuestionGroupOrder.objects.create(question=world.question_1a, question_group=world.question_group, order=4)
+
+@step(u'Then I should see the group title and description')
+def then_i_should_see_the_group_title_and_description(step):
+    world.page.is_text_present(world.question_group.name)
+
+@step(u'And I should see the subgroup title and description')
+def and_i_should_see_the_subgroup_title_and_description(step):
+    world.page.is_text_present(world.question_subgroup.name)
