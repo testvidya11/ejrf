@@ -9,6 +9,7 @@ class QuestionGroup(BaseModel):
     instructions = models.TextField(blank=False, null=True)
     parent = models.ForeignKey("QuestionGroup", null=True, related_name="sub_group")
     order = models.PositiveIntegerField(null=True, blank=False)
+    allow_multiples = models.BooleanField(default=False)
 
     def all_questions(self):
         return self.question.all()

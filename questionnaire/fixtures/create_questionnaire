@@ -42,7 +42,7 @@ question4 = Question.objects.create(text='C. Number of cases positive',
                                     instructions="Include only those cases found positive for the infectious agent.",
                                     UID='C00004', answer_type='Number')
 
-parent = QuestionGroup.objects.create(subsection=sub_section, order=1)
+parent = QuestionGroup.objects.create(subsection=sub_section, order=1, allow_multiples=True)
 parent.question.add(question1, question2)
 
 sub_group = QuestionGroup.objects.create(subsection=sub_section, parent=parent, name="Laboratory Investigation")

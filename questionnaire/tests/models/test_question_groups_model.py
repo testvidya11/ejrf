@@ -1,4 +1,3 @@
-from django.db import IntegrityError
 from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroupOrder
 from questionnaire.models.question_groups import QuestionGroup
 from questionnaire.tests.base_test import BaseTest
@@ -17,8 +16,8 @@ class GroupedQuestionsTest(BaseTest):
     def test_grouped_questions_field(self):
         grouped_question = QuestionGroup()
         fields = [str(item.attname) for item in grouped_question._meta.fields]
-        self.assertEqual(8, len(fields))
-        for field in ['id', 'created', 'modified','subsection_id', 'name', 'instructions', 'parent_id', 'order']:
+        self.assertEqual(9, len(fields))
+        for field in ['id', 'created', 'modified','subsection_id', 'name', 'instructions', 'parent_id', 'order', 'allow_multiples']:
             self.assertIn(field, fields)
 
     def test_grouped_questions_store(self):
@@ -107,4 +106,6 @@ class GroupedQuestionsTest(BaseTest):
         self.assertEqual(2, len(sub_group_ordered_questions))
         self.assertEqual(question, sub_group_ordered_questions[0])
         self.assertEqual(question2, sub_group_ordered_questions[1])
+
+
 

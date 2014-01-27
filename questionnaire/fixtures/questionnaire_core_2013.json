@@ -443,7 +443,8 @@
             "modified": "2014-01-20T18:41:07.945Z",
             "subsection": 22,
             "order": 1,
-            "instructions": null
+            "instructions": null,
+            "allow_multiples": 1
         }
     },
     {
