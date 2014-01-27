@@ -66,6 +66,22 @@ class SectionTest(BaseTest):
         self.assertEqual(self.question5, questions[4])
         self.assertEqual(self.question6, questions[5])
 
+    def test_ordered_questions_should_repeat_questions_in_multiple_groups(self):
+        self.question_group3.question.add(self.question4, self.question5)
+        QuestionGroupOrder.objects.create(question=self.question4, question_group=self.question_group3, order=2)
+        QuestionGroupOrder.objects.create(question=self.question5, question_group=self.question_group3, order=3)
+
+        questions = self.section.ordered_questions()
+        self.assertEqual(8, len(questions))
+        self.assertEqual(self.question1, questions[0])
+        self.assertEqual(self.question2, questions[1])
+        self.assertEqual(self.question3, questions[2])
+        self.assertEqual(self.question4, questions[3])
+        self.assertEqual(self.question5, questions[4])
+        self.assertEqual(self.question6, questions[5])
+        self.assertEqual(self.question4, questions[6])
+        self.assertEqual(self.question5, questions[7])
+
 
 class SubSectionTest(BaseTest):
     def setUp(self):

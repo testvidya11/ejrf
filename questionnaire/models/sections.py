@@ -15,8 +15,9 @@ class Section(BaseModel):
         questions = []
         for subsection in subsections:
             for group in subsection.question_group.order_by('order'):
-                questions.extend(group.orders.order_by('order').values_list('question', flat=True))
-        return Question.objects.filter(id__in=questions)
+                orders = group.orders.order_by('order')
+                questions.extend([group_question_order.question for group_question_order in orders])
+        return questions
 
 
     class Meta:

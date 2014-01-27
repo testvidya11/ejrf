@@ -96,8 +96,8 @@ QuestionGroupOrder.objects.create(question=question6, question_group=question_6_
 ########################################################################################################
 # SECTION: School Based Immunization
 ########################################################################################################
-section_2 = Section.objects.create(title="School Based Immunization", order=2,
-                                    questionnaire=questionnaire, name="School Imm Delivery", description="""Please complete this section if in your country
+section_2 = Section.objects.create(title="School Based Immunization", order=3,
+                                    questionnaire=questionnaire, name="School Imm. Delivery", description="""Please complete this section if in your country
 routine immunization is given to school-aged children using the school as a venue. For the purpose of this section,
 please consider as ""routine"" only those doses that are part of the national immunization schedule.
 Do not include doses given in campaigns, even if during those campaigns schools were used as vaccination sites.""")

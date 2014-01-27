@@ -161,3 +161,7 @@ label.error{
   color: red;
   width: 300px;
 }
+
+.form-horizontal select{
+    max-width: 223px;
+}

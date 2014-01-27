@@ -28,9 +28,9 @@ class QuestionnaireEntryFormService(object):
     def _formsets(self):
         formsets =  {}
         for answer_type in ANSWER_FORM.keys():
-            questions = self.ordered_questions.filter(answer_type=answer_type)
+            questions = filter(lambda question:question.answer_type == answer_type, self.ordered_questions)
             if questions:
-                _formset_factory = formset_factory(ANSWER_FORM[answer_type], max_num=questions.count())
+                _formset_factory = formset_factory(ANSWER_FORM[answer_type], max_num=len(questions))
                 initial = self._get_initial(questions)
                 formsets[answer_type] = _formset_factory(initial=initial)
         return formsets
