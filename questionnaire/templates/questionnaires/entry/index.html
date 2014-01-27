@@ -31,8 +31,7 @@
                                     <div class="col-sm-5 center-fields">
                                             {{ question|get_form:formsets }}
                                             {% if question.instructions %}
-                                                <a class="indent" data-toggle="popover" data-html="true"
-                                                   data-placement="bottom" data-content="{{ question.instructions }}"><i class="glyphicon glyphicon-info-sign cyan"></i> instructions</a>
+                                                <a class="indent" data-toggle="popover" data-html="true" data-placement="bottom" data-trigger="hover" data-content="{{ question.instructions }}"><i class="glyphicon glyphicon-info-sign cyan"></i> instructions</a>
                                             {% endif %}
                                     </div>
                             </div>

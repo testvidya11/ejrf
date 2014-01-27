@@ -1,21 +1,17 @@
-$('a[data-toggle=popover]').popover();
+$(document).ready(function() {
 
-$('body').on('click', function (e) {
-    $('[data-toggle="popover"]').each(function () {
-        //the 'is' for buttons that trigger popups
-        //the 'has' for icons within a button that triggers a popup
-        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-            $(this).popover('hide');
-        }
-    });
+    $('a[data-toggle=popover]').popover();
+
 });
 
 
-$('#add_more').click(function() {
+$('#add_more').click(function(event) {
     cloneMore($(this).prev('.question-group'), 'service');
 });
 
 function cloneMore(selector, type) {
+    $('a[data-toggle=popover]').popover('destroy');
+
     var newElement = $(selector).clone(true);
     newElement.find(':input').each(function() {
         // Reset cloned inputs
@@ -26,4 +22,6 @@ function cloneMore(selector, type) {
 
     $(selector).after(newElement);
     $(selector).after("<hr class='multiple-hr'/>");
+    $('a[data-toggle=popover]').popover();
+
 }
