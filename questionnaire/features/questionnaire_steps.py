@@ -9,7 +9,10 @@ def and_i_have_a_questionnaire_with_sections_and_subsections(step):
     world.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan")
 
     world.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
-                                                  questionnaire=world.questionnaire, name="Reported Cases")
+                                                  questionnaire=world.questionnaire, name="Reported Cases",
+                                                  description="some description")
+
+    world.section_2 = Section.objects.create(title="Section 2", order=2, questionnaire=world.questionnaire, name="Section2")
 
     world.sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1, section=world.section_1)
 
@@ -35,10 +38,14 @@ def and_i_set_orders_for_the_questions_in_the_group(step):
 
 @step(u'And I visit that questionnaires section page')
 def and_i_visit_that_questionnaires_section_page(step):
-    world.page = QuestionnairePage(world.browser, world.questionnaire)
+    world.page = QuestionnairePage(world.browser, world.section_1)
     world.page.visit()
 
-@step(u'Then I should see the questions')
+@step(u'Then I should see the section title and descriptions')
+def then_i_should_see_the_section_title_and_descriptions(step):
+    world.page.is_text_present(world.section_1.title, world.section_1.description)
+
+@step(u'And I should see the questions')
 def then_i_should_see_the_questions(step):
     world.page.is_text_present(world.question1.text,world.question2.text,world.question3.text)
 
@@ -69,3 +76,12 @@ def then_i_should_see_the_group_title_and_description(step):
 @step(u'And I should see the subgroup title and description')
 def and_i_should_see_the_subgroup_title_and_description(step):
     world.page.is_text_present(world.question_subgroup.name)
+
+@step(u'When I click on a different section tab')
+def when_i_click_on_a_different_section_tab(step):
+    world.page.click_link_by_text(" " + world.section_2.name)
+
+@step(u'Then I should see that section page')
+def then_i_should_see_that_section_page(step):
+    world.page = QuestionnairePage(world.browser, world.section_2)
+    world.page.validate_url()

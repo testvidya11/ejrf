@@ -2,10 +2,10 @@ from questionnaire.features.pages.base import PageObject
 
 
 class QuestionnairePage(PageObject):
-    def __init__(self, browser, questionnaire):
+    def __init__(self, browser, section):
         super(QuestionnairePage, self).__init__(browser)
-        self.questionnaire = questionnaire
-        self.section = self.questionnaire.sections.all()[0]
+        self.questionnaire = section.questionnaire
+        self.section = section
         self.url = "/questionnaire/entry/%s/section/%s/" % (self.questionnaire.id, self.section.id)
 
     def validate_fields(self):
