@@ -1,0 +1,584 @@
+[
+    {
+        "pk": 18,
+        "model": "questionnaire.section",
+        "fields": {
+            "description": null,
+            "title": "Immunization and Vitamin A Coverage National Administrative Coverage for the Year 2013",
+            "created": "2014-01-28T04:47:41.031Z",
+            "modified": "2014-01-28T04:47:41.032Z",
+            "questionnaire": 7,
+            "order": 3,
+            "name": "Routine Coverage"
+        }
+    },
+    {
+        "pk": 30,
+        "model": "questionnaire.subsection",
+        "fields": {
+            "description": null,
+            "title": "Administrative coverage",
+            "section": 18,
+            "created": "2014-01-28T04:47:41.033Z",
+            "modified": "2014-01-28T04:47:41.034Z",
+            "order": 1
+        }
+    },
+    {
+        "pk": 31,
+        "model": "questionnaire.subsection",
+        "fields": {
+            "description": "Administrative coverage estimates can be biased by inaccurate numerators and/or denominators. Use this space to describe any factors limiting the accuracy of the coverage estimates entered in the table above. Some common problems are listed here. Numerators may be underestimated because of incomplete reporting from reporting units or the exclusion of other vaccinating sources, such as the private sector and NGOs; or overestimated because of over-reporting from reporting units, for example, when other target groups are included. Denominators may have problems arising from population movements, inaccurate census estimations or projections, or multiple sources of data.",
+            "title": "Accuracy of administrative coverage",
+            "section": 18,
+            "created": "2014-01-28T04:47:41.068Z",
+            "modified": "2014-01-28T04:47:41.068Z",
+            "order": 2
+        }
+    },
+    {
+        "pk": 33,
+        "model": "questionnaire.subsection",
+        "fields": {
+            "description": "Report the number of HPV vaccinations given to females by their age at time of administration for each of the three recommended doses of HPV vaccine. If age is unknown but can be estimated, report for the estimated age. For example, if vaccination is offered exclusively to girls in the 6th school form and most girls in the 6th school form are eleven years of age, vaccinations by dose may be reported as vaccinations for girls eleven years of age.",
+            "title": "HPV Vaccine Doses administered: 2013",
+            "section": 18,
+            "created": "2014-01-28T04:47:41.093Z",
+            "modified": "2014-01-28T04:47:41.093Z",
+            "order": 4
+        }
+    },
+    {
+        "pk": 34,
+        "model": "questionnaire.subsection",
+        "fields": {
+            "description": null,
+            "title": "Accuracy of reported HPV Vaccine Doses",
+            "section": 18,
+            "created": "2014-01-28T04:47:41.112Z",
+            "modified": "2014-01-28T04:47:41.112Z",
+            "order": 5
+        }
+    },
+    {
+        "pk": 35,
+        "model": "questionnaire.subsection",
+        "fields": {
+            "description": "In an updated position paper (2012), WHO recommends that countries considering the initiation or expansion of seasonal influenza vaccination programmes give the highest priority to pregnant women. Additional risk groups to be considered for vaccination, in no particular order of priority, are: children aged 6-59 months; the elderly; individuals with specific chronic medical conditions; and healthcare workers. Report immunization coverage in this table using data collected from vaccination clinics/sites on the number of doses administered for each of the risk groups that are included in the country-specific policy for seasonal influenza vaccination. ",
+            "title": "Seasonal Influenza Vaccine Doses Administered",
+            "section": 18,
+            "created": "2014-01-28T04:47:41.114Z",
+            "modified": "2014-01-28T04:47:41.114Z",
+            "order": 6
+        }
+    },
+    {
+        "pk": 65,
+        "model": "questionnaire.questiongroup",
+        "fields": {
+            "allow_multiples": false,
+            "name": null,
+            "parent": null,
+            "created": "2014-01-28T04:47:41.056Z",
+            "question": [168, 169, 170, 171, 172],
+            "modified": "2014-01-28T04:47:41.056Z",
+            "subsection": 30,
+            "order": 1,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 66,
+        "model": "questionnaire.questiongroup",
+        "fields": {
+            "allow_multiples": false,
+            "name": null,
+            "parent": null,
+            "created": "2014-01-28T04:47:41.070Z",
+            "question": [173],
+            "modified": "2014-01-28T04:47:41.071Z",
+            "subsection": 31,
+            "order": 1,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 67,
+        "model": "questionnaire.questiongroup",
+        "fields": {
+            "allow_multiples": false,
+            "name": null,
+            "parent": null,
+            "created": "2014-01-28T04:47:41.075Z",
+            "question": [174],
+            "modified": "2014-01-28T04:47:41.075Z",
+            "subsection": 31,
+            "order": 2,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 68,
+        "model": "questionnaire.questiongroup",
+        "fields": {
+            "allow_multiples": false,
+            "name": null,
+            "parent": null,
+            "created": "2014-01-28T04:47:41.083Z",
+            "question": [175],
+            "modified": "2014-01-28T04:47:41.083Z",
+            "subsection": 32,
+            "order": 1,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 69,
+        "model": "questionnaire.questiongroup",
+        "fields": {
+            "allow_multiples": false,
+            "name": null,
+            "parent": null,
+            "created": "2014-01-28T04:47:41.087Z",
+            "question": [176],
+            "modified": "2014-01-28T04:47:41.087Z",
+            "subsection": 32,
+            "order": 2,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 71,
+        "model": "questionnaire.questiongroup",
+        "fields": {
+            "allow_multiples": false,
+            "name": null,
+            "parent": null,
+            "created": "2014-01-28T04:47:41.125Z",
+            "question": [184, 185, 182, 183],
+            "modified": "2014-01-28T04:47:41.125Z",
+            "subsection": 35,
+            "order": 1,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 70,
+        "model": "questionnaire.questiongroup",
+        "fields": {
+            "allow_multiples": false,
+            "name": null,
+            "parent": null,
+            "created": "2014-01-28T04:47:41.105Z",
+            "question": [177, 178, 179, 180],
+            "modified": "2014-01-28T04:47:41.105Z",
+            "subsection": 33,
+            "order": 1,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 168,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "MultiChoice",
+            "UID": "C00048",
+            "created": "2014-01-28T04:47:41.035Z",
+            "text": "Vaccine/Supplement",
+            "modified": "2014-01-28T04:47:41.035Z",
+            "short_instruction": null,
+            "instructions": "Please complete separately for each vaccine,  even if they are given in combination (e.g., if Pentavalent vaccine DTP-HepB-Hib is used, fill in the data for DTP3, HepB3 and Hib3)"
+        }
+    },
+    {
+        "pk": 169,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00049",
+            "created": "2014-01-28T04:47:41.052Z",
+            "text": "A. Description of the denominator used in coverage calculation",
+            "modified": "2014-01-28T04:47:41.052Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 170,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00050",
+            "created": "2014-01-28T04:47:41.053Z",
+            "text": "B. Number in target group(denominator)",
+            "modified": "2014-01-28T04:47:41.053Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 171,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00051",
+            "created": "2014-01-28T04:47:41.054Z",
+            "text": "C. Number of doses administered through routine services (numerator)",
+            "modified": "2014-01-28T04:47:41.054Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 172,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00052",
+            "created": "2014-01-28T04:47:41.055Z",
+            "text": "D. Percent coverage (=C/B*100)",
+            "modified": "2014-01-28T04:47:41.055Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 185,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 173,
+            "modified": "2014-01-28T04:47:41.074Z",
+            "question_group": 66,
+            "created": "2014-01-28T04:47:41.074Z"
+        }
+    },
+    {
+        "pk": 174,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Text",
+            "UID": "C00054",
+            "created": "2014-01-28T04:47:41.070Z",
+            "text": "Describe any factors limiting the accuracy of the denominator: (denominator = number in target group)",
+            "modified": "2014-01-28T04:47:41.070Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 175,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00055",
+            "created": "2014-01-28T04:47:41.081Z",
+            "text": "Total number of district reports expected at the national level from all districts across repording periods in 2013 (e.g., # districts x 12 months)",
+            "modified": "2014-01-28T04:47:41.081Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 188,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 176,
+            "modified": "2014-01-28T04:47:41.092Z",
+            "question_group": 69,
+            "created": "2014-01-28T04:47:41.092Z"
+        }
+    },
+    {
+        "pk": 184,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00064",
+            "created": "2014-01-28T04:47:41.123Z",
+            "text": "C. Number of doses administered through routine services (numerator)",
+            "modified": "2014-01-28T04:47:41.123Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 185,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00065",
+            "created": "2014-01-28T04:47:41.124Z",
+            "text": "D. Percent coverage (=C/B*100)",
+            "modified": "2014-01-28T04:47:41.124Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 182,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "MultiChoice",
+            "UID": "C00062",
+            "created": "2014-01-28T04:47:41.115Z",
+            "text": "Description of target population",
+            "modified": "2014-01-28T04:47:41.115Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 183,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00063",
+            "created": "2014-01-28T04:47:41.122Z",
+            "text": "B. Number in target group (denominator)",
+            "modified": "2014-01-28T04:47:41.122Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 177,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00057",
+            "created": "2014-01-28T04:47:41.094Z",
+            "text": "Vaccine administered (age in years)",
+            "modified": "2014-01-28T04:47:41.094Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 178,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00058",
+            "created": "2014-01-28T04:47:41.102Z",
+            "text": "A. 1st dose",
+            "modified": "2014-01-28T04:47:41.102Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 179,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00059",
+            "created": "2014-01-28T04:47:41.103Z",
+            "text": "B. 2d dose",
+            "modified": "2014-01-28T04:47:41.103Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 180,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Number",
+            "UID": "C00060",
+            "created": "2014-01-28T04:47:41.104Z",
+            "text": "C. 3d dose",
+            "modified": "2014-01-28T04:47:41.104Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 180,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 168,
+            "modified": "2014-01-28T04:47:41.062Z",
+            "question_group": 65,
+            "created": "2014-01-28T04:47:41.062Z"
+        }
+    },
+    {
+        "pk": 181,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 2,
+            "question": 169,
+            "modified": "2014-01-28T04:47:41.064Z",
+            "question_group": 65,
+            "created": "2014-01-28T04:47:41.064Z"
+        }
+    },
+    {
+        "pk": 182,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 3,
+            "question": 170,
+            "modified": "2014-01-28T04:47:41.065Z",
+            "question_group": 65,
+            "created": "2014-01-28T04:47:41.065Z"
+        }
+    },
+    {
+        "pk": 183,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 4,
+            "question": 171,
+            "modified": "2014-01-28T04:47:41.066Z",
+            "question_group": 65,
+            "created": "2014-01-28T04:47:41.066Z"
+        }
+    },
+    {
+        "pk": 184,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 5,
+            "question": 172,
+            "modified": "2014-01-28T04:47:41.067Z",
+            "question_group": 65,
+            "created": "2014-01-28T04:47:41.067Z"
+        }
+    },
+    {
+        "pk": 185,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 173,
+            "modified": "2014-01-28T04:47:41.074Z",
+            "question_group": 66,
+            "created": "2014-01-28T04:47:41.074Z"
+        }
+    },
+    {
+        "pk": 186,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 174,
+            "modified": "2014-01-28T04:47:41.079Z",
+            "question_group": 67,
+            "created": "2014-01-28T04:47:41.079Z"
+        }
+    },
+    {
+        "pk": 187,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 175,
+            "modified": "2014-01-28T04:47:41.086Z",
+            "question_group": 68,
+            "created": "2014-01-28T04:47:41.086Z"
+        }
+    },
+    {
+        "pk": 188,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 176,
+            "modified": "2014-01-28T04:47:41.092Z",
+            "question_group": 69,
+            "created": "2014-01-28T04:47:41.092Z"
+        }
+    },
+    {
+        "pk": 193,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 182,
+            "modified": "2014-01-28T04:47:41.129Z",
+            "question_group": 71,
+            "created": "2014-01-28T04:47:41.129Z"
+        }
+    },
+    {
+        "pk": 194,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 2,
+            "question": 183,
+            "modified": "2014-01-28T04:47:41.130Z",
+            "question_group": 71,
+            "created": "2014-01-28T04:47:41.130Z"
+        }
+    },
+    {
+        "pk": 195,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 3,
+            "question": 184,
+            "modified": "2014-01-28T04:47:41.131Z",
+            "question_group": 71,
+            "created": "2014-01-28T04:47:41.130Z"
+        }
+    },
+    {
+        "pk": 196,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 4,
+            "question": 185,
+            "modified": "2014-01-28T04:47:41.131Z",
+            "question_group": 71,
+            "created": "2014-01-28T04:47:41.131Z"
+        }
+    },
+    {
+        "pk": 189,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 177,
+            "modified": "2014-01-28T04:47:41.109Z",
+            "question_group": 70,
+            "created": "2014-01-28T04:47:41.109Z"
+        }
+    },
+    {
+        "pk": 190,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 2,
+            "question": 178,
+            "modified": "2014-01-28T04:47:41.110Z",
+            "question_group": 70,
+            "created": "2014-01-28T04:47:41.110Z"
+        }
+    },
+    {
+        "pk": 191,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 3,
+            "question": 179,
+            "modified": "2014-01-28T04:47:41.111Z",
+            "question_group": 70,
+            "created": "2014-01-28T04:47:41.110Z"
+        }
+    },
+    {
+        "pk": 192,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 4,
+            "question": 180,
+            "modified": "2014-01-28T04:47:41.111Z",
+            "question_group": 70,
+            "created": "2014-01-28T04:47:41.111Z"
+        }
+    }
+]

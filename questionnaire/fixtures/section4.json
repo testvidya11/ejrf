@@ -1,0 +1,189 @@
+[
+    {
+        "pk": 19,
+        "model": "questionnaire.section",
+        "fields": {
+            "description": null,
+            "title": "Immunization and Vitamin A Coverage",
+            "created": "2014-01-28T05:39:43.607Z",
+            "modified": "2014-01-28T05:39:43.607Z",
+            "questionnaire": 7,
+            "order": 4,
+            "name": "Coverage Surveys"
+        }
+    },
+    {
+        "pk": 36,
+        "model": "questionnaire.subsection",
+        "fields": {
+            "description": null,
+            "title": "Conducted in 2011-2013",
+            "section": 19,
+            "created": "2014-01-28T05:39:43.610Z",
+            "modified": "2014-01-28T05:39:43.610Z",
+            "order": 1
+        }
+    },
+    {
+        "pk": 37,
+        "model": "questionnaire.subsection",
+        "fields": {
+            "description": null,
+            "title": "Planned for 2014-2015",
+            "section": 19,
+            "created": "2014-01-28T05:39:43.628Z",
+            "modified": "2014-01-28T05:39:43.628Z",
+            "order": 2
+        }
+    },
+    {
+        "pk": 72,
+        "model": "questionnaire.questiongroup",
+        "fields": {
+            "allow_multiples": false,
+            "name": null,
+            "parent": null,
+            "created": "2014-01-28T05:39:43.618Z",
+            "question": [186, 187, 188],
+            "modified": "2014-01-28T05:39:43.619Z",
+            "subsection": 36,
+            "order": 1,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 73,
+        "model": "questionnaire.questiongroup",
+        "fields": {
+            "allow_multiples": false,
+            "name": null,
+            "parent": null,
+            "created": "2014-01-28T05:39:43.633Z",
+            "question": [189, 190],
+            "modified": "2014-01-28T05:39:43.633Z",
+            "subsection": 37,
+            "order": 1,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 186,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "MultiChoice",
+            "UID": "C00066",
+            "created": "2014-01-28T05:39:43.612Z",
+            "text": "Year of most recent survey",
+            "modified": "2014-01-28T05:39:43.612Z",
+            "short_instruction": null,
+            "instructions": "If a coverage survey or other surveys with immunization modules have been conducted from 2011 onwards, indicate whenit took place (if more than one survey took place during this time period, select the latest most recent one)?"
+        }
+    },
+    {
+        "pk": 187,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Text",
+            "UID": "C00067",
+            "created": "2014-01-28T05:39:43.617Z",
+            "text": "Full title of survey in the language of the original report",
+            "modified": "2014-01-28T05:39:43.617Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 188,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Text",
+            "UID": "C00068",
+            "created": "2014-01-28T05:39:43.618Z",
+            "text": "Full title of survey in English",
+            "modified": "2014-01-28T05:39:43.618Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 197,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 186,
+            "modified": "2014-01-28T05:39:43.624Z",
+            "question_group": 72,
+            "created": "2014-01-28T05:39:43.624Z"
+        }
+    },
+    {
+        "pk": 198,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 2,
+            "question": 187,
+            "modified": "2014-01-28T05:39:43.626Z",
+            "question_group": 72,
+            "created": "2014-01-28T05:39:43.625Z"
+        }
+    },
+    {
+        "pk": 199,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 3,
+            "question": 188,
+            "modified": "2014-01-28T05:39:43.627Z",
+            "question_group": 72,
+            "created": "2014-01-28T05:39:43.627Z"
+        }
+    },
+    {
+        "pk": 200,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 189,
+            "modified": "2014-01-28T05:39:43.637Z",
+            "question_group": 73,
+            "created": "2014-01-28T05:39:43.637Z"
+        }
+    },
+    {
+        "pk": 201,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 2,
+            "question": 190,
+            "modified": "2014-01-28T05:39:43.638Z",
+            "question_group": 73,
+            "created": "2014-01-28T05:39:43.638Z"
+        }
+    },
+    {
+        "pk": 189,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "MultiChoice",
+            "UID": "C00069",
+            "created": "2014-01-28T05:39:43.629Z",
+            "text": "Is a coverage survey planned for the next 24 months?",
+            "modified": "2014-01-28T05:39:43.629Z",
+            "short_instruction": null,
+            "instructions": ""
+        }
+    },
+    {
+        "pk": 190,
+        "model": "questionnaire.question",
+        "fields": {
+            "answer_type": "Text",
+            "UID": "C00070",
+            "created": "2014-01-28T05:39:43.632Z",
+            "text": "What type of survey is planned? (e.g., MICS, DHS, EPI or CES)",
+            "modified": "2014-01-28T05:39:43.632Z",
+            "short_instruction": null,
+            "instructions": null
+        }
+    }
+]
