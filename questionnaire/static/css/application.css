@@ -173,3 +173,8 @@ label.error{
 a[data-toggle='popover']{
     cursor:pointer;
 }
+.form-group ul li{
+   display: inline;
+   list-style-type: none;
+   margin-left: 5px;
+}
