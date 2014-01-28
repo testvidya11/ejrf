@@ -19,7 +19,7 @@ class HomePageViewTest(BaseTest):
     def test_homepage_redirects_to_first_section_of_first_questionnaire_if_any(self):
         questionnaire = Questionnaire.objects.create(name="JRF", description="bla")
         section = Section.objects.create(title="section", order=1, questionnaire=questionnaire, name="section")
-        section2 = Section.objects.create(title="section2", order=2, questionnaire=questionnaire, name="section2")
+        section2 = Section.objects.create(title="section", order=2, questionnaire=questionnaire, name="section")
 
         response = self.client.get("/")
         expected_url = "/questionnaire/entry/%d/section/%d/" % (questionnaire.id, section.id)

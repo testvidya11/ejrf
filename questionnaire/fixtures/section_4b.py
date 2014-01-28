@@ -3,7 +3,7 @@ from questionnaire.models import Questionnaire, Section, SubSection, Question, Q
 
 questionnaire = Questionnaire.objects.get(name="JRF 2013 Core English", description="From dropbox as given by Rouslan")
 
-section_1 = Section.objects.create(order=4, questionnaire=questionnaire, name="Coverage Surveys",
+section_1 = Section.objects.create(order=5, questionnaire=questionnaire, name="Coverage Surveys",
                                    title="Immunization and Vitamin A Coverage")
 
 sub_section = SubSection.objects.create(order=1, section=section_1, title="Conducted in 2011-2013")
@@ -42,20 +42,29 @@ QuestionGroupOrder.objects.create(question=question_1, question_group=parent2, o
 QuestionGroupOrder.objects.create(question=question_2, question_group=parent2, order=2)
 
 
-data = serializers.serialize("json", [section_1, sub_section, sub_section1])
-print data
+############################################ GENERATE FIXTURES
+questionnaires = Questionnaire.objects.all()
+sections = Section.objects.all()
+subsections = SubSection.objects.all()
+questions = Question.objects.all()
+question_groups = QuestionGroup.objects.all()
+options = QuestionOption.objects.all()
+orders = QuestionGroupOrder.objects.all()
 
-data = serializers.serialize("json", [parent1, parent2])
-print data
+# data = serializers.serialize("json", [questionnaires])
+# print data
 
-data = serializers.serialize("json", parent1.question.all())
-print data
-data = serializers.serialize("json", parent1.orders.all())
-print data
+# data = serializers.serialize("json", [sections])
+# print data
 
-data = serializers.serialize("json", parent2.orders.all())
-print data
-
-data = serializers.serialize("json", parent2.question.all())
-print data
-
+# data = serializers.serialize("json", [subsections])
+# print data
+#
+# data = serializers.serialize("json", [questions])
+# print data
+#
+# data = serializers.serialize("json", [question_groups])
+# print data
+#
+# data = serializers.serialize("json", [options, orders])
+# print data

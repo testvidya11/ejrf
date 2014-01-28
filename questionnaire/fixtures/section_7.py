@@ -3,7 +3,7 @@ from questionnaire.models import Questionnaire, Section, SubSection, Question, Q
 
 questionnaire = Questionnaire.objects.get(name="JRF 2013 Core English", description="From dropbox as given by Rouslan")
 
-section_1 = Section.objects.create(order=6, questionnaire=questionnaire, name="Indicators",
+section_1 = Section.objects.create(order=7, questionnaire=questionnaire, name="Indicators",
                                    title="Immunization System Indicators")
 
 sub_section = SubSection.objects.create(order=1, section=section_1, title="Planning and management")
@@ -140,22 +140,24 @@ sub_section2 = SubSection.objects.create(order=3, section=section_1, title="Dist
 question_1 = Question.objects.create(text="DTP3", UID='C00089', answer_type='MultiChoice')
 question_2 = Question.objects.create(text="A. Coverage is <50%", UID='C00090', answer_type='Number')
 question_3 = Question.objects.create(text="B. Coverage is 50-79%", UID='C00091', answer_type='Number')
-question_4 = Question.objects.create(text="A. Coverage is 80-89%", UID='C00092', answer_type='Number')
-question_5 = Question.objects.create(text="A. Coverage is 90-94%", UID='C00093', answer_type='Number')
-question_6 = Question.objects.create(text="A. Coverage is >=95%", UID='C00094', answer_type='Number')
+question_4 = Question.objects.create(text="C. Coverage is 80-89%", UID='C00092', answer_type='Number')
+question_5 = Question.objects.create(text="D. Coverage is 90-94%", UID='C00093', answer_type='Number')
+question_6 = Question.objects.create(text="E. Coverage is >=95%", UID='C00094', answer_type='Number')
+question_6b = Question.objects.create(text="F. number of districts not reporting", UID='C0094b', answer_type='Number')
 
 QuestionOption.objects.create(text="Number of districts with DTP3 coverage in each range", question=question_1)
 QuestionOption.objects.create(text="Number of surviving infants in these districts", question=question_1)
 QuestionOption.objects.create(text="Number of districts reporting DTP drop-out rates greater than 10%", question=question_1)
 
 parent4 = QuestionGroup.objects.create(subsection=sub_section2, order=1, allow_multiples=True)
-parent4.question.add(question_1, question_2, question_3, question_4, question_5, question_6)
+parent4.question.add(question_1, question_2, question_3, question_4, question_5, question_6, question_6b)
 QuestionGroupOrder.objects.create(question=question_1, question_group=parent4, order=1)
 QuestionGroupOrder.objects.create(question=question_2, question_group=parent4, order=2)
 QuestionGroupOrder.objects.create(question=question_3, question_group=parent4, order=3)
 QuestionGroupOrder.objects.create(question=question_4, question_group=parent4, order=4)
 QuestionGroupOrder.objects.create(question=question_5, question_group=parent4, order=5)
 QuestionGroupOrder.objects.create(question=question_6, question_group=parent4, order=6)
+QuestionGroupOrder.objects.create(question=question_7, question_group=parent4, order=7)
 
 
 question_7 = Question.objects.create(text="Measles", UID='C00095', answer_type='MultiChoice')

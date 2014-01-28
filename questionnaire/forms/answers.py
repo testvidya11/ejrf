@@ -49,7 +49,9 @@ class MultiChoiceAnswerSelectWidget(forms.Select):
 
     def render_option(self, selected_choices, option_value, option_label):
         option_value = force_text(option_value)
-        data_instruction = mark_safe(' data-instructions="%s"' % self.question_options.get(id=option_value).instructions)
+        data_instruction = ''
+        if option_value:
+            data_instruction = mark_safe(' data-instructions="%s"' % self.question_options.get(id=int(option_value)).instructions)
         if option_value in selected_choices:
             selected_html = mark_safe(' selected="selected"')
         else:

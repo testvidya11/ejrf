@@ -3,7 +3,7 @@ from questionnaire.models import Questionnaire, Section, SubSection, Question, Q
 
 questionnaire = Questionnaire.objects.get(name="JRF 2013 Core English", description="From dropbox as given by Rouslan")
 
-section_1 = Section.objects.create(order=3, questionnaire=questionnaire, name="Routine Coverage",
+section_1 = Section.objects.create(order=4, questionnaire=questionnaire, name="Routine Coverage",
                                    title="Immunization and Vitamin A Coverage <br/> National Administrative Coverage for the Year 2013")
 
 sub_section = SubSection.objects.create(order=1, section=section_1, title="Administrative coverage")
@@ -13,27 +13,51 @@ question1 = Question.objects.create(text="Vaccine/Supplement",
                                     instructions="Please complete separately for each vaccine,  even if they are given in combination (e.g., if Pentavalent vaccine DTP-HepB-Hib is used, fill in the data for DTP3, HepB3 and Hib3)")
 
 QuestionOption.objects.create(text="BCG", question=question1)
-QuestionOption.objects.create(text="HepB, birth dose (given within 24 hours of birth)", question=question1)
+QuestionOption.objects.create(text="HepB, birth dose (given within 24 hours of birth)", question=question1,
+instructions="Provide ONLY hepatitis B vaccine doses given within 24 hours of birth.  If time of birth is unknown, please provide doses of hepatitis B vaccine given within first day of life.  (For example, if the infant is born on day 0, include all HepB does given on days 0 and 1.)  This indicator is NOT equivalent to HepB1")
+
 QuestionOption.objects.create(text="DTP1", question=question1)
 QuestionOption.objects.create(text="DTP3", question=question1)
-QuestionOption.objects.create(text="Polio3 (OPV or IPV)", question=question1)
-QuestionOption.objects.create(text="HepB3", question=question1)
+QuestionOption.objects.create(text="Polio3 (OPV or IPV)", question=question1,
+instructions="This refers to the third dose of polio vaccine, excluding polio 0 (zero), if such a dose is included in the national schedule.")
+
+QuestionOption.objects.create(text="HepB3", question=question1,
+instructions="""In countries using monovalent vaccine for all doses, this refers to the third dose of hepatitis B vaccine, including the birth dose, if such a dose is included in the national schedule.<br/>
+In countries that are using monovalent vaccine for the birth dose and combination vaccine for the subsequent doses, HepB3 will refer to the third dose of the combination vaccine in addition to the birth dose.""")
+
 QuestionOption.objects.create(text="Hib3", question=question1)
 QuestionOption.objects.create(text="Pneumococcal conjugate vaccine 1st dose", question=question1)
 QuestionOption.objects.create(text="Pneumococcal conjugate vaccine 2nd dose", question=question1)
 QuestionOption.objects.create(text="Pneumococcal conjugate vaccine 3rd dose", question=question1)
 QuestionOption.objects.create(text="Rotavirus 1st dose", question=question1)
 QuestionOption.objects.create(text="Rotavirus last dose (2nd or 3rd depending on schedule)", question=question1)
-QuestionOption.objects.create(text="MCV1 (measles-containing vaccine, 1st dose)", question=question1)
-QuestionOption.objects.create(text="Rubella 1 (rubella-containing vaccine)", question=question1)
-QuestionOption.objects.create(text="MCV2 (measles-containing vaccine, 2nd dose)", question=question1)
+QuestionOption.objects.create(text="MCV1 (measles-containing vaccine, 1st dose)", question=question1,
+instructions="Measles-containing vaccine (MCV) includes measles vaccine, measles-rubella vaccine, measles-mumps-rubella vaccine, etc. Fill in the rows for both MCV and rubella vaccines even if they were given in combination.")
+
+QuestionOption.objects.create(text="Rubella 1 (rubella-containing vaccine)", question=question1,
+instructions="Measles-containing vaccine (MCV) includes measles vaccine, measles-rubella vaccine, measles-mumps-rubella vaccine, etc. Fill in the rows for both MCV and rubella vaccines even if they were given in combination.")
+
+QuestionOption.objects.create(text="MCV2 (measles-containing vaccine, 2nd dose)", question=question1,
+instructions="Measles-containing vaccine (MCV) includes measles vaccine, measles-rubella vaccine, measles-mumps-rubella vaccine, etc. Fill in the rows for both MCV and rubella vaccines even if they were given in combination.")
+
 QuestionOption.objects.create(text="Vitamin A, 1st dose", question=question1)
 QuestionOption.objects.create(text="Japanese encephalitis vaccine", question=question1)
 QuestionOption.objects.create(text="Tetanus toxoid-containing vaccine (TT2+) ", question=question1)
-QuestionOption.objects.create(text="Protection at birth (PAB) against neonatal tetanus", question=question1)
+QuestionOption.objects.create(text="Protection at birth (PAB) against neonatal tetanus", question=question1,
+instructions="This refers to children who are protected at birth (PAB) against neonatal tetanus by their mother's TT status; this information is collected during the DTP1 visit - a child is deemed protected if the mother has received 2 doses of TT in the last pregnancy or at-least 3 doses of TT in previous years. If the country does not calculate PAB, leave the cells blank.")
+
 
 question2 = Question.objects.create(text="A. Description of the denominator used in coverage calculation",
-                                    UID='C00049', answer_type='Number')
+                                    UID='C00049', answer_type='MultiChoice')
+
+QuestionOption.objects.create(text="live birth", question=question2)
+QuestionOption.objects.create(text="surviving infants", question=question2)
+QuestionOption.objects.create(text="less than 59 months", question=question2)
+QuestionOption.objects.create(text="12 - 59 months", question=question2)
+QuestionOption.objects.create(text="6 - 59 months", question=question2)
+QuestionOption.objects.create(text="pregnant women", question=question2,
+instructions="The number of live births can be used as a proxy for the total number of pregnant women.")
+
 question3 = Question.objects.create(text="B. Number in target group(denominator)",
                                     UID='C00050', answer_type='Number', )
 question4 = Question.objects.create(text="C. Number of doses administered through routine services (numerator)",
@@ -138,45 +162,30 @@ QuestionGroupOrder.objects.create(question=question63, question_group=parent6, o
 QuestionGroupOrder.objects.create(question=question64, question_group=parent6, order=4)
 
 
+############################################ GENERATE FIXTURES
+questionnaires = Questionnaire.objects.all()
+sections = Section.objects.all()
+subsections = SubSection.objects.all()
+questions = Question.objects.all()
+question_groups = QuestionGroup.objects.all()
+options = QuestionOption.objects.all()
+orders = QuestionGroupOrder.objects.all()
 
-data = serializers.serialize("json", [section_1, sub_section, sub_section2, sub_section4, sub_section5, sub_section6])
-print data
 
-data = serializers.serialize("json", [parent1, parent2, parent3, parent4, parent5, parent6, parent7])
-print data
+# data = serializers.serialize("json", [questionnaires])
+# print data
 
-data = serializers.serialize("json", parent1.question.all())
-print data
+# data = serializers.serialize("json", [sections])
+# print data
 
-data = serializers.serialize("json", parent2.orders.all())
-print data
-
-data = serializers.serialize("json", parent3.question.all())
-print data
-
-data = serializers.serialize("json", parent4.question.all())
-print data
-
-data = serializers.serialize("json", parent5.orders.all())
-print data
-
-data = serializers.serialize("json", parent6.question.all())
-print data
-
-data = serializers.serialize("json", parent7.question.all())
-print data
-
-data = serializers.serialize("json", parent1.orders.all())
-print data
-data = serializers.serialize("json", parent2.orders.all())
-print data
-data = serializers.serialize("json", parent3.orders.all())
-print data
-data = serializers.serialize("json", parent4.orders.all())
-print data
-data = serializers.serialize("json", parent5.orders.all())
-print data
-data = serializers.serialize("json", parent6.orders.all())
-print data
-data = serializers.serialize("json", parent7.orders.all())
-print data
+# data = serializers.serialize("json", [subsections])
+# print data
+#
+# data = serializers.serialize("json", [questions])
+# print data
+#
+# data = serializers.serialize("json", [question_groups])
+# print data
+#
+# data = serializers.serialize("json", [options, orders])
+# print data

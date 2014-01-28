@@ -3,7 +3,7 @@ from questionnaire.models import Questionnaire, Section, SubSection, Question, Q
 
 questionnaire = Questionnaire.objects.get(name="JRF 2013 Core English", description="From dropbox as given by Rouslan")
 
-section_1 = Section.objects.create(order=5, questionnaire=questionnaire, name="Official Estimates",
+section_1 = Section.objects.create(order=6, questionnaire=questionnaire, name="Official Estimates",
                                    title="Official Country Estimates of Immunization Coverage for the Year 2013",
                                    description="Please complete separately for each vaccine, even if they are given in combination (e.g., if Pentavalent vaccine DTP-HepB-Hib is used, fill in the data for DTP3, HepB3 and Hib3)")
 

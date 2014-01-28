@@ -18,25 +18,25 @@ question1 = Question.objects.create(text="Vaccine, Supplement, or Injection Equi
 question1b = Question.objects.create(text="Type",
                                     UID='C0031b', answer_type='MultiChoice',)
 
-question2 = Question.objects.create(text="A.1st dose", UID='C00032', answer_type='Text',)
-question3 = Question.objects.create(text="B.2nd dose", UID='C00033', answer_type='Text',)
-question4 = Question.objects.create(text="C.3rd dose", UID='C00034', answer_type='Text',)
-question5 = Question.objects.create(text="D.4th dose", UID='C00035', answer_type='Text',)
-question6 = Question.objects.create(text="E.5th dose", UID='C00036', answer_type='Text',)
-question7 = Question.objects.create(text="F.6th dose", UID='C00037', answer_type='Text',)
+question2 = Question.objects.create(text="A. 1st dose", UID='C00032', answer_type='Text',)
+question3 = Question.objects.create(text="B. 2nd dose", UID='C00033', answer_type='Text',)
+question4 = Question.objects.create(text="C. 3rd dose", UID='C00034', answer_type='Text',)
+question5 = Question.objects.create(text="D. 4th dose", UID='C00035', answer_type='Text',)
+question6 = Question.objects.create(text="E. 5th dose", UID='C00036', answer_type='Text',)
+question7 = Question.objects.create(text="F. 6th dose", UID='C00037', answer_type='Text',)
 
-question8 = Question.objects.create(text="G-H.Planned introduction", UID='C00038', answer_type='Date',)
+question8 = Question.objects.create(text="G-H. Planned introduction", UID='C00038', answer_type='Date',)
 
-question10 = Question.objects.create(text="I.Geo-graphic area", UID='C00040', answer_type='MultiChoice',
+question10 = Question.objects.create(text="I. Geo-graphic area", UID='C00040', answer_type='MultiChoice',
 instructions='If a vaccine or supplement is given throughout the entire country, pick "national" from the drop-down list. If it is given only in certain regions of the country, pick "subnational". This column refers only to geographical areas and not to special target or risk groups.')
 
-question11 = Question.objects.create(text="J.Specific target group", UID='C00041', answer_type='Text',
+question11 = Question.objects.create(text="J. Specific target group", UID='C00041', answer_type='Text',
 instructions='If a vaccine is not given to the entire population, specify the target group (for example, adults over 65, travellers, diabetes patients, or displaced persons).')
 
-question12 = Question.objects.create(text="L.Name of manufacturer", UID='C00042', answer_type='Text',
+question12 = Question.objects.create(text="L. Name of manufacturer", UID='C00042', answer_type='Text',
 instructions='Indicate the origin for all vaccines and supplements used in the country and also for auto-disable (AD) syringes. If AD syringes are not used in the country, leave those cells blank.')
 
-question13 = Question.objects.create(text="M.Which agency procured the vaccine?", UID='C00043', answer_type='MultiChoice',
+question13 = Question.objects.create(text="M. Which agency procured the vaccine?", UID='C00043', answer_type='MultiChoice',
 instructions="""
 There are four possible answers:
 <ul>
@@ -98,9 +98,22 @@ QuestionOption.objects.create(text="Vit A: Vitamin A supplements", question=ques
 QuestionOption.objects.create(text="Acellular", question=question1b)
 QuestionOption.objects.create(text="Whole cell", question=question1b)
 
+QuestionOption.objects.create(text="Subnational", question=question10)
+QuestionOption.objects.create(text="National", question=question10)
+
+QuestionOption.objects.create(text="government agency", question=question13)
+QuestionOption.objects.create(text="UNICEF, WHO or PAHO", question=question13)
+QuestionOption.objects.create(text="donating agency", question=question13)
+QuestionOption.objects.create(text="other", question=question13)
+
 parent = QuestionGroup.objects.create(subsection=sub_section, order=1)
 parent.question.add(question1, question1b, question2, question3, question4, question5, question6, question7, question8,
-                    question10, question11, question12, question13, question14)
+                    question10, question11)
+
+subgroup = QuestionGroup.objects.create(subsection=sub_section, parent=parent, name="Source of Vaccines, Vitamin A, and AD Syringes")
+parent.question.add(question12, question13, question14)
+
+
 
 QuestionGroupOrder.objects.create(question=question1, question_group=parent, order=1)
 QuestionGroupOrder.objects.create(question=question1b, question_group=parent, order=2)
@@ -136,18 +149,30 @@ QuestionGroupOrder.objects.create(question=question12, question_group=parent2, o
 QuestionGroupOrder.objects.create(question=question16, question_group=parent2, order=7)
 QuestionGroupOrder.objects.create(question=question17, question_group=parent2, order=8)
 
-data = serializers.serialize("json", [section_1, sub_section, parent, parent2])
-print data
+############################################ GENERATE FIXTURES
+questionnaires = Questionnaire.objects.all()
+sections = Section.objects.all()
+subsections = SubSection.objects.all()
+questions = Question.objects.all()
+question_groups = QuestionGroup.objects.all()
+options = QuestionOption.objects.all()
+orders = QuestionGroupOrder.objects.all()
 
-data = serializers.serialize("json", parent.question.all())
-print data
 
-data = serializers.serialize("json", parent.orders.all())
-print data
+# data = serializers.serialize("json", [questionnaires])
+# print data
 
-data = serializers.serialize("json", parent2.question.all())
-print data
+# data = serializers.serialize("json", [sections])
+# print data
 
-data = serializers.serialize("json", parent2.orders.all())
-print data
-
+# data = serializers.serialize("json", [subsections])
+# print data
+#
+# data = serializers.serialize("json", [questions])
+# print data
+#
+# data = serializers.serialize("json", [question_groups])
+# print data
+#
+# data = serializers.serialize("json", [options, orders])
+# print data
