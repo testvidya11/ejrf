@@ -34,4 +34,6 @@ Feature: Questionnaire feature
     And I visit that questionnaires section page
     Then I should see an Add More button
     When I click the Add More button
-    Then I should see a new subsection
+    Then I should see a new question group
+    When I click the question group delete button
+    Then I should not see that question group

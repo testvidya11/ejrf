@@ -17,7 +17,7 @@ function cloneMore(selector, type) {
     });
 
     $(selector).after(newElement);
-    $(selector).after('<button type="button" class="btn btn-default red delete-more close">×</button>');
+    $(selector).after('<button type="button" id="delete_more" class="btn btn-default red delete-more close">×</button>');
     $(selector).after("<hr class='multiple-hr'/>");
 
     $('a[data-toggle=popover]').popover();
