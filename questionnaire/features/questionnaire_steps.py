@@ -27,7 +27,7 @@ def and_i_have_a_question_group_and_questions_in_that_group(step):
                                         instructions="Include only those cases found positive for the infectious agent.",
                                         UID='C00004', answer_type='Number')
 
-    world.question_group = QuestionGroup.objects.create(subsection=world.sub_section, order=1, name="Immunization")
+    world.question_group = QuestionGroup.objects.create(subsection=world.sub_section, order=1, name="Immunization", allow_multiples=1)
     world.question_group.question.add(world.question1, world.question3, world.question2)
 
 @step(u'And I set orders for the questions in the group')
@@ -85,3 +85,15 @@ def when_i_click_on_a_different_section_tab(step):
 def then_i_should_see_that_section_page(step):
     world.page = QuestionnairePage(world.browser, world.section_2)
     world.page.validate_url()
+
+@step(u'Then I should see an Add More button')
+def then_i_should_see_an_add_more_button(step):
+    world.page.is_text_present('Add More')
+
+@step(u'When I click the Add More button')
+def when_i_click_the_add_more_button(step):
+    world.page.click_by_id('add_more')
+
+@step(u'Then I should see a new subsection')
+def then_i_should_see_a_new_subsection(step):
+    assert(world.page.number_of_elements("Immunization"), 2)

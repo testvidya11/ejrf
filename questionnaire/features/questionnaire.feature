@@ -26,3 +26,12 @@ Feature: Questionnaire feature
       And I visit that questionnaires section page
       When I click on a different section tab
       Then I should see that section page
+
+   Scenario: Display additional sub-section on clicking add-more
+    And I have a questionnaire with sections and subsections
+    And I have a question group and questions in that group
+    And I set orders for the questions in the group
+    And I visit that questionnaires section page
+    Then I should see an Add More button
+    When I click the Add More button
+    Then I should see a new subsection

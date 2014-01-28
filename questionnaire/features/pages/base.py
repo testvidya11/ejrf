@@ -48,3 +48,9 @@ class PageObject(object):
 
     def fill_form(self, data):
         self.browser.fill_form(data)
+
+    def click_by_id(self, id):
+        self.browser.find_by_id(id).first.click()
+
+    def number_of_elements(self, element_name):
+        return len(self.browser.find_by_name(element_name))
