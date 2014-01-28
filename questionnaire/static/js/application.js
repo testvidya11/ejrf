@@ -5,10 +5,6 @@ $(document).ready(function() {
 });
 
 
-$('#add_more').click(function(event) {
-    cloneMore($(this).prev('.question-group'), 'service');
-});
-
 function cloneMore(selector, type) {
     $('a[data-toggle=popover]').popover('destroy');
 
@@ -21,7 +17,23 @@ function cloneMore(selector, type) {
     });
 
     $(selector).after(newElement);
+    $(selector).after('<button type="button" class="btn btn-default red delete-more close">×</button>');
     $(selector).after("<hr class='multiple-hr'/>");
+
     $('a[data-toggle=popover]').popover();
 
 }
+
+$('#add_more').on('click', function(event) {
+    cloneMore($(this).prev('.question-group'), 'service');
+});
+
+$(document).on('click', '.delete-more', function() {
+    $('a[data-toggle=popover]').popover('destroy');
+
+    $(this).next('.question-group').remove();
+    $(this).prev('.multiple-hr').remove();
+    $(this).remove();
+
+    $('a[data-toggle=popover]').popover();
+});
