@@ -1,4 +1,4 @@
-from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
+from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm, MultiChoiceAnswerSelectWidget
 from questionnaire.models import Question, Country, QuestionOption
 from questionnaire.tests.base_test import BaseTest
 
@@ -14,8 +14,8 @@ class NumericalAnswerFormTest(BaseTest):
             'question': self.question.id,
             'country': self.country.id,
             'status': 'DRAFT',
-            'version':1,
-            'response':100
+            'version': 1,
+            'response': 100
             
         }
 
@@ -59,6 +59,7 @@ class TextAnswerFormTest(BaseTest):
         message = 'Enter a whole number.'
         self.assertEqual([message], answer_form.errors['version'])
 
+
 class DateAnswerFormTest(BaseTest):
     def setUp(self):
         self.country = Country.objects.create(name="Peru")
@@ -86,25 +87,27 @@ class DateAnswerFormTest(BaseTest):
         message = 'Enter a valid date.'
         self.assertEqual([message], answer_form.errors['response'])
 
+
 class MultiChoiceAnswerFormTest(BaseTest):
     def setUp(self):
         self.country = Country.objects.create(name="Peru")
         self.question = Question.objects.create(text='C. Number of cases positive',
                                             instructions="Include only those cases found positive for the infectious agent.",
                                             UID='C00001', answer_type='MultiChoice')
-        question_option_one = QuestionOption.objects.create(text='Option One', question=self.question)
+        self.question_option_one = QuestionOption.objects.create(text='Option One', question=self.question)
 
         self.form_data = {
             'question': self.question.id,
             'country': self.country.id,
             'status': 'DRAFT',
-            'version':1,
-            'response': question_option_one.id
+            'version': 1,
+            'response': self.question_option_one.id
         }
 
     def test_valid(self):
         answer_form = MultiChoiceAnswerForm(self.form_data)
         self.assertTrue(answer_form.is_valid())
+        self.assertIsNone(answer_form.fields['response'].empty_label)
 
     def test_id_of_a_non_option(self):
         form_data = self.form_data.copy()
@@ -113,3 +116,41 @@ class MultiChoiceAnswerFormTest(BaseTest):
         self.assertFalse(answer_form.is_valid())
         message = 'Select a valid choice. That choice is not one of the available choices.'
         self.assertEqual([message], answer_form.errors['response'])
+
+    def test_multiple_form_choice_form_adds_data_instruction_attributes_for_question_options(self):
+        question_option_two = QuestionOption.objects.create(text='Option 2', question=self.question, instructions="Some stuff")
+        question_option_3 = QuestionOption.objects.create(text='Option 3', question=self.question, instructions="Some stuff")
+        question_option_4 = QuestionOption.objects.create(text='Option 4', question=self.question, instructions="Some stuff")
+
+        initial = {'question': self.question}
+        answer_form = MultiChoiceAnswerForm(initial=initial)
+        query_set = answer_form._get_response_choices(initial)
+        widget = answer_form._get_response_widget(query_set)
+        self.assertIsInstance(widget, MultiChoiceAnswerSelectWidget)
+        self.assertEqual(4, widget.question_options.count())
+        self.assertIn(self.question_option_one, widget.question_options)
+        self.assertIn(question_option_two, widget.question_options)
+        self.assertIn(question_option_3, widget.question_options)
+        self.assertIn(question_option_4, widget.question_options)
+
+        self.assertEqual("Choose One", answer_form.fields['response'].empty_label)
+
+
+class MultiChoiceAnswerSelectWidgetTest(BaseTest):
+
+    def test_option_has_data_attributes_on_top_of_normal_attributes(self):
+        question = Question.objects.create(text='what do you drink?', UID='C_2013', answer_type='MultiChoice')
+        option1 = QuestionOption.objects.create(text='tusker lager', question=question, instructions="yeah yeah")
+        option2 = QuestionOption.objects.create(text='club', question=question, instructions="Are you crazy?")
+
+        choices =((option1.id, option1.text), (option2.id, option2.text))
+
+        widget = MultiChoiceAnswerSelectWidget(choices=choices, question_options=question.options.all())
+
+        expected_option_1 = '<option value="%d" selected="selected" data-instructions="%s">%s</option>' % (option1.id, option1.instructions, option1.text)
+        expected_option_2 = '<option value="%d" data-instructions="%s">%s</option>' % (option2.id, option2.instructions, option2.text)
+
+        self.assertEqual(expected_option_1,
+                         widget.render_option(selected_choices=[str(option1.id)], option_value=option1.id, option_label=option1.text))
+        self.assertEqual(expected_option_2,
+                         widget.render_option(selected_choices=[str(option1.id)], option_value=option2.id, option_label=option2.text))

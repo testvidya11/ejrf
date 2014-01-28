@@ -34,10 +34,14 @@ class Question(BaseModel):
         questions = self.group().ordered_questions()
         return self == questions[-1]
 
+    def has_question_option_instructions(self):
+        return self.options.exclude(instructions=None)
+
 
 class QuestionOption(BaseModel):
     text = models.CharField(max_length=100, blank=False, null=False)
     question = models.ForeignKey(Question, related_name="options")
+    instructions = models.TextField(blank=True, null=True)
 
     def __unicode__(self):
         return "%s" % self.text

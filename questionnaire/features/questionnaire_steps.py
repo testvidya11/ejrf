@@ -1,7 +1,7 @@
 from time import sleep
 from lettuce import step, world
 from questionnaire.features.pages.questionnaires import QuestionnairePage
-from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionGroupOrder
+from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionGroupOrder, QuestionOption
 
 
 @step(u'And I have a questionnaire with sections and subsections')
@@ -29,6 +29,8 @@ def and_i_have_a_question_group_and_questions_in_that_group(step):
 
     world.question_group = QuestionGroup.objects.create(subsection=world.sub_section, order=1, name="Immunization", allow_multiples=1)
     world.question_group.question.add(world.question1, world.question3, world.question2)
+
+    QuestionOption.objects.create(text='Option 2', question=world.question1)
 
 @step(u'And I set orders for the questions in the group')
 def and_i_set_orders_for_the_questions_in_the_group(step):
