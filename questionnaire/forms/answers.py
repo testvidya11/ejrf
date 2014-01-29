@@ -17,6 +17,7 @@ class NumericalAnswerForm(ModelForm):
             'status': forms.HiddenInput(),
             'country': forms.HiddenInput(),
             'version': forms.HiddenInput(),
+            'code': forms.HiddenInput(),
         }
 
 class TextAnswerForm(ModelForm):
@@ -28,6 +29,7 @@ class TextAnswerForm(ModelForm):
             'status': forms.HiddenInput(),
             'country': forms.HiddenInput(),
             'version': forms.HiddenInput(),
+            'code': forms.HiddenInput(),
         }
 
 class DateAnswerForm(ModelForm):
@@ -39,6 +41,7 @@ class DateAnswerForm(ModelForm):
             'status': forms.HiddenInput(),
             'country': forms.HiddenInput(),
             'version': forms.HiddenInput(),
+            'code': forms.HiddenInput(),
         }
 
 
@@ -98,5 +101,6 @@ class MultiChoiceAnswerForm(ModelForm):
             'status': forms.HiddenInput(),
             'country': forms.HiddenInput(),
             'version': forms.HiddenInput(),
+            'code': forms.HiddenInput(),
         }
 

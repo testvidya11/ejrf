@@ -10,8 +10,8 @@ class AnswerTest(TestCase):
     def test_answer_fields(self):
         answer = Answer()
         fields = [str(item.attname) for item in answer._meta.fields]
-        self.assertEqual(7, len(fields))
-        for field in ['id', 'created', 'modified', 'status', 'version', 'question_id', 'country_id']:
+        self.assertEqual(8, len(fields))
+        for field in ['id', 'created', 'modified', 'status', 'version', 'question_id', 'country_id', 'code']:
             self.assertIn(field, fields)
 
     def test_answer_stores(self):
@@ -21,6 +21,7 @@ class AnswerTest(TestCase):
         self.failUnless(answer.id)
         self.assertEqual(question, answer.question)
         self.assertEqual(country, answer.country)
+        self.assertEqual(None, answer.code)
 
 
 class NumericalAnswerTest(TestCase):
@@ -32,8 +33,8 @@ class NumericalAnswerTest(TestCase):
     def test_numerical_answer_fields(self):
         answer = NumericalAnswer()
         fields = [str(item.attname) for item in answer._meta.fields]
-        self.assertEqual(9, len(fields))
-        for field in ['id', 'created', 'modified', 'question_id', 'country_id', 'response']:
+        self.assertEqual(10, len(fields))
+        for field in ['id', 'created', 'modified', 'question_id', 'country_id', 'response', 'code']:
             self.assertIn(field, fields)
 
     def test_numerical_answer_store(self):
@@ -53,8 +54,8 @@ class TextAnswerTest(TestCase):
     def test_text_answer_fields(self):
         answer = TextAnswer()
         fields = [str(item.attname) for item in answer._meta.fields]
-        self.assertEqual(9, len(fields))
-        for field in ['id', 'created', 'modified', 'question_id', 'country_id', 'response']:
+        self.assertEqual(10, len(fields))
+        for field in ['id', 'created', 'modified', 'question_id', 'country_id', 'response', 'code']:
             self.assertIn(field, fields)
 
     def test_text_answer_store(self):
@@ -76,8 +77,8 @@ class DateAnswerTest(TestCase):
     def test_date_answer_fields(self):
         answer = DateAnswer()
         fields = [str(item.attname) for item in answer._meta.fields]
-        self.assertEqual(9, len(fields))
-        for field in ['id', 'created', 'modified', 'question_id','country_id', 'response']:
+        self.assertEqual(10, len(fields))
+        for field in ['id', 'created', 'modified', 'question_id','country_id', 'response', 'code']:
             self.assertIn(field, fields)
 
     def test_date_answer_store(self):
@@ -99,8 +100,8 @@ class MultiChoiceAnswerTest(TestCase):
     def test_mulitchoice_answer_fields(self):
         answer = MultiChoiceAnswer()
         fields = [str(item.attname) for item in answer._meta.fields]
-        self.assertEqual(9, len(fields))
-        for field in ['id', 'created', 'modified', 'question_id', 'country_id', 'response_id']:
+        self.assertEqual(10, len(fields))
+        for field in ['id', 'created', 'modified', 'question_id', 'country_id', 'response_id', 'code']:
             self.assertIn(field, fields)
 
     def test_mulitchoice_answer_store(self):

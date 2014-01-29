@@ -15,7 +15,8 @@ class NumericalAnswerFormTest(BaseTest):
             'country': self.country.id,
             'status': 'DRAFT',
             'version': 1,
-            'response': 100
+            'response': 100,
+            'code':'HAHA123'
             
         }
 
@@ -44,7 +45,8 @@ class TextAnswerFormTest(BaseTest):
             'country': self.country.id,
             'status': 'DRAFT',
             'version':1,
-            'response':'some answer'
+            'response':'some answer',
+            'code':'HAHA123'
         }
 
     def test_valid(self):
@@ -72,7 +74,8 @@ class DateAnswerFormTest(BaseTest):
             'country': self.country.id,
             'status': 'DRAFT',
             'version':1,
-            'response':'2014-01-01'
+            'response':'2014-01-01',
+            'code':'HAHA123'
         }
 
     def test_valid(self):
@@ -101,7 +104,8 @@ class MultiChoiceAnswerFormTest(BaseTest):
             'country': self.country.id,
             'status': 'DRAFT',
             'version': 1,
-            'response': self.question_option_one.id
+            'response': self.question_option_one.id,
+            'code':'HAHA123'
         }
 
     def test_valid(self):
