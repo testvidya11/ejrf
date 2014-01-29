@@ -16,6 +16,8 @@ class Question(BaseModel):
     short_instruction = models.CharField(max_length=250, blank=False, null=True)
     UID = models.CharField(blank=False, null=False, max_length=6, unique=True)
     answer_type = models.CharField(blank=False, null=False, max_length=20, choices=ANSWER_TYPES)
+    is_core = models.BooleanField(blank=False, null=False)
+    is_primary = models.BooleanField(blank=False, null=False)
 
     def all_answers(self):
         return self.answers.filter(status='Submitted').order_by('answergroup__id').select_subclasses()
