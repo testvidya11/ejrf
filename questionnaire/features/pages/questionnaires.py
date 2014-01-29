@@ -9,8 +9,9 @@ class QuestionnairePage(PageObject):
         self.url = "/questionnaire/entry/%s/section/%s/" % (self.questionnaire.id, self.section.id)
 
     def validate_fields(self):
-        assert len(self.browser.find_by_name("form-0-response")) == 2
-        assert self.browser.find_by_name("form-1-response")
+        assert self.browser.find_by_name("Number-0-response")
+        assert self.browser.find_by_name("Number-1-response")
+        assert self.browser.find_by_name("MultiChoice-0-response")
         assert self.browser.find_by_id('cancel_button').text.strip() == "CANCEL"
         assert self.browser.find_by_id('save_draft_button').text.strip() == "SAVE"
         assert self.browser.find_by_id('submit_button').text.strip() == "SUBMIT"

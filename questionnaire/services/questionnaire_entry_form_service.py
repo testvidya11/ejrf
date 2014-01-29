@@ -32,7 +32,7 @@ class QuestionnaireEntryFormService(object):
             if questions:
                 _formset_factory = formset_factory(ANSWER_FORM[answer_type], max_num=len(questions))
                 initial = self._get_initial(questions)
-                formsets[answer_type] = _formset_factory(initial=initial)
+                formsets[answer_type] = _formset_factory(prefix=answer_type, initial=initial)
         return formsets
 
     def _get_initial(self, questions):
