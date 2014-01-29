@@ -134,12 +134,18 @@ QuestionGroupOrder.objects.create(question=question14, question_group=parent, or
 
 question15 = Question.objects.create(text="AD equipement", UID='C00045', answer_type='MultiChoice',)
 
-question16 = Question.objects.create(text="M.Which agency procured the Syringes?", UID='C00046', answer_type='MultiChoice',)
+question16 = Question.objects.create(text="M. Which agency procured the Syringes?", UID='C00046', answer_type='MultiChoice',)
 
 question17 = Question.objects.create(text="N.Total no. of syringes procured at national level", UID='C00047', answer_type='Number',)
 
 parent2 = QuestionGroup.objects.create(subsection=sub_section, order=2)
 parent2.question.add(question15, question16, question17, question8, question10, question11, question12)
+
+QuestionOption.objects.create(text="government agency", question=question16)
+QuestionOption.objects.create(text="UNICEF, WHO or PAHO", question=question16)
+QuestionOption.objects.create(text="donating agency", question=question16)
+QuestionOption.objects.create(text="other", question=question16)
+
 
 QuestionGroupOrder.objects.create(question=question15, question_group=parent2, order=1)
 QuestionGroupOrder.objects.create(question=question8, question_group=parent2, order=2)
@@ -150,13 +156,13 @@ QuestionGroupOrder.objects.create(question=question16, question_group=parent2, o
 QuestionGroupOrder.objects.create(question=question17, question_group=parent2, order=8)
 
 ############################################ GENERATE FIXTURES
-questionnaires = Questionnaire.objects.all()
-sections = Section.objects.all()
-subsections = SubSection.objects.all()
-questions = Question.objects.all()
-question_groups = QuestionGroup.objects.all()
-options = QuestionOption.objects.all()
-orders = QuestionGroupOrder.objects.all()
+# questionnaires = Questionnaire.objects.all()
+# sections = Section.objects.all()
+# subsections = SubSection.objects.all()
+# questions = Question.objects.all()
+# question_groups = QuestionGroup.objects.all()
+# options = QuestionOption.objects.all()
+# orders = QuestionGroupOrder.objects.all()
 
 
 # data = serializers.serialize("json", [questionnaires])

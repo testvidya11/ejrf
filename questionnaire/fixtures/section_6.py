@@ -49,20 +49,20 @@ parent2 = QuestionGroup.objects.create(subsection=sub_section1, order=1)
 parent2.question.add(question_1)
 QuestionGroupOrder.objects.create(question=question_1, question_group=parent2, order=1)
 
-data = serializers.serialize("json", [section_1, sub_section, sub_section1])
-print data
-
-data = serializers.serialize("json", [parent1, parent2])
-print data
-
-data = serializers.serialize("json", parent1.question.all())
-print data
-data = serializers.serialize("json", parent1.orders.all())
-print data
-
-data = serializers.serialize("json", parent2.orders.all())
-print data
-
-data = serializers.serialize("json", parent2.question.all())
-print data
-
+# data = serializers.serialize("json", [section_1, sub_section, sub_section1])
+# print data
+#
+# data = serializers.serialize("json", [parent1, parent2])
+# print data
+#
+# data = serializers.serialize("json", parent1.question.all())
+# print data
+# data = serializers.serialize("json", parent1.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent2.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent2.question.all())
+# print data
+#

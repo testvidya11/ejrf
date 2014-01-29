@@ -17,5 +17,5 @@ class QuestionnairePage(PageObject):
         assert self.browser.find_by_id('submit_button').text.strip() == "SUBMIT"
 
     def validate_instructions(self, question):
-        self.browser.click_link_by_text(" instructions")
+        self.click_by_css("#question-%d-instructions" % question.id)
         self.is_text_present(question.instructions)

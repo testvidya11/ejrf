@@ -9,26 +9,26 @@ section_1 = Section.objects.create(order=8, questionnaire=questionnaire, name="S
 
 sub_section = SubSection.objects.create(order=1, section=section_1, title="Conducted during 2013")
 
-question1 = Question.objects.create(text="Vaccine/supplement", UID='C000', answer_type='Text')
-question2 = Question.objects.create(text="A. Round and type of activity", UID='C000', answer_type='Text',
+question1 = Question.objects.create(text="Vaccine/supplement", UID='C00129', answer_type='Text')
+question2 = Question.objects.create(text="A. Round and type of activity", UID='C00130', answer_type='Text',
 instructions="Record the name of the activity (for example, NIDs, micronutrition day, child health day, or vaccination week) and the number of the round (for example, first, second or third). If an activity involved more than one vaccine or supplement, use multiple lines to describe it, placing each vaccine or supplement on a separate line.")
-question3 = Question.objects.create(text="B. Date", UID='C000', answer_type='Date')
-question4 = Question.objects.create(text="C. Geographic Area", UID='C000', answer_type='MultiChoice')
-question5 = Question.objects.create(text="D. Target population", UID='C000', answer_type='Text',
+question3 = Question.objects.create(text="B. Date", UID='C00131', answer_type='Date')
+question4 = Question.objects.create(text="C. Geographic Area", UID='C00132', answer_type='MultiChoice')
+question5 = Question.objects.create(text="D. Target population", UID='C00133', answer_type='Text',
 instructions="If children are targeted, specify the age of the target group. If women are targeted, specify the age and/or pregnancy status of the target group, for example, women of childbearing age or pregnant women.")
-question6 = Question.objects.create(text="E. Estimated number in target population", UID='C000', answer_type='Number')
-question7 = Question.objects.create(text="F. Total number of persons vaccinated or supplemented", UID='C000', answer_type='Number')
-question8 = Question.objects.create(text="G. Coverage (%)", UID='C000', answer_type='Number',
+question6 = Question.objects.create(text="E. Estimated number in target population", UID='C00134', answer_type='Number')
+question7 = Question.objects.create(text="F. Total number of persons vaccinated or supplemented", UID='C00135', answer_type='Number')
+question8 = Question.objects.create(text="G. Coverage (%)", UID='C00136', answer_type='Number',
 instructions="Enter the official coverage estimate for the vaccine or supplement (including measles, yellow fever, meningitis, and polio vaccines and Vitamin A). Do NOT complete for tetanus vaccine. These estimates can come from a coverage survey and thus may differ from the administrative calculation.")
 
 group = QuestionGroup.objects.create(subsection=sub_section, order=1, allow_multiples=True,
 instructions="Record all supplementary activities related to immunization and nutritional supplementation that were conducted at either the national or sub-national levels in 2013. These could include activities related to polio, yellow fever, measles, rubella, influenza, meningitis, and tetanus toxoid vaccines; vitamin A and iron supplements; deworming; and the distribution of insecticide treated bednets (ITNs).")
 group.question.add(question1, question2, question3, question4, question5, question6, question7, question8)
 
-question11 = Question.objects.create(text="H. TT1", UID='C000', answer_type='Number')
-question12 = Question.objects.create(text="I. TT2", UID='C000', answer_type='Number')
-question13 = Question.objects.create(text="J. TT3", UID='C000', answer_type='Number')
-question14 = Question.objects.create(text="K. TT4 or more", UID='C000', answer_type='Number')
+question11 = Question.objects.create(text="H. TT1", UID='C00137', answer_type='Number')
+question12 = Question.objects.create(text="I. TT2", UID='C00138', answer_type='Number')
+question13 = Question.objects.create(text="J. TT3", UID='C00139', answer_type='Number')
+question14 = Question.objects.create(text="K. TT4 or more", UID='C00140', answer_type='Number')
 
 subgroup = QuestionGroup.objects.create(subsection=sub_section, parent = group,
 name="Number of persons vaccinated for tetanus",
@@ -65,16 +65,16 @@ QuestionGroupOrder.objects.create(question=question2, question_group=group2, ord
 QuestionGroupOrder.objects.create(question=question3, question_group=group2, order=3)
 QuestionGroupOrder.objects.create(question=question5, question_group=group2, order=4)
 QuestionGroupOrder.objects.create(question=question6, question_group=group2, order=5)
-
-############################################ GENERATE FIXTURES
-questionnaires = Questionnaire.objects.all()
-sections = Section.objects.all()
-subsections = SubSection.objects.all()
-questions = Question.objects.all()
-question_groups = QuestionGroup.objects.all()
-options = QuestionOption.objects.all()
-orders = QuestionGroupOrder.objects.all()
-
+#
+# ############################################ GENERATE FIXTURES
+# questionnaires = Questionnaire.objects.all()
+# sections = Section.objects.all()
+# subsections = SubSection.objects.all()
+# questions = Question.objects.all()
+# question_groups = QuestionGroup.objects.all()
+# options = QuestionOption.objects.all()
+# orders = QuestionGroupOrder.objects.all()
+#
 
 # data = serializers.serialize("json", [questionnaires])
 # print data
@@ -93,3 +93,6 @@ orders = QuestionGroupOrder.objects.all()
 #
 # data = serializers.serialize("json", [options, orders])
 # print data
+
+
+# ./manage.py dumpdata  questionnaire questionnaire.Questionnaire questionnaire.Section questionnaire.Subsection questionnaire.Question questionnaire.QuestionGroup questionnaire.QuestionOption questionnaire.QuestionGroupOrder --settings=eJRF.testsettings > haha.json

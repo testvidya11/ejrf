@@ -141,13 +141,13 @@ QuestionGroupOrder.objects.create(question=question21, question_group=question_1
 QuestionGroupOrder.objects.create(question=question22, question_group=question_14_22_group, order=9)
 
 ############################################ GENERATE FIXTURES
-questionnaires = Questionnaire.objects.all()
-sections = Section.objects.all()
-subsections = SubSection.objects.all()
-questions = Question.objects.all()
-question_groups = QuestionGroup.objects.all()
-options = QuestionOption.objects.all()
-orders = QuestionGroupOrder.objects.all()
+# questionnaires = Questionnaire.objects.all()
+# sections = Section.objects.all()
+# subsections = SubSection.objects.all()
+# questions = Question.objects.all()
+# question_groups = QuestionGroup.objects.all()
+# options = QuestionOption.objects.all()
+# orders = QuestionGroupOrder.objects.all()
 
 
 # data = serializers.serialize("json", [questionnaires])

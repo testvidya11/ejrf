@@ -120,7 +120,9 @@ QuestionGroupOrder.objects.create(question=question_1, question_group=parent2, o
 QuestionGroupOrder.objects.create(question=question_2, question_group=parent2, order=2)
 QuestionGroupOrder.objects.create(question=question_3, question_group=parent2, order=3)
 
-parent3 = QuestionGroup.objects.create(subsection=sub_section1, order=2, parent=parent2)
+parent3 = QuestionGroup.objects.create(subsection=sub_section1, order=2, parent=parent2,
+                                       name="Are the following areas of expertise represented in the group as core membership?",
+instructions="It should be noted that it is difficult to fully specify the minimum type of expertise required but it is very important to stress the need for expertise in pediatrics, public health, infectious diseases, epidemiology and immunology. NITAG may have additional expertise and that more expertise is useful.")
 parent3.question.add(question_4, question_5, question_6, question_7, question_8, question_9)
 
 QuestionGroupOrder.objects.create(question=question_4, question_group=parent2, order=4)
@@ -129,10 +131,10 @@ QuestionGroupOrder.objects.create(question=question_6, question_group=parent2, o
 QuestionGroupOrder.objects.create(question=question_7, question_group=parent2, order=7)
 QuestionGroupOrder.objects.create(question=question_8, question_group=parent2, order=8)
 QuestionGroupOrder.objects.create(question=question_9, question_group=parent2, order=9)
-QuestionGroupOrder.objects.create(question=question_9, question_group=parent2, order=10)
-QuestionGroupOrder.objects.create(question=question_9, question_group=parent2, order=11)
-QuestionGroupOrder.objects.create(question=question_9, question_group=parent2, order=12)
-QuestionGroupOrder.objects.create(question=question_9, question_group=parent2, order=13)
+QuestionGroupOrder.objects.create(question=question_10, question_group=parent2, order=10)
+QuestionGroupOrder.objects.create(question=question_11, question_group=parent2, order=11)
+QuestionGroupOrder.objects.create(question=question_12, question_group=parent2, order=12)
+QuestionGroupOrder.objects.create(question=question_13, question_group=parent2, order=13)
 
 ################################################################################################
 sub_section2 = SubSection.objects.create(order=3, section=section_1, title="District coverage reported for routine immunization services in 2013")
@@ -456,139 +458,139 @@ QuestionGroupOrder.objects.create(question=question_11, question_group=parent15,
 QuestionGroupOrder.objects.create(question=question_12, question_group=parent15, order=12)
 QuestionGroupOrder.objects.create(question=question_13, question_group=parent15, order=13)
 
-data = serializers.serialize("json", [section_1, sub_section, sub_section1, sub_section2, sub_section3, sub_section4,
-                                      sub_section5, sub_section6])
-print data
-
-data = serializers.serialize("json", [parent1, parent2, parent3, parent4, parent5, parent6, parent7, parent8, parent9,
-                                      parent10, parent11, parent12, parent13, parent14, parent15, parent16, parent17,
-                                      parent18, parent19, parent20])
-print data
-
-data = serializers.serialize("json", parent1.question.all())
-print data
-
-data = serializers.serialize("json", parent2.question.all())
-print data
-
-data = serializers.serialize("json", parent3.question.all())
-print data
-
-data = serializers.serialize("json", parent4.question.all())
-print data
-
-data = serializers.serialize("json", parent5.question.all())
-print data
-
-data = serializers.serialize("json", parent6.question.all())
-print data
-
-data = serializers.serialize("json", parent7.question.all())
-print data
-
-data = serializers.serialize("json", parent8.question.all())
-print data
-
-data = serializers.serialize("json", parent9.question.all())
-print data
-
-data = serializers.serialize("json", parent10.question.all())
-print data
-
-data = serializers.serialize("json", parent11.question.all())
-print data
-
-data = serializers.serialize("json", parent12.question.all())
-print data
-
-
-data = serializers.serialize("json", parent13.question.all())
-print data
-
-
-data = serializers.serialize("json", parent14.question.all())
-print data
-
-
-data = serializers.serialize("json", parent15.question.all())
-print data
-
-
-data = serializers.serialize("json", parent16.question.all())
-print data
-
-
-data = serializers.serialize("json", parent17.question.all())
-print data
-
-
-data = serializers.serialize("json", parent18.question.all())
-print data
-
-
-data = serializers.serialize("json", parent19.question.all())
-print data
-
-
-data = serializers.serialize("json", parent20.question.all())
-print data
-
-data = serializers.serialize("json", parent1.orders.all())
-print data
-
-data = serializers.serialize("json", parent2.orders.all())
-print data
-
-data = serializers.serialize("json", parent3.orders.all())
-print data
-
-data = serializers.serialize("json", parent4.orders.all())
-print data
-
-data = serializers.serialize("json", parent5.orders.all())
-print data
-
-data = serializers.serialize("json", parent6.orders.all())
-print data
-
-data = serializers.serialize("json", parent7.orders.all())
-print data
-
-data = serializers.serialize("json", parent8.orders.all())
-print data
-
-data = serializers.serialize("json", parent9.orders.all())
-print data
-
-data = serializers.serialize("json", parent10.orders.all())
-print data
-
-data = serializers.serialize("json", parent11.orders.all())
-print data
-
-data = serializers.serialize("json", parent12.orders.all())
-print data
-
-data = serializers.serialize("json", parent13.orders.all())
-print data
-
-data = serializers.serialize("json", parent14.orders.all())
-print data
-
-data = serializers.serialize("json", parent15.orders.all())
-print data
-
-data = serializers.serialize("json", parent16.orders.all())
-print data
-
-data = serializers.serialize("json", parent17.orders.all())
-print data
-
-data = serializers.serialize("json", parent18.orders.all())
-print data
-
-data = serializers.serialize("json", parent19.orders.all())
-print data
-
-data = serializers.serialize("json", parent20.orders.all())
-print data
+# data = serializers.serialize("json", [section_1, sub_section, sub_section1, sub_section2, sub_section3, sub_section4,
+#                                       sub_section5, sub_section6])
+# print data
+#
+# data = serializers.serialize("json", [parent1, parent2, parent3, parent4, parent5, parent6, parent7, parent8, parent9,
+#                                       parent10, parent11, parent12, parent13, parent14, parent15, parent16, parent17,
+#                                       parent18, parent19, parent20])
+# print data
+#
+# data = serializers.serialize("json", parent1.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent2.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent3.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent4.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent5.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent6.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent7.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent8.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent9.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent10.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent11.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent12.question.all())
+# print data
+#
+#
+# data = serializers.serialize("json", parent13.question.all())
+# print data
+#
+#
+# data = serializers.serialize("json", parent14.question.all())
+# print data
+#
+#
+# data = serializers.serialize("json", parent15.question.all())
+# print data
+#
+#
+# data = serializers.serialize("json", parent16.question.all())
+# print data
+#
+#
+# data = serializers.serialize("json", parent17.question.all())
+# print data
+#
+#
+# data = serializers.serialize("json", parent18.question.all())
+# print data
+#
+#
+# data = serializers.serialize("json", parent19.question.all())
+# print data
+#
+#
+# data = serializers.serialize("json", parent20.question.all())
+# print data
+#
+# data = serializers.serialize("json", parent1.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent2.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent3.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent4.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent5.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent6.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent7.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent8.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent9.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent10.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent11.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent12.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent13.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent14.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent15.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent16.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent17.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent18.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent19.orders.all())
+# print data
+#
+# data = serializers.serialize("json", parent20.orders.all())
+# print data
