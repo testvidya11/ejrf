@@ -98,8 +98,8 @@ class QuestionOptionTest(BaseTest):
     def test_question_option_fields(self):
         question = QuestionOption()
         fields = [str(item.attname) for item in question._meta.fields]
-        self.assertEqual(6, len(fields))
-        for field in ['id', 'created', 'modified', 'text', 'instructions', 'question_id']:
+        self.assertEqual(7, len(fields))
+        for field in ['id', 'created', 'modified', 'text', 'instructions', 'question_id', 'UID']:
             self.assertIn(field, fields)
 
     def test_question_store(self):
@@ -110,3 +110,4 @@ class QuestionOptionTest(BaseTest):
         self.assertEqual('tusker lager', question_option.text)
         self.assertEqual(question, question_option.question)
         self.assertEqual(None, question_option.instructions)
+        self.assertEqual(None, question_option.UID)
