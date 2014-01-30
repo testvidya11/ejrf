@@ -2,3 +2,4 @@
 omit =
         */site-packages/*
         */migrations/*
+	eJRF/settings.py
