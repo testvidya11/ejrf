@@ -4,13 +4,14 @@
     <title>
         {% block title %}{% endblock %} | eJRF
     </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" type="text/css" media="screen">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/application.css" type="text/css" media="screen">
     {% block extra_css %}{% endblock %}
     <!--[if lt IE 8]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+          <script src="{{ STATIC_URL }}html5shiv/src/html5shiv.js"></script>
+          <script src="{{ STATIC_URL }}Respond/src/respond.js"></script>
     <![endif]-->
 </head>
 <body>
