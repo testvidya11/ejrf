@@ -29,6 +29,7 @@ class ExportToTextServiceTest(BaseTest):
         self.regions = Region.objects.create(name="The Afro", organization=self.organisation)
         self.country = Country.objects.create(name="Uganda", code="UGX")
         self.regions.countries.add(self.country)
+        self.headings = ["ISO\tCountry\tYear\tField code\tQuestion text\tValue"]
 
         self.primary_question_answer = MultiChoiceAnswer.objects.create(question=self.primary_question, country=self.country,
                                                                status=Answer.SUBMITTED_STATUS,  response=self.option)
@@ -50,7 +51,8 @@ class ExportToTextServiceTest(BaseTest):
         answer_id = "R_%s_%s_%s" % (self.primary_question.UID, self.primary_question.UID, self.option.UID)
         answer_id_1 = "R_%s_%s_1" % (self.primary_question.UID, self.question1.UID)
         answer_id_2 = "R_%s_%s_%d_1" % (self.primary_question.UID, self.question1.UID, 1)
-        expected_data = [["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id, question_text, self.option.text)],
+        expected_data = [self.headings,
+                         ["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id, question_text, self.option.text)],
                          ["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_1, question_text1, '23.00')],
                          ["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_2, question_text_2, '1.00')]]
 
@@ -69,7 +71,6 @@ class ExportToTextServiceTest(BaseTest):
                                                            status=Answer.SUBMITTED_STATUS, response=55)
         answer_group2 = AnswerGroup.objects.create(grouped_question=self.parent, row=2)
         answer_group2.answer.add(primary_question_answer2, question1_answer2, question2_answer2)
-
         question_text = "%s | %s | %s" % (self.section_1.title, self.sub_section.title, self.primary_question.text)
         question_text1 = "%s | %s | %s" % (self.section_1.title, self.sub_section.title, self.question1.text)
         question_text_2 = "%s | %s | %s" % (self.section_1.title, self.sub_section.title, self.question2.text)
@@ -79,7 +80,8 @@ class ExportToTextServiceTest(BaseTest):
         answer_id_10 = "R_%s_%s_%s" % (self.primary_question.UID, self.primary_question.UID, self.option2.UID)
         answer_id_11 = "R_%s_%s_2" % (self.primary_question.UID, self.question1.UID)
         answer_id_21 = "R_%s_%s_2" % (self.primary_question.UID, self.question2.UID)
-        expected_data = [["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id, question_text, self.option.text)],
+        expected_data = [self.headings,
+                         ["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id, question_text, self.option.text)],
                          ["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_1, question_text1, '23.00')],
                          ["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_2, question_text_2, '1.00')],
                          ["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_10, question_text, self.option2.text)],
@@ -114,7 +116,8 @@ class ExportToTextServiceTest(BaseTest):
         question_text = "%s | %s | %s" % (self.section_1.title, self.sub_section.title, question.text)
         answer_id = "R_%s_%s_1" % (question.UID, question.UID)
 
-        expected_data = [["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id, question_text, 'tusker lager')]]
+        expected_data = [self.headings,
+                         ["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id, question_text, 'tusker lager')]]
 
         export_to_text_service = ExportToTextService(self.questionnaire)
         actual_data = export_to_text_service.get_formatted_responses()

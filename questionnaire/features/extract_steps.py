@@ -3,7 +3,7 @@ from lettuce import step, world
 from questionnaire.features.pages.extract import ExtractPage
 from questionnaire.features.pages.users import LoginPage
 from questionnaire.models import Questionnaire, SubSection, Section, QuestionGroup, NumericalAnswer, Region, Country, \
-    Organization, Answer, Question
+    Organization, Answer, Question, QuestionGroupOrder, AnswerGroup
 
 
 @step(u'And I logged in the user')
@@ -45,10 +45,16 @@ def and_i_have_questions_and_their_answers(step):
         world.regions = Region.objects.create(name="The Afro", organization=world.organisation)
         world.country = Country.objects.create(name="Uganda", code="UGX")
         world.regions.countries.add(world.country)
+        QuestionGroupOrder.objects.create(question=world.question1, question_group=world.parent, order=1)
+        QuestionGroupOrder.objects.create(question=world.question2, question_group=world.parent, order=2)
+
         world.question1_answer = NumericalAnswer.objects.create(question=world.question1, country=world.country,
                                                                 status=Answer.SUBMITTED_STATUS,  response=23)
         world.question2_answer = NumericalAnswer.objects.create(question=world.question2, country=world.country,
                                                                 status=Answer.SUBMITTED_STATUS, response=1)
+        world.answer_group1 = AnswerGroup.objects.create(grouped_question=world.parent, row=1)
+        world.answer_group1.answer.add(world.question1_answer, world.question2_answer)
+
 
 @step(u'When I click the extract link')
 def when_i_click_the_extract_link(step):
