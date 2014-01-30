@@ -24,7 +24,8 @@ class QuestionnaireTest(BaseTest):
         self.question1_answer = NumericalAnswer.objects.create(question=self.question1, country=self.country,
                                                                status=Answer.SUBMITTED_STATUS,  response=23)
         self.question1_answer_2 = NumericalAnswer.objects.create(question=self.question1, country=self.country,
-                                                               status=Answer.SUBMITTED_STATUS, response=1)
+                                                                 status=Answer.SUBMITTED_STATUS, response=1)
+
     def test_questionnaire_fields(self):
         fields = [str(item.attname) for item in Questionnaire._meta.fields]
         self.assertEqual(6, len(fields))
@@ -45,3 +46,23 @@ class QuestionnaireTest(BaseTest):
         all_questions = self.questionnaire.get_all_questions()
         self.assertEqual(1, len(all_questions))
         self.assertIn(self.question1, all_questions)
+
+    def test_questionnaire_knows_all_question_groups(self):
+        question1 = Question.objects.create(text='B. Number of cases tested', UID='C00033', answer_type='Number')
+        another_group = QuestionGroup.objects.create(subsection=self.sub_section_2, name="Laboratory Investigation2")
+        another_group.question.add(question1)
+
+        self.assertEqual(2, len(self.questionnaire.all_groups()))
+        self.assertIn(self.sub_group, self.questionnaire.all_groups())
+        self.assertIn(another_group, self.questionnaire.all_groups())
+
+    def test_questionnaire_does_not_know_groups_that_do__not_belong_to_it(self):
+        questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English")
+        section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)",
+                                           order=1, questionnaire=questionnaire, name="Reported Cases")
+        sub_section_1 = SubSection.objects.create(title="Reported cases for the year 2013", order=1, section=section_1)
+        another_group = QuestionGroup.objects.create(subsection=sub_section_1, name="Laboratory Investigation2")
+
+        self.assertEqual(1, len(self.questionnaire.all_groups()))
+        self.assertIn(self.sub_group, self.questionnaire.all_groups())
+        self.assertNotIn(another_group, self.questionnaire.all_groups())

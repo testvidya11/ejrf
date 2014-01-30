@@ -8,14 +8,18 @@ class Questionnaire(BaseModel):
     year = models.PositiveIntegerField(null=True, blank=True)
 
     def sub_sections(self):
-        subsections = []
         sections = self.sections.all()
-        for section in sections:
-            subsections.extend(list(section.sub_sections.all()))
-        return subsections
+        from questionnaire.models import SubSection
+        return SubSection.objects.filter(section__in=sections)
 
     def get_all_questions(self):
         all_questions = []
         for subsection in self.sub_sections():
             all_questions.extend(subsection.all_questions())
         return all_questions
+
+    def all_groups(self):
+        all_qroups = []
+        for subsection in self.sub_sections():
+            all_qroups.extend(subsection.question_group.all())
+        return all_qroups

@@ -126,6 +126,10 @@ class SubSectionTest(BaseTest):
         group2 = QuestionGroup.objects.create(subsection=self.sub_section, name="group 2")
         sub_group = QuestionGroup.objects.create(subsection=self.sub_section, name="subgroup 1", parent=group1)
 
+        question = Question.objects.create(text='Disease', UID='C00003', answer_type='MultiChoice')
+        group1.question.add(question)
+        group2.question.add(question)
+
         known_groups = self.sub_section.parent_question_groups()
 
         self.assertEqual(2, len(known_groups))

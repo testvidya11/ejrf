@@ -11,7 +11,6 @@ class QuestionGroupOrderTest(BaseTest):
         self.sub_section = SubSection.objects.create(title="Immunisation Extra Coverage", order=1, section=self.section)
         self.grouped_question = QuestionGroup.objects.create(subsection=self.sub_section, order=1)
 
-
     def test_question_group_order_fields(self):
         question_group_order = QuestionGroupOrder()
         fields = [str(item.attname) for item in question_group_order._meta.fields]

@@ -24,6 +24,7 @@ class Section(BaseModel):
         ordering = ('order',)
         app_label = 'questionnaire'
 
+
 class SubSection(BaseModel):
     title = models.CharField(max_length=256, blank=False, null=False)
     order = models.IntegerField(blank=False, null=False)
@@ -40,7 +41,7 @@ class SubSection(BaseModel):
         return all_questions
 
     def parent_question_groups(self):
-        return self.question_group.filter(parent=None)
+        return self.question_group.filter(parent=None).exclude(question=None)
 
     class Meta:
         ordering = ('order',)

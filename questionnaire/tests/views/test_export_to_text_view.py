@@ -1,6 +1,6 @@
 from urllib import quote
 from django.test import Client
-from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, Organization, Region, Country, NumericalAnswer, Answer
+from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, Organization, Region, Country, NumericalAnswer, Answer, QuestionGroupOrder, AnswerGroup
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -38,6 +38,12 @@ class ExportToTextViewTest(BaseTest):
         self.question2_answer = NumericalAnswer.objects.create(question=self.question2, country=self.country,
                                                                status=Answer.SUBMITTED_STATUS, response=1)
 
+        self.answer_group1 = AnswerGroup.objects.create(grouped_question=self.parent, row=1)
+        self.answer_group1.answer.add(self.question1_answer, self.question2_answer)
+
+        QuestionGroupOrder.objects.create(question=self.question1, question_group=self.parent, order=2)
+        QuestionGroupOrder.objects.create(question=self.question2, question_group=self.parent, order=3)
+
     def test_get(self):
         response = self.client.get("/extract/")
         self.assertEqual(200, response.status_code)
@@ -57,7 +63,13 @@ class ExportToTextViewTest(BaseTest):
         self.assertEquals(200, response.status_code)
         self.assertEquals(response.get('Content-Type'), 'text/csv')
         self.assertEquals(response.get('Content-Disposition'), 'attachment; filename="%s"' % file_name)
-        row1 = ["2013\tUGX\t%s\t%s" % (self.question1.UID, '23.00')]
-        row2 = ["2013\tUGX\t%s\t%s" % (self.question2.UID, '1.00')]
-        contents = "%s\r\n%s\r\n" % ("".join(row1), "".join(row2))
+
+        question_text1 = "%s | %s | %s" % (self.section_1.title, self.sub_section.title, self.question1.text)
+        question_text_2 = "%s | %s | %s" % (self.section_1.title, self.sub_section.title, self.question2.text)
+        answer_id_1 = "R_%s_%s_1" % (self.question1.UID, self.question1.UID)
+        answer_id_2 = "R_%s_%s_%d" % (self.question1.UID, self.question2.UID, 1)
+
+        row = ["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_1, question_text1, '23.00')]
+        row1 = ["UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_2, question_text_2, '1.00')]
+        contents = "%s\r\n%s\r\n" % ("".join(row), "".join(row1))
         self.assertEqual(contents, response.content)

@@ -26,7 +26,7 @@ class QuestionnaireEntryFormService(object):
         return {key: 0 for key in ANSWER_FORM.keys()}
 
     def _formsets(self):
-        formsets =  {}
+        formsets = {}
         for answer_type in ANSWER_FORM.keys():
             questions = filter(lambda question:question.answer_type == answer_type, self.ordered_questions)
             if questions:
