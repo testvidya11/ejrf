@@ -5,5 +5,6 @@ from django.db import models
 
 class UserProfile(BaseModel):
     user = models.OneToOneField(User, related_name="user_profile")
-    region = models.CharField(max_length=50, blank=True, null=True)
-    country = models.CharField(max_length=50, blank=True, null=True)
+    region = models.ForeignKey("Region", blank=True, null=True)
+    country = models.ForeignKey("Country", blank=True, null=True)
+    organization = models.ForeignKey("Organization", blank=True, null=True)

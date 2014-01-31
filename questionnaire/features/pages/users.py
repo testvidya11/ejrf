@@ -11,9 +11,13 @@ class LoginPage(PageObject):
         self.browser.fill_form(details)
         self.submit()
 
+
 class UserListingPage(PageObject):
     url = "/users/"
 
 
 class CreateUserPage(PageObject):
     url = "/users/new/"
+
+    def select(self, value):
+        self.browser.find_by_value(value).first.check()

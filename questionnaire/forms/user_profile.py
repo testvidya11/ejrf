@@ -1,12 +1,18 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django import forms
-from questionnaire.models import Region, Country, UserProfile
+from questionnaire.models import Region, Country, UserProfile, Organization
 
 
 class UserProfileForm(UserCreationForm):
-    region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=None, required=False)
-    country = forms.ModelChoiceField(queryset=Country.objects.all(), empty_label=None, required=False)
+    region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=None, required=False,
+                                    widget=forms.HiddenInput())
+    organization = forms.ModelChoiceField(queryset=Organization.objects.all(), empty_label=None, required=False,
+                                          widget=forms.HiddenInput())
+    country = forms.ModelChoiceField(queryset=Country.objects.all(), empty_label=None, required=False,
+                                     widget=forms.HiddenInput())
+    groups = forms.ModelChoiceField(queryset=Group.objects.all(), empty_label=None, required=False,
+                                    widget=forms.RadioSelect(), label="Roles")
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)
@@ -14,15 +20,18 @@ class UserProfileForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("username", "password1", "password2", "email", "groups")
+        fields = ("username", "password1", "password2", "email")
 
     def save(self, commit=True, *args, **kwargs):
         user = super(UserProfileForm, self).save(commit=commit, *args, **kwargs)
         if commit:
+            user.groups.add(self.cleaned_data['groups'])
+            user.save()
             self.save_m2m()
             user_profile, b = UserProfile.objects.get_or_create(user=user)
             user_profile.region = self.cleaned_data['region']
             user_profile.country = self.cleaned_data['country']
+            user_profile.organization = self.cleaned_data['organization']
             user_profile.save()
         return user
 

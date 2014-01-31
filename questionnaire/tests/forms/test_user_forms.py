@@ -1,6 +1,6 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
 from questionnaire.forms.user_profile import UserProfileForm
-from questionnaire.models import Country, Region, UserProfile
+from questionnaire.models import Country, Region, UserProfile, Organization
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -9,6 +9,9 @@ class UserProfileFormTest(BaseTest):
     def setUp(self):
         self.region = Region.objects.create(name="Afro")
         self.uganda = Country.objects.create(name="uganda", code="UGX")
+        self.global_admin = Group.objects.create(name='Global Admin')
+        self.organization = Organization.objects.create(name="UNICEF")
+
         self.region.countries.add(self.uganda)
         self.form_data = {
             'username': 'user',
@@ -17,6 +20,8 @@ class UserProfileFormTest(BaseTest):
             'email': 'raj@ni.kant',
             'country': self.uganda.id,
             'region': self.region.id,
+            'organization': self.organization.id,
+            'groups': self.global_admin.id
         }
 
     def test_valid(self):
@@ -25,12 +30,14 @@ class UserProfileFormTest(BaseTest):
         user = user_profile_form.save()
         saved_user = User.objects.get(username='user')
         self.failUnless(saved_user.id)
-        self.assertEqual(saved_user, user)
+        self.assertEqual(1, len(saved_user.groups.all()))
+        self.assertIn(self.global_admin, saved_user.groups.all())
 
         user_profile = UserProfile.objects.filter(user=user)
         self.failUnless(user_profile)
-        self.assertEquals(int(user_profile[0].region), self.region.id)
-        self.assertEquals(int(user_profile[0].country), self.uganda.id)
+        self.assertEqual(user_profile[0].region, self.region)
+        self.assertEqual(user_profile[0].country, self.uganda)
+        self.assertEqual(user_profile[0].organization, self.organization)
 
     def test_email_already_used(self):
         form_data = self.form_data

@@ -83,11 +83,11 @@ def given_i_have_a_global_admin_user(step):
     world.user = User.objects.create(username='user1', email='rajni@kant.com')
     world.user.set_password('pass')
     world.user.save()
-    global_admin = Group.objects.create(name='Global Admin')
+    world.global_admin = Group.objects.create(name='Global Admin')
     auth_content = ContentType.objects.get_for_model(Permission)
     permission, out = Permission.objects.get_or_create(codename='is_global_admin', content_type=auth_content)
-    global_admin.permissions.add(permission)
-    global_admin.user_set.add(world.user)
+    world.global_admin.permissions.add(permission)
+    world.global_admin.user_set.add(world.user)
 
 @step(u'And I have 100 other users')
 def and_i_have_100_other_users(step):
@@ -116,6 +116,7 @@ def and_i_fill_in_the_user_information(step):
         'password2': 'kant',
         'email': 'raj@ni.kant'}
     world.page.fill_form(world.form_data)
+    world.page.select(world.global_admin.id)
 
 @step(u'Then I should see that the user was successfully created')
 def then_i_should_see_that_the_user_was_successfully_created(step):
