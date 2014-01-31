@@ -27,7 +27,7 @@ Feature: User management
         And I visit the user listing page
         Then I should see the list of users paginated
 
-    Scenario: Create a user
+    Scenario: Create a global admin user
         Given I have a global admin user
         And I have 100 other users
         And I logged in the user

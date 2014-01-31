@@ -142,6 +142,7 @@ form p{
 form p label{
     width: 150px;
     padding: 5px;
+    font-weight: normal;
 }
 
 form p select, input[type='text'], input[type='password'] {
@@ -183,7 +184,14 @@ a[data-toggle='popover']{
     max-width: 350px;
     display: inline;
 }
-.field-error{
+form li{
+    list-style: none;
+}
+form li label{
+    font-weight: normal;
+    display: inline;
+    margin-left: 50px;
+}.field-error{
     border: 1px solid #CC0000;
     display: inherit;
 }
