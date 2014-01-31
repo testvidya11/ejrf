@@ -17,7 +17,7 @@ class Answer(BaseModel):
     country = models.ForeignKey("Country", null=True)
     status = models.CharField(max_length=15, blank=False, null=False, choices=STATUS_CHOICES, default=DRAFT_STATUS)
     version = models.IntegerField(blank=False, null=True, default=1)
-    code = models.CharField(blank=False, max_length=20, unique=True, null=True)
+    code = models.CharField(blank=False, max_length=20, null=True)
 
 
 class NumericalAnswer(Answer):
