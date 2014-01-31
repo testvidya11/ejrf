@@ -3,4 +3,16 @@
     <h2>{{ title }}</h2>
     <br/>
     {% include 'base/naked_form.html' with a_form=form %}
+
+<script type="text/template" id="organization-template">
+    <p>
+        <label for="organization">Organization</label>
+            <select id="organization" name="organization">
+                {%   for org in organizations %}
+                <option value={{ org.id }}>{{ org.name }}</option>
+                {% endfor %}
+            </select>
+        <label class="error">
+    </p>
+</script>
 {% endblock %}

@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.test import Client
 from questionnaire.forms.user_profile import UserProfileForm
+from questionnaire.models import Organization
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -16,7 +17,7 @@ class UsersViewTest(BaseTest):
         permission, out = Permission.objects.get_or_create(codename='is_global_admin', content_type=auth_content)
         self.global_admin.permissions.add(permission)
         self.global_admin.user_set.add(self.user)
-
+        self.organization = Organization.objects.create(name="haha")
         self.form_data = {
             'username': 'rajni',
             'password1': 'kant',
@@ -48,6 +49,7 @@ class UsersViewTest(BaseTest):
         self.assertIsInstance(response.context['form'], UserProfileForm)
         self.assertIn('CREATE', response.context['btn_label'])
         self.assertIn('Create new user', response.context['title'])
+        self.assertIn(self.organization, response.context['organizations'])
 
     def test_post_new_user(self):
         response = self.client.post('/users/new/', data=self.form_data)

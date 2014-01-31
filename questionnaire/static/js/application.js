@@ -1,6 +1,13 @@
 $(document).ready(function() {
 
     $('a[data-toggle=popover]').popover();
+    $('a[data-toggle=popover]').popover('destroy');
+    $(this).next('.question-group').remove();
+    $(this).prev('.multiple-hr').remove();
+    $(this).remove();
+
+    $('a[data-toggle=popover]').popover();
+    load_organization_template();
 
 });
 
@@ -28,12 +35,10 @@ $('#add_more').on('click', function(event) {
     cloneMore($(this).prev('.question-group'), 'service');
 });
 
-$(document).on('click', '.delete-more', function() {
-    $('a[data-toggle=popover]').popover('destroy');
-
-    $(this).next('.question-group').remove();
-    $(this).prev('.multiple-hr').remove();
-    $(this).remove();
-
-    $('a[data-toggle=popover]').popover();
-});
+function load_organization_template(){
+    $('.radio-roles').on('change', function(){
+     var template = $("#organization-template").html();
+        $(this).parents('ul').after(template);
+        $('#id_organization').remove();
+    })
+}

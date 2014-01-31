@@ -15,6 +15,8 @@ class LoginPage(PageObject):
 class UserListingPage(PageObject):
     url = "/users/"
 
+    def validate_user_list_headers(self):
+        self.is_text_present("Username", "Email", "Roles", "Organization / Region / Country", "Status", "Actions")
 
 class CreateUserPage(PageObject):
     url = "/users/new/"

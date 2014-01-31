@@ -101,6 +101,7 @@ def and_i_visit_the_user_listing_page(step):
 
 @step(u'Then I should see the list of users paginated')
 def then_i_should_see_the_list_of_users_paginated(step):
+    world.page.validate_user_list_headers()
     world.page.validate_pagination()
 
 @step(u'And I click an new user button')
@@ -124,7 +125,7 @@ def then_i_should_see_that_the_user_was_successfully_created(step):
 
 @step(u'And I should see the user listed on the listing page')
 def and_i_should_see_the_user_listed_on_the_listing_page(step):
-    world.page.is_text_present(world.form_data['username'], world.form_data['email'])
+    world.page.is_text_present(world.form_data['username'], world.form_data['email'], world.global_admin.name)
 
 @step(u'And I have 10 other users')
 def and_i_have_10_other_users(step):

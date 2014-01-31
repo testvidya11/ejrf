@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.views.generic import ListView, CreateView
 from questionnaire.forms.user_profile import UserProfileForm
+from questionnaire.models import Organization
 
 
 class UsersList(ListView):
@@ -36,5 +37,5 @@ class CreateUser(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateUser, self).get_context_data(**kwargs)
-        context.update({'btn_label': "CREATE", 'title': "Create new user"})
+        context.update({'btn_label': "CREATE", 'title': "Create new user", 'organizations': Organization.objects.all()})
         return context

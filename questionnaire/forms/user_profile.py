@@ -12,7 +12,7 @@ class UserProfileForm(UserCreationForm):
     country = forms.ModelChoiceField(queryset=Country.objects.all(), empty_label=None, required=False,
                                      widget=forms.HiddenInput())
     groups = forms.ModelChoiceField(queryset=Group.objects.all(), empty_label=None, required=False,
-                                    widget=forms.RadioSelect(), label="Roles")
+                                    widget=forms.RadioSelect(attrs={'class': 'radio-roles'}), label="Roles" )
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)

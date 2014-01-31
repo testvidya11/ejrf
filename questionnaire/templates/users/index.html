@@ -14,8 +14,9 @@
             <th>Username</th>
             <th>Email</th>
             <th>Roles</th>
-            <th>Location (Country/Region)</th>
+            <th>Organization / Region / Country</th>
             <th>Status</th>
+            <th>Actions</th>
           </tr>
           </thead>
           <tbody>
@@ -24,8 +25,15 @@
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.groups.all |display_list}}</td>
-                    <td>{{ user.country }}{{ user.region }}</td>
-                    <td>{{ user.status }}</td>
+                    <td>{{ user.country }}{{ user.user_profile.organization }}</td>
+                    <td>
+                        {% if user.is_active %}
+                            Active
+                            {% else %}
+                            Inactive
+                        {% endif %}
+                    </td>
+                    <td><a href="" class="btn btn-sm btn-default"> <span class="glyphicon glyphicon-pencil"></span> Edit</a> </td>
                 </tr>
             {% endfor %}
           </tbody>
