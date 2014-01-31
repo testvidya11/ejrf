@@ -4,28 +4,31 @@ from django.utils.html import format_html
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 
-from questionnaire.models import NumericalAnswer, TextAnswer, DateAnswer, MultiChoiceAnswer, QuestionOption
+from questionnaire.models import NumericalAnswer, TextAnswer, DateAnswer, MultiChoiceAnswer, QuestionOption, AnswerGroup
 
 
 class AnswerForm(ModelForm):
-
     def __init__(self, *args, **kwargs):
         super(AnswerForm, self).__init__(*args, **kwargs)
         self._initial = kwargs['initial'] if 'initial' in kwargs else {}
+        self.question_group = self._initial['group'] if self._initial else None
 
     def save(self, commit=True, *args, **kwargs):
         answer = super(AnswerForm, self).save(commit=False, *args, **kwargs)
         self._add_extra_attributes_to(answer)
         answer.save()
+        self._add_to_answer_group(answer)
         return answer
 
     def _add_extra_attributes_to(self, answer):
-        for attribute in self.initial.keys():
-            setattr(answer, attribute, self.initial[attribute])
+        for attribute in self._initial.keys():
+            setattr(answer, attribute, self._initial[attribute])
 
+    def _add_to_answer_group(self, answer):
+        answer_group = AnswerGroup.objects.get_or_create(grouped_question=self.question_group)[0]
+        answer_group.answer.add(answer)
 
 class NumericalAnswerForm(AnswerForm):
-
     class Meta:
         model = NumericalAnswer
         exclude = ('question', 'status', 'country', 'version', 'code')

@@ -1,5 +1,5 @@
 from django.test import Client
-from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionOption, MultiChoiceAnswer, NumericalAnswer, QuestionGroupOrder
+from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionOption, MultiChoiceAnswer, NumericalAnswer, QuestionGroupOrder, AnswerGroup
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.tests.base_test import BaseTest
 
@@ -84,3 +84,27 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-0-response']), question=self.question2))
         self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-1-response']), question=self.question3))
 
+    def test_post_groups_rows_into_answer_groups(self):
+        data = {u'MultiChoice-MAX_NUM_FORMS': u'1', u'MultiChoice-TOTAL_FORMS': u'1',
+                u'MultiChoice-INITIAL_FORMS': u'1', u'MultiChoice-0-response': self.option1.id,
+                u'Number-INITIAL_FORMS': u'2', u'Number-TOTAL_FORMS': u'2', u'Number-MAX_NUM_FORMS': u'2',
+                u'Number-0-response': u'2', u'Number-1-response': u'33'}
+
+        self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-1-response'])))
+
+        response = self.client.post(self.url, data=data)
+        self.assertEqual(200, response.status_code)
+
+        primary = MultiChoiceAnswer.objects.get(response__id=int(data['MultiChoice-0-response']), question=self.question1)
+        answer_1 = NumericalAnswer.objects.get(response=int(data['Number-0-response']), question=self.question2)
+        answer_2 = NumericalAnswer.objects.get(response=int(data['Number-1-response']), question=self.question3)
+
+        answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
+        self.assertEqual(1, answer_group.count())
+        answer_group_answers = answer_group[0].answer.all().select_subclasses()
+        self.assertEqual(3, answer_group_answers.count())
+        self.assertIn(primary, answer_group_answers)
+        self.assertIn(answer_1, answer_group_answers)
+        self.assertIn(answer_2, answer_group_answers)

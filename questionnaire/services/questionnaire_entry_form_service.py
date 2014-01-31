@@ -1,5 +1,6 @@
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
 from django.forms.formsets import formset_factory
+from questionnaire.models import AnswerGroup
 
 ANSWER_FORM ={
     'Number': NumericalAnswerForm,
@@ -15,7 +16,7 @@ class QuestionnaireEntryFormService(object):
         self.initial = initial
         self.data = data
         self.section = section
-        self.ordered_questions = section.ordered_questions()
+        self.question_orders = section.question_orders()
         self.formsets = self._formsets()
         self.ANSWER_FORM_COUNTER = self._initialize_form_counter()
 
@@ -30,15 +31,15 @@ class QuestionnaireEntryFormService(object):
     def _formsets(self):
         formsets = {}
         for answer_type in ANSWER_FORM.keys():
-            questions = filter(lambda question: question.answer_type == answer_type, self.ordered_questions)
-            if questions:
-                _formset_factory = formset_factory(ANSWER_FORM[answer_type], max_num=len(questions))
-                initial = self._get_initial(questions)
+            orders = filter(lambda order: order.question.answer_type == answer_type, self.question_orders)
+            if orders:
+                _formset_factory = formset_factory(ANSWER_FORM[answer_type], max_num=len(orders))
+                initial = self._get_initial(orders)
                 formsets[answer_type] = _formset_factory(prefix=answer_type, initial=initial, data=self.data)
         return formsets
 
-    def _get_initial(self, questions):
-        return [dict(self.initial.items() + {'question': question}.items())  for question in questions]
+    def _get_initial(self, orders):
+        return [dict(self.initial.items() + {'group': order.question_group, 'question': order.question}.items())  for order in orders]
 
     def is_valid(self):
         formset_checks = [formset.is_valid() for formset in self.formsets.values()]
@@ -47,5 +48,4 @@ class QuestionnaireEntryFormService(object):
     def save(self):
         for formset in self.formsets.values():
             for form in formset:
-                form.save()
-
+                answer=form.save()
