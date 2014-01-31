@@ -14,8 +14,11 @@
         </div>
     {% endif %}
 
-    <form class="form-horizontal" role="form">
-
+    <form class="form-horizontal" role="form" method="post">
+    {% csrf_token %}
+    {% for form_type, form_set in formsets.formsets.items %}
+        {{ form_set.management_form }}
+    {% endfor %}
     {% for subsection in section.sub_sections.all %}
         <h4> {{subsection.title}}</h4>
         {% for group in subsection.parent_question_groups %}

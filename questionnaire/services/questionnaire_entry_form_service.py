@@ -11,7 +11,9 @@ ANSWER_FORM ={
 
 class QuestionnaireEntryFormService(object):
 
-    def __init__(self, section):
+    def __init__(self, section, initial={}, data=None):
+        self.initial = initial
+        self.data = data
         self.section = section
         self.ordered_questions = section.ordered_questions()
         self.formsets = self._formsets()
@@ -28,12 +30,22 @@ class QuestionnaireEntryFormService(object):
     def _formsets(self):
         formsets = {}
         for answer_type in ANSWER_FORM.keys():
-            questions = filter(lambda question:question.answer_type == answer_type, self.ordered_questions)
+            questions = filter(lambda question: question.answer_type == answer_type, self.ordered_questions)
             if questions:
                 _formset_factory = formset_factory(ANSWER_FORM[answer_type], max_num=len(questions))
                 initial = self._get_initial(questions)
-                formsets[answer_type] = _formset_factory(prefix=answer_type, initial=initial)
+                formsets[answer_type] = _formset_factory(prefix=answer_type, initial=initial, data=self.data)
         return formsets
 
     def _get_initial(self, questions):
-        return [{'question': question} for question in questions]
+        return [dict(self.initial.items() + {'question': question}.items())  for question in questions]
+
+    def is_valid(self):
+        formset_checks = [formset.is_valid() for formset in self.formsets.values()]
+        return len(formset_checks) == formset_checks.count(True)
+
+    def save(self):
+        for formset in self.formsets.values():
+            for form in formset:
+                form.save()
+

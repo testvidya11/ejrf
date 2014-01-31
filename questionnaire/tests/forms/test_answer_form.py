@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm, MultiChoiceAnswerSelectWidget
 from questionnaire.models import Question, Country, QuestionOption
 from questionnaire.tests.base_test import BaseTest
@@ -11,23 +12,25 @@ class NumericalAnswerFormTest(BaseTest):
                                             UID='C00001', answer_type='Number')
 
         self.form_data = {
+            'response': 100,
+        }
+
+        self.initial = {
             'question': self.question.id,
             'country': self.country.id,
             'status': 'DRAFT',
             'version': 1,
-            'response': 100,
             'code':'HAHA123'
-            
         }
 
     def test_valid(self):
-        answer_form = NumericalAnswerForm(self.form_data)
+        answer_form = NumericalAnswerForm(self.form_data, initial=self.initial)
         self.assertTrue(answer_form.is_valid())
 
     def test_text_response_is_invalid(self):
         form_data = self.form_data.copy()
         form_data['response'] = 'some text which is not number'
-        answer_form = NumericalAnswerForm(form_data)
+        answer_form = NumericalAnswerForm(form_data, initial=self.initial)
         self.assertFalse(answer_form.is_valid())
         message = 'Enter a number.'
         self.assertEqual([message], answer_form.errors['response'])
@@ -41,25 +44,19 @@ class TextAnswerFormTest(BaseTest):
                                             UID='C00001', answer_type='Text')
 
         self.form_data = {
+            'response':'some answer',
+        }
+        self.initial = {
             'question': self.question.id,
             'country': self.country.id,
             'status': 'DRAFT',
             'version':1,
-            'response':'some answer',
             'code':'HAHA123'
         }
 
     def test_valid(self):
-        answer_form = TextAnswerForm(self.form_data)
+        answer_form = TextAnswerForm(self.form_data, initial=self.initial)
         self.assertTrue(answer_form.is_valid())
-
-    def test_version_should_be_integer(self):
-        form_data = self.form_data.copy()
-        form_data['version'] = 'some text which is not number'
-        answer_form = TextAnswerForm(form_data)
-        self.assertFalse(answer_form.is_valid())
-        message = 'Enter a whole number.'
-        self.assertEqual([message], answer_form.errors['version'])
 
 
 class DateAnswerFormTest(BaseTest):
@@ -70,22 +67,25 @@ class DateAnswerFormTest(BaseTest):
                                             UID='C00001', answer_type='Date')
 
         self.form_data = {
+            'response':'2014-01-01',
+        }
+
+        self.initial = {
             'question': self.question.id,
             'country': self.country.id,
             'status': 'DRAFT',
             'version':1,
-            'response':'2014-01-01',
             'code':'HAHA123'
         }
 
     def test_valid(self):
-        answer_form = DateAnswerForm(self.form_data)
+        answer_form = DateAnswerForm(self.form_data, initial=self.initial)
         self.assertTrue(answer_form.is_valid())
 
     def test_response_cannot_be_text(self):
         form_data = self.form_data.copy()
         form_data['response'] = 'some text which is not a date'
-        answer_form = DateAnswerForm(form_data)
+        answer_form = DateAnswerForm(form_data, initial=self.initial)
         self.assertFalse(answer_form.is_valid())
         message = 'Enter a valid date.'
         self.assertEqual([message], answer_form.errors['response'])
@@ -100,23 +100,26 @@ class MultiChoiceAnswerFormTest(BaseTest):
         self.question_option_one = QuestionOption.objects.create(text='Option One', question=self.question)
 
         self.form_data = {
-            'question': self.question.id,
-            'country': self.country.id,
+            'response': self.question_option_one.id,
+        }
+
+        self.initial = {
+            'question': self.question,
+            'country': self.country,
             'status': 'DRAFT',
             'version': 1,
-            'response': self.question_option_one.id,
             'code':'HAHA123'
         }
 
     def test_valid(self):
-        answer_form = MultiChoiceAnswerForm(self.form_data)
+        answer_form = MultiChoiceAnswerForm(self.form_data, initial=self.initial)
         self.assertTrue(answer_form.is_valid())
         self.assertIsNone(answer_form.fields['response'].empty_label)
 
     def test_id_of_a_non_option(self):
         form_data = self.form_data.copy()
         form_data['response'] = -1
-        answer_form = MultiChoiceAnswerForm(form_data)
+        answer_form = MultiChoiceAnswerForm(form_data, initial=self.initial)
         self.assertFalse(answer_form.is_valid())
         message = 'Select a valid choice. That choice is not one of the available choices.'
         self.assertEqual([message], answer_form.errors['response'])

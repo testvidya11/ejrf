@@ -2,6 +2,8 @@ import csv
 from django.contrib.auth.models import User
 from django.test import TestCase
 from urllib import quote
+from questionnaire.models import Country, UserProfile
+
 
 class BaseTest(TestCase):
 
@@ -13,6 +15,9 @@ class BaseTest(TestCase):
 
     def create_user_with_no_permissions(self):
         self.user = User.objects.create(username="user", email="user@mail.com")
+        uganda = Country.objects.create(name="Uganda")
+        UserProfile.objects.create(user=self.user, country=uganda)
+
         self.user.set_password("pass")
         self.user.save()
         return self.user

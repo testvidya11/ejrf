@@ -7,42 +7,38 @@ from django.utils.safestring import mark_safe
 from questionnaire.models import NumericalAnswer, TextAnswer, DateAnswer, MultiChoiceAnswer, QuestionOption
 
 
-class NumericalAnswerForm(ModelForm):
+class AnswerForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(AnswerForm, self).__init__(*args, **kwargs)
+        self._initial = kwargs['initial'] if 'initial' in kwargs else {}
+
+    def save(self, commit=True, *args, **kwargs):
+        answer = super(AnswerForm, self).save(commit=False, *args, **kwargs)
+        self._add_extra_attributes_to(answer)
+        answer.save()
+        return answer
+
+    def _add_extra_attributes_to(self, answer):
+        for attribute in self.initial.keys():
+            setattr(answer, attribute, self.initial[attribute])
+
+
+class NumericalAnswerForm(AnswerForm):
 
     class Meta:
         model = NumericalAnswer
+        exclude = ('question', 'status', 'country', 'version', 'code')
 
-        widgets = {
-            'question': forms.HiddenInput(),
-            'status': forms.HiddenInput(),
-            'country': forms.HiddenInput(),
-            'version': forms.HiddenInput(),
-            'code': forms.HiddenInput(),
-        }
-
-class TextAnswerForm(ModelForm):
+class TextAnswerForm(AnswerForm):
     class Meta:
         model = TextAnswer
+        exclude = ('question', 'status', 'country', 'version', 'code')
 
-        widgets = {
-            'question': forms.HiddenInput(),
-            'status': forms.HiddenInput(),
-            'country': forms.HiddenInput(),
-            'version': forms.HiddenInput(),
-            'code': forms.HiddenInput(),
-        }
-
-class DateAnswerForm(ModelForm):
+class DateAnswerForm(AnswerForm):
     class Meta:
         model = DateAnswer
-
-        widgets = {
-            'question': forms.HiddenInput(),
-            'status': forms.HiddenInput(),
-            'country': forms.HiddenInput(),
-            'version': forms.HiddenInput(),
-            'code': forms.HiddenInput(),
-        }
+        exclude = ('question', 'status', 'country', 'version', 'code')
 
 
 class MultiChoiceAnswerSelectWidget(forms.Select):
@@ -66,7 +62,7 @@ class MultiChoiceAnswerSelectWidget(forms.Select):
                            force_text(option_label))
 
 
-class MultiChoiceAnswerForm(ModelForm):
+class MultiChoiceAnswerForm(AnswerForm):
     response = ModelChoiceField(queryset=None, widget=forms.Select())
 
     def __init__(self, *args, **kwargs):
@@ -95,12 +91,4 @@ class MultiChoiceAnswerForm(ModelForm):
 
     class Meta:
         model = MultiChoiceAnswer
-
-        widgets = {
-            'question': forms.HiddenInput(),
-            'status': forms.HiddenInput(),
-            'country': forms.HiddenInput(),
-            'version': forms.HiddenInput(),
-            'code': forms.HiddenInput(),
-        }
-
+        exclude = ('question', 'status', 'country', 'version', 'code')
