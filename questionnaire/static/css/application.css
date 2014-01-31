@@ -115,7 +115,7 @@
 }
 
 .indent{
-    padding-left: 40px;
+    margin-left: 40px;
 }
 .group-hr{
     border: 1px solid #000;
@@ -182,4 +182,8 @@ a[data-toggle='popover']{
 .group-name-instructions h5{
     max-width: 350px;
     display: inline;
+}
+.field-error{
+    border: 1px solid #CC0000;
+    display: inherit;
 }

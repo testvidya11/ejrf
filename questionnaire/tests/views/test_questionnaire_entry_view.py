@@ -42,6 +42,12 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.user = self.create_user_with_no_permissions()
         self.login_user()
 
+        self.data = {u'MultiChoice-MAX_NUM_FORMS': u'1', u'MultiChoice-TOTAL_FORMS': u'1',
+                u'MultiChoice-INITIAL_FORMS': u'1', u'MultiChoice-0-response': self.option1.id,
+                u'Number-INITIAL_FORMS': u'2', u'Number-TOTAL_FORMS': u'2', u'Number-MAX_NUM_FORMS': u'2',
+                u'Number-0-response': u'2', u'Number-1-response': u'33'}
+
+
     def test_get_questionnaire_entry_view(self):
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
@@ -66,11 +72,7 @@ class QuestionnaireEntryViewTest(BaseTest):
 
 
     def test_post_saves_answers(self):
-        data = {u'MultiChoice-MAX_NUM_FORMS': u'1', u'MultiChoice-TOTAL_FORMS': u'1',
-                u'MultiChoice-INITIAL_FORMS': u'1', u'MultiChoice-0-response': self.option1.id,
-                u'Number-INITIAL_FORMS': u'2', u'Number-TOTAL_FORMS': u'2', u'Number-MAX_NUM_FORMS': u'2',
-                u'Number-0-response': u'2', u'Number-1-response': u'33'}
-
+        data = self.data
         self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response'])))
         self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response'])))
         self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-1-response'])))
@@ -85,11 +87,7 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-1-response']), question=self.question3))
 
     def test_post_groups_rows_into_answer_groups(self):
-        data = {u'MultiChoice-MAX_NUM_FORMS': u'1', u'MultiChoice-TOTAL_FORMS': u'1',
-                u'MultiChoice-INITIAL_FORMS': u'1', u'MultiChoice-0-response': self.option1.id,
-                u'Number-INITIAL_FORMS': u'2', u'Number-TOTAL_FORMS': u'2', u'Number-MAX_NUM_FORMS': u'2',
-                u'Number-0-response': u'2', u'Number-1-response': u'33'}
-
+        data = self.data
         self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response'])))
         self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response'])))
         self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-1-response'])))
@@ -108,3 +106,37 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.assertIn(primary, answer_group_answers)
         self.assertIn(answer_1, answer_group_answers)
         self.assertIn(answer_2, answer_group_answers)
+
+    def test_successful_post_shows_success_message(self):
+        data = self.data
+        self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-1-response'])))
+
+        response = self.client.post(self.url, data=data)
+        self.assertEqual(200, response.status_code)
+        expected_message = 'Draft saved.'
+        self.assertIn(expected_message, response.content)
+
+
+    def test_post_failure_does_not_save_answers(self):
+        data = self.data
+        data[u'MultiChoice-0-response'] = -1
+
+        self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-1-response'])))
+
+        response = self.client.post(self.url, data=data)
+        self.assertEqual(200, response.status_code)
+        templates = [template.name for template in response.templates]
+        self.assertIn('questionnaires/entry/index.html', templates)
+
+        self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-1-response'])))
+
+        self.failIf(AnswerGroup.objects.filter(grouped_question=self.question_group))
+
+        expected_message = 'Draft NOT saved. See errors below.'
+        self.assertIn(expected_message, response.content)

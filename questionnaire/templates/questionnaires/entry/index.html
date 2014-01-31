@@ -32,10 +32,22 @@
                             <div class="form-group">
                                     <label class="col-sm-6 control-label center-fields">{{ question.text }}</label>
                                     <div class="col-sm-5 center-fields">
-                                            {{ question|get_form:formsets }}
+                                        {% for field in question|get_form:formsets %}
+                                            {% if field.errors %}
+                                               <div class="field-error">
+                                            {% endif %}
+                                            {{ field }}
+                                            {% if field.errors %}
+                                               </div>
+                                            {% endif %}
                                             {% if question.instructions %}
                                                 <a class="indent" data-toggle="popover" data-html="true" data-placement="bottom" data-trigger="hover" data-content="{{ question.instructions }}" id="question-{{ question.id }}-instructions"><i class="glyphicon glyphicon-info-sign cyan"></i> instructions</a>
                                             {% endif %}
+                                            {% if field.errors %}
+                                                <a class="indent red" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="{{ field.errors|striptags }}" id="question-{{ question.id }}-instructions"><i class="glyphicon glyphicon-warning-sign red"></i></a>
+                                            {% endif %}
+                                        {% endfor %}
+
                                     </div>
                             </div>
                         {% if question.group.parent and question.is_last_in_group %}

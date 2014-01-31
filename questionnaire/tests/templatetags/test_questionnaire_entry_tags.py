@@ -20,5 +20,5 @@ class QuestionnaireEntryTagTest(BaseTest):
         mock_form.visible_fields.return_value = [expected_visible_field, 'some useless element']
         with patch.object(QuestionnaireEntryFormService, 'next_ordered_form', return_value=mock_form) as mock_next_ordered_form:
             obtained_visible_fields = get_form(fake_question, fake_formsets)
-            self.assertEqual(expected_visible_field, obtained_visible_fields)
+            self.assertEqual([expected_visible_field], obtained_visible_fields)
             mock_next_ordered_form.assert_called_once_with(fake_question)

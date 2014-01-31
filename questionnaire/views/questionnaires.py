@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.views.generic import FormView
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.models import Questionnaire, Section
@@ -11,6 +12,7 @@ ANSWER_FORM ={
             'Date': DateAnswerForm,
             'MultiChoice': MultiChoiceAnswerForm
         }
+
 class Entry(LoginRequiredMixin, FormView):
     template_name = 'questionnaires/entry/index.html'
 
@@ -31,17 +33,21 @@ class Entry(LoginRequiredMixin, FormView):
         formsets = QuestionnaireEntryFormService(section, initial=initial, data=request.POST)
 
         if formsets.is_valid():
-            return self._form_valid(formsets, questionnaire, section)
-        return self._form_invalid(formsets)
+            return self._form_valid(request, formsets, questionnaire, section)
+        return self._form_invalid(request, formsets, questionnaire, section)
 
-    def _form_valid(self, formsets, questionnaire, section):
+    def _form_valid(self, request, formsets, questionnaire, section):
         formsets.save()
+        messages.success(request, 'Draft saved.')
         context = {'questionnaire': questionnaire, 'section': section,
                    'formsets': formsets, 'ordered_sections': Section.objects.order_by('order')}
 
         return self.render_to_response(context)
 
+    def _form_invalid(self, request, formsets, questionnaire, section):
+        messages.error(request, 'Draft NOT saved. See errors below.')
+        context = {'questionnaire': questionnaire, 'section': section,
+                   'formsets': formsets, 'ordered_sections': Section.objects.order_by('order')}
 
-    def _form_invalid(self, formsets):
+        return self.render_to_response(context)
 
-        pass
