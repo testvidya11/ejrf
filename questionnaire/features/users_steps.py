@@ -4,7 +4,6 @@ from lettuce import step, world
 from questionnaire.features.pages.extract import ExtractPage
 from questionnaire.features.pages.home import HomePage
 from questionnaire.features.pages.users import LoginPage, UserListingPage, CreateUserPage
-from questionnaire.models import UserProfile
 
 
 @step(u'Given I am registered user')
@@ -32,6 +31,7 @@ def and_i_submit_the_form(step):
 def then_i_should_be_redirected_dashboard(step):
     world.page = HomePage(world.browser)
     world.page.validate_url()
+    world.page.is_text_present("Electronic Joint Reporting Form")
 
 @step(u'And I should see my username and the logout link')
 def and_i_should_see_my_username_and_the_logout_link(step):
