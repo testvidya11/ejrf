@@ -18,8 +18,6 @@ class UserListingPage(PageObject):
     def validate_user_list_headers(self):
         self.is_text_present("Username", "Email", "Roles", "Organization / Region / Country", "Status", "Actions")
 
+
 class CreateUserPage(PageObject):
     url = "/users/new/"
-
-    def select(self, value):
-        self.browser.find_by_value(value).first.check()

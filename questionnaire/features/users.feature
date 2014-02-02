@@ -27,6 +27,17 @@ Feature: User management
         And I visit the user listing page
         Then I should see the list of users paginated
 
+    Scenario: Filter users list
+        Given I have a global admin user
+        And I have a region
+        And I have 10 users in one of the regions
+        And I have five others not in that region
+        And I logged in the user
+        And I visit the user listing page
+        And I select a region
+        And I click get list
+        Then I should see only the users in that region
+
     Scenario: Create a global admin user
         Given I have a global admin user
         And I have 100 other users

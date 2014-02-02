@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView, CreateView
+from questionnaire.forms.filter import UserFilterForm
 from questionnaire.forms.user_profile import UserProfileForm
 from questionnaire.models import Organization
 
@@ -15,7 +17,17 @@ class UsersList(ListView):
         self.object_list = self.get_queryset()
 
     def get(self, *args, **kwargs):
-        context = {'request': self.request, 'users': self.object_list}
+        context = {'request': self.request, 'users': self.object_list, 'filter_form': UserFilterForm()}
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        form = UserFilterForm(request.POST)
+        region = None
+        if form.is_valid():
+            region = form.cleaned_data['region']
+        context = {'request': self.request,
+                   'users': self.object_list.filter(user_profile__region=region),
+                   'filter_form': UserFilterForm()}
         return self.render_to_response(context)
 
     def get_queryset(self):

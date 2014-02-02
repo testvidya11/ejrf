@@ -5,13 +5,14 @@ from questionnaire.models import Questionnaire, Section
 from django.core.urlresolvers import reverse
 from braces.views import LoginRequiredMixin
 
+
 class Home(LoginRequiredMixin, View):
-    template_name="home/index.html"
+    template_name = "home/index.html"
 
     def get(self, request, *args, **kwargs):
         questionnaires = Questionnaire.objects.all()
         sections = Section.objects.order_by('order')
         if questionnaires.exists() and sections.exists():
-            return HttpResponseRedirect(reverse('questionnaire_entry_page', args=(questionnaires.latest('created').id,
-                                                                                sections[0].id)))
+            args = (questionnaires.latest('created').id, sections[0].id)
+            return HttpResponseRedirect(reverse('questionnaire_entry_page', args=args))
         return render(request, self.template_name)

@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.test import Client
+from questionnaire.forms.filter import UserFilterForm
 from questionnaire.forms.user_profile import UserProfileForm
-from questionnaire.models import Organization
+from questionnaire.models import Organization, Region, Country, UserProfile
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -18,6 +19,7 @@ class UsersViewTest(BaseTest):
         self.global_admin.permissions.add(permission)
         self.global_admin.user_set.add(self.user)
         self.organization = Organization.objects.create(name="haha")
+
         self.form_data = {
             'username': 'rajni',
             'password1': 'kant',
@@ -38,6 +40,7 @@ class UsersViewTest(BaseTest):
         self.assertEqual(200, response.status_code)
         templates = [template.name for template in response.templates]
         self.assertIn('users/index.html', templates)
+        self.assertIsInstance(response.context['filter_form'], UserFilterForm)
         self.assertIn(self.user, response.context['users'])
         self.assertIn(user2, response.context['users'])
 
@@ -57,3 +60,26 @@ class UsersViewTest(BaseTest):
         user = User.objects.filter(username=self.form_data['username'])
         self.failUnless(user)
         self.assertIn('User created successfully.', response.cookies['messages'].value)
+
+    def test_post_filter_users(self):
+        organization = Organization.objects.create(name="UNICEF")
+        region = Region.objects.create(name="Afro", organization=organization)
+        paho = Region.objects.create(name="PAHO", organization=organization)
+        uganda = Country.objects.create(name="uganda", code="UGX")
+        rwanda = Country.objects.create(name="Rwanda", code="RWA")
+        region.countries.add(uganda)
+        peru = Country.objects.create(name="Peru", code="PRU")
+        paho.countries.add(peru)
+        jacinta = User.objects.create(username='Jacinta')
+        tony = User.objects.create(username='Tony')
+        UserProfile.objects.create(user=jacinta, country=uganda, region=region)
+        UserProfile.objects.create(user=tony, country=rwanda, region=region)
+
+        felix = User.objects.create(username='Felix')
+        UserProfile.objects.create(user=felix, country=peru, region=paho)
+
+        response = self.client.post('/users/', data={'region': region.id, 'organization': organization.id})
+
+        self.assertEqual(2, len(response.context['users']))
+        self.assertIn(jacinta, response.context['users'])
+        self.assertNotIn(felix, response.context['users'])

@@ -4,6 +4,7 @@ from lettuce import step, world
 from questionnaire.features.pages.extract import ExtractPage
 from questionnaire.features.pages.home import HomePage
 from questionnaire.features.pages.users import LoginPage, UserListingPage, CreateUserPage
+from questionnaire.models import Region, Country, UserProfile
 
 
 @step(u'Given I am registered user')
@@ -127,7 +128,38 @@ def then_i_should_see_that_the_user_was_successfully_created(step):
 def and_i_should_see_the_user_listed_on_the_listing_page(step):
     world.page.is_text_present(world.form_data['username'], world.form_data['email'], world.global_admin.name)
 
-@step(u'And I have 10 other users')
-def and_i_have_10_other_users(step):
+@step(u'And I have a region')
+def and_i_have_a_region(step):
+    world.afro_region = Region.objects.create(name="Afro")
+
+@step(u'And I have 10 users in one of the regions')
+def and_i_have_10_users_in_one_region(step):
     for i in range(0, 10):
-        User.objects.create(username='Rajni%s' % str(i), email='rajni@kant%s.com' % str(i), password='I_Rock')
+        world.user = User.objects.create(username='Rajni%s' % str(i), email='rajni@kant%s.com' % str(i), password='I_Rock')
+        world.country = Country.objects.create(name="Country%s" % str(i), code="UGX")
+        world.afro_region.countries.add(world.country)
+        UserProfile.objects.create(user=world.user, country=world.country, region=world.afro_region)
+
+@step(u'And I have five others not in that region')
+def and_i_have_five_others_not_in_that_region(step):
+    region = Region.objects.create(name="Afro")
+    for i in range(11, 16):
+        world.user = User.objects.create(username='Jacinta%s' % str(i), email='jacinta%s@gmail.com' % str(i), password='I_Rock')
+        UserProfile.objects.create(user=world.user, region=region)
+
+
+@step(u'And I select a region')
+def and_i_select_a_region(step):
+    world.page.select(world.afro_region.id)
+
+@step(u'And I click get list')
+def and_i_click_get_list(step):
+    world.page.click_by_css("#get-list-btn")
+
+@step(u'Then I should see only the users in that region')
+def then_i_should_see_only_the_users_in_that_region(step):
+    for i in range(0, 10):
+        world.page.is_text_present('Rajni%s' % str(i), 'rajni@kant%s.com' % str(i))
+
+    for i in range(11, 16):
+        world.page.is_text_present('Jacinta%s' % str(i), 'jacinta%s@gmail.com' % str(i), status=False)

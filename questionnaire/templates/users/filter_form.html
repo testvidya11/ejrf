@@ -1,0 +1,20 @@
+<form method="post" class="pull-left padded-bottom" accept-charset="utf-8">
+    {% csrf_token %}
+    <div>
+        <ul>
+            {% for field in a_form.visible_fields %}
+                <li>
+                    <ul class="inner-field-list">
+                        <li><b>{{ field.label }}</b></li>
+                        <li>{{ field }}</li>
+                    </ul>
+                </li>
+            {% endfor %}
+
+            <li>
+                <button id="get-list-btn" type="submit">Get list</button>
+            </li>
+        </ul>
+    </div>
+
+</form>
