@@ -94,7 +94,7 @@ def then_i_should_see_an_add_more_button(step):
 
 @step(u'When I click the Add More button')
 def when_i_click_the_add_more_button(step):
-    world.page.click_by_id('add_more')
+    world.page.click_by_css('.add-more')
 
 @step(u'Then I should see a new question group')
 def then_i_should_see_a_new_subsection(step):
@@ -102,7 +102,7 @@ def then_i_should_see_a_new_subsection(step):
 
 @step(u'When I click the question group delete button')
 def when_i_click_the_sub_section_delete_button(step):
-    world.page.click_by_id('delete_more')
+    world.page.click_by_css('.delete-more')
 
 @step(u'Then I should not see that question group')
 def then_i_should_not_see_that_question_group(step):

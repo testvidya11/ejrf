@@ -1,12 +1,6 @@
 $(document).ready(function() {
 
     $('a[data-toggle=popover]').popover();
-    $('a[data-toggle=popover]').popover('destroy');
-    $(this).next('.question-group').remove();
-    $(this).prev('.multiple-hr').remove();
-    $(this).remove();
-
-    $('a[data-toggle=popover]').popover();
     load_organization_template();
 
 });
@@ -24,14 +18,14 @@ function cloneMore(selector, type) {
     });
 
     $(selector).after(newElement);
-    $(selector).after('<button type="button" id="delete_more" class="btn btn-default red delete-more close">×</button>');
+    $(selector).after('<button type="button" class="btn btn-default red delete-more close">×</button>');
     $(selector).after("<hr class='multiple-hr'/>");
 
     $('a[data-toggle=popover]').popover();
 
 }
 
-$('#add_more').on('click', function(event) {
+$('.add-more').on('click', function(event) {
     cloneMore($(this).prev('.question-group'), 'service');
 });
 
@@ -42,3 +36,13 @@ function load_organization_template(){
         $('#id_organization').remove();
     })
 }
+
+$(document).on('click', '.delete-more', function() {
+    $('a[data-toggle=popover]').popover('destroy');
+
+    $(this).next('.question-group').remove();
+    $(this).prev('.multiple-hr').remove();
+    $(this).remove();
+
+    $('a[data-toggle=popover]').popover();
+});
