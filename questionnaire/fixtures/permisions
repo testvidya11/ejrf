@@ -1,0 +1,44 @@
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
+from django.core import serializers
+
+auth_content = ContentType.objects.get_for_model(Permission)
+permission, out = Permission.objects.get_or_create(codename='can_submit_responses', content_type=auth_content)
+extract_permission, out = Permission.objects.get_or_create(codename='can_extract_data', content_type=auth_content)
+comments_permission, out = Permission.objects.get_or_create(codename='can_add_comments', content_type=auth_content)
+questionnaire_permission, out = Permission.objects.get_or_create(codename='can_view_questionnaire', content_type=auth_content)
+edit_questionnaire_permission, out = Permission.objects.get_or_create(codename='can_edit_questionnaire', content_type=auth_content)
+users_permission, out = Permission.objects.get_or_create(codename='can_view_users', content_type=auth_content)
+progress_permission, out = Permission.objects.get_or_create(codename='can_view_progress', content_type=auth_content)
+draft_permission, out = Permission.objects.get_or_create(codename='can_view_drafts', content_type=auth_content)
+
+
+global_admin = Group.objects.create(name='Global Admin')
+global_admin.permissions.add(extract_permission, comments_permission, questionnaire_permission,
+                             edit_questionnaire_permission, users_permission, progress_permission)
+
+regional_admin = Group.objects.create(name='Regional Admin')
+regional_admin.permissions.add(extract_permission, comments_permission, questionnaire_permission,
+                               edit_questionnaire_permission, progress_permission)
+
+country_admin = Group.objects.create(name='Country Admin')
+country_admin.permissions.add(extract_permission, comments_permission, progress_permission)
+
+data_submitter = Group.objects.create(name='Data Submitter')
+data_submitter.permissions.add(extract_permission, comments_permission, progress_permission, permission)
+
+
+data = serializers.serialize("json", [global_admin, regional_admin, country_admin, data_submitter])
+print data
+
+data = serializers.serialize("json", global_admin.permissions.all())
+print data
+
+data = serializers.serialize("json", regional_admin.permissions.all())
+print data
+
+data = serializers.serialize("json", country_admin.permissions.all())
+print data
+
+data = serializers.serialize("json", data_submitter.permissions.all())
+print data

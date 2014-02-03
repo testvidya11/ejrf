@@ -1,0 +1,196 @@
+[
+    {
+        "pk": 7,
+        "model": "auth.group",
+        "fields": {
+            "name": "Global Admin",
+            "permissions": [78, 80, 77, 82, 79, 81]
+        }
+    },
+    {
+        "pk": 8,
+        "model": "auth.group",
+        "fields": {
+            "name": "Regional Admin",
+            "permissions": [78, 80, 77, 82, 79]
+        }
+    },
+    {
+        "pk": 9,
+        "model": "auth.group",
+        "fields": {
+            "name": "Country Admin",
+            "permissions": [78, 77, 82]
+        }
+    },
+    {
+        "pk": 10,
+        "model": "auth.group",
+        "fields": {
+            "name": "Data Submitter",
+            "permissions": [78, 77, 76, 82]
+        }
+    },
+    {
+        "pk": 78,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_add_comments",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 80,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_edit_questionnaire",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 77,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_extract_data",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 82,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_view_progress",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 79,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_view_questionnaire",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 81,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_view_users",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 78,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_add_comments",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 80,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_edit_questionnaire",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 77,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_extract_data",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 82,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_view_progress",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 79,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_view_questionnaire",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 78,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_add_comments",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 77,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_extract_data",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 82,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_view_progress",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 78,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_add_comments",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 77,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_extract_data",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 76,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_submit_responses",
+            "name": "",
+            "content_type": 2
+        }
+    },
+    {
+        "pk": 82,
+        "model": "auth.permission",
+        "fields": {
+            "codename": "can_view_progress",
+            "name": "",
+            "content_type": 2
+        }
+    }
+]
