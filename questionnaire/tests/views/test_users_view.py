@@ -19,6 +19,8 @@ class UsersViewTest(BaseTest):
         self.global_admin.permissions.add(permission)
         self.global_admin.user_set.add(self.user)
         self.organization = Organization.objects.create(name="haha")
+        self.afro = Region.objects.create(name="Afro")
+        self.uganda = Country.objects.create(name="Uganda")
 
         self.form_data = {
             'username': 'rajni',
@@ -53,6 +55,8 @@ class UsersViewTest(BaseTest):
         self.assertIn('CREATE', response.context['btn_label'])
         self.assertIn('Create new user', response.context['title'])
         self.assertIn(self.organization, response.context['organizations'])
+        self.assertIn(self.afro, response.context['regions'])
+        self.assertIn(self.uganda, response.context['countries'])
 
     def test_post_new_user(self):
         response = self.client.post('/users/new/', data=self.form_data)

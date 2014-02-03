@@ -45,6 +45,22 @@ Feature: User management
         And I visit the user listing page
         And I click an new user button
         And I fill in the user information
+        And I select global admin role
         And I submit the form
         Then I should see that the user was successfully created
         And I should see the user listed on the listing page
+
+    Scenario: Create a regional admin user
+        Given I have a global admin user
+        And I have a region and a country
+        And I logged in the user
+        And I have 10 users in one of the regions
+        And I have roles
+        And I visit the user listing page
+        And I click an new user button
+        And I fill in the user information
+        And I select regional admin role
+        Then I should see only region and country fields
+        When I select the country and region for the new user
+        And I submit the form
+        Then I should see that the user was successfully created

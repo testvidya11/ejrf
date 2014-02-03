@@ -12,6 +12,27 @@
                 <option value={{ org.id }}>{{ org.name }}</option>
                 {% endfor %}
             </select>
+         <label class="error"></label>
+    </p>
+</script>
+
+<script type="text/template" id="country-template">
+    <p>
+        <label for="region">Region</label>
+            <select id="region" name="region">
+                {%   for region in regions %}
+                <option value={{ region.id }}>{{ regions.name }}</option>
+                {% endfor %}
+            </select>
+         <label class="error"></label>
+    </p>
+    <p>
+        <label for="country">Country</label>
+            <select id="country" name="country">
+                {%   for country in countries %}
+                <option value={{ country.id }}>{{ country.name }}</option>
+                {% endfor %}
+            </select>
         <label class="error"></label>
     </p>
 </script>

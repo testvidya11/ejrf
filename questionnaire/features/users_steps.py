@@ -118,7 +118,10 @@ def and_i_fill_in_the_user_information(step):
         'password2': 'kant',
         'email': 'raj@ni.kant'}
     world.page.fill_form(world.form_data)
-    world.page.select(world.global_admin.id)
+
+@step(u'And I select global admin role')
+def and_i_select_global_admin_role(step):
+    world.page.check(world.global_admin.id)
 
 @step(u'Then I should see that the user was successfully created')
 def then_i_should_see_that_the_user_was_successfully_created(step):
@@ -131,6 +134,8 @@ def and_i_should_see_the_user_listed_on_the_listing_page(step):
 @step(u'And I have a region')
 def and_i_have_a_region(step):
     world.afro_region = Region.objects.create(name="Afro")
+    world.uganda = Country.objects.create(name="Afro", code="COD")
+    world.afro_region.countries.add(world.uganda)
 
 @step(u'And I have 10 users in one of the regions')
 def and_i_have_10_users_in_one_region(step):
@@ -150,7 +155,7 @@ def and_i_have_five_others_not_in_that_region(step):
 
 @step(u'And I select a region')
 def and_i_select_a_region(step):
-    world.page.select(world.afro_region.id)
+    world.page.select('region', world.afro_region.id)
 
 @step(u'And I click get list')
 def and_i_click_get_list(step):
@@ -163,3 +168,23 @@ def then_i_should_see_only_the_users_in_that_region(step):
 
     for i in range(11, 16):
         world.page.is_text_present('Jacinta%s' % str(i), 'jacinta%s@gmail.com' % str(i), status=False)
+
+@step(u'And I select regional admin role')
+def and_i_select_regional_admin_role(step):
+    world.page.check(world.regional_admin.id)
+
+@step(u'Then I should see only region and country fields')
+def then_i_should_see_the_region_and_country_fields(step):
+    world.page.is_text_present("Region", "Country")
+    world.page.is_text_present("Organization", status=False)
+
+@step(u'When I select the country and region for the new user')
+def when_i_select_the_country_and_region_for_the_new_user(step):
+    world.page.select('region', world.afro_region.id)
+    world.page.select('country', world.uganda.id)
+
+@step(u'And I have roles')
+def and_i_have_roles(step):
+    world.regional_admin = Group.objects.create(name='Regional Admin')
+    world.country_admin = Group.objects.create(name='Country Admin')
+    world.data_submitter = Group.objects.create(name='Data Submitter')

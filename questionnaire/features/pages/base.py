@@ -55,5 +55,8 @@ class PageObject(object):
     def number_of_elements(self, element_name):
         return len(self.browser.find_by_name(element_name))
 
-    def select(self, value):
+    def check(self, value):
         self.browser.find_by_value(value).first.check()
+
+    def select(self, name, value):
+        self.browser.select(name, value)

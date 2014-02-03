@@ -1,11 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
 from django.views.generic import ListView, CreateView
 from questionnaire.forms.filter import UserFilterForm
 from questionnaire.forms.user_profile import UserProfileForm
-from questionnaire.models import Organization
+from questionnaire.models import Organization, Region, Country
 
 
 class UsersList(ListView):
@@ -49,5 +48,10 @@ class CreateUser(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateUser, self).get_context_data(**kwargs)
-        context.update({'btn_label': "CREATE", 'title': "Create new user", 'organizations': Organization.objects.all()})
+        context_vars = {'btn_label': "CREATE",
+                        'title': "Create new user",
+                        'organizations': Organization.objects.all(),
+                        'regions': Region.objects.all(),
+                        'countries': Country.objects.all()}
+        context.update(context_vars)
         return context
