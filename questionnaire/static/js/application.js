@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     $('a[data-toggle=popover]').popover();
     load_role_template();
-
+    $('p:empty').remove()
     warn_before_navigating_away();
 
 });
@@ -70,7 +70,7 @@ function load_role_template(){
         var $selected_role = $.trim($(this).parents('label').text());
         var select_element = $(this).parents('form').find('select')
         select_element.prev('label').remove()
-        select_element.remove()
+        select_element.parents('p').remove()
 
         if($selected_role === "Global Admin"){
             load_country_and_region_template.call(this, template);
