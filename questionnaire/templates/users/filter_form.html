@@ -1,20 +1,10 @@
-<form method="post" class="pull-left padded-bottom" accept-charset="utf-8">
+<form class="form-inline pull-left" role="form" method="post" accept-charset="utf-8">
     {% csrf_token %}
-    <div>
-        <ul>
-            {% for field in a_form.visible_fields %}
-                <li>
-                    <ul class="inner-field-list">
-                        <li><b>{{ field.label }}</b></li>
-                        <li>{{ field }}</li>
-                    </ul>
-                </li>
-            {% endfor %}
-
-            <li>
-                <button id="get-list-btn" type="submit">Get list</button>
-            </li>
-        </ul>
-    </div>
-
+    {% for field in a_form.visible_fields %}
+      <div class="form-group">
+        {{ field.label }}
+        {{ field }}
+      </div>
+    {% endfor %}
+    <button id="get-list-btn" type="submit" class="btn btn-primary">Get list</button>
 </form>
