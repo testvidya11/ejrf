@@ -5,11 +5,12 @@ $(document).ready(function() {
 
 });
 
-
-function cloneMore(selector, type) {
+function cloneMore(selector) {
     $('a[data-toggle=popover]').popover('destroy');
 
     var newElement = $(selector).clone(true);
+    updateFormCounts(newElement);
+
     newElement.find(':input').each(function() {
         // Reset cloned inputs
         $(this).val('');
@@ -22,20 +23,26 @@ function cloneMore(selector, type) {
     $(selector).after("<hr class='multiple-hr'/>");
 
     $('a[data-toggle=popover]').popover();
+}
 
+function updateFormCounts(form_element){
+    form_element.find(':input').each(function() {
+        var inputType = $(this).attr('name').split('-', 1)[0];
+        var total = $('#id_' + inputType + '-TOTAL_FORMS').val();
+
+        var name = $(this).attr('name').replace(/[\d]+/g, total.toString());
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        total++;
+
+        $('#id_' + inputType + '-TOTAL_FORMS').val(total);
+        $('#id_' + inputType + '-MAX_NUM_FORMS').val(total);
+    });
 }
 
 $('.add-more').on('click', function(event) {
-    cloneMore($(this).prev('.question-group'), 'service');
+    cloneMore($(this).prev('.question-group'));
 });
-
-function load_organization_template(){
-    $('.radio-roles').on('change', function(){
-     var template = $("#organization-template").html();
-        $(this).parents('ul').after(template);
-        $('#id_organization').remove();
-    })
-}
 
 $(document).on('click', '.delete-more', function() {
     $('a[data-toggle=popover]').popover('destroy');
@@ -46,3 +53,12 @@ $(document).on('click', '.delete-more', function() {
 
     $('a[data-toggle=popover]').popover();
 });
+
+function load_organization_template(){
+    $('.radio-roles').on('change', function(){
+     var template = $("#organization-template").html();
+        $(this).parents('ul').after(template);
+        $('#id_organization').remove();
+    })
+}
+
