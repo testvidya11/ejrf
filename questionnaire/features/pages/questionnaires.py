@@ -19,3 +19,11 @@ class QuestionnairePage(PageObject):
     def validate_instructions(self, question):
         self.click_by_css("#question-%d-instructions" % question.id)
         self.is_text_present(question.instructions)
+
+    def validate_alert_success(self):
+        self.is_text_present("Draft saved")
+        self.is_element_present_by_css(".alert-success")
+
+    def validate_alert_error(self):
+        self.is_text_present("Draft NOT saved. See errors below")
+        self.is_element_present_by_css(".alert-danger")
