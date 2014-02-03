@@ -1,7 +1,11 @@
+var form_has_changed = false;
+
 $(document).ready(function() {
 
     $('a[data-toggle=popover]').popover();
     load_organization_template();
+
+    warn_before_navigating_away();
 
 });
 
@@ -62,3 +66,19 @@ function load_organization_template(){
     })
 }
 
+$( "#questionnaire_entry :input" ).change(function() {
+  form_has_changed = true;
+});
+
+$("#questionnaire_entry").on('submit', function(){
+    form_has_changed = false;
+    this.submit();
+});
+
+function warn_before_navigating_away(){
+    window.onbeforeunload = function(){
+      if(form_has_changed){
+        return "Are you sure you want to navigate away from this page?\nAll unsaved changes will be lost.";
+       }
+   };
+};
