@@ -72,15 +72,14 @@ def and_i_navigate_to_the_section_of_the_questionnaire_to_be_filled_in(step):
 @step(u'When I enter valid responses to the questions')
 def and_i_enter_valid_responses_to_the_questions(step):
     data = {
-        'Text-0-response':'James Smith',
-        'Text-1-response':'EPI Manager',
-        'Text-2-response':'jsmith@moh.gov.ug',
-        'Text-3-response':'Angellina Jones',
-        'Text-4-response':'ajones@unicef.org',
-        'Text-5-response':'Brad Wolfstrom',
-        'Text-6-response':'brad.wolfstrom@who.org',
-        'Number-0-response':'200',
-            }
+        'Text-0-response': 'James Smith',
+        'Text-1-response': 'EPI Manager',
+        'Text-2-response': 'jsmith@moh.gov.ug',
+        'Text-3-response': 'Angellina Jones',
+        'Text-4-response': 'ajones@unicef.org',
+        'Text-5-response': 'Brad Wolfstrom',
+        'Text-6-response': 'brad.wolfstrom@who.org',
+        'Number-0-response': '200'}
     world.page.fill_form(data)
 
 @step(u'And I click the save button')
@@ -94,15 +93,14 @@ def then_i_should_see_a_message_that_a_draft_of_my_responses_has_been_saved(step
 @step(u'When I enter invalid responses to the questions')
 def when_i_enter_invalid_responses_to_the_questions(step):
     data = {
-        'Text-0-response':'',
-        'Text-1-response':'',
-        'Text-2-response':'',
-        'Text-3-response':'Angellina Jones',
-        'Text-4-response':'ajones@unicef.org',
-        'Text-5-response':'Brad Wolfstrom',
-        'Text-6-response':'brad.wolfstrom@who.org',
-        'Number-0-response':'200',
-            }
+        'Text-0-response': '',
+        'Text-1-response': '',
+        'Text-2-response': '',
+        'Text-3-response': 'Angellina Jones',
+        'Text-4-response': 'ajones@unicef.org',
+        'Text-5-response': 'Brad Wolfstrom',
+        'Text-6-response': 'brad.wolfstrom@who.org',
+        'Number-0-response': '200'}
     world.page.fill_form(data)
 
 @step(u'Then I should see a save draft error message')

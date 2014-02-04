@@ -28,15 +28,18 @@ class AnswerForm(ModelForm):
         answer_group = AnswerGroup.objects.get_or_create(grouped_question=self.question_group)[0]
         answer_group.answer.add(answer)
 
+
 class NumericalAnswerForm(AnswerForm):
     class Meta:
         model = NumericalAnswer
         exclude = ('question', 'status', 'country', 'version', 'code')
 
+
 class TextAnswerForm(AnswerForm):
     class Meta:
         model = TextAnswer
         exclude = ('question', 'status', 'country', 'version', 'code')
+
 
 class DateAnswerForm(AnswerForm):
     class Meta:
@@ -90,7 +93,6 @@ class MultiChoiceAnswerForm(AnswerForm):
             question = kwargs['initial']['question']
             return question.options.all()
         return QuestionOption.objects.all()
-
 
     class Meta:
         model = MultiChoiceAnswer

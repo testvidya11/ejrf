@@ -178,10 +178,9 @@ def then_i_should_see_the_region_and_country_fields(step):
     world.page.is_text_present("Region", "Country")
     world.page.is_text_present("Organization", status=False)
 
-@step(u'When I select the country and region for the new user')
+@step(u'When I select the region for the new user')
 def when_i_select_the_country_and_region_for_the_new_user(step):
     world.page.select('region', world.afro_region.id)
-    world.page.select('country', world.uganda.id)
 
 @step(u'And I have roles')
 def and_i_have_roles(step):

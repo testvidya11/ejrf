@@ -61,6 +61,6 @@ Feature: User management
         And I fill in the user information
         And I select regional admin role
         Then I should see only region and country fields
-        When I select the country and region for the new user
+        When I select the region for the new user
         And I submit the form
         Then I should see that the user was successfully created
