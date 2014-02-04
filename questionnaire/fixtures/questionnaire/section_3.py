@@ -34,16 +34,14 @@ question10 = Question.objects.create(text='Supervision', UID='C00010', answer_ty
 QuestionOption.objects.create(text="Yes", question=question10)
 QuestionOption.objects.create(text="No", question=question10)
 
-
 question11 = Question.objects.create(text='Planing', UID='C00011', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Yes", question=question11)
 QuestionOption.objects.create(text="No", question=question11)
 
-question_8_11__group = QuestionGroup.objects.create(subsection=sub_section_3, order=2)
-sub_group_2 = QuestionGroup.objects.create(subsection=sub_section_3, parent=question_8_11__group, name="Which"
-"activities the EPI Program responsible for (and not the school staff per se ):")
+question_8_11__group = QuestionGroup.objects.create(subsection=sub_section_3, order=2, name="Which "
+"activities is the EPI Program responsible for (and not the school staff per se ):")
 
-sub_group_2.question.add(question8, question9, question10, question11)
+question_8_11__group.question.add(question8, question9, question10, question11)
 
 QuestionGroupOrder.objects.create(question=question8, question_group=question_8_11__group, order=1)
 QuestionGroupOrder.objects.create(question=question9, question_group=question_8_11__group, order=2)
@@ -61,18 +59,16 @@ question_12_group.question.add(question12)
 QuestionGroupOrder.objects.create(question=question12, question_group=question_12_group, order=1)
 
 
-question13 = Question.objects.create(text='Which interventions are given in the school health program?', UID='C00013', answer_type='MultiChoice')
-QuestionOption.objects.create(text="Yes", question=question13)
-QuestionOption.objects.create(text="No", question=question13)
+question13 = Question.objects.create(text='Which interventions are given in the school health program?', UID='C00013', answer_type='Text')
 
-question_13_group = QuestionGroup.objects.create(subsection=sub_section_3, order=3)
+question_13_group = QuestionGroup.objects.create(subsection=sub_section_3, order=4)
 question_13_group.question.add(question13)
 
 QuestionGroupOrder.objects.create(question=question13, question_group=question_13_group, order=1)
 
 
 #################################### next sub
-sub_section_4 = SubSection.objects.create(order=2, section=section_2, title="Routine Immunization given at school"
+sub_section_4 = SubSection.objects.create(order=2, section=section_2, title="Routine Immunization given at school "
     "(please complete one row  for each grade level or age and vaccine)", description="""
      Please complete the table by using one row for each vaccine and each target group. Examples: if TT
      and MR is given in grade 2 and TT in grade 8, use three rows (TT-grade 2; MR-grade 2; TT-grade 8);
@@ -126,7 +122,7 @@ question22 = Question.objects.create(text='H. Does recorded on immunization or c
 QuestionOption.objects.create(text="Yes", question=question22)
 QuestionOption.objects.create(text="No", question=question22)
 
-question_14_22_group = QuestionGroup.objects.create(subsection=sub_section_4, order=1)
+question_14_22_group = QuestionGroup.objects.create(subsection=sub_section_4, order=1, allow_multiples=True)
 question_14_22_group.question.add(question14, question15, question16, question17, question18, question19,
                                    question20, question21, question22)
 
