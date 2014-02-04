@@ -109,7 +109,7 @@
 .delete-more{
     opacity: 1 !important;
 }
-.form-group label{
+.control-label{
     text-align: left !important;
     font-weight: normal !important;
 }
@@ -174,10 +174,24 @@ label.error{
 a[data-toggle='popover']{
     cursor:pointer;
 }
+
+.instructions{
+    float: right;
+}
+
+.form-group ul{
+   display: inline;
+   padding-left: 0px;
+}
+
 .form-group ul li{
    display: inline;
    list-style-type: none;
    margin-left: 5px;
+}
+
+.form-group ul li label{
+   margin-left: 0px;
 }
 
 .group-name-instructions h5{
