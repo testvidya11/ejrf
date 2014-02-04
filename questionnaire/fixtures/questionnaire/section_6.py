@@ -35,7 +35,7 @@ QuestionOption.objects.create(text="Tetanus toxoid-containing vaccine (TT2+) for
 question2 = Question.objects.create(text="Official coverage estimates (percent coverage)",
                                     UID='C00072', answer_type='Text')
 
-parent1 = QuestionGroup.objects.create(subsection=sub_section, order=1)
+parent1 = QuestionGroup.objects.create(subsection=sub_section, order=1, allow_multiples=True)
 parent1.question.add(question2, question1)
 QuestionGroupOrder.objects.create(question=question1, question_group=parent1, order=1)
 QuestionGroupOrder.objects.create(question=question2, question_group=parent1, order=2)
