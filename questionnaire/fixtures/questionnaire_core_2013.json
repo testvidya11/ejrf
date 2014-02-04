@@ -723,11 +723,11 @@
         "pk": 49,
         "model": "questionnaire.question",
         "fields": {
-            "answer_type": "Number",
+            "answer_type": "MultiChoice",
             "UID": "C00057",
             "created": "2014-01-29T07:53:21.208Z",
             "text": "Vaccine administered (age in years)",
-            "modified": "2014-01-29T07:53:21.208Z",
+            "modified": "2014-02-04T09:10:30.530Z",
             "short_instruction": null,
             "is_primary": false,
             "is_core": false,
@@ -3585,8 +3585,8 @@
             "UID": null,
             "created": "2014-01-29T07:53:21.230Z",
             "text": "Children 6-23 months",
-            "question": 49,
-            "modified": "2014-01-29T07:53:21.230Z",
+            "question": 54,
+            "modified": "2014-02-04T09:13:41.562Z",
             "instructions": null
         }
     },
@@ -5403,6 +5403,18 @@
         }
     },
     {
+        "pk": 275,
+        "model": "questionnaire.questionoption",
+        "fields": {
+            "UID": null,
+            "created": "2014-02-04T09:05:57.915Z",
+            "text": "unknown age",
+            "question": 49,
+            "modified": "2014-02-04T09:05:57.916Z",
+            "instructions": null
+        }
+    },
+    {
         "pk": 1,
         "model": "questionnaire.questiongrouporder",
         "fields": {
@@ -7196,6 +7208,17 @@
         }
     },
     {
+        "pk": 169,
+        "model": "questionnaire.questiongrouporder",
+        "fields": {
+            "order": 1,
+            "question": 53,
+            "modified": "2014-02-04T09:28:47.481Z",
+            "question_group": 49,
+            "created": "2014-02-04T09:28:47.481Z"
+        }
+    },
+    {
         "pk": 1,
         "model": "questionnaire.questiongroup",
         "fields": {
@@ -7394,12 +7417,12 @@
         "pk": 14,
         "model": "questionnaire.questiongroup",
         "fields": {
-            "allow_multiples": false,
+            "allow_multiples": true,
             "name": null,
             "parent": null,
             "created": "2014-01-29T07:53:21.165Z",
             "question": [40, 41, 42, 43, 44],
-            "modified": "2014-01-29T07:53:21.165Z",
+            "modified": "2014-02-04T08:59:39.087Z",
             "subsection": 6,
             "order": 1,
             "instructions": null
@@ -7469,12 +7492,12 @@
         "pk": 19,
         "model": "questionnaire.questiongroup",
         "fields": {
-            "allow_multiples": false,
+            "allow_multiples": true,
             "name": null,
             "parent": null,
             "created": "2014-01-29T07:53:21.218Z",
-            "question": [49, 50, 51, 52],
-            "modified": "2014-01-29T07:53:21.218Z",
+            "question": [50, 51, 52, 49],
+            "modified": "2014-02-04T09:33:11.042Z",
             "subsection": 9,
             "order": 1,
             "instructions": null
@@ -7484,12 +7507,12 @@
         "pk": 20,
         "model": "questionnaire.questiongroup",
         "fields": {
-            "allow_multiples": false,
+            "allow_multiples": true,
             "name": null,
             "parent": null,
             "created": "2014-01-29T07:53:21.239Z",
             "question": [54, 55, 56, 57],
-            "modified": "2014-01-29T07:53:21.239Z",
+            "modified": "2014-02-04T09:31:11.883Z",
             "subsection": 11,
             "order": 1,
             "instructions": null
@@ -7911,6 +7934,21 @@
             "question": [134, 135, 136, 137, 138, 139, 140, 141],
             "modified": "2014-01-29T08:14:19.959Z",
             "subsection": 25,
+            "order": 1,
+            "instructions": null
+        }
+    },
+    {
+        "pk": 49,
+        "model": "questionnaire.questiongroup",
+        "fields": {
+            "allow_multiples": false,
+            "name": null,
+            "parent": null,
+            "created": "2014-02-04T09:26:31.192Z",
+            "question": [53],
+            "modified": "2014-02-04T09:27:06.337Z",
+            "subsection": 10,
             "order": 1,
             "instructions": null
         }

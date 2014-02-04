@@ -64,7 +64,7 @@ question4 = Question.objects.create(text="C. Number of doses administered throug
                                     UID='C00051', answer_type='Number')
 question5 = Question.objects.create(text="D. Percent coverage (=C/B*100)", UID='C00052', answer_type='Number')
 
-parent1 = QuestionGroup.objects.create(subsection=sub_section, order=1)
+parent1 = QuestionGroup.objects.create(subsection=sub_section, order=1, allow_multiples=True)
 parent1.question.add(question1, question2, question3, question3, question4, question5)
 
 QuestionGroupOrder.objects.create(question=question1, question_group=parent1, order=1)
@@ -110,7 +110,7 @@ QuestionGroupOrder.objects.create(question=question32, question_group=parent5, o
 sub_section4 = SubSection.objects.create(order=4, section=section_1, title="HPV Vaccine Doses administered: 2013",
                                          description="Report the number of HPV vaccinations given to females by their age at time of administration for each of the three recommended doses of HPV vaccine. If age is unknown but can be estimated, report for the estimated age. For example, if vaccination is offered exclusively to girls in the 6th school form and most girls in the 6th school form are eleven years of age, vaccinations by dose may be reported as vaccinations for girls eleven years of age.")
 
-question41 = Question.objects.create(text="Vaccine administered (age in years)", UID='C00057', answer_type='Number')
+question41 = Question.objects.create(text="Vaccine administered (age in years)", UID='C00057', answer_type='MultiChoice')
 QuestionOption.objects.create(text="9", question=question41)
 QuestionOption.objects.create(text="10", question=question41)
 QuestionOption.objects.create(text="11", question=question41)
@@ -118,12 +118,13 @@ QuestionOption.objects.create(text="12", question=question41)
 QuestionOption.objects.create(text="13", question=question41)
 QuestionOption.objects.create(text="14", question=question41)
 QuestionOption.objects.create(text="15+", question=question41)
+QuestionOption.objects.create(text="unknown age", question=question41)
 
 question42 = Question.objects.create(text="A. 1st dose", UID='C00058', answer_type='Number')
 question43 = Question.objects.create(text="B. 2d dose", UID='C00059', answer_type='Number')
 question44 = Question.objects.create(text="C. 3d dose", UID='C00060', answer_type='Number')
 
-parent7 = QuestionGroup.objects.create(subsection=sub_section4, order=1)
+parent7 = QuestionGroup.objects.create(subsection=sub_section4, order=1, allow_multiples=True)
 parent7.question.add(question41, question42, question43, question44)
 QuestionGroupOrder.objects.create(question=question41, question_group=parent7, order=1)
 QuestionGroupOrder.objects.create(question=question42, question_group=parent7, order=2)
@@ -134,13 +135,16 @@ sub_section5 = SubSection.objects.create(order=5, section=section_1, title="Accu
 
 question51 = Question.objects.create(text="Describe any factors limiting the accuracy of the administered doses",
                                      UID='C00061', answer_type='Text')
-
+question51 = Question.objects.create(text="Describe any factors limiting the accuracy of the administered doses", UID='C00061')
+parent8 = QuestionGroup.objects.create(subsection=sub_section5, order=1)
+parent8.question.add(question51)
+QuestionGroupOrder.objects.create(question=question51, question_group=parent8, order=1)
 
 sub_section6 = SubSection.objects.create(order=6, section=section_1, title="Seasonal Influenza Vaccine Doses Administered",
                                          description="In an updated position paper (2012), WHO recommends that countries considering the initiation or expansion of seasonal influenza vaccination programmes give the highest priority to pregnant women. Additional risk groups to be considered for vaccination, in no particular order of priority, are: children aged 6-59 months; the elderly; individuals with specific chronic medical conditions; and healthcare workers. Report immunization coverage in this table using data collected from vaccination clinics/sites on the number of doses administered for each of the risk groups that are included in the country-specific policy for seasonal influenza vaccination. ")
 
 question61 = Question.objects.create(text="Description of target population", UID='C00062', answer_type='MultiChoice')
-QuestionOption.objects.create(text="Children 6-23 months", question=question41)
+QuestionOption.objects.create(text="Children 6-23 months", question=question61)
 QuestionOption.objects.create(text="Children >=24 months up to 9 years", question=question61)
 QuestionOption.objects.create(text="Elderly (please specify minimum age under explanatory comments)", question=question61)
 QuestionOption.objects.create(text="Pregnant women", question=question61)
@@ -154,7 +158,7 @@ question62 = Question.objects.create(text="B. Number in target group (denominato
 question63 = Question.objects.create(text="C. Number of doses administered through routine services (numerator)", UID='C00064', answer_type='Number')
 question64 = Question.objects.create(text="D. Percent coverage (=C/B*100)", UID='C00065', answer_type='Number')
 
-parent6 = QuestionGroup.objects.create(subsection=sub_section6, order=1)
+parent6 = QuestionGroup.objects.create(subsection=sub_section6, order=1, allow_multiples=True)
 parent6.question.add(question61, question62, question63, question64)
 QuestionGroupOrder.objects.create(question=question61, question_group=parent6, order=1)
 QuestionGroupOrder.objects.create(question=question62, question_group=parent6, order=2)
