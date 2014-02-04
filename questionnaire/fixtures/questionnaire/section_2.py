@@ -106,7 +106,7 @@ QuestionOption.objects.create(text="UNICEF, WHO or PAHO", question=question13)
 QuestionOption.objects.create(text="donating agency", question=question13)
 QuestionOption.objects.create(text="other", question=question13)
 
-parent = QuestionGroup.objects.create(subsection=sub_section, order=1)
+parent = QuestionGroup.objects.create(subsection=sub_section, order=1, allow_multiples=True)
 parent.question.add(question1, question1b, question2, question3, question4, question5, question6, question7, question8,
                     question10, question11)
 
@@ -142,7 +142,7 @@ question16 = Question.objects.create(text="M. Which agency procured the Syringes
 
 question17 = Question.objects.create(text="N.Total no. of syringes procured at national level", UID='C00047', answer_type='Number',)
 
-parent2 = QuestionGroup.objects.create(subsection=sub_section, order=2)
+parent2 = QuestionGroup.objects.create(subsection=sub_section, order=2, allow_multiples=True)
 parent2.question.add(question15, question16, question17, question8, question10, question11, question12)
 
 QuestionOption.objects.create(text="government agency", question=question16)

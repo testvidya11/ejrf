@@ -7259,7 +7259,7 @@
         "pk": 5,
         "model": "questionnaire.questiongroup",
         "fields": {
-            "allow_multiples": false,
+            "allow_multiples": true,
             "name": null,
             "parent": null,
             "created": "2014-01-29T07:53:06.960Z",
@@ -7289,7 +7289,7 @@
         "pk": 7,
         "model": "questionnaire.questiongroup",
         "fields": {
-            "allow_multiples": false,
+            "allow_multiples": true,
             "name": null,
             "parent": null,
             "created": "2014-01-29T07:53:06.988Z",
