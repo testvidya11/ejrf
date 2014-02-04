@@ -79,7 +79,7 @@ class MultiChoiceAnswerForm(AnswerForm):
         return None if query_set.count() <= 3 else "Choose One"
 
     def _get_response_widget(self, query_set):
-        if query_set.count() <= 3:
+        if query_set.count() <= 2 or query_set.filter(text='Yes').exists():
             return forms.RadioSelect()
         if query_set.exclude(instructions=None).exists():
             return MultiChoiceAnswerSelectWidget(question_options=query_set)

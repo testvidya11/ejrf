@@ -132,7 +132,11 @@ QuestionGroupOrder.objects.create(question=question14, question_group=parent, or
 
 ######################################### next group
 
-question15 = Question.objects.create(text="AD equipement", UID='C00045', answer_type='MultiChoice',)
+question15 = Question.objects.create(text="AD equipment", UID='C00045', answer_type='MultiChoice',)
+
+QuestionOption.objects.create(text="AD - BCG: AD (auto-disable) syringes for BCG", question=question15)
+QuestionOption.objects.create(text="AD - inj: AD syringes", question=question15)
+QuestionOption.objects.create(text="AD - Rec: AD syringes for reconstitution", question=question15)
 
 question16 = Question.objects.create(text="M. Which agency procured the Syringes?", UID='C00046', answer_type='MultiChoice',)
 
