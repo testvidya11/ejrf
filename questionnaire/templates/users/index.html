@@ -26,7 +26,9 @@
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.groups.all |display_list}}</td>
-                    <td>{{ user.country }}{{ user.user_profile.organization }}</td>
+                    <td>{{ user.user_profile.organization| default_if_none:"&nbsp" }}
+                        {{ user.user_profile.region| default_if_none:"&nbsp" }}
+                        {{ user.user_profile.country| default_if_none:"&nbsp" }}</td>
                     <td>
                         {% if user.is_active %}
                             Active
