@@ -41,14 +41,15 @@ QuestionOption.objects.create(question=question4, text="Subnational")
 QuestionGroupOrder.objects.create(question=question1, question_group=group, order=1)
 QuestionGroupOrder.objects.create(question=question2, question_group=group, order=2)
 QuestionGroupOrder.objects.create(question=question3, question_group=group, order=3)
-QuestionGroupOrder.objects.create(question=question5, question_group=group, order=4)
-QuestionGroupOrder.objects.create(question=question6, question_group=group, order=5)
-QuestionGroupOrder.objects.create(question=question7, question_group=group, order=6)
-QuestionGroupOrder.objects.create(question=question8, question_group=group, order=7)
-QuestionGroupOrder.objects.create(question=question11, question_group=group, order=8)
-QuestionGroupOrder.objects.create(question=question12, question_group=group, order=9)
-QuestionGroupOrder.objects.create(question=question13, question_group=group, order=10)
-QuestionGroupOrder.objects.create(question=question14, question_group=group, order=11)
+QuestionGroupOrder.objects.create(question=question4, question_group=group, order=4)
+QuestionGroupOrder.objects.create(question=question5, question_group=group, order=5)
+QuestionGroupOrder.objects.create(question=question6, question_group=group, order=6)
+QuestionGroupOrder.objects.create(question=question7, question_group=group, order=7)
+QuestionGroupOrder.objects.create(question=question8, question_group=group, order=8)
+QuestionGroupOrder.objects.create(question=question11, question_group=group, order=9)
+QuestionGroupOrder.objects.create(question=question12, question_group=group, order=10)
+QuestionGroupOrder.objects.create(question=question13, question_group=group, order=11)
+QuestionGroupOrder.objects.create(question=question14, question_group=group, order=12)
 
 
 ############################################################################################
@@ -58,13 +59,14 @@ sub_section2 = SubSection.objects.create(order=2, section=section_1, title="Plan
 
 group2 = QuestionGroup.objects.create(subsection=sub_section2, order=1, allow_multiples=True,
 instructions="Record any supplementary activities related to immunization and nutritional supplementation, at either the national or sub-national levels, that are planned for 2014 and 2015. These could include activities related to polio, yellow fever, measles, rubella, influenza, meningitis, and tetanus toxoid vaccines; vitamin A and iron supplements; deworming; and the distribution of insecticide-treated bednets (ITNs).")
-group.question.add(question1, question2, question3, question4, question5, question6)
+group2.question.add(question1, question2, question3, question4, question5, question6)
 
 QuestionGroupOrder.objects.create(question=question1, question_group=group2, order=1)
 QuestionGroupOrder.objects.create(question=question2, question_group=group2, order=2)
 QuestionGroupOrder.objects.create(question=question3, question_group=group2, order=3)
-QuestionGroupOrder.objects.create(question=question5, question_group=group2, order=4)
-QuestionGroupOrder.objects.create(question=question6, question_group=group2, order=5)
+QuestionGroupOrder.objects.create(question=question4, question_group=group2, order=4)
+QuestionGroupOrder.objects.create(question=question5, question_group=group2, order=5)
+QuestionGroupOrder.objects.create(question=question6, question_group=group2, order=6)
 #
 # ############################################ GENERATE FIXTURES
 # questionnaires = Questionnaire.objects.all()
