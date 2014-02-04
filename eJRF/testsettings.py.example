@@ -1,34 +1,63 @@
-from settings import *
-
+import sys
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "ejrf_test",
-        "USER": "ejrf",
+        "USER": "andrew",
         "PASSWORD": "",
         "HOST": "localhost",
     }
 }
 
+SECRET_KEY = 'fwcsq!p9i1m6@%us!hh%8k8o_5ccycphkz0)0wv*^+72)4s-4y'
+
 INSTALLED_APPS = (
-    'django.contrib.contenttypes',
+    'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
     'django_nose',
-    'south',
     'lettuce.django',
+    'south',
     'django_extensions',
     'bootstrap_pagination',
-    'questionnaire'
+    'questionnaire',
 )
 
-SOUTH_TESTS_MIGRATE = False
 
-import logging
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'bootstrap_pagination.middleware.PaginationMiddleware',
+)
 
-south_logger = logging.getLogger('south')
-south_logger.setLevel(logging.INFO)
+if ('test' in sys.argv) or ('harvest' in sys.argv):
+    LETTUCE_SERVER_PORT = 7000
+    LETTUCE_AVOID_APPS = (
+            'south',
+            'lettuce.django',
+            'django_extensions',
+            'bootstrap_pagination',
+            'django_nose',
+            'autotest'
+    )
+
+    DATABASES = {
+       "default": {
+           "ENGINE": "django.db.backends.postgresql_psycopg2",
+           "NAME": "ejrf_test",
+           "USER": "andrew",
+           "PASSWORD": "",
+           "HOST": "localhost",
+       }
+    }
+
+    import logging
+    south_logger=logging.getLogger('south')
+    south_logger.setLevel(logging.INFO)

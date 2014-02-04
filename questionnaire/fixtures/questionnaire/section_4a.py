@@ -135,7 +135,6 @@ sub_section5 = SubSection.objects.create(order=5, section=section_1, title="Accu
 
 question51 = Question.objects.create(text="Describe any factors limiting the accuracy of the administered doses",
                                      UID='C00061', answer_type='Text')
-question51 = Question.objects.create(text="Describe any factors limiting the accuracy of the administered doses", UID='C00061')
 parent8 = QuestionGroup.objects.create(subsection=sub_section5, order=1)
 parent8.question.add(question51)
 QuestionGroupOrder.objects.create(question=question51, question_group=parent8, order=1)

@@ -151,7 +151,7 @@ QuestionOption.objects.create(text="Number of districts with DTP3 coverage in ea
 QuestionOption.objects.create(text="Number of surviving infants in these districts", question=question_1)
 QuestionOption.objects.create(text="Number of districts reporting DTP drop-out rates greater than 10%", question=question_1)
 
-parent4 = QuestionGroup.objects.create(subsection=sub_section2, order=1, allow_multiples=True)
+parent4 = QuestionGroup.objects.create(subsection=sub_section2, order=1)
 parent4.question.add(question_1, question_2, question_3, question_4, question_5, question_6, question_6b)
 QuestionGroupOrder.objects.create(question=question_1, question_group=parent4, order=1)
 QuestionGroupOrder.objects.create(question=question_2, question_group=parent4, order=2)
@@ -159,14 +159,14 @@ QuestionGroupOrder.objects.create(question=question_3, question_group=parent4, o
 QuestionGroupOrder.objects.create(question=question_4, question_group=parent4, order=4)
 QuestionGroupOrder.objects.create(question=question_5, question_group=parent4, order=5)
 QuestionGroupOrder.objects.create(question=question_6, question_group=parent4, order=6)
-QuestionGroupOrder.objects.create(question=question_7, question_group=parent4, order=7)
+QuestionGroupOrder.objects.create(question=question_6b, question_group=parent4, order=7)
 
 
 question_7 = Question.objects.create(text="Measles", UID='C00095', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Number of districts with measles (MCV1) coverage in each range", question=question_7)
 QuestionOption.objects.create(text="Number of surviving infants in these districts", question=question_7)
 
-parent5 = QuestionGroup.objects.create(subsection=sub_section2, order=2, allow_multiples=True)
+parent5 = QuestionGroup.objects.create(subsection=sub_section2, order=2)
 parent5.question.add(question_7, question_2, question_3, question_4, question_5, question_6)
 QuestionGroupOrder.objects.create(question=question_7, question_group=parent5, order=1)
 QuestionGroupOrder.objects.create(question=question_2, question_group=parent5, order=2)
@@ -174,12 +174,13 @@ QuestionGroupOrder.objects.create(question=question_3, question_group=parent5, o
 QuestionGroupOrder.objects.create(question=question_4, question_group=parent5, order=4)
 QuestionGroupOrder.objects.create(question=question_5, question_group=parent5, order=5)
 QuestionGroupOrder.objects.create(question=question_6, question_group=parent5, order=6)
+QuestionGroupOrder.objects.create(question=question_6b, question_group=parent5, order=7)
 
 question_8 = Question.objects.create(text="TT2+ (pregnant women)", UID='C00096', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Number of districts with TT2+ coverage in each range", question=question_8)
 QuestionOption.objects.create(text="Number of live births in these districts", question=question_8)
 
-parent6 = QuestionGroup.objects.create(subsection=sub_section2, order=3, allow_multiples=True)
+parent6 = QuestionGroup.objects.create(subsection=sub_section2, order=3)
 parent6.question.add(question_8, question_2, question_3, question_4, question_5, question_6)
 QuestionGroupOrder.objects.create(question=question_8, question_group=parent6, order=1)
 QuestionGroupOrder.objects.create(question=question_2, question_group=parent6, order=2)
@@ -187,6 +188,7 @@ QuestionGroupOrder.objects.create(question=question_3, question_group=parent6, o
 QuestionGroupOrder.objects.create(question=question_4, question_group=parent6, order=4)
 QuestionGroupOrder.objects.create(question=question_5, question_group=parent6, order=5)
 QuestionGroupOrder.objects.create(question=question_6, question_group=parent6, order=6)
+QuestionGroupOrder.objects.create(question=question_6b, question_group=parent6, order=7)
 
 question_9 = Question.objects.create(text="PAB (protection at birth)", UID='C00097', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Number of districts with PAB coverage in each range", question=question_9)
@@ -200,6 +202,7 @@ QuestionGroupOrder.objects.create(question=question_3, question_group=parent7, o
 QuestionGroupOrder.objects.create(question=question_4, question_group=parent7, order=4)
 QuestionGroupOrder.objects.create(question=question_5, question_group=parent7, order=5)
 QuestionGroupOrder.objects.create(question=question_6, question_group=parent7, order=6)
+QuestionGroupOrder.objects.create(question=question_6b, question_group=parent7, order=7)
 
 ################################################################################################
 sub_section3 = SubSection.objects.create(order=4, section=section_1)
