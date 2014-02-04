@@ -63,7 +63,7 @@ class UsersViewTest(BaseTest):
         self.assertRedirects(response, expected_url='/users/')
         user = User.objects.filter(username=self.form_data['username'])
         self.failUnless(user)
-        self.assertIn('User created successfully.', response.cookies['messages'].value)
+        self.assertIn('%s created successfully.' % self.global_admin.name, response.cookies['messages'].value)
 
     def test_post_filter_users(self):
         organization = Organization.objects.create(name="UNICEF")

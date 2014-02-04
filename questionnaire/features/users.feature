@@ -63,4 +63,4 @@ Feature: User management
         Then I should see only region and country fields
         When I select the region for the new user
         And I submit the form
-        Then I should see that the user was successfully created
+        Then I should see that the data regional admin was successfully created

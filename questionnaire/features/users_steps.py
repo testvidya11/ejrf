@@ -125,7 +125,7 @@ def and_i_select_global_admin_role(step):
 
 @step(u'Then I should see that the user was successfully created')
 def then_i_should_see_that_the_user_was_successfully_created(step):
-    world.page.is_text_present("User created successfully.")
+    world.page.is_text_present("%s created successfully." % world.global_admin.name)
 
 @step(u'And I should see the user listed on the listing page')
 def and_i_should_see_the_user_listed_on_the_listing_page(step):
@@ -187,3 +187,7 @@ def and_i_have_roles(step):
     world.regional_admin = Group.objects.create(name='Regional Admin')
     world.country_admin = Group.objects.create(name='Country Admin')
     world.data_submitter = Group.objects.create(name='Data Submitter')
+
+@step(u'Then I should see that the data regional admin was successfully created')
+def then_i_should_see_that_the_data_regional_admin_was_successfully_created(step):
+    world.page.is_text_present("%s created successfully." % world.regional_admin.name)
