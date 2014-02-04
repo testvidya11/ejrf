@@ -11,7 +11,7 @@ class UserProfileForm(UserCreationForm):
                                           widget=forms.HiddenInput())
     country = forms.ModelChoiceField(queryset=Country.objects.all(), empty_label=None, required=False,
                                      widget=forms.HiddenInput())
-    groups = forms.ModelChoiceField(queryset=Group.objects.all(), empty_label=None, required=False,
+    groups = forms.ModelChoiceField(queryset=Group.objects.all(), empty_label=None, required=True,
                                     widget=forms.RadioSelect(attrs={'class': 'radio-roles'}), label="Roles")
 
     def __init__(self, *args, **kwargs):
