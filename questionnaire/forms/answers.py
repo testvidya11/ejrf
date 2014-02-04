@@ -45,6 +45,9 @@ class DateAnswerForm(AnswerForm):
     class Meta:
         model = DateAnswer
         exclude = ('question', 'status', 'country', 'version', 'code')
+        widgets={
+            'response': forms.DateInput(attrs={'class': 'form-control datetimepicker', 'data-format':'YYYY-MM-DD'})
+        }
 
 
 class MultiChoiceAnswerSelectWidget(forms.Select):

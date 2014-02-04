@@ -7,6 +7,10 @@ $(document).ready(function() {
     $('p:empty').remove()
     warn_before_navigating_away();
 
+    $('.datetimepicker').each(function(){
+        $(this).datetimepicker({ pickTime: false });
+    });
+    
 });
 
 function cloneMore(selector) {
