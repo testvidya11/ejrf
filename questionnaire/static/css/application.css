@@ -97,6 +97,11 @@
 .bold{
     font-weight: bold;
 }
+.case-text{
+    font-size: 11px;
+    display: inherit;
+    padding-top: 5px;;
+}
 .red{
     color:#CC0000;
 }
