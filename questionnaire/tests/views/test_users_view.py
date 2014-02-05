@@ -196,7 +196,6 @@ class FilterUsersViewTest(BaseTest):
         who_region.countries.add(sudan)
         fatima = User.objects.create(username='Fatima')
         UserProfile.objects.create(user=fatima, country=self.uganda, region=who_region, organization=self.organization)
-
         faritha = User.objects.create(username='Faritha')
         UserProfile.objects.create(user=faritha, country=sudan, region=who_region, organization=organization)
 
@@ -210,4 +209,12 @@ class FilterUsersViewTest(BaseTest):
         self.assertNotIn(faritha, response.context['users'])
         self.assertNotIn(fatima, response.context['users'])
         self.assertIn(self.tony, response.context['users'])
+        self.assertNotIn(self.felix, response.context['users'])
+
+    def test_ignores_csrf_token_in_the_post(self):
+        post_data = {'region': self.region.id, 'organization': '', 'role': '', 'csrf_token': 'BlahBlah'}
+        response = self.client.post('/users/', data=post_data)
+
+        self.assertEqual(2, len(response.context['users']))
+        self.assertIn(self.jacinta, response.context['users'])
         self.assertNotIn(self.felix, response.context['users'])
