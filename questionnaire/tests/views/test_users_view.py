@@ -78,11 +78,12 @@ class UsersViewTest(BaseTest):
         tony = User.objects.create(username='Tony')
         UserProfile.objects.create(user=jacinta, country=uganda, region=region)
         UserProfile.objects.create(user=tony, country=rwanda, region=region)
-
+        global_admin = Group.objects.create(name="UNICEF")
         felix = User.objects.create(username='Felix')
         UserProfile.objects.create(user=felix, country=peru, region=paho)
 
-        response = self.client.post('/users/', data={'region': region.id, 'organization': organization.id})
+        post_data = {'region': region.id, 'organization': organization.id, 'role': global_admin.id}
+        response = self.client.post('/users/', data=post_data)
 
         self.assertEqual(2, len(response.context['users']))
         self.assertIn(jacinta, response.context['users'])
