@@ -2,7 +2,7 @@ from questionnaire.models import AnswerGroup
 
 
 class ExportToTextService:
-    HEADERS = ["ISO\tCountry\tYear\tField code\tQuestion text\tValue"]
+    HEADERS = "ISO\tCountry\tYear\tField code\tQuestion text\tValue"
 
     def __init__(self, questionnaire):
         self.questionnaire = questionnaire
@@ -40,4 +40,4 @@ class ExportToTextService:
         question_text_format = "%s | %s | %s" % (group.subsection.section.title, group.subsection.title, question.text)
         answer_format = (answer.country.code, answer.country.name, self.questionnaire.year, answer_id,
                          question_text_format, str(answer.response))
-        return ["%s\t%s\t%s\t%s\t%s\t%s" % answer_format]
+        return "%s\t%s\t%s\t%s\t%s\t%s" % answer_format

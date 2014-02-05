@@ -18,6 +18,5 @@ class ExportToTextView(LoginRequiredMixin, TemplateView):
         formatted_responses = ExportToTextService(questionnaire).get_formatted_responses()
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="%s-%s.txt"'% (questionnaire.name, questionnaire.year)
-        for row in formatted_responses:
-            response.write("%s\r\n" % row[0])
+        response.write("\r\n".join(formatted_responses))
         return response
