@@ -31,7 +31,7 @@ def take_screen_shot(scenario):
 
 @after.each_scenario
 def clear_cookies(scenario):
-    world.browser.cookies.delete()
+    world.browser.driver.delete_all_cookies()
 
 @after.all
 def close_browser(total):
