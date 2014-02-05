@@ -64,3 +64,15 @@ Feature: User management
         When I select the region for the new user
         And I submit the form
         Then I should see that the data regional admin was successfully created
+
+    Scenario: Filter users list by organization, region and role
+        Given I have a global admin user
+        And I have two organizations, region and role
+        And I have 4 users in the UNICEF organization, 2 of which are regional admins in the AFRO region
+        And I have 2 users in the WHO organization
+        And I logged in the user
+        And I visit the user listing page
+        And I select UNICEF organization, AFRO region and regional admin role
+        And I click get list
+        Then I should see only regional admin users in the UNICEF organization in the AFRO region
+        And I should not see the rest of the users

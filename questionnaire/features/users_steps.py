@@ -4,7 +4,7 @@ from lettuce import step, world
 from questionnaire.features.pages.extract import ExtractPage
 from questionnaire.features.pages.home import HomePage
 from questionnaire.features.pages.users import LoginPage, UserListingPage, CreateUserPage
-from questionnaire.models import Region, Country, UserProfile
+from questionnaire.models import Region, Country, UserProfile, Organization
 
 
 @step(u'Given I am registered user')
@@ -163,10 +163,10 @@ def and_i_click_get_list(step):
 
 @step(u'Then I should see only the users in that region')
 def then_i_should_see_only_the_users_in_that_region(step):
-    for i in range(0, 10):
+    for i in range(0, 2):
         world.page.is_text_present('Rajni%s' % str(i), 'rajni@kant%s.com' % str(i))
 
-    for i in range(11, 16):
+    for i in range(11, 13):
         world.page.is_text_present('Jacinta%s' % str(i), 'jacinta%s@gmail.com' % str(i), status=False)
 
 @step(u'And I select regional admin role')
@@ -191,3 +191,42 @@ def and_i_have_roles(step):
 @step(u'Then I should see that the data regional admin was successfully created')
 def then_i_should_see_that_the_data_regional_admin_was_successfully_created(step):
     world.page.is_text_present("%s created successfully." % world.regional_admin.name)
+
+@step(u'And I have two organizations, region and role')
+def and_i_have_an_organization_region_and_role(step):
+    world.organization = Organization.objects.create(name="UNICEF")
+    world.who_organization = Organization.objects.create(name="WHO")
+    world.region = Region.objects.create(name="Afro", organization=world.organization)
+    world.paho = Region.objects.create(name="PAHO", organization=world.organization)
+    world.global_admin = Group.objects.create(name="Global")
+    world.regional_admin = Group.objects.create(name="Regional")
+
+@step(u'And I have 4 users in the UNICEF organization, 2 of which are regional admins in the AFRO region')
+def and_i_have_4_users_in_the_unicef_organization(step):
+    for i in range(0, 4):
+        world.jacinta = User.objects.create(username="jacinta%s" % str(i), email='jacinta%s@gmail.com' % str(i))
+        UserProfile.objects.create(user=world.jacinta, region=world.region, organization=world.organization)
+        if i < 2:
+            world.regional_admin.user_set.add(world.jacinta)
+
+@step(u'And I have 2 users in the WHO organization')
+def and_i_have_2_users_in_the_who_organization(step):
+    for i in range(5, 7):
+        world.jacinta = User.objects.create(username="jacinta%s" % str(i))
+        UserProfile.objects.create(user=world.jacinta, region=world.region, organization=world.who_organization)
+
+@step(u'And I select UNICEF organization, AFRO region and regional admin role')
+def and_i_select_unicef_organization_afro_region_and_regional_admin_role(step):
+    world.page.select('organization', world.organization.id)
+    world.page.select('region', world.region.id)
+    world.page.select('role', world.regional_admin.id)
+
+@step(u'Then I should see only regional admin users in the UNICEF organization in the AFRO region')
+def then_i_should_see_only_regional_admin_users_in_the_unicef_organization_in_the_afro_region(step):
+    for i in range(0, 2):
+        world.page.is_text_present('jacinta%s' % str(i), 'jacinta%s@gmail.com' % str(i))
+
+@step(u'And I should not see the rest of the users')
+def and_i_should_not_see_the_rest_of_the_users(step):
+    for i in range(2, 7):
+        world.page.is_text_present('jacinta%s' % str(i), 'jacinta%s@gmail.com' % str(i), status=False)
