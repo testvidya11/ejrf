@@ -1,4 +1,3 @@
-import csv
 from braces.views import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views.generic import TemplateView
@@ -19,7 +18,6 @@ class ExportToTextView(LoginRequiredMixin, TemplateView):
         formatted_responses = ExportToTextService(questionnaire).get_formatted_responses()
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="%s-%s.txt"'% (questionnaire.name, questionnaire.year)
-        writer = csv.writer(response)
         for row in formatted_responses:
-            writer.writerow(row)
+            response.write("%s\r\n" % row[0])
         return response
