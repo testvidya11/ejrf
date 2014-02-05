@@ -18,6 +18,9 @@ class UserListingPage(PageObject):
     def validate_user_list_headers(self):
         self.is_text_present("Username", "Email", "Roles", "Organization / Region / Country", "Status", "Actions")
 
+    def validate_select_not_present(self, name):
+        assert len(self.browser.find_option_by_text(name)) == 0
+
 
 class CreateUserPage(PageObject):
     url = "/users/new/"

@@ -76,3 +76,12 @@ Feature: User management
         And I click get list
         Then I should see only regional admin users in the UNICEF organization in the AFRO region
         And I should not see the rest of the users
+
+    Scenario: Get regions for selected organizations
+        Given I have a global admin user
+        And I have two organizations, region and role
+        And I logged in the user
+        And I visit the user listing page
+        And I select unicef
+        Then I should see the region under unicef in the select
+        And I should not see the region under who in the select

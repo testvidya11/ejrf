@@ -197,7 +197,7 @@ def and_i_have_an_organization_region_and_role(step):
     world.organization = Organization.objects.create(name="UNICEF")
     world.who_organization = Organization.objects.create(name="WHO")
     world.region = Region.objects.create(name="Afro", organization=world.organization)
-    world.paho = Region.objects.create(name="PAHO", organization=world.organization)
+    world.paho = Region.objects.create(name="PAHO", organization=world.who_organization)
     world.global_admin = Group.objects.create(name="Global")
     world.regional_admin = Group.objects.create(name="Regional")
 
@@ -228,5 +228,17 @@ def then_i_should_see_only_regional_admin_users_in_the_unicef_organization_in_th
 
 @step(u'And I should not see the rest of the users')
 def and_i_should_not_see_the_rest_of_the_users(step):
-    for i in range(2, 7):
+    for i in range(4, 7):
         world.page.is_text_present('jacinta%s' % str(i), 'jacinta%s@gmail.com' % str(i), status=False)
+
+@step(u'And I select unicef')
+def and_i_select_unicef(step):
+    world.page.select('organization', world.organization.id)
+
+@step(u'Then I should see the region under unicef in the select')
+def then_i_should_see_the_region_under_unicef_in_the_select(step):
+    world.page.select('region', world.region.id)
+
+@step(u'And I should not see the region under who in the select')
+def and_i_should_not_see_the_region_under_who_in_the_select(step):
+    world.page.validate_select_not_present(world.paho.name)

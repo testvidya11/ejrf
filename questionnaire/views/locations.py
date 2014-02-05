@@ -1,6 +1,10 @@
-from django.views.generic import ListView
-from questionnaire.models import Region, Country
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+from django.http import HttpResponse
+from django.views.generic import ListView, DetailView
+from questionnaire.models import Region, Country, Organization
 from braces.views import LoginRequiredMixin
+
 
 class ListRegions(LoginRequiredMixin, ListView):
     model = Region
@@ -17,3 +21,14 @@ class ListCountries(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return self.region.countries.all()
+
+
+class RegionsForOrganization(DetailView):
+    model = Organization
+
+    def get(self, request, *args, **kwargs):
+        json_dump = json.dumps(list(self.get_object().regions.all().values('id', 'name')), cls=DjangoJSONEncoder)
+        return HttpResponse(json_dump, mimetype='application/json')
+
+    def get_object(self, queryset=None):
+        return self.model.objects.get(pk=self.kwargs['organization_id'])

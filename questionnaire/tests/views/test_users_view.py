@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.test import Client
@@ -64,6 +65,7 @@ class UsersViewTest(BaseTest):
         user = User.objects.filter(username=self.form_data['username'])
         self.failUnless(user)
         self.assertIn('%s created successfully.' % self.global_admin.name, response.cookies['messages'].value)
+
 
 class FilterUsersViewTest(BaseTest):
     def setUp(self):
@@ -218,3 +220,22 @@ class FilterUsersViewTest(BaseTest):
         self.assertEqual(2, len(response.context['users']))
         self.assertIn(self.jacinta, response.context['users'])
         self.assertNotIn(self.felix, response.context['users'])
+
+
+class GetRegionsForOrganizationTest(BaseTest):
+
+    def setUp(self):
+        self.unicef = Organization.objects.create(name="UNICEF")
+        self.who = Organization.objects.create(name="WHO")
+        self.afr = Region.objects.create(name="AFR", organization=self.unicef)
+        self.paho = Region.objects.create(name="PAHO", organization=self.who)
+
+    def test_get_filtered_json_for_organization(self):
+        response = self.client.get('/locations/organization/%s/region/' % self.unicef.id, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.failUnlessEqual(response.status_code, 200)
+        content = json.loads(response.content)
+
+        self.assertEquals(len(content), 1)
+
+        self.assertEquals(content[0]['id'], self.afr.id)
+        self.assertEquals(content[0]['name'], self.afr.name)
