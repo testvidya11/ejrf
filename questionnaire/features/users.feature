@@ -29,10 +29,10 @@ Feature: User management
 
     Scenario: Filter users list
         Given I have a global admin user
+        And I logged in the user
         And I have a region
         And I have 10 users in one of the regions
         And I have five others not in that region
-        And I logged in the user
         And I visit the user listing page
         And I select a region
         And I click get list

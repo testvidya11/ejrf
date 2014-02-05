@@ -1,3 +1,4 @@
+from braces.views import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -9,7 +10,8 @@ from questionnaire.models import Organization, Region, Country
 FORM_FIELD_QUERY_FIELD = {'region': 'user_profile__region', 'role': 'groups',
                           'organization': 'user_profile__organization'}
 
-class UsersList(ListView):
+
+class UsersList(LoginRequiredMixin, ListView):
 
     def __init__(self, **kwargs):
         super(UsersList, self).__init__(**kwargs)
@@ -24,7 +26,6 @@ class UsersList(ListView):
     def post(self, request, *args, **kwargs):
         form = UserFilterForm(request.POST)
         if form.is_valid():
-            region = form.cleaned_data['region']
             filtered_users = self._query_for(request)
             context = {'request': self.request,
                        'users': filtered_users,
@@ -44,7 +45,7 @@ class UsersList(ListView):
         return self.model.objects.order_by('user_profile__created')
 
 
-class CreateUser(CreateView):
+class CreateUser(LoginRequiredMixin, CreateView):
 
     def __init__(self, **kwargs):
         super(CreateUser, self).__init__(**kwargs)

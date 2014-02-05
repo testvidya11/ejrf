@@ -1,4 +1,3 @@
-from time import sleep
 from lettuce import step, world
 from questionnaire.features.pages.extract import ExtractPage
 from questionnaire.features.pages.users import LoginPage

@@ -66,9 +66,15 @@ class UsersViewTest(BaseTest):
         self.failUnless(user)
         self.assertIn('%s created successfully.' % self.global_admin.name, response.cookies['messages'].value)
 
+    def test_assert_login_required_for_create_new_user(self):
+        self.assert_login_required('/users/new/')
+
 
 class FilterUsersViewTest(BaseTest):
     def setUp(self):
+        self.client = Client()
+        self.user = self.create_user_with_no_permissions()
+        self.login_user()
         self.organization = Organization.objects.create(name="UNICEF")
         self.region = Region.objects.create(name="Afro", organization=self.organization)
         self.paho = Region.objects.create(name="PAHO", organization=self.organization)
@@ -221,10 +227,16 @@ class FilterUsersViewTest(BaseTest):
         self.assertIn(self.jacinta, response.context['users'])
         self.assertNotIn(self.felix, response.context['users'])
 
+    def test_assert_login_required_for_filter_users_list(self):
+        self.assert_login_required('/users/')
+
 
 class GetRegionsForOrganizationTest(BaseTest):
 
     def setUp(self):
+        self.client = Client()
+        self.user = self.create_user_with_no_permissions()
+        self.login_user()
         self.unicef = Organization.objects.create(name="UNICEF")
         self.who = Organization.objects.create(name="WHO")
         self.afr = Region.objects.create(name="AFR", organization=self.unicef)
@@ -239,3 +251,6 @@ class GetRegionsForOrganizationTest(BaseTest):
 
         self.assertEquals(content[0]['id'], self.afr.id)
         self.assertEquals(content[0]['name'], self.afr.name)
+
+    def test_assert_login_required_for_get_json_regions_for_organization(self):
+        self.assert_login_required('/locations/organization/%s/region/' % self.unicef.id)

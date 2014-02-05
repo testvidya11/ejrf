@@ -23,7 +23,7 @@ class ListCountries(LoginRequiredMixin, ListView):
         return self.region.countries.all()
 
 
-class RegionsForOrganization(DetailView):
+class RegionsForOrganization(LoginRequiredMixin, DetailView):
     model = Organization
 
     def get(self, request, *args, **kwargs):
