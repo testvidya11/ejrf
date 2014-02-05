@@ -6,6 +6,8 @@ from questionnaire.forms.filter import UserFilterForm
 from questionnaire.forms.user_profile import UserProfileForm
 from questionnaire.models import Organization, Region, Country
 
+FORM_FIELD_QUERY_FIELD = {'region': 'user_profile__region', 'role': 'groups',
+                          'organization': 'user_profile__organization'}
 
 class UsersList(ListView):
 
@@ -21,13 +23,22 @@ class UsersList(ListView):
 
     def post(self, request, *args, **kwargs):
         form = UserFilterForm(request.POST)
-        region = None
         if form.is_valid():
             region = form.cleaned_data['region']
-        context = {'request': self.request,
-                   'users': self.object_list.filter(user_profile__region=region),
-                   'filter_form': UserFilterForm()}
-        return self.render_to_response(context)
+            filtered_users = self._query_for(request)
+            context = {'request': self.request,
+                       'users': filtered_users,
+                       'filter_form': UserFilterForm()}
+            return self.render_to_response(context)
+
+    def _query_for(self, request):
+        post_request = request.POST.iteritems()
+        query_params = dict((self._get_query_field(key), value) for key, value in post_request if value.strip() != '' and key in FORM_FIELD_QUERY_FIELD.keys())
+        return self.object_list.filter(**query_params)
+
+    @staticmethod
+    def _get_query_field(_key):
+        return FORM_FIELD_QUERY_FIELD.get(_key)
 
     def get_queryset(self):
         return self.model.objects.order_by('user_profile__created')

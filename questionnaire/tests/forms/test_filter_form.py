@@ -23,17 +23,17 @@ class UserProfileFormTest(BaseTest):
     def test_valid_when_organization_is_blank(self):
         form_data = self.form_data.copy()
         form_data['organization'] = ''
-        user_filter = UserFilterForm(self.form_data)
+        user_filter = UserFilterForm(form_data)
         self.assertTrue(user_filter.is_valid())
 
     def test_valid_when_region_is_blank(self):
         form_data = self.form_data.copy()
         form_data['region'] = ''
-        user_filter = UserFilterForm(self.form_data)
+        user_filter = UserFilterForm(form_data)
         self.assertTrue(user_filter.is_valid())
 
     def test_valid_when_role_is_blank(self):
         form_data = self.form_data.copy()
         form_data['role'] = ''
-        user_filter = UserFilterForm(self.form_data)
+        user_filter = UserFilterForm(form_data)
         self.assertTrue(user_filter.is_valid())
