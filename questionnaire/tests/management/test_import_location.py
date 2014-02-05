@@ -17,11 +17,11 @@ class FakeCommand(Command):
 
 class ImportLocationTest(BaseTest):
     def setUp(self):
-        self.data = [['Region', 'Country'],
-                     ['AFRO', 'Uganda'],
-                     ['AFRO', 'Kenya'],
-                     ['PAHO', 'Brazil'],
-                     ['PAHO', 'Mexico']]
+        self.data = [['Region', 'Country' 'ISO'],
+                     ['AFRO', 'Uganda', 'UGA'],
+                     ['AFRO', 'Kenya', 'KES'],
+                     ['PAHO', 'Brazil', 'JGJ'],
+                     ['PAHO', 'Mexico', 'THD']]
 
         self.write_to_csv('wb', self.data)
         self.filename = 'test.csv'
@@ -36,4 +36,4 @@ class ImportLocationTest(BaseTest):
         for locations in self.data[1:]:
             region = Region.objects.filter(name=locations[0], organization__name='UNICEF')
             self.failUnless(region)
-            self.failUnless(Country.objects.filter(name=locations[1], regions=region[0]))
+            self.failUnless(Country.objects.filter(name=locations[1], regions=region[0], code=locations[-1]))

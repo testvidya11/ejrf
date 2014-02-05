@@ -1,0 +1,197 @@
+UNICEF_region,Country_name_en,ISO3_code
+ROSA,Afghanistan,AFG
+ESAR,Angola,AGO
+CEE-NIS,Albania,ALB
+Industrialized,Andorra,AND
+MENA,United Arab Emirates,ARE
+TACR,Argentina,ARG
+CEE-NIS,Armenia,ARM
+TACR,Antigua and Barbuda,ATG
+Industrialized,Australia,AUS
+Industrialized,Austria,AUT
+CEE-NIS,Azerbaijan,AZE
+ESAR,Burundi,BDI
+Industrialized,Belgium,BEL
+WCAR,Benin,BEN
+WCAR,Burkina Faso,BFA
+ROSA,Bangladesh,BGD
+CEE-NIS,Bulgaria,BGR
+MENA,Bahrain,BHR
+TACR,Bahamas,BHS
+CEE-NIS,Bosnia and Herzegovina,BIH
+CEE-NIS,Belarus,BLR
+TACR,Belize,BLZ
+TACR,Bolivia,BOL
+TACR,Brazil,BRA
+TACR,Barbados,BRB
+EAPR,Brunei Darussalam,BRN
+ROSA,Bhutan,BTN
+ESAR,Botswana,BWA
+WCAR,Central African Republic,CAF
+Industrialized,Canada,CAN
+Industrialized,Switzerland,CHE
+TACR,Chile,CHL
+EAPR,China,CHN
+WCAR,Cote d'Ivoire,CIV
+WCAR,Cameroon,CMR
+WCAR,"Congo, Democratic Republic of",COD
+WCAR,Congo,COG
+EAPR,Cook Islands,COK
+TACR,Colombia,COL
+ESAR,Comoros,COM
+WCAR,Cabo Verde,CPV
+TACR,Costa Rica,CRI
+TACR,Cuba,CUB
+Industrialized,Cyprus,CYP
+Industrialized,Czech Republic,CZE
+Industrialized,Germany,DEU
+MENA,Djibouti,DJI
+TACR,Dominica,DMA
+Industrialized,Denmark,DNK
+TACR,Dominican Republic,DOM
+MENA,Algeria,DZA
+TACR,Ecuador,ECU
+MENA,Egypt,EGY
+ESAR,Eritrea,ERI
+Industrialized,Spain,ESP
+Industrialized,Estonia,EST
+ESAR,Ethiopia,ETH
+Industrialized,Finland,FIN
+EAPR,Fiji,FJI
+Industrialized,France,FRA
+EAPR,Micronesia (Federated States of),FSM
+WCAR,Gabon,GAB
+Industrialized,United Kingdom,GBR
+CEE-NIS,Georgia,GEO
+WCAR,Ghana,GHA
+WCAR,Guinea,GIN
+WCAR,Gambia,GMB
+WCAR,Guinea-Bissau,GNB
+WCAR,Equatorial Guinea,GNQ
+Industrialized,Greece,GRC
+TACR,Grenada,GRD
+TACR,Guatemala,GTM
+TACR,Guyana,GUY
+TACR,Honduras,HND
+CEE-NIS,Croatia,HRV
+TACR,Haiti,HTI
+Industrialized,Hungary,HUN
+EAPR,Indonesia,IDN
+ROSA,India,IND
+Industrialized,Ireland,IRL
+MENA,Iran (Islamic Republic of),IRN
+MENA,Iraq,IRQ
+Industrialized,Iceland,ISL
+Industrialized,Israel,ISR
+Industrialized,Italy,ITA
+TACR,Jamaica,JAM
+MENA,Jordan,JOR
+Industrialized,Japan,JPN
+CEE-NIS,Kazakhstan,KAZ
+ESAR,Kenya,KEN
+CEE-NIS,Kyrgyzstan,KGZ
+EAPR,Cambodia,KHM
+EAPR,Kiribati,KIR
+TACR,Saint Kitts and Nevis,KNA
+EAPR,"Korea, Republic of",KOR
+MENA,Kuwait,KWT
+EAPR,Lao People's Democratic Republic,LAO
+MENA,Lebanon,LBN
+WCAR,Liberia,LBR
+MENA,Libyan Arab Jamahiriya,LBY
+TACR,Saint Lucia,LCA
+ROSA,Sri Lanka,LKA
+ESAR,Lesotho,LSO
+Industrialized,Lithuania,LTU
+Industrialized,Luxembourg,LUX
+Industrialized,Latvia,LVA
+MENA,Morocco,MAR
+Industrialized,Monaco,MCO
+CEE-NIS,Moldova,MDA
+ESAR,Madagascar,MDG
+ROSA,Maldives,MDV
+TACR,Mexico,MEX
+EAPR,Marshall Islands,MHL
+CEE-NIS,"Macedonia, the former Yugoslav Republic of",MKD
+WCAR,Mali,MLI
+Industrialized,Malta,MLT
+EAPR,Myanmar,MMR
+CEE-NIS,Montenegro,MNE
+EAPR,Mongolia,MNG
+ESAR,Mozambique,MOZ
+WCAR,Mauritania,MRT
+ESAR,Mauritius,MUS
+ESAR,Malawi,MWI
+EAPR,Malaysia,MYS
+ESAR,Namibia,NAM
+WCAR,Niger,NER
+WCAR,Nigeria,NGA
+TACR,Nicaragua,NIC
+EAPR,Niue,NIU
+Industrialized,Netherlands,NLD
+Industrialized,Norway,NOR
+ROSA,Nepal,NPL
+EAPR,Nauru,NRU
+Industrialized,New Zealand,NZL
+MENA,Oman,OMN
+ROSA,Pakistan,PAK
+TACR,Panama,PAN
+TACR,Peru,PER
+EAPR,Philippines,PHL
+EAPR,Palau,PLW
+EAPR,Papua New Guinea,PNG
+Industrialized,Poland,POL
+EAPR,"Korea, Democratic People's Republic of",PRK
+Industrialized,Portugal,PRT
+TACR,Paraguay,PRY
+MENA,"Palestine, the State of",PSE
+MENA,Qatar,QAT
+CEE-NIS,Romania,ROU
+CEE-NIS,Russian Federation,RUS
+ESAR,Rwanda,RWA
+MENA,Saudi Arabia,SAU
+MENA,Sudan,SDN
+WCAR,Senegal,SEN
+EAPR,Singapore,SGP
+EAPR,Solomon Islands,SLB
+WCAR,Sierra Leone,SLE
+TACR,El Salvador,SLV
+Industrialized,San Marino,SMR
+ESAR,Somalia,SOM
+CEE-NIS,Serbia,SRB
+ESAR,South Sudan,SSD
+WCAR,Sao Tome and Principe,STP
+TACR,Suriname,SUR
+Industrialized,Slovakia,SVK
+Industrialized,Slovenia,SVN
+Industrialized,Sweden,SWE
+ESAR,Swaziland,SWZ
+ESAR,Seychelles,SYC
+MENA,Syrian Arab Republic,SYR
+WCAR,Chad,TCD
+WCAR,Togo,TGO
+EAPR,Thailand,THA
+CEE-NIS,Tajikistan,TJK
+CEE-NIS,Turkmenistan,TKM
+EAPR,Timor-Leste,TLS
+EAPR,Tonga,TON
+TACR,Trinidad and Tobago,TTO
+MENA,Tunisia,TUN
+CEE-NIS,Turkey,TUR
+EAPR,Tuvalu,TUV
+ESAR,"Tanzania, United Republic of",TZA
+ESAR,Uganda,UGA
+CEE-NIS,Ukraine,UKR
+TACR,Uruguay,URY
+Industrialized,United States,USA
+CEE-NIS,Uzbekistan,UZB
+TACR,Saint Vincent and the Grenadines,VCT
+TACR,Venezuela (Bolivarian Republic of),VEN
+EAPR,Viet Nam,VNM
+EAPR,Vanuatu,VUT
+EAPR,Samoa,WSM
+MENA,Yemen,YEM
+CEE-NIS,Serbia and Montenegro (pre-cession),YUG
+ESAR,South Africa,ZAF
+ESAR,Zambia,ZMB
+ESAR,Zimbabwe,ZWE
