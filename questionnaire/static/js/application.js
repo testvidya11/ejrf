@@ -21,7 +21,9 @@ function cloneMore(selector) {
 
     newElement.find(':input').each(function() {
         // Reset cloned inputs
-        $(this).val('');
+        if($(this).attr('type') != 'radio')
+            $(this).val('');
+
         $(this).removeAttr('checked');
         $(this).removeAttr('selected');
     });
@@ -38,10 +40,16 @@ function updateFormCounts(form_element){
         var inputType = $(this).attr('name').split('-', 1)[0];
         var total = $('#id_' + inputType + '-TOTAL_FORMS').val();
 
-        var name = $(this).attr('name').replace(/[\d]+/g, total.toString());
-        var id = 'id_' + name;
-        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
-        total++;
+        var name = $(this).attr('name').replace(/-[\d]+-/g, '-'+total.toString()+'-');
+        var id = $(this).attr('id').replace(/-[\d]+-/g, '-'+total.toString()+'-');
+        $(this).attr({'name': name, 'id': id})
+
+        if($(this).attr('type') == 'radio'){
+            //update the previous label
+            $(this).parents('label').attr({'for': id});
+        }
+        else
+            total++;
 
         $('#id_' + inputType + '-TOTAL_FORMS').val(total);
         $('#id_' + inputType + '-MAX_NUM_FORMS').val(total);
