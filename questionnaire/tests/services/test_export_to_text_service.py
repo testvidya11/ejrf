@@ -52,9 +52,9 @@ class ExportToTextServiceTest(BaseTest):
         answer_id_1 = "R_%s_%s_1" % (self.primary_question.UID, self.question1.UID)
         answer_id_2 = "R_%s_%s_%d_1" % (self.primary_question.UID, self.question1.UID, 1)
         expected_data = [self.headings,
-                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id, question_text, self.option.text),
-                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_1, question_text1, '23.00'),
-                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_2, question_text_2, '1.00')]
+                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id.encode('base64').strip(), question_text, self.option.text),
+                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_1.encode('base64').strip(), question_text1, '23.00'),
+                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_2.encode('base64').strip(), question_text_2, '1.00')]
 
         export_to_text_service = ExportToTextService(self.questionnaire)
         actual_data = export_to_text_service.get_formatted_responses()
@@ -81,12 +81,12 @@ class ExportToTextServiceTest(BaseTest):
         answer_id_11 = "R_%s_%s_2" % (self.primary_question.UID, self.question1.UID)
         answer_id_21 = "R_%s_%s_2" % (self.primary_question.UID, self.question2.UID)
         expected_data = [self.headings,
-                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id, question_text, self.option.text),
-                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_1, question_text1, '23.00'),
-                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_2, question_text_2, '1.00'),
-                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_10, question_text, self.option2.text),
-                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_11, question_text1, '4.00'),
-                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_21, question_text_2, '55.00')]
+                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id.encode('base64').strip(), question_text, self.option.text),
+                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_1.encode('base64').strip(), question_text1, '23.00'),
+                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_2.encode('base64').strip(), question_text_2, '1.00'),
+                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_10.encode('base64').strip(), question_text, self.option2.text),
+                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_11.encode('base64').strip(), question_text1, '4.00'),
+                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id_21.encode('base64').strip(), question_text_2, '55.00')]
 
         export_to_text_service = ExportToTextService(self.questionnaire)
         actual_data = export_to_text_service.get_formatted_responses()
@@ -117,7 +117,7 @@ class ExportToTextServiceTest(BaseTest):
         answer_id = "R_%s_%s_1" % (question.UID, question.UID)
 
         expected_data = [self.headings,
-                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id, question_text, 'tusker lager')]
+                         "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id.encode('base64').strip(), question_text, 'tusker lager')]
 
         export_to_text_service = ExportToTextService(self.questionnaire)
         actual_data = export_to_text_service.get_formatted_responses()
