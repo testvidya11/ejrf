@@ -224,3 +224,12 @@ margin-top: 25px;
 form ul li{
     display: inline;
 }
+.question-number{
+    color: #0080FF;
+    font-size: 11px;
+    display: inline-block;
+}
+.question-text{
+    padding-left: 10px;
+    display: inline-block;
+}

@@ -20,7 +20,7 @@
         {{ form_set.management_form }}
     {% endfor %}
     {% for subsection in section.sub_sections.all %}
-        <h4> {{ subsection.order }}. {{subsection.title}}</h4>
+        <h4> {{ section.order }}.{{ subsection.order }}. {{subsection.title}}</h4>
         {% for group in subsection.parent_question_groups %}
             <div class="question-group indent">
                 {% for order in group.question_orders %}
@@ -31,7 +31,13 @@
                         {% endif %}
                         <div class="form-group">
                                 <label class="col-sm-6 control-label center-fields">
-                                    {{ subsection.order }}.{% if subsection.has_at_least_two_groups %}{{group.order}}.{% endif %}{{ order.order }}. {{ order.question.text }}</label>
+                                    <div class="question-number">
+                                        {{ section.order }}.{{ subsection.order }}.{% if subsection.has_at_least_two_groups %}{{group.order}}.{% endif %}{{ order.order }}.
+                                    </div>
+                                    <div class="question-text">
+                                        {{ order.question.text }}
+                                    </div>
+                                </label>
                                 <div class="col-sm-5 center-fields">
                                     {% for field in order.question|get_form:formsets %}
                                         {% if field.errors %}
