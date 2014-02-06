@@ -53,18 +53,14 @@ question12 = Question.objects.create(text='Is this part of a comprehensive schoo
 QuestionOption.objects.create(text="Yes", question=question12)
 QuestionOption.objects.create(text="No", question=question12)
 
-question_12_group = QuestionGroup.objects.create(subsection=sub_section_3, order=3)
-question_12_group.question.add(question12)
-
-QuestionGroupOrder.objects.create(question=question12, question_group=question_12_group, order=1)
-
-
 question13 = Question.objects.create(text='Which interventions are given in the school health program?', UID='C00013', answer_type='Text')
 
-question_13_group = QuestionGroup.objects.create(subsection=sub_section_3, order=4)
-question_13_group.question.add(question13)
 
-QuestionGroupOrder.objects.create(question=question13, question_group=question_13_group, order=1)
+question_12__13_group = QuestionGroup.objects.create(subsection=sub_section_3, order=3)
+question_12__13_group.question.add(question12, question13)
+
+QuestionGroupOrder.objects.create(question=question12, question_group=question_12__13_group, order=1)
+QuestionGroupOrder.objects.create(question=question13, question_group=question_12__13_group, order=2)
 
 
 #################################### next sub
@@ -77,47 +73,47 @@ sub_section_4 = SubSection.objects.create(order=2, section=section_2, title="Rou
      """)
 
 question14 = Question.objects.create(text='Vaccine', UID='C00014', answer_type='Text')
-question15 = Question.objects.create(text='A. Grade/Level', UID='C00015', answer_type='Number',
+question15 = Question.objects.create(text='Grade/Level', UID='C00015', answer_type='Number',
 instructions="""
 "Grade / Level" indicates the class or grade that is targeted for
 the vaccine concerned. Complete this cell if children in school are targeted by class or grade,
  regardless of their age. Please use the local gradation system, or use a class grading system of 1 to 12, where class 1
   equals the first year in primary school, class 2 the second year of primary school, etc.  """)
 
-question16 = Question.objects.create(text='B. Age Group', UID='C00016', answer_type='Number',
+question16 = Question.objects.create(text='Age Group', UID='C00016', answer_type='Number',
 instructions="""
 "Age group" indicates the age groups that are targeted for the vaccine concerned. Complete this cell if children are
  targeted according to their age rather than according to the class they are in.
 """)
-question17 = Question.objects.create(text='C. Sex', UID='C00017', answer_type='MultiChoice')
+question17 = Question.objects.create(text='Sex', UID='C00017', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Female", question=question17)
 QuestionOption.objects.create(text="Male", question=question17)
 QuestionOption.objects.create(text="Both", question=question17)
 
-question18 = Question.objects.create(text='D. Geographic Area', UID='C00018', answer_type='MultiChoice')
+question18 = Question.objects.create(text='Geographic Area', UID='C00018', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Subnational", question=question18)
 QuestionOption.objects.create(text="National", question=question18)
 
-question19 = Question.objects.create(text='E. Number in target group', UID='C00019', answer_type='Number',
+question19 = Question.objects.create(text='Number in target group', UID='C00019', answer_type='Number',
 instructions="""
 "Number targeted" is the number of children targeted through the school-based immunization for each dose.
 If school-based immunization is not given in all the areas of the country, the target is the number of children
  in the areas where school-based immunization is being implemented
 """)
 
-question20 = Question.objects.create(text='F. Number of doses administered at school', UID='C00020', answer_type='Number',
+question20 = Question.objects.create(text='Number of doses administered at school', UID='C00020', answer_type='Number',
 instructions="""
 "Number vaccinated in school": the number for children who received this dose in the areas where school-based
 immunization is being implemented.
  """)
 
-question21 = Question.objects.create(text='G. Other interventions given with the vaccine', UID='C00021',
+question21 = Question.objects.create(text='Other interventions given with the vaccine', UID='C00021',
                                      answer_type='Text',
 instructions="""
 "Other intervention given with the vaccine":  Mention any other intervention
 (e.g. growth monitoring, antihelmintics,...) that is given at the same time as the vaccination contact """)
 
-question22 = Question.objects.create(text='H. Does recorded on immunization or child death card', UID='C00022',
+question22 = Question.objects.create(text='Does recorded on immunization or child death card', UID='C00022',
                                      answer_type='MultiChoice')
 QuestionOption.objects.create(text="Yes", question=question22)
 QuestionOption.objects.create(text="No", question=question22)

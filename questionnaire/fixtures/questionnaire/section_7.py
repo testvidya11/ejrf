@@ -57,32 +57,32 @@ QuestionOption.objects.create(text="NR", question=question_3)
 
 
 #subgroup
-question_4 = Question.objects.create(text="A. pediatrics", UID='C00080', answer_type='MultiChoice')
+question_4 = Question.objects.create(text="pediatrics", UID='C00080', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Yes", question=question_4)
 QuestionOption.objects.create(text="No", question=question_4)
 QuestionOption.objects.create(text="NR", question=question_4)
 
-question_5 = Question.objects.create(text="B. public health", UID='C00126', answer_type='MultiChoice')
+question_5 = Question.objects.create(text="public health", UID='C00126', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Yes", question=question_5)
 QuestionOption.objects.create(text="No", question=question_5)
 QuestionOption.objects.create(text="NR", question=question_5)
 
-question_6 = Question.objects.create(text="C. infectious diseases", UID='C00081', answer_type='MultiChoice')
+question_6 = Question.objects.create(text="infectious diseases", UID='C00081', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Yes", question=question_6)
 QuestionOption.objects.create(text="No", question=question_6)
 QuestionOption.objects.create(text="NR", question=question_6)
 
-question_7 = Question.objects.create(text="D. epidemiology", UID='C00082', answer_type='MultiChoice')
+question_7 = Question.objects.create(text="epidemiology", UID='C00082', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Yes", question=question_7)
 QuestionOption.objects.create(text="No", question=question_7)
 QuestionOption.objects.create(text="NR", question=question_7)
 
-question_8 = Question.objects.create(text="E. immunology", UID='C00083', answer_type='MultiChoice')
+question_8 = Question.objects.create(text="immunology", UID='C00083', answer_type='MultiChoice')
 QuestionOption.objects.create(text="Yes", question=question_8)
 QuestionOption.objects.create(text="No", question=question_8)
 QuestionOption.objects.create(text="NR", question=question_8)
 
-question_9 = Question.objects.create(text="F. other: please specify under explanatory comments", UID='C00084',
+question_9 = Question.objects.create(text="other: please specify under explanatory comments", UID='C00084',
                                      answer_type='MultiChoice')
 QuestionOption.objects.create(text="Yes", question=question_9)
 QuestionOption.objects.create(text="No", question=question_9)
@@ -140,12 +140,12 @@ QuestionGroupOrder.objects.create(question=question_13, question_group=parent2, 
 sub_section2 = SubSection.objects.create(order=3, section=section_1, title="District coverage reported for routine immunization services in 2013")
 
 question_1 = Question.objects.create(text="DTP3", UID='C00089', answer_type='MultiChoice')
-question_2 = Question.objects.create(text="A. Coverage is <50%", UID='C00090', answer_type='Number')
-question_3 = Question.objects.create(text="B. Coverage is 50-79%", UID='C00091', answer_type='Number')
-question_4 = Question.objects.create(text="C. Coverage is 80-89%", UID='C00092', answer_type='Number')
-question_5 = Question.objects.create(text="D. Coverage is 90-94%", UID='C00093', answer_type='Number')
-question_6 = Question.objects.create(text="E. Coverage is >=95%", UID='C00094', answer_type='Number')
-question_6b = Question.objects.create(text="F. number of districts not reporting", UID='C0094b', answer_type='Number')
+question_2 = Question.objects.create(text="Coverage is <50%", UID='C00090', answer_type='Number')
+question_3 = Question.objects.create(text="Coverage is 50-79%", UID='C00091', answer_type='Number')
+question_4 = Question.objects.create(text="Coverage is 80-89%", UID='C00092', answer_type='Number')
+question_5 = Question.objects.create(text="Coverage is 90-94%", UID='C00093', answer_type='Number')
+question_6 = Question.objects.create(text="Coverage is >=95%", UID='C00094', answer_type='Number')
+question_6b = Question.objects.create(text="number of districts not reporting", UID='C0094b', answer_type='Number')
 
 QuestionOption.objects.create(text="Number of districts with DTP3 coverage in each range", question=question_1)
 QuestionOption.objects.create(text="Number of surviving infants in these districts", question=question_1)
@@ -233,12 +233,12 @@ parent9.question.add(question_1)
 
 ##################
 #start of subgroup
-question_2 = Question.objects.create(text="A. Was there a stock-out (no remaining doses for any period of time) at the national level during 2013?", UID='C00100', answer_type='MultiChoice', instructions="If a vaccine is not currently in use, select \"NR\" (not relevant) from the drop-down menu.")
+question_2 = Question.objects.create(text="Was there a stock-out (no remaining doses for any period of time) at the national level during 2013?", UID='C00100', answer_type='MultiChoice', instructions="If a vaccine is not currently in use, select \"NR\" (not relevant) from the drop-down menu.")
 QuestionOption.objects.create(text="Yes", question=question_2)
 QuestionOption.objects.create(text="No", question=question_2)
 QuestionOption.objects.create(text="NR", question=question_2)
 
-question_3 = Question.objects.create(text="B. public health", UID='C00101', answer_type='Number', instructions="If the stock-out lasted less than one month (for example, a few days or weeks), enter \"1\".")
+question_3 = Question.objects.create(text="public health", UID='C00101', answer_type='Number', instructions="If the stock-out lasted less than one month (for example, a few days or weeks), enter \"1\".")
 
 parent10 = QuestionGroup.objects.create(subsection=sub_section4, order=2, parent=parent9, name="National store")
 parent10.question.add(question_2, question_3)
@@ -247,13 +247,13 @@ parent10.question.add(question_2, question_3)
 
 ##################
 #start of subgroup
-question_4 = Question.objects.create(text="C. Was there a stock-out in any district during 2013?", UID='C00102', answer_type='MultiChoice',
+question_4 = Question.objects.create(text="Was there a stock-out in any district during 2013?", UID='C00102', answer_type='MultiChoice',
                                      instructions="Districts can experience stock-outs even if there was no stock-out at the national level. Therefore, the answer in column C may be \"yes\" even if the answer in column A is \"no\".\nIf a vaccine is not currently in use, select \"NR\" (not relevant) from the drop-down menu in column C.\n\nIf a district has no permanent vaccine store (i.e., the store is located at the provincial or higher level) but health units have been affected by vaccine shortages, select \"yes\" from the drop-down menu in column C and count the district in column D.")
 QuestionOption.objects.create(text="Yes", question=question_4)
 QuestionOption.objects.create(text="No", question=question_4)
 QuestionOption.objects.create(text="NR", question=question_4)
 
-question_5 = Question.objects.create(text="D. If yes, indicate the number of districts with interruption of activities due to stock-outs", UID='C00103', answer_type='Number',
+question_5 = Question.objects.create(text="If yes, indicate the number of districts with interruption of activities due to stock-outs", UID='C00103', answer_type='Number',
                                      instructions="Districts can experience stock-outs even if there was no stock-out at the national level. Therefore, the answer in column C may be \"yes\" even if the answer in column A is \"no\".\nIf a vaccine is not currently in use, select \"NR\" (not relevant) from the drop-down menu in column C.\n\nIf a district has no permanent vaccine store (i.e., the store is located at the provincial or higher level) but health units have been affected by vaccine shortages, select \"yes\" from the drop-down menu in column C and count the district in column D.")
 
 parent11 = QuestionGroup.objects.create(subsection=sub_section4, order=3, parent=parent9, name="District stores")
@@ -264,7 +264,7 @@ parent11.question.add(question_4, question_5)
 ##################
 #start of subgroup
 
-question_6 = Question.objects.create(text="E. Wastage (%) Please complete separately for each vaccine, even if they were given in combination", UID='C00104', answer_type='Number',
+question_6 = Question.objects.create(text="Wastage (%) Please complete separately for each vaccine, even if they were given in combination", UID='C00104', answer_type='Number',
                                      instructions="List the percentage of vaccine wasted throughout the country in opened vials at the service delivery points. Enter \"ND\" if no data are available. Please enter a value for the wastage rate for each vaccine listed, even if the vaccines were given in combination.")
 
 parent12 = QuestionGroup.objects.create(subsection=sub_section4, order=4, parent=parent9, name="Wastage")

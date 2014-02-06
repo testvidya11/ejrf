@@ -25,7 +25,6 @@ class UsersList(LoginRequiredMixin, ListView):
 
     def post(self, request, *args, **kwargs):
         form = UserFilterForm(request.POST)
-        form.is_valid()
         if form.is_valid():
             filtered_users = self._query_for(request)
             context = {'request': self.request,

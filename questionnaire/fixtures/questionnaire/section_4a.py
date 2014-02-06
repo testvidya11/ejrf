@@ -47,7 +47,7 @@ QuestionOption.objects.create(text="Protection at birth (PAB) against neonatal t
 instructions="This refers to children who are protected at birth (PAB) against neonatal tetanus by their mother's TT status; this information is collected during the DTP1 visit - a child is deemed protected if the mother has received 2 doses of TT in the last pregnancy or at-least 3 doses of TT in previous years. If the country does not calculate PAB, leave the cells blank.")
 
 
-question2 = Question.objects.create(text="A. Description of the denominator used in coverage calculation",
+question2 = Question.objects.create(text="Description of the denominator used in coverage calculation",
                                     UID='C00049', answer_type='MultiChoice')
 
 QuestionOption.objects.create(text="live birth", question=question2)
@@ -58,11 +58,11 @@ QuestionOption.objects.create(text="6 - 59 months", question=question2)
 QuestionOption.objects.create(text="pregnant women", question=question2,
 instructions="The number of live births can be used as a proxy for the total number of pregnant women.")
 
-question3 = Question.objects.create(text="B. Number in target group(denominator)",
+question3 = Question.objects.create(text="Number in target group(denominator)",
                                     UID='C00050', answer_type='Number', )
-question4 = Question.objects.create(text="C. Number of doses administered through routine services (numerator)",
+question4 = Question.objects.create(text="Number of doses administered through routine services (numerator)",
                                     UID='C00051', answer_type='Number')
-question5 = Question.objects.create(text="D. Percent coverage (=C/B*100)", UID='C00052', answer_type='Number')
+question5 = Question.objects.create(text="Percent coverage (=C/B*100)", UID='C00052', answer_type='Number')
 
 parent1 = QuestionGroup.objects.create(subsection=sub_section, order=1, allow_multiples=True)
 parent1.question.add(question1, question2, question3, question3, question4, question5)
@@ -120,9 +120,9 @@ QuestionOption.objects.create(text="14", question=question41)
 QuestionOption.objects.create(text="15+", question=question41)
 QuestionOption.objects.create(text="unknown age", question=question41)
 
-question42 = Question.objects.create(text="A. 1st dose", UID='C00058', answer_type='Number')
-question43 = Question.objects.create(text="B. 2d dose", UID='C00059', answer_type='Number')
-question44 = Question.objects.create(text="C. 3d dose", UID='C00060', answer_type='Number')
+question42 = Question.objects.create(text="1st dose", UID='C00058', answer_type='Number')
+question43 = Question.objects.create(text="2d dose", UID='C00059', answer_type='Number')
+question44 = Question.objects.create(text="3d dose", UID='C00060', answer_type='Number')
 
 parent7 = QuestionGroup.objects.create(subsection=sub_section4, order=1, allow_multiples=True)
 parent7.question.add(question41, question42, question43, question44)
@@ -153,9 +153,9 @@ QuestionOption.objects.create(text="Persons with chronic diseases ", question=qu
 QuestionOption.objects.create(text="Others)", question=question61)
 #instruction = (may include various other groups: poultry workers, subnational levels, government officials, adults, etc
 
-question62 = Question.objects.create(text="B. Number in target group (denominator)", UID='C00063', answer_type='Number')
-question63 = Question.objects.create(text="C. Number of doses administered through routine services (numerator)", UID='C00064', answer_type='Number')
-question64 = Question.objects.create(text="D. Percent coverage (=C/B*100)", UID='C00065', answer_type='Number')
+question62 = Question.objects.create(text="Number in target group (denominator)", UID='C00063', answer_type='Number')
+question63 = Question.objects.create(text="Number of doses administered through routine services (numerator)", UID='C00064', answer_type='Number')
+question64 = Question.objects.create(text="Percent coverage (=C/B*100)", UID='C00065', answer_type='Number')
 
 parent6 = QuestionGroup.objects.create(subsection=sub_section6, order=1, allow_multiples=True)
 parent6.question.add(question61, question62, question63, question64)

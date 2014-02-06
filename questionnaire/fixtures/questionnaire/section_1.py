@@ -20,7 +20,7 @@ section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Pre
 sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1, section=section_1)
 
 question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice')
-question2 = Question.objects.create(text='A. Total Cases', short_instruction="Include clinically, epidemiologically, and"
+question2 = Question.objects.create(text='Total Cases', short_instruction="Include clinically, epidemiologically, and"
 " laboratory-confirmed cases. Do not include suspect cases.",
 instructions="""<strong>Column A</strong> refers only to <strong>CONFIRMED</strong> cases, including those confirmed clinically, epidemiologically, or by laboratory investigation.&nbsp;<br />
 <br />
@@ -34,11 +34,11 @@ Cases that have been <strong>discarded</strong> following laboratory investigati
 """,
 UID='C00002', answer_type='Number')
 
-question3 = Question.objects.create(text='B. Number of cases tested',
+question3 = Question.objects.create(text='Number of cases tested',
                                     instructions="Enter the total number of cases for which specimens were collected, and tested in laboratory",
                                     UID='C00003', answer_type='Number')
 
-question4 = Question.objects.create(text='C. Number of cases positive',
+question4 = Question.objects.create(text='Number of cases positive',
                                     instructions="Include only those cases found positive for the infectious agent.",
                                     UID='C00004', answer_type='Number')
 
