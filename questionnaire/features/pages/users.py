@@ -24,3 +24,18 @@ class UserListingPage(PageObject):
 
 class CreateUserPage(PageObject):
     url = "/users/new/"
+
+    def validate_only_organization_drop_down_visible(self):
+        assert len(self.browser.find_by_id('organization')) == 1
+        assert len(self.browser.find_by_id('region')) == 0
+        assert len(self.browser.find_by_id('country')) == 0
+
+    def validate_only_organization_and_region_drop_down_visible(self):
+        assert len(self.browser.find_by_id('organization')) == 1
+        assert len(self.browser.find_by_id('region')) == 1
+        assert len(self.browser.find_by_id('country')) == 0
+
+    def validate_only_country_drop_down_visible(self):
+        assert len(self.browser.find_by_id('organization')) == 0
+        assert len(self.browser.find_by_id('region')) == 0
+        assert len(self.browser.find_by_id('country')) == 1

@@ -174,9 +174,9 @@ def and_i_select_regional_admin_role(step):
     world.page.check(world.regional_admin.id)
 
 @step(u'Then I should see only region and country fields')
-def then_i_should_see_the_region_and_country_fields(step):
-    world.page.is_text_present("Region", "Country")
-    world.page.is_text_present("Organization", status=False)
+def then_i_should_see_only_region_and_country_fields(step):
+    world.page.is_text_present("Region", "Organization")
+    world.page.validate_only_organization_and_region_drop_down_visible()
 
 @step(u'When I select the region for the new user')
 def when_i_select_the_country_and_region_for_the_new_user(step):
@@ -242,3 +242,44 @@ def then_i_should_see_the_region_under_unicef_in_the_select(step):
 @step(u'And I should not see the region under who in the select')
 def and_i_should_not_see_the_region_under_who_in_the_select(step):
     world.page.validate_select_not_present(world.paho.name)
+
+@step(u'And I have two organizations and regions')
+def and_i_have_two_organizations_and_regions(step):
+    world.unicef = Organization.objects.create(name="UNICEF")
+    world.who = Organization.objects.create(name="WHO")
+    world.region = Region.objects.create(name="Afro", organization=world.unicef)
+    world.paho = Region.objects.create(name="PAHO", organization=world.who)
+
+@step(u'And I have four roles')
+def and_i_have_four_roles(step):
+    world.regional_admin = Group.objects.create(name="Regional Admin")
+    world.country_admin = Group.objects.create(name="Country Admin")
+    world.data_submitter = Group.objects.create(name="Data Submitter")
+
+@step(u'When I select the global admin role')
+def when_i_select_the_global_admin_role(step):
+    world.page.check(world.global_admin.id)
+
+@step(u'Then I should see organisations drop down')
+def then_i_should_see_organisations_drop_down(step):
+    world.page.validate_only_organization_drop_down_visible()
+
+@step(u'When I select the region admin role')
+def when_i_select_the_region_admin_role(step):
+    world.page.check(world.regional_admin.id)
+
+@step(u'Then I should see region and country')
+def then_i_should_see_region_and_country(step):
+    world.page.validate_only_organization_and_region_drop_down_visible()
+
+@step(u'When I select the country admin role')
+def when_i_select_the_country_admin_role(step):
+    world.page.check(world.country_admin.id)
+
+@step(u'Then I should see country drop down')
+def then_i_should_see_country_drop_down(step):
+    world.page.validate_only_country_drop_down_visible()
+
+@step(u'When I select the data submitter role')
+def when_i_select_the_data_submitter_role(step):
+    world.page.check(world.data_submitter.id)

@@ -70,35 +70,6 @@ $(document).on('click', '.delete-more', function() {
     $('a[data-toggle=popover]').popover();
 });
 
-function load_country_and_region_template(country_template) {
-    $(this).parents('ul').after(country_template);
-    console.log($(this).next('p'))
-}
-function load_role_template(){
-     var template = $("#organization-template").html(),
-         country_template = $('#country-template').html(),
-         region_template = $('#region-template').html();
-    $('.radio-roles').on('change', function(){
-        $('#id_organization').remove();
-        $('#id_region').remove();
-        $('#id_country').remove();
-        var $selected_role = $.trim($(this).parents('label').text());
-        var select_element = $(this).parents('form').find('select');
-        select_element.prev('label').remove();
-        select_element.parents('p').remove();
-
-        if($selected_role === "Global Admin"){
-            load_country_and_region_template.call(this, template);
-        } else if ($selected_role == "Regional Admin") {
-            load_country_and_region_template.call(this, region_template);
-        }else if ($selected_role == "Country Admin") {
-            load_country_and_region_template.call(this, country_template);
-        }else if ($selected_role == "Data Submitter") {
-            load_country_and_region_template.call(this, country_template);
-        }
-    })
-}
-
 $( "#questionnaire_entry :input" ).change(function() {
   form_has_changed = true;
 });

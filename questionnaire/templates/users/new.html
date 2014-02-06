@@ -17,6 +17,16 @@
 
 <script type="text/template" id="region-template">
     <p>
+        <label for="organization">Organization</label>
+            <select id="organization" name="organization">
+                {%   for org in organizations %}
+                <option value={{ org.id }}>{{ org.name }}</option>
+                {% endfor %}
+            </select>
+         <label class="error"></label>
+    </p>
+
+    <p>
         <label for="region">Region</label>
             <select id="region" name="region">
                 {%   for region in regions %}
@@ -27,15 +37,6 @@
     </p>
 </script>
 <script type="text/template" id="country-template">
-    <p>
-        <label for="region">Region</label>
-            <select id="region" name="region">
-                {%   for region in regions %}
-                <option value={{ region.id }}>{{ region.name }}</option>
-                {% endfor %}
-            </select>
-         <label class="error"></label>
-    </p>
     <p>
         <label for="country">Country</label>
             <select id="country" name="country">

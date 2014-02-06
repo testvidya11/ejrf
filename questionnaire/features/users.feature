@@ -85,3 +85,19 @@ Feature: User management
         And I select unicef
         Then I should see the region under unicef in the select
         And I should not see the region under who in the select
+
+    Scenario: Create user organisation and region options
+        Given I have a global admin user
+        And I have two organizations and regions
+        And I have four roles
+        And I logged in the user
+        And I visit the user listing page
+        And I click an new user button
+        When I select the global admin role
+        Then I should see organisations drop down
+        When I select the region admin role
+        Then I should see region and country
+        When I select the country admin role
+        Then I should see country drop down
+        When I select the data submitter role
+        Then I should see country drop down
