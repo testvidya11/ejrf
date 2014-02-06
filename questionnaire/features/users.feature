@@ -52,7 +52,7 @@ Feature: User management
 
     Scenario: Create a regional admin user
         Given I have a global admin user
-        And I have a region and a country
+        And I have one region, in an organization
         And I logged in the user
         And I have 10 users in one of the regions
         And I have roles
@@ -60,8 +60,9 @@ Feature: User management
         And I click an new user button
         And I fill in the user information
         And I select regional admin role
-        Then I should see only region and country fields
-        When I select the region for the new user
+        Then I should see only organization and region fields
+        When I select the organization
+        And I select the region for the new user
         And I submit the form
         Then I should see that the data regional admin was successfully created
 
@@ -72,7 +73,8 @@ Feature: User management
         And I have 2 users in the WHO organization
         And I logged in the user
         And I visit the user listing page
-        And I select UNICEF organization, AFRO region and regional admin role
+        When I select UNICEF organization
+        And I select the AFRO region and regional admin role
         And I click get list
         Then I should see only regional admin users in the UNICEF organization in the AFRO region
         And I should not see the rest of the users

@@ -1,3 +1,4 @@
+from time import sleep
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from lettuce import step, world
@@ -131,7 +132,7 @@ def then_i_should_see_that_the_user_was_successfully_created(step):
 def and_i_should_see_the_user_listed_on_the_listing_page(step):
     world.page.is_text_present(world.form_data['username'], world.form_data['email'], world.global_admin.name)
 
-@step(u'And I have a region')
+@step(u'And I have a region, in an organization')
 def and_i_have_a_region(step):
     world.afro_region = Region.objects.create(name="Afro")
     world.uganda = Country.objects.create(name="Afro", code="COD")
@@ -178,7 +179,7 @@ def then_i_should_see_only_region_and_country_fields(step):
     world.page.is_text_present("Region", "Organization")
     world.page.validate_only_organization_and_region_drop_down_visible()
 
-@step(u'When I select the region for the new user')
+@step(u'And I select the region for the new user')
 def when_i_select_the_country_and_region_for_the_new_user(step):
     world.page.select('region', world.afro_region.id)
 
@@ -214,12 +215,6 @@ def and_i_have_2_users_in_the_who_organization(step):
     for i in range(5, 7):
         world.jacinta = User.objects.create(username="jacinta%s" % str(i))
         UserProfile.objects.create(user=world.jacinta, region=world.region, organization=world.who_organization)
-
-@step(u'And I select UNICEF organization, AFRO region and regional admin role')
-def and_i_select_unicef_organization_afro_region_and_regional_admin_role(step):
-    world.page.select('organization', world.organization.id)
-    world.page.select('region', world.region.id)
-    world.page.select('role', world.regional_admin.id)
 
 @step(u'Then I should see only regional admin users in the UNICEF organization in the AFRO region')
 def then_i_should_see_only_regional_admin_users_in_the_unicef_organization_in_the_afro_region(step):
@@ -283,3 +278,32 @@ def then_i_should_see_country_drop_down(step):
 @step(u'When I select the data submitter role')
 def when_i_select_the_data_submitter_role(step):
     world.page.check(world.data_submitter.id)
+
+@step(u'And I have a region')
+def and_i_have_a_region(step):
+    world.afro_region = Region.objects.create(name="Afro")
+    world.uganda = Country.objects.create(name="Afro", code="COD")
+    world.afro_region.countries.add(world.uganda)
+
+@step(u'Then I should see only organization and region fields')
+def then_i_should_see_only_organization_and_region_fields(step):
+    world.page.validate_only_organization_and_region_drop_down_visible()
+
+@step(u'And I have one region, in an organization')
+def and_i_have_one_region_in_an_organization(step):
+    world.unicef = Organization.objects.create(name="Unicef")
+    world.afro_region = Region.objects.create(name="Afro")
+    world.unicef.regions.add(world.afro_region)
+
+@step(u'When I select the organization')
+def when_i_select_the_organization(step):
+    world.page.select('organization', world.unicef.id)
+
+@step(u'When I select UNICEF organization')
+def when_i_select_unicef_organization(step):
+    world.page.select('organization', world.organization.id)
+
+@step(u'And I select the AFRO region and regional admin role')
+def and_i_select_the_afro_region_and_regional_admin_role(step):
+    world.page.select('region', world.region.id)
+    world.page.select('role', world.regional_admin.id)
