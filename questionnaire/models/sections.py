@@ -54,3 +54,6 @@ class SubSection(BaseModel):
     class Meta:
         ordering = ('order',)
         app_label = 'questionnaire'
+
+    def has_at_least_two_groups(self):
+        return self.parent_question_groups().count() > 1

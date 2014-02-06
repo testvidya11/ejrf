@@ -24,10 +24,12 @@ class QuestionGroup(BaseModel):
         return questions
 
     def ordered_questions(self):
+        return [order.question for order in self.question_orders()]
+
+    def question_orders(self):
         if self.parent:
-            question_orders = self.parent.orders.order_by('order').filter(question__in=self.all_questions())
-            return [order.question for order in question_orders]
-        return [order.question for order in self.orders.order_by('order')]
+            return self.parent.orders.order_by('order').filter(question__in=self.all_questions()).select_related()
+        return self.orders.order_by('order').select_related()
 
     class Meta:
         ordering = ('order',)
