@@ -23,13 +23,12 @@ def clear_screen_shots():
 def open_browser():
     remote_url = "http://%s:%s@ondemand.saucelabs.com:80/wd/hub" % (os.environ['SAUCE_USERNAME'], os.environ['SAUCE_ACCESS_KEY'])
     world.browser = Browser(
-            driver_name="remote",
-            url=remote_url,
-            browser="%s" % os.environ['BROWSER_TYPE'],
-            platform="Windows 7",
-            version="%s" % os.environ['BROWSER_VERSION'],
-            name="eJRF SnapCI test on %s version %s" % (os.environ['BROWSER_TYPE'], os.environ['BROWSER_VERSION'])
-        )
+        driver_name="remote",
+        url=remote_url,
+        browser="%s" % os.environ['BROWSER_TYPE'],
+        platform="Windows 7",
+        version="%s" % os.environ['BROWSER_VERSION'],
+        name="eJRF SnapCI test on %s version %s" % (os.environ['BROWSER_TYPE'], os.environ['BROWSER_VERSION']))
     world.browser.driver.set_window_size(1024, 720)
 
 @after.each_scenario
