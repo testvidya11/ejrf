@@ -1,6 +1,5 @@
 Feature: Questionnaire feature
   Background:
-    Given I have two countries in a region
     Given I am logged in
 
 
