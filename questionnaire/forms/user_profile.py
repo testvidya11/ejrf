@@ -46,11 +46,8 @@ class UserProfileForm(UserCreationForm):
     def clean_country(self):
         country = self.cleaned_data.get('country', None)
         region = self.cleaned_data.get('region', None)
-        if (country and region) and country not in region.countries.all():
+        if (country is not None and region is not None) and country not in region.countries.all():
             message = "%s does not belong to region %s" % (country.name, region.name)
-            self._add_error_country_messages(message)
-        if country and not region:
-            message = "%s should belong to a region" % country.name
             self._add_error_country_messages(message)
         return country
 

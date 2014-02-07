@@ -66,6 +66,20 @@ Feature: User management
         And I submit the form
         Then I should see that the data regional admin was successfully created
 
+    Scenario: Create a data submitter user
+        Given I have a global admin user
+        And I have one region, in an organization
+        And I have a countries in that region
+        And I logged in the user
+        And I have roles
+        And I visit the user listing page
+        And I click an new user button
+        And I fill in data submitter information
+        And I select data submitter role
+        When I select a country
+        And I submit the form
+        Then I should see that the data submitter was successfully created
+
     Scenario: Filter users list by organization, region and role
         Given I have a global admin user
         And I have two organizations, region and role

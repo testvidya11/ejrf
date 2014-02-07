@@ -84,15 +84,6 @@ class UserProfileFormTest(BaseTest):
         user_form = UserProfileForm(form_data)
         self.assertTrue(user_form.is_valid())
 
-    def test_invalid_when_country_is_given_with_no_region(self):
-        form_data = self.form_data.copy()
-        form_data['country'] = self.uganda.id
-        form_data['region'] = ''
-        user_form = UserProfileForm(form_data)
-        self.assertFalse(user_form.is_valid())
-        message = "%s should belong to a region" % self.uganda.name
-        self.assertEquals(user_form.errors['country'], [message])
-
     def test_groups_required(self):
         form_data = self.form_data.copy()
         form_data['groups'] = ''

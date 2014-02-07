@@ -307,3 +307,31 @@ def when_i_select_unicef_organization(step):
 def and_i_select_the_afro_region_and_regional_admin_role(step):
     world.page.select('region', world.region.id)
     world.page.select('role', world.regional_admin.id)
+
+@step(u'And I have a countries in that region')
+def and_i_have_a_countries_in_that_region(step):
+    world.uganda = Country.objects.create(name="Uganda")
+    world.rwanda = Country.objects.create(name="Rwanda")
+    world.afro_region.countries.add(world.uganda, world.rwanda)
+
+@step(u'And I fill in data submitter information')
+def and_i_fill_in_data_submitter_information(step):
+    world.form_data = {
+        'username': 'jacinta',
+        'password1': 'pass',
+        'password2': 'pass',
+        'email': 'iacinta@ni.kant'}
+    world.page.fill_form(world.form_data)
+
+@step(u'And I select data submitter role')
+def and_i_select_data_submitter_role(step):
+    world.page.check(world.data_submitter.id)
+
+@step(u'When I select a country')
+def when_i_select_a_country(step):
+    world.page.select('country', world.uganda.id)
+
+@step(u'Then I should see that the data submitter was successfully created')
+def then_i_should_see_that_the_data_submitter_was_successfully_created(step):
+    world.page.is_text_present("%s created successfully." % world.data_submitter.name)
+    world.page.is_text_present(world.form_data['username'], world.form_data['email'], 'Active')
