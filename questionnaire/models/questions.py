@@ -39,6 +39,13 @@ class Question(BaseModel):
     def has_question_option_instructions(self):
         return self.options.exclude(instructions=None)
 
+    def draft_answer(self, parent_group):
+        from questionnaire.models import Answer
+        answer = self.answers.filter(answergroup__grouped_question=parent_group, status=Answer.DRAFT_STATUS).select_subclasses()
+        if answer.exists():
+            return answer[0].response
+        return None
+
 
 class QuestionOption(BaseModel):
     text = models.CharField(max_length=100, blank=False, null=False)

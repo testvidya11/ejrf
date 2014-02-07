@@ -39,7 +39,14 @@ class QuestionnaireEntryFormService(object):
         return formsets
 
     def _get_initial(self, orders):
-        return [dict(self.initial.items() + {'group': order.question_group, 'question': order.question}.items())  for order in orders]
+        return [dict(self.initial.items() + self._question_initial(order).items()) for order in orders]
+
+    def _question_initial(self, order):
+        existing_draft_answer = order.question.draft_answer(order.question_group)
+        initial = {'group': order.question_group, 'question': order.question}
+        if existing_draft_answer:
+            initial['response'] = existing_draft_answer
+        return initial
 
     def is_valid(self):
         formset_checks = [formset.is_valid() for formset in self.formsets.values()]

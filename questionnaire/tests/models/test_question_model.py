@@ -1,5 +1,5 @@
 from django.db import IntegrityError
-from questionnaire.models import Questionnaire, Section, SubSection, Organization, Region, Country, QuestionGroup, NumericalAnswer, Answer, QuestionGroupOrder
+from questionnaire.models import Questionnaire, Section, SubSection, Organization, Region, Country, QuestionGroup, NumericalAnswer, Answer, QuestionGroupOrder, AnswerGroup
 from questionnaire.models.questions import Question, QuestionOption
 from questionnaire.tests.base_test import BaseTest
 
@@ -91,6 +91,32 @@ class QuestionTest(BaseTest):
         question = Question.objects.create(text='what do you drink?', UID='C_2014', answer_type='MultiChoice')
         QuestionOption.objects.create(text='tusker lager', question=question)
         self.assertFalse(question.has_question_option_instructions())
+
+    def test_question_knows_answer_draft_given_group(self):
+        question1 = Question.objects.create(text='question1', UID='C00015', answer_type='Number', is_primary=True)
+        question2 = Question.objects.create(text='question2', UID='C00016', answer_type='Number')
+        question3 = Question.objects.create(text='question3', UID='C00017', answer_type='Number')
+        self.parent_group.question.add(question1, question2)
+
+        group2 = QuestionGroup.objects.create(subsection=self.sub_section_1, name="group2")
+        group2.question.add(question3)
+
+        question1_answer = NumericalAnswer.objects.create(question=question1, country=self.country,
+                                                               status=Answer.DRAFT_STATUS, response=23)
+        question2_answer = NumericalAnswer.objects.create(question=question2, country=self.country,
+                                                               status=Answer.DRAFT_STATUS, response=1)
+        question3_answer = NumericalAnswer.objects.create(question=question3, country=self.country,
+                                                               status=Answer.SUBMITTED_STATUS, response=11)
+
+        answer_group1 = AnswerGroup.objects.create(grouped_question=self.parent_group, row=1)
+        answer_group1.answer.add(question1_answer, question2_answer)
+
+        answer_group2 = AnswerGroup.objects.create(grouped_question=group2, row=1)
+        answer_group2.answer.add(question3_answer)
+
+        self.assertEqual(question1_answer.response, question1.draft_answer(self.parent_group))
+        self.assertEqual(question2_answer.response, question2.draft_answer(self.parent_group))
+        self.assertIsNone(question3.draft_answer(group2))
 
 
 class QuestionOptionTest(BaseTest):

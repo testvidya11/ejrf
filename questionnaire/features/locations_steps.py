@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from lettuce import step, world
 from questionnaire.features.pages.locations import ListRegionsPage, ListCountriesPage
 from questionnaire.features.pages.users import LoginPage
+from questionnaire.models import UserProfile
 from questionnaire.models.locations import Region, Country, Organization
 
 
@@ -9,6 +10,7 @@ from questionnaire.models.locations import Region, Country, Organization
 def given_i_am_logged_in(step):
     password = 'I_Rock'
     user = User.objects.create_user('Rajni', 'rajni@kant.com', password)
+    # UserProfile.objects.create(user=user, country=world.uganda)
     world.page = LoginPage(world.browser)
     world.page.visit()
     world.page.login(user, password)

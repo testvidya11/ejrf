@@ -1,10 +1,11 @@
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
-from questionnaire.models import Questionnaire, Section, SubSection, QuestionGroup, Question, QuestionGroupOrder
+from questionnaire.models import Questionnaire, Section, SubSection, QuestionGroup, Question, QuestionGroupOrder, NumericalAnswer, Answer, AnswerGroup, Country, TextAnswer
 from questionnaire.tests.base_test import BaseTest
 
 
 class QuestionnaireEntryFormTest(BaseTest):
+
     def setUp(self):
         self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan")
 
@@ -43,6 +44,8 @@ class QuestionnaireEntryFormTest(BaseTest):
         QuestionGroupOrder.objects.create(question=self.question4, question_group=self.question_group2, order=1)
         QuestionGroupOrder.objects.create(question=self.question5, question_group=self.question_group2, order=2)
         QuestionGroupOrder.objects.create(question=self.question6, question_group=self.question_group3, order=1)
+
+        self.country = Country.objects.create(name="Uganda")
 
     def test_questionnaire_entry_form_formset_size_per_answer_type_should_match_number_of_question_per_answer_type(self):
         questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
@@ -97,3 +100,41 @@ class QuestionnaireEntryFormTest(BaseTest):
         question_form = questionnaire_entry_form.next_ordered_form(self.question6)
         self.assertIsInstance(question_form, DateAnswerForm)
         self.assertEqual(self.question6, question_form.initial['question'])
+
+    def test_should_append_groups_in_initial(self):
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
+        formsets = questionnaire_entry_form._formsets()
+
+        self.assertEqual(self.question_group, formsets['MultiChoice'][0].initial['group'])
+        self.assertEqual(self.question_group, formsets['Text'][0].initial['group'])
+        self.assertEqual(self.question_group, formsets['Number'][0].initial['group'])
+        self.assertEqual(self.question_group2, formsets['MultiChoice'][1].initial['group'])
+        self.assertEqual(self.question_group2, formsets['Number'][1].initial['group'])
+        self.assertEqual(self.question_group3, formsets['Date'][0].initial['group'])
+
+    def test_initial_gets_response_if_there_is_draft_answer(self):
+        question2_answer = TextAnswer.objects.create(question=self.question2, country=self.country,
+                                                               status=Answer.DRAFT_STATUS, response="ayoyoyo")
+        question3_answer = NumericalAnswer.objects.create(question=self.question3, country=self.country,
+                                                               status=Answer.DRAFT_STATUS, response=1)
+        answer_group1 = AnswerGroup.objects.create(grouped_question=self.question_group, row=1)
+        answer_group1.answer.add(question2_answer, question3_answer)
+
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
+        formsets = questionnaire_entry_form._formsets()
+
+        self.assertEqual(self.question1, formsets['MultiChoice'][0].initial['question'])
+        self.assertEqual(self.question2, formsets['Text'][0].initial['question'])
+        self.assertEqual(self.question3, formsets['Number'][0].initial['question'])
+        self.assertEqual(self.question4, formsets['MultiChoice'][1].initial['question'])
+        self.assertEqual(self.question5, formsets['Number'][1].initial['question'])
+        self.assertEqual(self.question6, formsets['Date'][0].initial['question'])
+
+
+        self.assertNotIn('response', formsets['MultiChoice'][0].initial.keys())
+        self.assertEqual(question2_answer.response, formsets['Text'][0].initial['response'])
+        self.assertEqual(question3_answer.response, formsets['Number'][0].initial['response'])
+        self.assertNotIn('response', formsets['MultiChoice'][1].initial.keys())
+        self.assertNotIn('response', formsets['Number'][1].initial.keys())
+        self.assertNotIn('response', formsets['Date'][0].initial.keys())
+

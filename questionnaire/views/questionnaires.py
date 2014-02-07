@@ -19,7 +19,8 @@ class Entry(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         questionnaire = Questionnaire.objects.get(id=self.kwargs['questionnaire_id'])
         section = Section.objects.get(id=self.kwargs['section_id'])
-        formsets = QuestionnaireEntryFormService(section)
+        initial = {'status': 'Draft', 'version':1, 'code':'ABC123'}
+        formsets = QuestionnaireEntryFormService(section, initial=initial)
 
         context = {'questionnaire': questionnaire, 'section': section,
                    'formsets': formsets, 'ordered_sections':Section.objects.order_by('order')}
