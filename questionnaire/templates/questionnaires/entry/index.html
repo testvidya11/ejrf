@@ -27,7 +27,10 @@
                         {% if order.question.is_first_in_group and order.question.group.name %}
                             <hr/>
                             <span class="group-name-instructions"><h5>{{order.question.group.name}} </h5>
-                                <a class="indent" data-toggle="popover" data-html="true" data-placement="bottom" data-trigger="hover" data-content="{{ order.question.group.instructions }}"><i class="glyphicon glyphicon-info-sign cyan"></i> instructions</a></span>
+                                {% if order.question.group.instructions %}
+                                    <a class="indent" data-toggle="popover" data-html="true" data-placement="bottom" data-trigger="hover" data-content="{{ order.question.group.instructions }}"><i class="glyphicon glyphicon-info-sign cyan"></i> instructions</a>
+                                {% endif %}
+                            </span>
                         {% endif %}
                         <div class="form-group">
                                 <label class="col-sm-6 control-label center-fields">
