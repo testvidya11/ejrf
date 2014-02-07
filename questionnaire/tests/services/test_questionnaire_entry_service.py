@@ -138,3 +138,9 @@ class QuestionnaireEntryFormTest(BaseTest):
         self.assertNotIn('response', formsets['Number'][1].initial.keys())
         self.assertNotIn('response', formsets['Date'][0].initial.keys())
 
+        self.assertNotIn('answer', formsets['MultiChoice'][0].initial.keys())
+        self.assertEqual(question2_answer, formsets['Text'][0].initial['answer'])
+        self.assertEqual(question3_answer, formsets['Number'][0].initial['answer'])
+        self.assertNotIn('answer', formsets['MultiChoice'][1].initial.keys())
+        self.assertNotIn('answer', formsets['Number'][1].initial.keys())
+        self.assertNotIn('answer', formsets['Date'][0].initial.keys())

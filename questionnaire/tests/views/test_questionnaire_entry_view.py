@@ -140,3 +140,28 @@ class QuestionnaireEntryViewTest(BaseTest):
 
         expected_message = 'Draft NOT saved. See errors below.'
         self.assertIn(expected_message, response.content)
+
+    def test_post_on_section_with_draft_answers_modify_original_draft_answers_and_not_create_new_instance(self):
+        data = self.data
+        self.client.post(self.url, data=data)
+
+        old_primary = MultiChoiceAnswer.objects.get(response__id=int(data['MultiChoice-0-response']), question=self.question1)
+        old_answer_1 = NumericalAnswer.objects.get(response=int(data['Number-0-response']), question=self.question2)
+        old_answer_2 = NumericalAnswer.objects.get(response=int(data['Number-1-response']), question=self.question3)
+
+        data_modified = data.copy()
+        data_modified['MultiChoice-0-response'] = self.option2.id
+        data_modified['Number-1-response'] = '3'
+        response = self.client.post(self.url, data=data_modified)
+        self.assertEqual(200, response.status_code)
+
+        primary = MultiChoiceAnswer.objects.get(response__id=int(data_modified['MultiChoice-0-response']), question=self.question1)
+        answer_1 = NumericalAnswer.objects.get(response=int(data_modified['Number-0-response']), question=self.question2)
+        answer_2 = NumericalAnswer.objects.get(response=int(data_modified['Number-1-response']), question=self.question3)
+
+        self.assertEqual(old_primary.id, primary.id)
+        self.assertEqual(old_answer_1.id, answer_1.id)
+        self.assertEqual(old_answer_2.id, answer_2.id)
+
+        answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
+        self.assertEqual(1, answer_group.count())

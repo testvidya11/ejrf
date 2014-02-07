@@ -45,7 +45,8 @@ class QuestionnaireEntryFormService(object):
         existing_draft_answer = order.question.draft_answer(order.question_group)
         initial = {'group': order.question_group, 'question': order.question}
         if existing_draft_answer:
-            initial['response'] = existing_draft_answer
+            initial['response'] = existing_draft_answer.response
+            initial['answer'] = existing_draft_answer
         return initial
 
     def is_valid(self):

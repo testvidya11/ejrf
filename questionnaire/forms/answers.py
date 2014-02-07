@@ -11,9 +11,21 @@ class AnswerForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(AnswerForm, self).__init__(*args, **kwargs)
         self._initial = kwargs['initial'] if 'initial' in kwargs else {}
+        self.is_editing = False
+        self._set_instance()
         self.question_group = self._initial['group'] if self._initial else None
 
+    def _set_instance(self):
+        if 'answer' in self._initial:
+            self.is_editing = True
+            self.instance = self._initial['answer']
+
     def save(self, commit=True, *args, **kwargs):
+        if self.is_editing:
+            return super(AnswerForm, self).save(commit=commit, *args, **kwargs)
+        return self._create_new_answer(*args, **kwargs)
+
+    def _create_new_answer(self, *args, **kwargs):
         answer = super(AnswerForm, self).save(commit=False, *args, **kwargs)
         self._add_extra_attributes_to(answer)
         answer.save()
@@ -27,6 +39,7 @@ class AnswerForm(ModelForm):
     def _add_to_answer_group(self, answer):
         answer_group = AnswerGroup.objects.get_or_create(grouped_question=self.question_group)[0]
         answer_group.answer.add(answer)
+
 
 
 class NumericalAnswerForm(AnswerForm):

@@ -43,7 +43,7 @@ class Question(BaseModel):
         from questionnaire.models import Answer
         answer = self.answers.filter(answergroup__grouped_question=parent_group, status=Answer.DRAFT_STATUS).select_subclasses()
         if answer.exists():
-            return answer[0].response
+            return answer[0]
         return None
 
 

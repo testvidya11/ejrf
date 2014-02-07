@@ -114,8 +114,8 @@ class QuestionTest(BaseTest):
         answer_group2 = AnswerGroup.objects.create(grouped_question=group2, row=1)
         answer_group2.answer.add(question3_answer)
 
-        self.assertEqual(question1_answer.response, question1.draft_answer(self.parent_group))
-        self.assertEqual(question2_answer.response, question2.draft_answer(self.parent_group))
+        self.assertEqual(question1_answer, question1.draft_answer(self.parent_group))
+        self.assertEqual(question2_answer, question2.draft_answer(self.parent_group))
         self.assertIsNone(question3.draft_answer(group2))
 
 
