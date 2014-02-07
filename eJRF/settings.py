@@ -113,6 +113,7 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 STATIC_URL = '/static/'
 
+ACCEPTED_EXTENSIONS = ['PDF', "DOC", "DOCX", "HTM", "HTML", "JPG", "PDF", "PPT", "PPTX", "RTF", "TIF", "TXT", "XLS", "XLSX"]
 # Importing server specific settings
 try:
    from localsettings import *

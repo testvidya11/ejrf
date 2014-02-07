@@ -34,3 +34,7 @@ class DateAnswer(Answer):
 
 class MultiChoiceAnswer(Answer):
     response = models.ForeignKey(QuestionOption)
+
+
+class FileAnswer(Answer):
+    response = models.FileField(upload_to='.')
