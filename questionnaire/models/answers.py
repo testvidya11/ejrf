@@ -1,7 +1,7 @@
 from model_utils.managers import InheritanceManager
+from django.db import models
 from questionnaire.models.questions import Question, QuestionOption
 from questionnaire.models.base import BaseModel
-from django.db import models
 
 
 class Answer(BaseModel):
@@ -34,7 +34,3 @@ class DateAnswer(Answer):
 
 class MultiChoiceAnswer(Answer):
     response = models.ForeignKey(QuestionOption)
-
-
-class FileAnswer(Answer):
-    response = models.FileField(upload_to='.')

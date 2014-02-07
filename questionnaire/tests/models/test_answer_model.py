@@ -2,7 +2,7 @@ from datetime import date
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from questionnaire.models import Question, Country, QuestionOption, MultiChoiceAnswer
-from questionnaire.models.answers import Answer, NumericalAnswer, TextAnswer, DateAnswer, FileAnswer
+from questionnaire.models.answers import Answer, NumericalAnswer, TextAnswer, DateAnswer
 
 
 class AnswerTest(TestCase):
@@ -114,22 +114,3 @@ class MultiChoiceAnswerTest(TestCase):
         self.assertEqual(question, answer.question)
         self.assertEqual(country, answer.country)
         self.assertEqual(option, answer.response)
-
-
-class FileAnswerTest(TestCase):
-
-    def test_file_answer_fields(self):
-        answer = FileAnswer()
-        fields = [str(item.attname) for item in answer._meta.fields]
-        self.assertEqual(10, len(fields))
-        for field in ['id', 'created', 'modified', 'question_id', 'country_id', 'response', 'code']:
-            self.assertIn(field, fields)
-
-    def test_file_answer_field_store(self):
-        question = Question.objects.create(text='Provide Attachement', UID='abc133', answer_type='FileAnswer')
-        country = Country.objects.create(name="Peru")
-        pdf_file_name = "survey2013.pdf"
-        answer = FileAnswer.objects.create(question=question, country=country, response=pdf_file_name)
-        self.failUnless(answer.id)
-        self.assertEqual(question, answer.question)
-        self.assertEqual(pdf_file_name, answer.response)

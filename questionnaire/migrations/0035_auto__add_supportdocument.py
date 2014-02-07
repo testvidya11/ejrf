@@ -8,17 +8,21 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'FileAnswer'
-        db.create_table(u'questionnaire_fileanswer', (
-            (u'answer_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['questionnaire.Answer'], unique=True, primary_key=True)),
-            ('response', self.gf('django.db.models.fields.files.FileField')(max_length=100)),
+        # Adding model 'SupportDocument'
+        db.create_table(u'questionnaire_supportdocument', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('modified', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, blank=True)),
+            ('questionnaire', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['questionnaire.Questionnaire'])),
+            ('country', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['questionnaire.Country'])),
+            ('path', self.gf('django.db.models.fields.files.FileField')(max_length=100)),
         ))
-        db.send_create_signal('questionnaire', ['FileAnswer'])
+        db.send_create_signal('questionnaire', ['SupportDocument'])
 
 
     def backwards(self, orm):
-        # Deleting model 'FileAnswer'
-        db.delete_table(u'questionnaire_fileanswer')
+        # Deleting model 'SupportDocument'
+        db.delete_table(u'questionnaire_supportdocument')
 
 
     models = {
@@ -100,11 +104,6 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'DateAnswer', '_ormbases': ['questionnaire.Answer']},
             u'answer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['questionnaire.Answer']", 'unique': 'True', 'primary_key': 'True'}),
             'response': ('django.db.models.fields.DateField', [], {})
-        },
-        'questionnaire.fileanswer': {
-            'Meta': {'object_name': 'FileAnswer', '_ormbases': ['questionnaire.Answer']},
-            u'answer_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['questionnaire.Answer']", 'unique': 'True', 'primary_key': 'True'}),
-            'response': ('django.db.models.fields.files.FileField', [], {'max_length': '100'})
         },
         'questionnaire.multichoiceanswer': {
             'Meta': {'object_name': 'MultiChoiceAnswer', '_ormbases': ['questionnaire.Answer']},
@@ -206,6 +205,15 @@ class Migration(SchemaMigration):
             'order': ('django.db.models.fields.IntegerField', [], {}),
             'section': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'sub_sections'", 'to': "orm['questionnaire.Section']"}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '256'})
+        },
+        'questionnaire.supportdocument': {
+            'Meta': {'object_name': 'SupportDocument'},
+            'country': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['questionnaire.Country']"}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'modified': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'blank': 'True'}),
+            'path': ('django.db.models.fields.files.FileField', [], {'max_length': '100'}),
+            'questionnaire': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['questionnaire.Questionnaire']"})
         },
         'questionnaire.textanswer': {
             'Meta': {'object_name': 'TextAnswer', '_ormbases': ['questionnaire.Answer']},

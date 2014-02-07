@@ -8,6 +8,7 @@ from questionnaire.models.locations import Location, Region, Country, Organizati
 from questionnaire.models.questionnaires import Questionnaire
 from questionnaire.models.questions import Question, QuestionOption
 from questionnaire.models.sections import Section, SubSection
+from questionnaire.models.support_document import SupportDocument
 from questionnaire.models.users import UserProfile
 
 __all__ = [
@@ -29,5 +30,6 @@ __all__ = [
     'Comment',
     'AnswerGroup',
     'QuestionGroupOrder',
-    'UserProfile'
+    'UserProfile',
+    'SupportDocument'
 ]
