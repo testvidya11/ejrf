@@ -47,6 +47,12 @@ function updateFormCounts(form_element){
         if($(this).attr('type') == 'radio'){
             //update the previous label
             $(this).parents('label').attr({'for': id});
+
+            //update count if gone through all the ul elements
+            var list_count = $(this).parents('ul')[0].childElementCount;
+            var element_count = parseInt(id.substr(id.length - 1)) + 1;
+            if(list_count == element_count)
+                total++;
         }
         else
             total++;
