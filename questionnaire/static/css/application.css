@@ -227,9 +227,9 @@ form ul li{
 .question-number{
     color: #0080FF;
     font-size: 11px;
-    display: inline-block;
+    display: table-cell;
 }
 .question-text{
     padding-left: 10px;
-    display: inline-block;
+    display: table-cell;
 }
