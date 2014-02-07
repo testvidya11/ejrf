@@ -233,3 +233,6 @@ form ul li{
     padding-left: 10px;
     display: table-cell;
 }
+.region-select{
+    min-width: 170px !important;
+}

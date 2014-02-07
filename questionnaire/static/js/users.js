@@ -14,7 +14,7 @@ function get_regions_for(organization, region){
             region_select = $(region);
         $.get(url, function(data){
             region_select.html(' ');
-            region_select.html('<option>Select a region </option>');
+            region_select.html('<option value="">All </option>');
             data.forEach(function(region){
                 region_select.append('<option value='+ region.id +'>'+ region.name +'</option>')
             });
