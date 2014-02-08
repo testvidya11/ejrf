@@ -2,16 +2,21 @@ from braces.views import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.views.generic import ListView, CreateView
 from questionnaire.forms.filter import UserFilterForm
 from questionnaire.forms.user_profile import UserProfileForm
 from questionnaire.models import Organization, Region, Country
 
-FORM_FIELD_QUERY_FIELD = {'region': 'user_profile__region', 'role': 'groups',
-                          'organization': 'user_profile__organization'}
-
 
 class UsersList(LoginRequiredMixin, ListView):
+    FORM_QUERY_FIELD = {'role': 'groups',
+                        'organization': 'user_profile__organization',
+                        'region': 'user_profile__region'}
+
+    COUNTRY_QUERY_FIELD = {'role': 'groups',
+                           'organization': 'user_profile__country__regions__organization',
+                           'region': 'user_profile__country__regions'}
 
     def __init__(self, **kwargs):
         super(UsersList, self).__init__(**kwargs)
@@ -26,21 +31,21 @@ class UsersList(LoginRequiredMixin, ListView):
     def post(self, request, *args, **kwargs):
         form = UserFilterForm(request.POST)
         if form.is_valid():
-            filtered_users = self._query_for(request)
+            global_query_params = self._query_for(request.POST.iteritems(), self.FORM_QUERY_FIELD)
+            regional_query_params = self._query_for(request.POST.iteritems(), self.COUNTRY_QUERY_FIELD)
+            filtered_users = self.object_list.filter(Q(**regional_query_params) | Q(**global_query_params))
             context = {'request': self.request,
                        'users': filtered_users,
                        'filter_form': form}
             return self.render_to_response(context)
-        return self.get(args, kwargs)
 
-    def _query_for(self, request):
-        post_request = request.POST.iteritems()
-        query_params = dict((self._get_query_field(key), value) for key, value in post_request if value.strip() != '' and key in FORM_FIELD_QUERY_FIELD.keys())
-        return self.object_list.filter(**query_params)
+    def _query_for(self, post, query_key_map):
+        query_params = dict((self._get_query_field(key, query_key_map), value) for key, value in post if value.strip() != '' and key in query_key_map.keys())
+        return query_params
 
     @staticmethod
-    def _get_query_field(_key):
-        return FORM_FIELD_QUERY_FIELD.get(_key)
+    def _get_query_field(_key, query_key_map):
+        return query_key_map.get(_key)
 
     def get_queryset(self):
         return self.model.objects.order_by('user_profile__created')

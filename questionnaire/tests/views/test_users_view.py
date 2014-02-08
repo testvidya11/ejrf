@@ -227,8 +227,35 @@ class FilterUsersViewTest(BaseTest):
         self.assertIn(self.jacinta, response.context['users'])
         self.assertNotIn(self.felix, response.context['users'])
 
+    def test_junk_in_the_post_data(self):
+        post_data = {'region': self.region.id, 'organization': '', 'role': '', 'hohohohohoh': 'hehehehehe'}
+        response = self.client.post('/users/', data=post_data)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(2, len(response.context['users']))
+        self.assertIn(self.jacinta, response.context['users'])
+        self.assertNotIn(self.felix, response.context['users'])
+
     def test_assert_login_required_for_filter_users_list(self):
         self.assert_login_required('/users/')
+
+    def test_post_filter_gets_data_submitters_and_country_admins_when_region_is_posted(self):
+        organization = Organization.objects.create(name="WHO")
+        who_region = Region.objects.create(name="AFR", organization=organization)
+        sudan = Country.objects.create(name="Sudan", code="SDA")
+        who_region.countries.add(sudan)
+        faritha = User.objects.create(username='Faritha')
+        UserProfile.objects.create(user=faritha, country=sudan)
+
+        fatima = User.objects.create(username='Fatima')
+        UserProfile.objects.create(user=fatima, country=self.uganda)
+
+        post_data = {'organization': organization.id, 'region': who_region.id}
+
+        response = self.client.post('/users/', data=post_data)
+
+        self.assertEqual(1, len(response.context['users']))
+        self.assertIn(faritha, response.context['users'])
+        self.assertNotIn(fatima, response.context['users'])
 
 
 class GetRegionsForOrganizationTest(BaseTest):
