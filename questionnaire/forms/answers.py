@@ -41,7 +41,6 @@ class AnswerForm(ModelForm):
         answer_group.answer.add(answer)
 
 
-
 class NumericalAnswerForm(AnswerForm):
     class Meta:
         model = NumericalAnswer
@@ -96,10 +95,15 @@ class MultiChoiceAnswerForm(AnswerForm):
         self.fields['response'].empty_label = self._set_response_label(query_set)
 
     def _set_response_label(self, query_set):
-        return None if query_set.count() <= 3 else "Choose One"
+        if self.widget_is_radio_button(query_set):
+            return None
+        return "Choose One"
+
+    def widget_is_radio_button(self, query_set):
+        return query_set.count() <= 2 or query_set.filter(text='Yes').exists() or query_set.filter(text='Male').exists()
 
     def _get_response_widget(self, query_set):
-        if query_set.count() <= 2 or query_set.filter(text='Yes').exists() or query_set.filter(text='Male').exists():
+        if self.widget_is_radio_button(query_set):
             return forms.RadioSelect()
         if query_set.exclude(instructions=None).exists():
             return MultiChoiceAnswerSelectWidget(question_options=query_set)
