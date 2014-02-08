@@ -335,3 +335,26 @@ def when_i_select_a_country(step):
 def then_i_should_see_that_the_data_submitter_was_successfully_created(step):
     world.page.is_text_present("%s created successfully." % world.data_submitter.name)
     world.page.is_text_present(world.form_data['username'], world.form_data['email'], 'Active')
+
+@step(u'And I have 2 country admins and data submitters in countries in the AFRO')
+def and_i_have_2_country_admins_and_data_submitters_in_countries_in_the_afro(step):
+    world.user = User.objects.create(username="mutoni", email="mutoni@ccc.ccc")
+    UserProfile.objects.create(user=world.user, country=world.uganda)
+    world.user1 = User.objects.create(username="mbabazi", email="mbabazi@ccc.ccc")
+    UserProfile.objects.create(user=world.user1, country=world.rwanda)
+    world.data_submitter.user_set.add(world.user, world.user1)
+
+@step(u'And I select the AFRO region')
+def and_i_select_the_afro_region(step):
+    world.page.select('region', world.region.id)
+
+@step(u'Then I should see all the data submitters too')
+def then_i_should_see_all_the_users_in_the_region_including_data_submitters_and_country_admins(step):
+    world.page.is_text_present(world.user.username, world.user.email)
+    world.page.is_text_present(world.user1.username, world.user1.email)
+
+@step(u'And I have countries in AFRO region')
+def and_i_have_countries_in_afro_region(step):
+    world.uganda = Country.objects.create(name="Uganda")
+    world.rwanda = Country.objects.create(name="Rwanda")
+    world.region.countries.add(world.uganda, world.rwanda)

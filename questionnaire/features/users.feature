@@ -93,6 +93,23 @@ Feature: User management
         Then I should see only regional admin users in the UNICEF organization in the AFRO region
         And I should not see the rest of the users
 
+    Scenario: Filter users by regions and organizations
+        Given I have a global admin user
+        And I logged in the user
+        And I have two organizations, region and role
+        And I have 4 users in the UNICEF organization, 2 of which are regional admins in the AFRO region
+        And I have countries in AFRO region
+        And I have four roles
+        And I have 2 country admins and data submitters in countries in the AFRO
+        And I visit the user listing page
+        When I select UNICEF organization
+        And I select the AFRO region
+        And I click get list
+        Then I should see only regional admin users in the UNICEF organization in the AFRO region
+        Then I should see all the data submitters too
+        And I should not see the rest of the users
+
+
     Scenario: Get regions for selected organizations
         Given I have a global admin user
         And I have two organizations, region and role
