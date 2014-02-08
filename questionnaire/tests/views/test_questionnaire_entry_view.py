@@ -70,7 +70,6 @@ class QuestionnaireEntryViewTest(BaseTest):
     def test_login_required(self):
         self.assert_login_required('/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id))
 
-
     def test_post_saves_answers(self):
         data = self.data
         self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response'])))

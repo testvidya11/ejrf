@@ -30,7 +30,7 @@ class Entry(LoginRequiredMixin, FormView):
     def post(self, request, *args, **kwargs):
         questionnaire = Questionnaire.objects.get(id=self.kwargs['questionnaire_id'])
         section = Section.objects.get(id=self.kwargs['section_id'])
-        initial = {'country': self.request.user.user_profile.country, 'status': 'Draft', 'version':1, 'code':'ABC123'}
+        initial = {'country': self.request.user.user_profile.country, 'status': 'Draft', 'version':1, 'code': 'ABC123'}
         formsets = QuestionnaireEntryFormService(section, initial=initial, data=request.POST)
 
         if formsets.is_valid():
