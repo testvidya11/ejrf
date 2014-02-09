@@ -9,8 +9,8 @@ class BaseTest(TestCase):
 
     def write_to_csv(self, mode, data, csvfilename='test.csv'):
         with open(csvfilename, mode) as fp:
-            file = csv.writer(fp, delimiter=',')
-            file.writerows(data)
+            _file = csv.writer(fp, delimiter=',')
+            _file.writerows(data)
             fp.close()
 
     def create_user_with_no_permissions(self):
@@ -28,5 +28,5 @@ class BaseTest(TestCase):
     def assert_login_required(self, url):
         self.client.logout()
         response = self.client.get(url)
-        self.assertRedirects(response, expected_url='/accounts/login/?next=%s'%quote(url),
+        self.assertRedirects(response, expected_url='/accounts/login/?next=%s' % quote(url),
                              status_code=302, target_status_code=200, msg_prefix='')

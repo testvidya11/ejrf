@@ -113,7 +113,8 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 STATIC_URL = '/static/'
 
-ACCEPTED_EXTENSIONS = ['PDF', "DOC", "DOCX", "HTM", "HTML", "JPG", "PDF", "PPT", "PPTX", "RTF", "TIF", "TXT", "XLS", "XLSX"]
+ACCEPTED_EXTENSIONS = [".doc", ".docx", ".htm", ".html", ".jpg", ".pdf", ".ppt", ".pptx", ".rtf", ".tif", ".txt", ".xls", ".xlsx"]
+FILE_SIZE_LIMIT = 50000
 # Importing server specific settings
 try:
    from localsettings import *
