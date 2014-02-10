@@ -182,6 +182,7 @@ a[data-toggle='popover']{
 
 .instructions{
     float: right;
+    display: inline-flex;
 }
 
 .form-group ul{

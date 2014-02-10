@@ -32,6 +32,9 @@ class Section(BaseModel):
         ordering = ('order',)
         app_label = 'questionnaire'
 
+    def has_at_least_two_subsections(self):
+        return self.sub_sections.count() > 1
+
 
 class SubSection(BaseModel):
     title = models.CharField(max_length=256, blank=False, null=False)
