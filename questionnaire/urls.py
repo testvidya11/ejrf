@@ -3,6 +3,7 @@ from questionnaire.views.export_to_text import ExportToTextView
 from questionnaire.views.home import Home
 from questionnaire.views.locations import ListRegions, ListCountries, RegionsForOrganization
 from questionnaire.views.questionnaires import Entry
+from questionnaire.views.upload_document import UploadDocument
 from questionnaire.views.users import UsersList, CreateUser
 
 urlpatterns = patterns('',
@@ -15,6 +16,8 @@ urlpatterns = patterns('',
     url(r'^locations/region/(?P<region_id>\d+)/country/$', ListCountries.as_view(), name="list_country_page"),
     url(r'^questionnaire/entry/(?P<questionnaire_id>\d+)/section/(?P<section_id>\d+)/$',
         Entry.as_view(), name="questionnaire_entry_page"),
+    url(r'^questionnaire/entry/(?P<questionnaire_id>\d+)/documents/upload/$', UploadDocument.as_view(),
+        name='upload_document'),
     url(r'^users/$', UsersList.as_view(), name="list_users_page"),
     url(r'^users/new/$', CreateUser.as_view(), name="create_user_page"),
 )

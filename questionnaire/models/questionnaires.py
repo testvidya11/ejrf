@@ -7,6 +7,9 @@ class Questionnaire(BaseModel):
     description = models.TextField(null=True, blank=True)
     year = models.PositiveIntegerField(null=True, blank=True)
 
+    def __unicode__(self):
+        return '%s' % self.name
+
     def sub_sections(self):
         sections = self.sections.all()
         from questionnaire.models import SubSection

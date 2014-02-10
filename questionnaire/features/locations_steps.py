@@ -9,8 +9,9 @@ from questionnaire.models.locations import Region, Country, Organization
 @step(u'Given I am logged in')
 def given_i_am_logged_in(step):
     password = 'I_Rock'
+    world.uganda = Country.objects.create(name="Uganda")
     user = User.objects.create_user('Rajni', 'rajni@kant.com', password)
-    # UserProfile.objects.create(user=user, country=world.uganda)
+    UserProfile.objects.create(user=user, country=world.uganda)
     world.page = LoginPage(world.browser)
     world.page.visit()
     world.page.login(user, password)

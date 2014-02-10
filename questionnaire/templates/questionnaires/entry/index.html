@@ -6,14 +6,13 @@
 {% load questionnaire_entry_tags %}
 
     {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
-
+    <a href="{% url 'upload_document' section.questionnaire.id %}" class="btn btn-default pull-right" id="upload-file"><span class="cyan"><span class="glyphicon glyphicon-open"></span> Upload a document</span> </a>
     <h3>{{ section.order}}. {{ section.title | safe }}</h3>
     {% if section.description %}
         <div class="">
            {{ section.description| safe }}
         </div>
     {% endif %}
-
     <form class="form-horizontal" id="questionnaire_entry" role="form" method="post">
     {% csrf_token %}
     {% for form_type, form_set in formsets.formsets.items %}

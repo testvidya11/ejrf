@@ -63,3 +63,6 @@ class PageObject(object):
 
     def is_element_present_by_css(self, css_selector):
         self.browser.is_element_present_by_css(css_selector)
+
+    def input_file(self, filename):
+        self.browser.attach_file('path', filename)

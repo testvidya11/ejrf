@@ -111,10 +111,16 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
+MEDIA_ROOT = BASE_DIR + "/media/"
+
+UPLOADS_MEDIA_URL = 'user_uploads/'
+MEDIA_URL = "media/"
+
 STATIC_URL = '/static/'
 
-ACCEPTED_EXTENSIONS = [".doc", ".docx", ".htm", ".html", ".jpg", ".pdf", ".ppt", ".pptx", ".rtf", ".tif", ".txt", ".xls", ".xlsx"]
-FILE_SIZE_LIMIT = 50000
+ACCEPTED_EXTENSIONS = [".doc", ".docx", ".htm", ".html", ".jpg", ".pdf", ".ppt", ".pptx", ".rtf", ".tif", ".txt",
+                       ".xls", ".xlsx"]
+MAX_UPLOAD_SIZE = 52428800
 # Importing server specific settings
 try:
    from localsettings import *
