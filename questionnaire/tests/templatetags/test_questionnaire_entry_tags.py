@@ -2,7 +2,7 @@ from mock import patch, MagicMock
 from questionnaire.models import Questionnaire, Section
 
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
-from questionnaire.templatetags.questionnaire_entry_tags import get_form
+from questionnaire.templatetags.questionnaire_entry_tags import get_form, _filename
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -22,3 +22,7 @@ class QuestionnaireEntryTagTest(BaseTest):
             obtained_visible_fields = get_form(fake_question, fake_formsets)
             self.assertEqual([expected_visible_field], obtained_visible_fields)
             mock_next_ordered_form.assert_called_once_with(fake_question)
+
+    def test_gets_filename_from_path(self):
+        filename = _filename('user_uploads/TechRadar_Jan_2014_V1_1.pdf')
+        self.assertEqual('TechRadar_Jan_2014_V1_1.pdf', filename)

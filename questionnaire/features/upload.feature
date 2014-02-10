@@ -9,3 +9,4 @@ Feature: Support document upload
    When I select a file to upload 
    And I click upload button
    Then I should see the file was uploaded successfully
+   And I should be able to download the file

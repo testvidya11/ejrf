@@ -22,7 +22,7 @@ class Questionnaire(BaseModel):
         return all_questions
 
     def all_groups(self):
-        all_qroups = []
+        all_groups = []
         for subsection in self.sub_sections():
-            all_qroups.extend(subsection.question_group.all())
-        return all_qroups
+            all_groups.extend(subsection.question_group.all())
+        return all_groups

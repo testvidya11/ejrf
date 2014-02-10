@@ -32,3 +32,7 @@ def and_i_have_a_pdf_document(step):
     with patch('__main__.open', m, create=True):
         with open(world.filename, 'w') as document:
             document.write("Some stuff")
+
+@step(u'And I should be able to download the file')
+def and_i_should_be_able_to_download_the_file(step):
+    world.page.is_text_present(world.filename)

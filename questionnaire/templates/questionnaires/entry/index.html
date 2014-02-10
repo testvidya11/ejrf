@@ -6,7 +6,15 @@
 {% load questionnaire_entry_tags %}
 
     {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
-    <a href="{% url 'upload_document' section.questionnaire.id %}" class="btn btn-default pull-right" id="upload-file"><span class="cyan"><span class="glyphicon glyphicon-open"></span> Upload a document</span> </a>
+    <div>
+        <div class="btn-group">
+            {% for document in questionnaire.support_documents.all %}
+              <a href="{% url 'download_document' questionnaire.id document.id %}" class="btn btn-default" target="_blank">
+                  <span class="cyan"><span class="glyphicon glyphicon-save"></span> {{ document.path|_filename }}</span> </a>
+            {% endfor %}
+        </div>
+        <a href="{% url 'upload_document' section.questionnaire.id %}" class="btn btn-default pull-right" id="upload-file"><span class="cyan"><span class="glyphicon glyphicon-open"></span> Upload a document</span> </a>
+    </div>
     <h3>{{ section.order}}. {{ section.title | safe }}</h3>
     {% if section.description %}
         <div class="">

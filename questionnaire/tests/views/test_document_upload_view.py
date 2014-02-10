@@ -1,11 +1,11 @@
 import os
-from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.files import File
 from django.test import Client
 from mock import mock_open, patch
 from questionnaire.forms.support_document_upload_form import SupportDocumentUploadForm
 
 from questionnaire.tests.base_test import BaseTest
-from questionnaire.models import Questionnaire, Country
+from questionnaire.models import Questionnaire, Country, SupportDocument
 
 
 class UploadSupportDocumentTest(BaseTest):
@@ -13,7 +13,7 @@ class UploadSupportDocumentTest(BaseTest):
         self.client = Client()
         self.user, self.country = self.create_user_with_no_permissions()
         self.login_user()
-        self.filename = 'empty_file.pdf'
+        self.filename = 'test_empty_file.pdf'
         self.uganda = Country.objects.create(name="Uganda")
         self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", year=2013)
 
@@ -47,5 +47,20 @@ class UploadSupportDocumentTest(BaseTest):
         response = self.client.post('/questionnaire/entry/%s/documents/upload/' % self.questionnaire.id, data=data)
         self.assertEqual(200, response.status_code)
 
+    def test_download_attachment_view(self):
+        uganda = Country.objects.create(name="Uganda")
+        questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", year=2013)
+
+        m = mock_open()
+        with patch('__main__.open', m, create=True):
+            with open(self.filename, 'w') as document:
+                document.write("Some stuff")
+            document = open(self.filename, 'rb')
+        _document = SupportDocument.objects.create(path=File(document), country=uganda, questionnaire=questionnaire)
+        url = '/questionnaire/entry/%s/documents/%s/download/' % (questionnaire.id, _document.id)
+        response = self.client.get(url)
+        self.assertEqual(200, response.status_code)
+
     def tearDown(self):
         os.system("rm -rf %s" % self.filename)
+        os.system("rm -rf media/user_uploads/test_*")

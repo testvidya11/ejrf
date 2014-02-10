@@ -12,4 +12,3 @@ def bootstrap_message(django_message):
     if django_message == 'error':
         return 'danger'
     return django_message
-

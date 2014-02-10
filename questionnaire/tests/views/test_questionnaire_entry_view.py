@@ -47,7 +47,6 @@ class QuestionnaireEntryViewTest(BaseTest):
                 u'Number-INITIAL_FORMS': u'2', u'Number-TOTAL_FORMS': u'2', u'Number-MAX_NUM_FORMS': u'2',
                 u'Number-0-response': u'2', u'Number-1-response': u'33'}
 
-
     def test_get_questionnaire_entry_view(self):
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
@@ -116,7 +115,6 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.assertEqual(200, response.status_code)
         expected_message = 'Draft saved.'
         self.assertIn(expected_message, response.content)
-
 
     def test_post_failure_does_not_save_answers(self):
         data = self.data
