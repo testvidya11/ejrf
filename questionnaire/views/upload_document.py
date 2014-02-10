@@ -19,8 +19,14 @@ class UploadDocument(CreateView):
         except UserProfile.DoesNotExist:
             pass
         context.update({'upload_form': self.form_class(initial=upload_data_initial), 'button_label': 'Upload'})
+        print upload_data_initial
         return context
 
     def form_valid(self, form):
         messages.success(self.request, "File was uploaded successfully")
         return super(UploadDocument, self).form_valid(form)
+
+    def form_invalid(self, form):
+        print "F"
+        print form.errors
+        return super(UploadDocument, self).form_invalid(form)

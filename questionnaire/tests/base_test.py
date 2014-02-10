@@ -17,7 +17,6 @@ class BaseTest(TestCase):
         self.user = User.objects.create(username="user", email="user@mail.com")
         uganda = Country.objects.create(name="Uganda")
         UserProfile.objects.create(user=self.user, country=uganda)
-
         self.user.set_password("pass")
         self.user.save()
         return self.user
