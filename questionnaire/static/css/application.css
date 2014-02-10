@@ -237,7 +237,9 @@ form ul li{
 .region-select{
     min-width: 170px !important;
 }
-form input[type=file]{
+textarea{
+    height: 34px;
+}form input[type=file]{
     margin-left: 154px;
     margin-top: -28px;
 }

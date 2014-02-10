@@ -49,6 +49,7 @@ class NumericalAnswerForm(AnswerForm):
 
 
 class TextAnswerForm(AnswerForm):
+    response = forms.CharField( widget=forms.Textarea )
     class Meta:
         model = TextAnswer
         exclude = ('question', 'status', 'country', 'version', 'code')

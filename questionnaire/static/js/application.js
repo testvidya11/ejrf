@@ -7,14 +7,17 @@ $(document).ready(function() {
     $('p:empty').remove()
     warn_before_navigating_away();
 
-    $('.datetimepicker').each(function(){
-        $(this).datetimepicker({ pickTime: false });
-    });
-    
+    $('.datetimepicker').datetimepicker({ pickTime: false });
+    $('textarea').autosize();
 });
+
 
 function cloneMore(selector) {
     $('a[data-toggle=popover]').popover('destroy');
+    $('textarea').trigger('autosize.destroy');
+    $('.datetimepicker').each(function(){
+        $(this).data("DateTimePicker").destroy();
+    });
 
     var newElement = $(selector).clone(true);
     updateFormCounts(newElement);
@@ -33,6 +36,8 @@ function cloneMore(selector) {
     $(selector).after("<hr class='multiple-hr'/>");
 
     $('a[data-toggle=popover]').popover();
+    $('textarea').autosize().trigger('autosize.resize');
+    $('.datetimepicker').datetimepicker({ pickTime: false });
 }
 
 function updateFormCounts(form_element){
@@ -66,6 +71,12 @@ $('.add-more').on('click', function(event) {
     cloneMore($(this).prev('.question-group'));
 });
 
+$('textarea').on('keyup', function(event){
+  var maxLength = 256;
+  if($(this).val().length >= maxLength)
+    $(this).val($(this).val().substring(0, maxLength));
+});
+
 $(document).on('click', '.delete-more', function() {
     $('a[data-toggle=popover]').popover('destroy');
 
@@ -92,3 +103,4 @@ function warn_before_navigating_away(){
        }
    };
 };
+
