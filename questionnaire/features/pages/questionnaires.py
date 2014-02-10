@@ -14,7 +14,7 @@ class QuestionnairePage(PageObject):
         assert self.browser.find_by_name("MultiChoice-0-response")
         assert self.browser.find_by_id('cancel_button').text.strip() == "CANCEL"
         assert self.browser.find_by_id('save_draft_button').text.strip() == "SAVE"
-        assert self.browser.find_by_id('submit_button').text.strip() == "SUBMIT"
+        assert self.browser.find_by_id('submit_modal_button').text.strip() == "SUBMIT"
 
     def validate_instructions(self, question):
         self.click_by_css("#question-%d-instructions" % question.id)

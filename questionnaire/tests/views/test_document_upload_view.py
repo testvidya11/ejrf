@@ -11,7 +11,7 @@ from questionnaire.models import Questionnaire, Country
 class UploadSupportDocumentTest(BaseTest):
     def setUp(self):
         self.client = Client()
-        self.user = self.create_user_with_no_permissions()
+        self.user, self.country = self.create_user_with_no_permissions()
         self.login_user()
         self.filename = 'empty_file.pdf'
         self.uganda = Country.objects.create(name="Uganda")

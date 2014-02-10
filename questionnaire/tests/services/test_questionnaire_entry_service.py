@@ -267,3 +267,31 @@ class QuestionnaireEntryAsFormTest(BaseTest):
 
         answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
         self.assertEqual(1, answer_group.count())
+
+    def test_submit_changes_draft_answers_to_submitted_and_not_create_new_instances(self):
+        data = self.data
+
+        old_primary = MultiChoiceAnswer.objects.create(response=self.option1, question=self.question1, **self.initial)
+        old_answer_1 = NumericalAnswer.objects.create(response=int(data['Number-0-response']), question=self.question2, **self.initial)
+        old_answer_2 = NumericalAnswer.objects.create(response=int(data['Number-1-response']), question=self.question3, **self.initial)
+
+        answer_group = AnswerGroup.objects.create(grouped_question=self.question_group)
+        answer_group.answer.add(old_primary, old_answer_1, old_answer_2)
+
+        data_modified = data.copy()
+        data_modified['MultiChoice-0-response'] = self.option2.id
+        data_modified['Number-1-response'] = '3'
+
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section_1, initial=self.initial, data=data_modified)
+        questionnaire_entry_form.save()
+
+        primary = MultiChoiceAnswer.objects.get(response__id=int(data_modified['MultiChoice-0-response']), question=self.question1)
+        answer_1 = NumericalAnswer.objects.get(response=int(data_modified['Number-0-response']), question=self.question2)
+        answer_2 = NumericalAnswer.objects.get(response=int(data_modified['Number-1-response']), question=self.question3)
+
+        self.assertEqual(old_primary.id, primary.id)
+        self.assertEqual(old_answer_1.id, answer_1.id)
+        self.assertEqual(old_answer_2.id, answer_2.id)
+
+        answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
+        self.assertEqual(1, answer_group.count())

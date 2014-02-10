@@ -56,4 +56,4 @@ class QuestionnaireEntryFormService(object):
     def save(self):
         for formset in self.formsets.values():
             for form in formset:
-                answer=form.save()
+                answer = form.save()

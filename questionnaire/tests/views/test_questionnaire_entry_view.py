@@ -1,5 +1,5 @@
 from django.test import Client
-from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionOption, MultiChoiceAnswer, NumericalAnswer, QuestionGroupOrder, AnswerGroup
+from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionOption, MultiChoiceAnswer, NumericalAnswer, QuestionGroupOrder, AnswerGroup, Answer
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.tests.base_test import BaseTest
 
@@ -39,7 +39,7 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.url = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id)
 
         self.client = Client()
-        self.user = self.create_user_with_no_permissions()
+        self.user, self.country = self.create_user_with_no_permissions()
         self.login_user()
 
         self.data = {u'MultiChoice-MAX_NUM_FORMS': u'1', u'MultiChoice-TOTAL_FORMS': u'1',
@@ -163,4 +163,48 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.assertEqual(old_answer_2.id, answer_2.id)
 
         answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
+        self.assertEqual(1, answer_group.count())
+
+    def test_post_submit_save_draft_and_changes_all_answers_statuses_to_submitted(self):
+        other_section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)",
+                                                 order=2, questionnaire=self.questionnaire, name="Reported Cases")
+        other_sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1,
+                                                      section=other_section_1)
+        other_question1 = Question.objects.create(text='other question 1', UID='C00011', answer_type='Number')
+        other_question2 = Question.objects.create(text='other question 2', UID='C00012', answer_type='Number')
+
+        other_question_group = QuestionGroup.objects.create(subsection=other_sub_section, order=1)
+        other_question_group.question.add(other_question1, other_question2)
+
+        QuestionGroupOrder.objects.create(question=other_question1, order=1, question_group=other_question_group)
+        QuestionGroupOrder.objects.create(question=other_question2, order=2, question_group=other_question_group)
+
+        other_answer_1 = NumericalAnswer.objects.create(response=1, question=other_question1, status=Answer.DRAFT_STATUS, country=self.country)
+        other_answer_2 = NumericalAnswer.objects.create(response=2, question=other_question2, status=Answer.DRAFT_STATUS, country=self.country)
+
+        answer_group = AnswerGroup.objects.create(grouped_question=other_question_group)
+        answer_group.answer.add(other_answer_1, other_answer_2)
+
+        data = self.data
+        data['final_submit'] = True
+        self.client.post(self.url, data=data)
+
+        old_primary = MultiChoiceAnswer.objects.get(response__id=int(data['MultiChoice-0-response']), question=self.question1)
+        old_answer_1 = NumericalAnswer.objects.get(response=int(data['Number-0-response']), question=self.question2)
+        old_answer_2 = NumericalAnswer.objects.get(response=int(data['Number-1-response']), question=self.question3)
+
+        self.assertEqual(Answer.SUBMITTED_STATUS, old_primary.status)
+        self.assertEqual(Answer.SUBMITTED_STATUS, old_answer_1.status)
+        self.assertEqual(Answer.SUBMITTED_STATUS, old_answer_2.status)
+
+        answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
+        self.assertEqual(1, answer_group.count())
+
+        other_answer_1 = NumericalAnswer.objects.get(response=1, question=other_question1, country=self.country)
+        other_answer_2 = NumericalAnswer.objects.get(response=2, question=other_question2, country=self.country)
+
+        self.assertEqual(Answer.SUBMITTED_STATUS, other_answer_1.status)
+        self.assertEqual(Answer.SUBMITTED_STATUS, other_answer_2.status)
+
+        answer_group = AnswerGroup.objects.filter(grouped_question=other_question_group)
         self.assertEqual(1, answer_group.count())

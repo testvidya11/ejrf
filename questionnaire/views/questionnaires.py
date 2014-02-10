@@ -5,13 +5,14 @@ from questionnaire.models import Questionnaire, Section
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
 from django.forms.formsets import formset_factory
 from braces.views import LoginRequiredMixin
+from questionnaire.services.users import UserService
 
-ANSWER_FORM ={
-            'Number': NumericalAnswerForm,
-            'Text': TextAnswerForm,
-            'Date': DateAnswerForm,
-            'MultiChoice': MultiChoiceAnswerForm
-        }
+ANSWER_FORM = {'Number': NumericalAnswerForm,
+               'Text': TextAnswerForm,
+               'Date': DateAnswerForm,
+               'MultiChoice': MultiChoiceAnswerForm,
+               }
+
 
 class Entry(LoginRequiredMixin, FormView):
     template_name = 'questionnaires/entry/index.html'
@@ -19,18 +20,18 @@ class Entry(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         questionnaire = Questionnaire.objects.get(id=self.kwargs['questionnaire_id'])
         section = Section.objects.get(id=self.kwargs['section_id'])
-        initial = {'status': 'Draft', 'version':1, 'code':'ABC123'}
+        initial = {'status': 'Draft', 'version': 1, 'code': 'ABC123'}
         formsets = QuestionnaireEntryFormService(section, initial=initial)
 
         context = {'questionnaire': questionnaire, 'section': section,
-                   'formsets': formsets, 'ordered_sections':Section.objects.order_by('order')}
+                   'formsets': formsets, 'ordered_sections': Section.objects.order_by('order')}
 
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
         questionnaire = Questionnaire.objects.get(id=self.kwargs['questionnaire_id'])
         section = Section.objects.get(id=self.kwargs['section_id'])
-        initial = {'country': self.request.user.user_profile.country, 'status': 'Draft', 'version':1, 'code': 'ABC123'}
+        initial = {'country': self.request.user.user_profile.country, 'status': 'Draft', 'version': 1, 'code': 'ABC123'}
         formsets = QuestionnaireEntryFormService(section, initial=initial, data=request.POST)
 
         if formsets.is_valid():
@@ -39,7 +40,11 @@ class Entry(LoginRequiredMixin, FormView):
 
     def _form_valid(self, request, formsets, questionnaire, section):
         formsets.save()
-        messages.success(request, 'Draft saved.')
+        message = 'Draft saved.'
+        if 'final_submit' in request.POST:
+            UserService(self.request.user).submit(questionnaire)
+            message = "Questionnaire Submitted."
+        messages.success(request, message)
         context = {'questionnaire': questionnaire, 'section': section,
                    'formsets': formsets, 'ordered_sections': Section.objects.order_by('order')}
 

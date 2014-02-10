@@ -19,7 +19,7 @@ class BaseTest(TestCase):
         UserProfile.objects.create(user=self.user, country=uganda)
         self.user.set_password("pass")
         self.user.save()
-        return self.user
+        return self.user, uganda
 
     def login_user(self):
         self.client.login(username='user', password='pass')

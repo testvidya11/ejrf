@@ -12,7 +12,7 @@ class UsersViewTest(BaseTest):
 
     def setUp(self):
         self.client = Client()
-        self.user = self.create_user_with_no_permissions()
+        self.user, self.country = self.create_user_with_no_permissions()
         self.login_user()
         self.global_admin = Group.objects.create(name='Global Admin')
         auth_content = ContentType.objects.get_for_model(Permission)
@@ -73,7 +73,7 @@ class UsersViewTest(BaseTest):
 class FilterUsersViewTest(BaseTest):
     def setUp(self):
         self.client = Client()
-        self.user = self.create_user_with_no_permissions()
+        self.user, self.country = self.create_user_with_no_permissions()
         self.login_user()
         self.organization = Organization.objects.create(name="UNICEF")
         self.region = Region.objects.create(name="Afro", organization=self.organization)
@@ -262,7 +262,7 @@ class GetRegionsForOrganizationTest(BaseTest):
 
     def setUp(self):
         self.client = Client()
-        self.user = self.create_user_with_no_permissions()
+        self.user, self.country = self.create_user_with_no_permissions()
         self.login_user()
         self.unicef = Organization.objects.create(name="UNICEF")
         self.who = Organization.objects.create(name="WHO")

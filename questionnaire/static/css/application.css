@@ -111,6 +111,11 @@
 .cyan{
     color:#0099FF;
 }
+
+.bg-cyan{
+    background-color:#0099FF;
+}
+
 .delete-more{
     opacity: 1 !important;
 }
