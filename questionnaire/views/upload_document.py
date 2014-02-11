@@ -36,5 +36,5 @@ class UploadDocument(CreateView):
 
 class DownloadDocument(View):
     def get(self, *args, **kwargs):
-        document = SupportDocument.objects.get(id=self.kwargs['document_id'], questionnaire=self.kwargs['questionnaire_id'])
+        document = SupportDocument.objects.get(id=kwargs['document_id'], questionnaire=kwargs['questionnaire_id'])
         return serve(self.request, os.path.basename(document.path.url), os.path.dirname(document.path.url))

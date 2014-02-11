@@ -248,3 +248,7 @@ textarea{
     margin-left: 154px;
     margin-top: -28px;
 }
+
+#id-upload-form label{
+    width: 770px;
+}
