@@ -1,5 +1,6 @@
 import os
 from django.contrib import messages
+from django.shortcuts import render
 from django.views.generic import CreateView, View
 from django.views.static import serve
 from questionnaire.forms.support_document_upload_form import SupportDocumentUploadForm
@@ -27,6 +28,10 @@ class UploadDocument(CreateView):
     def form_valid(self, form):
         messages.success(self.request, "File was uploaded successfully")
         return super(UploadDocument, self).form_valid(form)
+
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'upload_form': form,
+                                                         'button_label': 'Upload', 'id': 'id-upload-form'})
 
 
 class DownloadDocument(View):
