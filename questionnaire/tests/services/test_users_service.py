@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
 from questionnaire.models import Questionnaire, Section, SubSection, QuestionGroup, Question, QuestionGroupOrder, Country, QuestionOption, MultiChoiceAnswer, NumericalAnswer, AnswerGroup, UserProfile, Answer
-from questionnaire.services.users import UserService
+from questionnaire.services.users import UserQuestionnaireService
 from questionnaire.tests.base_test import BaseTest
 
 
-class QuestionnaireEntryAsFormTest(BaseTest):
+class UserServiceTest(BaseTest):
 
     def setUp(self):
         self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English",
@@ -58,8 +58,8 @@ class QuestionnaireEntryAsFormTest(BaseTest):
         answer_group = AnswerGroup.objects.create(grouped_question=self.question_group)
         answer_group.answer.add(old_primary, old_answer_1, old_answer_2)
 
-        user_service = UserService(self.user)
-        user_answers = user_service.answers()
+        user_service = UserQuestionnaireService(self.user, self.questionnaire)
+        user_answers = user_service.all_answers()
 
         self.assertEqual(3, len(user_answers))
 
@@ -104,8 +104,8 @@ class QuestionnaireEntryAsFormTest(BaseTest):
         answer_group = AnswerGroup.objects.create(grouped_question=question_group)
         answer_group.answer.add(answer_1, answer_2)
 
-        user_service = UserService(self.user)
-        user_answers = user_service.answers_in(self.questionnaire)
+        user_service = UserQuestionnaireService(self.user, self.questionnaire)
+        user_answers = user_service.questionnaire_answers()
 
         self.assertEqual(5, len(user_answers))
 
@@ -117,7 +117,6 @@ class QuestionnaireEntryAsFormTest(BaseTest):
         self.assertIn(answer_1, user_answers)
         self.assertIn(answer_2, user_answers)
 
-
     def test_submit_changes_draft_answers_to_submitted_and_not_create_new_instances(self):
         data = self.data
 
@@ -128,8 +127,8 @@ class QuestionnaireEntryAsFormTest(BaseTest):
         answer_group = AnswerGroup.objects.create(grouped_question=self.question_group)
         answer_group.answer.add(old_primary, old_answer_1, old_answer_2)
 
-        user_service = UserService(self.user)
-        user_service.submit(self.questionnaire)
+        user_service = UserQuestionnaireService(self.user, self.questionnaire)
+        user_service.submit()
 
         primary = MultiChoiceAnswer.objects.get(response__id=int(data['MultiChoice-0-response']), question=self.question1)
         answer_1 = NumericalAnswer.objects.get(response=int(data['Number-0-response']), question=self.question2)
@@ -146,3 +145,36 @@ class QuestionnaireEntryAsFormTest(BaseTest):
 
         answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
         self.assertEqual(1, answer_group.count())
+
+    def test_user_knows_answer_version_of_questionnaire_is_0_if_no_answer_exist_yet(self):
+        user_service = UserQuestionnaireService(self.user, self.questionnaire)
+        self.assertEqual(0, user_service.answer_version())
+
+    def test_user_knows_answer_version_of_questionnaire_is_the_same_as_draft_if_draf_exists(self):
+        data = self.data
+
+        old_primary = MultiChoiceAnswer.objects.create(response=self.option1, question=self.question1, **self.initial)
+        old_answer_1 = NumericalAnswer.objects.create(response=int(data['Number-0-response']), question=self.question2, **self.initial)
+        old_answer_2 = NumericalAnswer.objects.create(response=int(data['Number-1-response']), question=self.question3, **self.initial)
+
+        answer_group = AnswerGroup.objects.create(grouped_question=self.question_group)
+        answer_group.answer.add(old_primary, old_answer_1, old_answer_2)
+
+        user_service = UserQuestionnaireService(self.user, self.questionnaire)
+        self.assertEqual(self.initial['version'], user_service.answer_version())
+
+    def test_user_knows_answer_version_of_questionnaire_is_plus_1_of_the_latest_submitted_answers(self):
+        data = self.data
+
+        old_primary = MultiChoiceAnswer.objects.create(response=self.option1, question=self.question1, **self.initial)
+        old_answer_1 = NumericalAnswer.objects.create(response=int(data['Number-0-response']), question=self.question2, **self.initial)
+        old_answer_2 = NumericalAnswer.objects.create(response=int(data['Number-1-response']), question=self.question3, **self.initial)
+
+        answer_group = AnswerGroup.objects.create(grouped_question=self.question_group)
+        answer_group.answer.add(old_primary, old_answer_1, old_answer_2)
+
+        user_service = UserQuestionnaireService(self.user, self.questionnaire)
+        user_service.submit()
+
+        self.assertEqual(self.initial['version']+1, user_service.answer_version())
+

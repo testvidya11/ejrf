@@ -108,7 +108,7 @@ class ExportToTextServiceTest(BaseTest):
         QuestionGroupOrder.objects.create(question=question,  question_group=parent, order=1)
 
         country = Country.objects.create(name="Uganda", code="UGX")
-        answer1 = TextAnswer.objects.create(question=question, country=country, response="tusker lager", status=Answer.DRAFT_STATUS)
+        answer1 = TextAnswer.objects.create(question=question, country=country, response="tusker lager", status=Answer.SUBMITTED_STATUS)
 
         answer_group1 = AnswerGroup.objects.create(grouped_question=parent, row=1)
         answer_group1.answer.add(answer1)
@@ -118,6 +118,27 @@ class ExportToTextServiceTest(BaseTest):
 
         expected_data = [self.headings,
                          "UGX\t%s\t2013\t%s\t%s\t%s" % (self.country.name, answer_id.encode('base64').strip(), question_text, 'tusker lager')]
+
+        export_to_text_service = ExportToTextService(self.questionnaire)
+        actual_data = export_to_text_service.get_formatted_responses()
+        self.assertEqual(len(expected_data), len(actual_data))
+        self.assertIn(expected_data[0], actual_data)
+
+    def test_draft_answers_does_not_show_on_extract_questionnaire_answers(self):
+        Question.objects.all().delete()
+        question = Question.objects.create(text='what do you drink?', UID='abc123', answer_type='Text')
+        parent = QuestionGroup.objects.create(subsection=self.sub_section, order=2)
+        parent.question.add(question)
+
+        QuestionGroupOrder.objects.create(question=question,  question_group=parent, order=1)
+
+        country = Country.objects.create(name="Uganda", code="UGX")
+        answer1 = TextAnswer.objects.create(question=question, country=country, response="tusker lager", status=Answer.DRAFT_STATUS)
+
+        answer_group1 = AnswerGroup.objects.create(grouped_question=parent, row=1)
+        answer_group1.answer.add(answer1)
+
+        expected_data = [self.headings,]
 
         export_to_text_service = ExportToTextService(self.questionnaire)
         actual_data = export_to_text_service.get_formatted_responses()

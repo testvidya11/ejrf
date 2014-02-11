@@ -5,7 +5,7 @@ from questionnaire.models import Questionnaire, Section
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
 from django.forms.formsets import formset_factory
 from braces.views import LoginRequiredMixin
-from questionnaire.services.users import UserService
+from questionnaire.services.users import UserQuestionnaireService
 
 ANSWER_FORM = {'Number': NumericalAnswerForm,
                'Text': TextAnswerForm,
@@ -20,7 +20,9 @@ class Entry(LoginRequiredMixin, FormView):
     def get(self, request, *args, **kwargs):
         questionnaire = Questionnaire.objects.get(id=self.kwargs['questionnaire_id'])
         section = Section.objects.get(id=self.kwargs['section_id'])
-        initial = {'status': 'Draft', 'version': 1, 'code': 'ABC123'}
+        user_questionnaire_service = UserQuestionnaireService(self.request.user, questionnaire)
+        initial = {'country': self.request.user.user_profile.country, 'status': 'Draft',
+                   'version': user_questionnaire_service.answer_version()}
         formsets = QuestionnaireEntryFormService(section, initial=initial)
 
         context = {'questionnaire': questionnaire, 'section': section,
@@ -31,29 +33,30 @@ class Entry(LoginRequiredMixin, FormView):
     def post(self, request, *args, **kwargs):
         questionnaire = Questionnaire.objects.get(id=self.kwargs['questionnaire_id'])
         section = Section.objects.get(id=self.kwargs['section_id'])
-        initial = {'country': self.request.user.user_profile.country, 'status': 'Draft', 'version': 1, 'code': 'ABC123'}
+        user_questionnaire_service = UserQuestionnaireService(self.request.user, questionnaire)
+        initial = {'country': self.request.user.user_profile.country, 'status': 'Draft',
+                   'version': user_questionnaire_service.answer_version()}
         formsets = QuestionnaireEntryFormService(section, initial=initial, data=request.POST)
 
-        if formsets.is_valid():
-            return self._form_valid(request, formsets, questionnaire, section)
-        return self._form_invalid(request, formsets, questionnaire, section)
+        context = {'questionnaire': questionnaire, 'section': section,
+                   'formsets': formsets, 'ordered_sections': Section.objects.order_by('order')}
 
-    def _form_valid(self, request, formsets, questionnaire, section):
+        if formsets.is_valid():
+            return self._form_valid(request, formsets, user_questionnaire_service, context)
+        return self._form_invalid(request, context)
+
+    def _form_valid(self, request, formsets, user_questionnaire_service, context):
         formsets.save()
         message = 'Draft saved.'
         if 'final_submit' in request.POST:
-            UserService(self.request.user).submit(questionnaire)
-            message = "Questionnaire Submitted."
+            user_questionnaire_service.submit()
+            message = 'Questionnaire Submitted.'
         messages.success(request, message)
-        context = {'questionnaire': questionnaire, 'section': section,
-                   'formsets': formsets, 'ordered_sections': Section.objects.order_by('order')}
-
         return self.render_to_response(context)
 
-    def _form_invalid(self, request, formsets, questionnaire, section):
-        messages.error(request, 'Draft NOT saved. See errors below.')
-        context = {'questionnaire': questionnaire, 'section': section,
-                   'formsets': formsets, 'ordered_sections': Section.objects.order_by('order')}
-
+    def _form_invalid(self, request, context):
+        message = 'Draft NOT saved. See errors below.'
+        if 'final_submit' in request.POST:
+            message = 'Submission NOT completed. See errors below.'
+        messages.error(request, message)
         return self.render_to_response(context)
-

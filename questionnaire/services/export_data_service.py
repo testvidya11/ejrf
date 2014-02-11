@@ -1,4 +1,4 @@
-from questionnaire.models import AnswerGroup
+from questionnaire.models import AnswerGroup, Answer
 
 
 class ExportToTextService:
@@ -17,13 +17,21 @@ class ExportToTextService:
     def _answers(self, subsection):
         formatted_response = []
         for group in subsection.parent_question_groups():
-            ordered_questions = group.ordered_questions()
-            primary_question = ordered_questions[0]
-            answer_groups = AnswerGroup.objects.filter(answer__question=primary_question)
-            for index, answer_group in enumerate(answer_groups):
-                answers = answer_group.answer.all().select_subclasses()
-                for question in ordered_questions:
-                    answer = answers.get(question=question)
+            answers_in_group = self._answers_in(group)
+            formatted_response.extend(answers_in_group)
+        return formatted_response
+
+    def _answers_in(self, group):
+        formatted_response = []
+        ordered_questions = group.ordered_questions()
+        primary_question = ordered_questions[0]
+        answer_groups = AnswerGroup.objects.filter(answer__question=primary_question)
+        for index, answer_group in enumerate(answer_groups):
+            answers = answer_group.answer.all().select_subclasses()
+            for question in ordered_questions:
+                answer = answers.filter(question=question, status=Answer.SUBMITTED_STATUS)
+                if answer.exists():
+                    answer = answer.latest('modified')
                     response_row = self._format_response(answer, question, primary_question.UID, group, index)
                     formatted_response.append(response_row)
         return formatted_response

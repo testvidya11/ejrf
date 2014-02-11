@@ -152,9 +152,9 @@ class QuestionnaireEntryViewTest(BaseTest):
         response = self.client.post(self.url, data=data_modified)
         self.assertEqual(200, response.status_code)
 
-        primary = MultiChoiceAnswer.objects.get(response__id=int(data_modified['MultiChoice-0-response']), question=self.question1)
-        answer_1 = NumericalAnswer.objects.get(response=int(data_modified['Number-0-response']), question=self.question2)
-        answer_2 = NumericalAnswer.objects.get(response=int(data_modified['Number-1-response']), question=self.question3)
+        primary = MultiChoiceAnswer.objects.get(response__id=int(data_modified['MultiChoice-0-response']), question=self.question1, version=0)
+        answer_1 = NumericalAnswer.objects.get(response=int(data_modified['Number-0-response']), question=self.question2, version=0)
+        answer_2 = NumericalAnswer.objects.get(response=int(data_modified['Number-1-response']), question=self.question3, version=0)
 
         self.assertEqual(old_primary.id, primary.id)
         self.assertEqual(old_answer_1.id, answer_1.id)
@@ -177,8 +177,8 @@ class QuestionnaireEntryViewTest(BaseTest):
         QuestionGroupOrder.objects.create(question=other_question1, order=1, question_group=other_question_group)
         QuestionGroupOrder.objects.create(question=other_question2, order=2, question_group=other_question_group)
 
-        other_answer_1 = NumericalAnswer.objects.create(response=1, question=other_question1, status=Answer.DRAFT_STATUS, country=self.country)
-        other_answer_2 = NumericalAnswer.objects.create(response=2, question=other_question2, status=Answer.DRAFT_STATUS, country=self.country)
+        other_answer_1 = NumericalAnswer.objects.create(response=1, question=other_question1, status=Answer.DRAFT_STATUS, country=self.country, version=0)
+        other_answer_2 = NumericalAnswer.objects.create(response=2, question=other_question2, status=Answer.DRAFT_STATUS, country=self.country, version=0)
 
         answer_group = AnswerGroup.objects.create(grouped_question=other_question_group)
         answer_group.answer.add(other_answer_1, other_answer_2)
@@ -187,9 +187,9 @@ class QuestionnaireEntryViewTest(BaseTest):
         data['final_submit'] = True
         self.client.post(self.url, data=data)
 
-        old_primary = MultiChoiceAnswer.objects.get(response__id=int(data['MultiChoice-0-response']), question=self.question1)
-        old_answer_1 = NumericalAnswer.objects.get(response=int(data['Number-0-response']), question=self.question2)
-        old_answer_2 = NumericalAnswer.objects.get(response=int(data['Number-1-response']), question=self.question3)
+        old_primary = MultiChoiceAnswer.objects.get(response__id=int(data['MultiChoice-0-response']), question=self.question1, version=0)
+        old_answer_1 = NumericalAnswer.objects.get(response=int(data['Number-0-response']), question=self.question2, version=0)
+        old_answer_2 = NumericalAnswer.objects.get(response=int(data['Number-1-response']), question=self.question3, version=0)
 
         self.assertEqual(Answer.SUBMITTED_STATUS, old_primary.status)
         self.assertEqual(Answer.SUBMITTED_STATUS, old_answer_1.status)
@@ -198,11 +198,46 @@ class QuestionnaireEntryViewTest(BaseTest):
         answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
         self.assertEqual(1, answer_group.count())
 
-        other_answer_1 = NumericalAnswer.objects.get(response=1, question=other_question1, country=self.country)
-        other_answer_2 = NumericalAnswer.objects.get(response=2, question=other_question2, country=self.country)
+        other_answer_1 = NumericalAnswer.objects.get(response=1, question=other_question1, country=self.country, version=0)
+        other_answer_2 = NumericalAnswer.objects.get(response=2, question=other_question2, country=self.country, version=0)
 
         self.assertEqual(Answer.SUBMITTED_STATUS, other_answer_1.status)
         self.assertEqual(Answer.SUBMITTED_STATUS, other_answer_2.status)
 
         answer_group = AnswerGroup.objects.filter(grouped_question=other_question_group)
         self.assertEqual(1, answer_group.count())
+
+    def test_post_after_submit_save_new_draft_version(self):
+        data = self.data.copy()
+        data['final_submit'] = True
+        self.client.post(self.url, data=data)
+
+        old_primary = MultiChoiceAnswer.objects.get(response__id=int(data['MultiChoice-0-response']), question=self.question1, version=0)
+        old_answer_1 = NumericalAnswer.objects.get(response=int(data['Number-0-response']), question=self.question2, version=0)
+        old_answer_2 = NumericalAnswer.objects.get(response=int(data['Number-1-response']), question=self.question3, version=0)
+
+        self.assertEqual(Answer.SUBMITTED_STATUS, old_primary.status)
+        self.assertEqual(Answer.SUBMITTED_STATUS, old_answer_1.status)
+        self.assertEqual(Answer.SUBMITTED_STATUS, old_answer_2.status)
+
+        answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
+        self.assertEqual(1, answer_group.count())
+
+        data = self.data
+        self.client.post(self.url, data=data)
+
+        primary = MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response']), question=self.question1, version=1)
+        answer_1 = NumericalAnswer.objects.filter(response=int(data['Number-0-response']), question=self.question2, version=1)
+        answer_2 = NumericalAnswer.objects.filter(response=int(data['Number-1-response']), question=self.question3, version=1)
+
+        self.assertEqual(1, primary.count())
+        self.assertEqual(Answer.DRAFT_STATUS, primary[0].status)
+        self.assertEqual(1, primary[0].version)
+
+        self.assertEqual(1, answer_1.count())
+        self.assertEqual(Answer.DRAFT_STATUS, answer_1[0].status)
+        self.assertEqual(1, answer_1[0].version)
+
+        self.assertEqual(1, answer_2.count())
+        self.assertEqual(Answer.DRAFT_STATUS, answer_2[0].status)
+        self.assertEqual(1, answer_2[0].version)
