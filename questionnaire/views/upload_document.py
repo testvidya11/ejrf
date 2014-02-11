@@ -20,7 +20,8 @@ class UploadDocument(CreateView):
             upload_data_initial.update({'country': self.request.user.user_profile.country})
         except UserProfile.DoesNotExist:
             pass
-        context.update({'upload_form': self.form_class(initial=upload_data_initial), 'button_label': 'Upload'})
+        context.update({'upload_form': self.form_class(initial=upload_data_initial),
+                        'button_label': 'Upload', 'id': 'id-upload-form'})
         return context
 
     def form_valid(self, form):

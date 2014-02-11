@@ -9,7 +9,7 @@
     <div>
         <div class="btn-group">
             {% for document in questionnaire.support_documents.all %}
-              <a href="{% url 'download_document' questionnaire.id document.id %}" class="btn btn-default" target="_blank">
+              <a href="{% url 'download_document' questionnaire.id document.id %}" class="btn btn-default">
                   <span class="cyan"><span class="glyphicon glyphicon-save"></span> {{ document.path|_filename }}</span> </a>
             {% endfor %}
         </div>

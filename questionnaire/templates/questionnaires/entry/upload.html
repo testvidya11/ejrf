@@ -4,12 +4,25 @@
 {% endblock %}
 {% block content %}
     <h3>Upload Support Document</h3>
-    <form action="{{ action }}" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+    <form action="{{ action }}" enctype="multipart/form-data" method="post" accept-charset="utf-8" id="{{ id }}">
         {% csrf_token %}
         {% include "base/naked_form.html" with a_form=upload_form %}
         <div class="form-actions">
-            <button type="submit" class="btn btn-default" name="save_button" id="upload-btn"><span class="cyan"><span class="glyphicon glyphicon-open"></span>{{ button_label }}</span></button>
+            <button type="submit" class="btn btn-default" name="upload-btn" id="upload-btn"><span class="cyan"><span class="glyphicon glyphicon-open"></span>{{ button_label }}</span></button>
             <button type="reset" href="#" class="btn btn-default" name="cancel_button"><span class="cyan"> Cancel</span></button>
         </div>
     </form>
+<script type="text/template" id="file_grt_40_mbs">
+    <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Warning!</strong> That file is is larger than 40Mb, it might take longer to be uploaded.
+    </div>
+</script>
+
+<script type="text/template" id="file_too_large">
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Sorry</strong> That file is too large, Please try a file not larger than 50Mb.
+    </div>
+</script>
 {% endblock %}

@@ -3,14 +3,13 @@ var form_has_changed = false;
 $(document).ready(function() {
 
     $('a[data-toggle=popover]').popover();
-    load_role_template();
-    $('p:empty').remove()
-    warn_before_navigating_away();
+    loadRoleTemplate();
+    $('p:empty').remove();
+    warnBeforeNavigatingAway();
 
     $('.datetimepicker').datetimepicker({ pickTime: false });
     $('textarea').autosize();
 });
-
 
 function cloneMore(selector) {
     $('a[data-toggle=popover]').popover('destroy');
@@ -96,11 +95,11 @@ $("#questionnaire_entry").on('submit', function(){
     this.submit();
 });
 
-function warn_before_navigating_away(){
+function warnBeforeNavigatingAway(){
     window.onbeforeunload = function(){
       if(form_has_changed){
         return "Are you sure you want to navigate away from this page?\nAll unsaved changes will be lost.";
        }
    };
-};
+}
 
