@@ -36,3 +36,16 @@ def and_i_have_a_pdf_document(step):
 @step(u'And I should be able to download the file')
 def and_i_should_be_able_to_download_the_file(step):
     world.page.is_text_present(world.filename)
+
+@step(u'And I have a zip file')
+def and_i_have_a_zip_file(step):
+    world.filename = 'sample_file.zip'
+    m = mock_open()
+    with patch('__main__.open', m, create=True):
+        with open(world.filename, 'w') as document:
+            document.write("Some stuff")
+
+@step(u'Then I should see an error that the file type is not supported')
+def then_i_should_see_an_error_that_the_file_type_is_not_supported(step):
+    world.page.is_element_present_by_css('.error')
+    world.page.is_text_present('file type is not an allowed')
