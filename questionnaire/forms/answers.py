@@ -10,6 +10,7 @@ from questionnaire.models import NumericalAnswer, TextAnswer, DateAnswer, MultiC
 class AnswerForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(AnswerForm, self).__init__(*args, **kwargs)
+        self.fields['response'].required = False
         self._initial = kwargs['initial'] if 'initial' in kwargs else {}
         self.is_editing = False
         self._set_instance()

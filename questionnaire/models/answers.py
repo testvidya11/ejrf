@@ -21,7 +21,7 @@ class Answer(BaseModel):
 
 
 class NumericalAnswer(Answer):
-    response = models.DecimalField(max_digits=9, decimal_places=2)
+    response = models.DecimalField(max_digits=9, decimal_places=2, null=True)
 
 
 class TextAnswer(Answer):
@@ -29,8 +29,8 @@ class TextAnswer(Answer):
 
 
 class DateAnswer(Answer):
-    response = models.DateField()
+    response = models.DateField(null=True)
 
 
 class MultiChoiceAnswer(Answer):
-    response = models.ForeignKey(QuestionOption)
+    response = models.ForeignKey(QuestionOption, null=True)

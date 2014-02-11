@@ -100,7 +100,7 @@ def when_i_enter_invalid_responses_to_the_questions(step):
         'Text-4-response': 'ajones@unicef.org',
         'Text-5-response': 'Brad Wolfstrom',
         'Text-6-response': 'brad.wolfstrom@who.org',
-        'Number-0-response': '200'}
+        'Number-0-response': 'something that is not a number'}
     world.page.fill_form(data)
 
 @step(u'Then I should see a save draft error message')
