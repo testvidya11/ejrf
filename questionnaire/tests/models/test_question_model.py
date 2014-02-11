@@ -29,9 +29,9 @@ class QuestionTest(BaseTest):
     def test_question_fields(self):
         question = Question()
         fields = [str(item.attname) for item in question._meta.fields]
-        self.assertEqual(10, len(fields))
+        self.assertEqual(11, len(fields))
         for field in ['id', 'created', 'modified', 'text', 'instructions', 'UID', 'answer_type', 'short_instruction',
-                      'is_core', 'is_primary']:
+                      'is_core', 'is_primary', 'is_required']:
             self.assertIn(field, fields)
 
     def test_question_store(self):
@@ -43,6 +43,7 @@ class QuestionTest(BaseTest):
         self.assertEqual('abc123', question.UID)
         self.assertFalse(question.is_core)
         self.assertFalse(question.is_primary)
+        self.assertFalse(question.is_required)
 
     def test_question_uid_is_unique(self):
         a_question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Text')

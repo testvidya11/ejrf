@@ -1,4 +1,3 @@
-from django.db.models.query import QuerySet
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm, MultiChoiceAnswerSelectWidget
 from questionnaire.models import Question, Country, QuestionOption, QuestionGroup, Section, Questionnaire, SubSection
 from questionnaire.tests.base_test import BaseTest
@@ -25,7 +24,7 @@ class NumericalAnswerFormTest(BaseTest):
         }
 
         self.initial = {
-            'question': self.question.id,
+            'question': self.question,
             'country': self.country.id,
             'status': 'DRAFT',
             'version': 1,
@@ -67,7 +66,7 @@ class TextAnswerFormTest(BaseTest):
             'response':'some answer',
         }
         self.initial = {
-            'question': self.question.id,
+            'question': self.question,
             'country': self.country.id,
             'status': 'DRAFT',
             'version':1,
@@ -101,7 +100,7 @@ class DateAnswerFormTest(BaseTest):
         }
 
         self.initial = {
-            'question': self.question.id,
+            'question': self.question,
             'country': self.country.id,
             'status': 'DRAFT',
             'version':1,

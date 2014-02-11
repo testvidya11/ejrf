@@ -10,7 +10,8 @@ from questionnaire.models import NumericalAnswer, TextAnswer, DateAnswer, MultiC
 class AnswerForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(AnswerForm, self).__init__(*args, **kwargs)
-        self.fields['response'].required = False
+        self.question = self._get_question(kwargs)
+        self.fields['response'].required = self.question.is_required
         self._initial = kwargs['initial'] if 'initial' in kwargs else {}
         self.is_editing = False
         self._set_instance()
@@ -41,6 +42,10 @@ class AnswerForm(ModelForm):
         answer_group = AnswerGroup.objects.get_or_create(grouped_question=self.question_group)[0]
         answer_group.answer.add(answer)
 
+    def _get_question(self, kwargs):
+        if 'initial'in kwargs.keys() and 'question' in kwargs['initial'].keys():
+            return kwargs['initial']['question']
+        return None
 
 class NumericalAnswerForm(AnswerForm):
     class Meta:
@@ -111,9 +116,8 @@ class MultiChoiceAnswerForm(AnswerForm):
         return forms.Select()
 
     def _get_response_choices(self, kwargs):
-        if 'initial'in kwargs.keys() and 'question' in kwargs['initial'].keys():
-            question = kwargs['initial']['question']
-            return question.options.all()
+        if self.question:
+            return self.question.options.all()
         return QuestionOption.objects.all()
 
     class Meta:

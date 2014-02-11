@@ -11,14 +11,14 @@ section_1 = Section.objects.create(order=0,
                         questionnaire=questionnaire, name="Cover page")
 sub_section = SubSection.objects.create(order=1, section=section_1)
 question1 = Question.objects.create(text='Name of person in Ministry of Health responsible for completing this form',
-                                    UID='C00023', answer_type='Text', instructions="""
+                                    UID='C00023', answer_type='Text', is_required=True, instructions="""
 List the name of the person responsible for submitting the completed form.
 Since multiple departments in the Ministry of Health may have relevant data,
  this person should liaise with other departments to ensure that the form
  contains the most accurate and complete data possible. For example,
  information on Vitamin A may come from the nutrition department.""")
-question2 = Question.objects.create(text='Position/title', UID='C00024', answer_type='Text',)
-question3 = Question.objects.create(text='Email address', UID='C00025', answer_type='Text',)
+question2 = Question.objects.create(text='Position/title', UID='C00024',  is_required=True, answer_type='Text',)
+question3 = Question.objects.create(text='Email address', UID='C00025', answer_type='Text',  is_required=True,)
 question4 = Question.objects.create(text='Name of UNICEF contact', UID='C00026', answer_type='Text',)
 question5 = Question.objects.create(text='Email address of UNICEF contact', UID='C00027', answer_type='Text',)
 question6 = Question.objects.create(text='Name of WHO contact', UID='C00028', answer_type='Text',)

@@ -18,6 +18,7 @@ class Question(BaseModel):
     answer_type = models.CharField(blank=False, null=False, max_length=20, choices=ANSWER_TYPES)
     is_core = models.BooleanField(blank=False, null=False, default=False)
     is_primary = models.BooleanField(blank=False, null=False, default=False)
+    is_required = models.BooleanField(blank=False, null=False, default=False)
 
     def all_answers(self):
         return self.answers.filter(status='Submitted').order_by('answergroup__id').select_subclasses()

@@ -10,6 +10,7 @@
             "modified": "2014-02-06T15:44:14.056Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -25,6 +26,7 @@
             "modified": "2014-02-06T15:44:14.057Z",
             "short_instruction": "Include clinically, epidemiologically, and laboratory-confirmed cases. Do not include suspect cases.",
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "<strong>Column A</strong> refers only to <strong>CONFIRMED</strong> cases, including those confirmed clinically, epidemiologically, or by laboratory investigation.&nbsp;<br />\n<br />\n<strong>Clinically-confirmed case:</strong> a case that meets the clinical case definition of the country<br />\n<br />\n<strong>Epidemiologically-confirmed case: </strong>a case that meets the clinical case definition and is linked epidemiologically to a laboratory-confirmed case<br />\n<br />\n<strong>Laboratory-confirmed case:</strong> a case that meets the clinical case definition and is confirmed by laboratory investigation<br />\n<br />\nCases that have been <strong>discarded</strong> following laboratory investigation should <strong>NOT</strong> be included in these columns.\n"
         }
@@ -40,6 +42,7 @@
             "modified": "2014-02-06T15:44:14.058Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Enter the total number of cases for which specimens were collected, and tested in laboratory"
         }
@@ -55,6 +58,7 @@
             "modified": "2014-02-06T15:44:14.059Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Include only those cases found positive for the infectious agent."
         }
@@ -70,6 +74,7 @@
             "modified": "2014-02-06T15:44:14.083Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -85,6 +90,7 @@
             "modified": "2014-02-06T15:44:14.092Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -100,6 +106,7 @@
             "modified": "2014-02-06T15:44:16.900Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -115,6 +122,7 @@
             "modified": "2014-02-06T15:44:16.901Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -130,6 +138,7 @@
             "modified": "2014-02-06T15:44:16.902Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -145,6 +154,7 @@
             "modified": "2014-02-06T15:44:16.902Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -160,6 +170,7 @@
             "modified": "2014-02-06T15:44:16.903Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -175,6 +186,7 @@
             "modified": "2014-02-06T15:44:16.904Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -190,6 +202,7 @@
             "modified": "2014-02-06T15:44:16.905Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -205,6 +218,7 @@
             "modified": "2014-02-06T15:44:16.906Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -220,6 +234,7 @@
             "modified": "2014-02-06T15:44:16.907Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -235,6 +250,7 @@
             "modified": "2014-02-06T15:44:16.908Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "If a vaccine or supplement is given throughout the entire country, pick \"national\" from the drop-down list. If it is given only in certain regions of the country, pick \"subnational\". This column refers only to geographical areas and not to special target or risk groups."
         }
@@ -250,6 +266,7 @@
             "modified": "2014-02-06T15:44:16.909Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "If a vaccine is not given to the entire population, specify the target group (for example, adults over 65, travellers, diabetes patients, or displaced persons)."
         }
@@ -265,6 +282,7 @@
             "modified": "2014-02-06T15:44:16.910Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Indicate the origin for all vaccines and supplements used in the country and also for auto-disable (AD) syringes. If AD syringes are not used in the country, leave those cells blank."
         }
@@ -280,6 +298,7 @@
             "modified": "2014-02-06T15:44:16.911Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "\nThere are four possible answers:\n<ul>\n<li> the vaccine was procured by the supply division of the MOH or some other governmental agency</li>\n<li> the vaccine was procured through UNICEF, WHO, or PAHO</li>\n<li> the vaccine was procured through a donating agency, business, or person </li>\n<li> the vaccine was procured through some other organization or source not listed above</li>\n</ul>\n"
         }
@@ -295,6 +314,7 @@
             "modified": "2014-02-06T15:44:16.912Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Indicate how many doses of each type of vaccine and supplement were procured at the national level."
         }
@@ -310,6 +330,7 @@
             "modified": "2014-02-06T15:44:16.980Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -325,6 +346,7 @@
             "modified": "2014-02-06T15:44:16.983Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -340,6 +362,7 @@
             "modified": "2014-02-06T15:44:16.984Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -355,6 +378,7 @@
             "modified": "2014-02-06T15:44:19.810Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -370,6 +394,7 @@
             "modified": "2014-02-06T15:44:19.819Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -385,6 +410,7 @@
             "modified": "2014-02-06T15:44:19.821Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -400,6 +426,7 @@
             "modified": "2014-02-06T15:44:19.824Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -415,6 +442,7 @@
             "modified": "2014-02-06T15:44:19.827Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -430,6 +458,7 @@
             "modified": "2014-02-06T15:44:19.836Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -445,6 +474,7 @@
             "modified": "2014-02-06T15:44:19.839Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -460,6 +490,7 @@
             "modified": "2014-02-06T15:44:19.845Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -475,6 +506,7 @@
             "modified": "2014-02-06T15:44:19.846Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "\n\"Grade / Level\" indicates the class or grade that is targeted for\nthe vaccine concerned. Complete this cell if children in school are targeted by class or grade,\n regardless of their age. Please use the local gradation system, or use a class grading system of 1 to 12, where class 1\n  equals the first year in primary school, class 2 the second year of primary school, etc.  "
         }
@@ -490,6 +522,7 @@
             "modified": "2014-02-06T15:44:19.847Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "\n\"Age group\" indicates the age groups that are targeted for the vaccine concerned. Complete this cell if children are\n targeted according to their age rather than according to the class they are in.\n"
         }
@@ -505,6 +538,7 @@
             "modified": "2014-02-06T15:44:19.848Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -520,6 +554,7 @@
             "modified": "2014-02-06T15:44:19.852Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -535,6 +570,7 @@
             "modified": "2014-02-06T15:44:19.855Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "\n\"Number targeted\" is the number of children targeted through the school-based immunization for each dose.\nIf school-based immunization is not given in all the areas of the country, the target is the number of children\n in the areas where school-based immunization is being implemented\n"
         }
@@ -550,6 +586,7 @@
             "modified": "2014-02-06T15:44:19.856Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "\n\"Number vaccinated in school\": the number for children who received this dose in the areas where school-based\nimmunization is being implemented.\n "
         }
@@ -565,6 +602,7 @@
             "modified": "2014-02-06T15:44:19.856Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "\n\"Other intervention given with the vaccine\":  Mention any other intervention\n(e.g. growth monitoring, antihelmintics,...) that is given at the same time as the vaccination contact "
         }
@@ -580,6 +618,7 @@
             "modified": "2014-02-06T15:44:19.857Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -595,6 +634,7 @@
             "modified": "2014-02-06T15:44:26.556Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Please complete separately for each vaccine,  even if they are given in combination (e.g., if Pentavalent vaccine DTP-HepB-Hib is used, fill in the data for DTP3, HepB3 and Hib3)"
         }
@@ -610,6 +650,7 @@
             "modified": "2014-02-06T15:44:26.577Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -625,6 +666,7 @@
             "modified": "2014-02-06T15:44:26.583Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -640,6 +682,7 @@
             "modified": "2014-02-06T15:44:26.584Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -655,6 +698,7 @@
             "modified": "2014-02-06T15:44:26.584Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -670,6 +714,7 @@
             "modified": "2014-02-06T15:44:26.595Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -685,6 +730,7 @@
             "modified": "2014-02-06T15:44:26.595Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -700,6 +746,7 @@
             "modified": "2014-02-06T15:44:26.605Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -715,6 +762,7 @@
             "modified": "2014-02-06T15:44:26.606Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -730,6 +778,7 @@
             "modified": "2014-02-06T15:44:26.616Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -745,6 +794,7 @@
             "modified": "2014-02-06T15:44:26.625Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -760,6 +810,7 @@
             "modified": "2014-02-06T15:44:26.625Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -775,6 +826,7 @@
             "modified": "2014-02-06T15:44:26.626Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -790,6 +842,7 @@
             "modified": "2014-02-06T15:44:26.635Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -805,6 +858,7 @@
             "modified": "2014-02-06T15:44:26.641Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -820,6 +874,7 @@
             "modified": "2014-02-06T15:44:26.648Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -835,6 +890,7 @@
             "modified": "2014-02-06T15:44:26.649Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -850,6 +906,7 @@
             "modified": "2014-02-06T15:44:26.650Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -865,6 +922,7 @@
             "modified": "2014-02-06T15:44:31.220Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "If a coverage survey or other surveys with immunization modules have been conducted from 2011 onwards, indicate whenit took place (if more than one survey took place during this time period, select the latest most recent one)?"
         }
@@ -880,6 +938,7 @@
             "modified": "2014-02-06T15:44:31.225Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -895,6 +954,7 @@
             "modified": "2014-02-06T15:44:31.227Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -910,6 +970,7 @@
             "modified": "2014-02-06T15:44:31.237Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": ""
         }
@@ -925,6 +986,7 @@
             "modified": "2014-02-06T15:44:31.240Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -940,6 +1002,7 @@
             "modified": "2014-02-06T15:44:36.876Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -955,6 +1018,7 @@
             "modified": "2014-02-06T15:44:36.898Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -970,6 +1034,7 @@
             "modified": "2014-02-06T15:44:36.904Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": ""
         }
@@ -985,6 +1050,7 @@
             "modified": "2014-02-06T15:44:40.820Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1000,6 +1066,7 @@
             "modified": "2014-02-06T15:44:40.824Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1015,6 +1082,7 @@
             "modified": "2014-02-06T15:44:40.825Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1030,6 +1098,7 @@
             "modified": "2014-02-06T15:44:40.829Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1045,6 +1114,7 @@
             "modified": "2014-02-06T15:44:40.838Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": ""
         }
@@ -1060,6 +1130,7 @@
             "modified": "2014-02-06T15:44:40.841Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1075,6 +1146,7 @@
             "modified": "2014-02-06T15:44:40.845Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1090,6 +1162,7 @@
             "modified": "2014-02-06T15:44:40.848Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1105,6 +1178,7 @@
             "modified": "2014-02-06T15:44:40.851Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1120,6 +1194,7 @@
             "modified": "2014-02-06T15:44:40.855Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1135,6 +1210,7 @@
             "modified": "2014-02-06T15:44:40.859Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1150,6 +1226,7 @@
             "modified": "2014-02-06T15:44:40.862Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1165,6 +1242,7 @@
             "modified": "2014-02-06T15:44:40.866Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1180,6 +1258,7 @@
             "modified": "2014-02-06T15:44:40.869Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Altough groups can have ad hoc meetings when necessary, it is recommended to have meetings at regular intervals on predetermined dates and at least once a year. This ensures that the group remains active and recommendations remain current. And it also facilitates increased attendance rates allowing members to plan the time commitment into their schedules in advance."
         }
@@ -1195,6 +1274,7 @@
             "modified": "2014-02-06T15:44:40.870Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "An agenda for each NITAG meeting should be distributed in advance to all members. This allows to properly prepare for the meeting. Ideally, background materials would also be distributed prior to the meetings to provide members with current research available on the topic. The distribution of this material facilitates a well rounded, informed discussion during the meeting, provided the members receive the information within sufficient time prior to the meeting."
         }
@@ -1210,6 +1290,7 @@
             "modified": "2014-02-06T15:44:40.873Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "To ensure transparency and avoid conflicts of interests as much as possible, NITAGs should require all members to declare their interests prior to official appointment. A conflict of interest occurs in the case of the member having a personal investment, activity, or relationship which may affect, or appear to affect, their responsibilities of the NITAG. A conflict of interest, whether real or perceived, can compromise the quality of the recommendations made by the group and can compromise the reputation and integrity of the NITAG. It can also compromise the credibility of the group, even if it would not influence the recommendations. Therefore, interests should be declared prior to the individual's official appointment as a core member. The individual should only be appointed as a member if the person is considered an independent expert so that that their interests do not compromise the integrity of the NITAG."
         }
@@ -1225,6 +1306,7 @@
             "modified": "2014-02-06T15:44:40.877Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": " WHO  encourages sharing experiences between countries and their NITAGs. In order to facilitate experience sharing process, WHO would like to circulate website or webpage addresses of NITAGs to others interested."
         }
@@ -1240,6 +1322,7 @@
             "modified": "2014-02-06T15:44:40.900Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1255,6 +1338,7 @@
             "modified": "2014-02-06T15:44:40.900Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1270,6 +1354,7 @@
             "modified": "2014-02-06T15:44:40.901Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1285,6 +1370,7 @@
             "modified": "2014-02-06T15:44:40.902Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1300,6 +1386,7 @@
             "modified": "2014-02-06T15:44:40.903Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1315,6 +1402,7 @@
             "modified": "2014-02-06T15:44:40.903Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1330,6 +1418,7 @@
             "modified": "2014-02-06T15:44:40.904Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1345,6 +1434,7 @@
             "modified": "2014-02-06T15:44:40.918Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1360,6 +1450,7 @@
             "modified": "2014-02-06T15:44:40.930Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1375,6 +1466,7 @@
             "modified": "2014-02-06T15:44:40.943Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1390,6 +1482,7 @@
             "modified": "2014-02-06T15:44:40.957Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Drop-out rate = (DTP1-DTP3) x 100 / DTP1"
         }
@@ -1405,6 +1498,7 @@
             "modified": "2014-02-06T15:44:40.963Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Please complete separately for each vaccine, even if they were given in combination"
         }
@@ -1420,6 +1514,7 @@
             "modified": "2014-02-06T15:44:40.976Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "If a vaccine is not currently in use, select \"NR\" (not relevant) from the drop-down menu."
         }
@@ -1435,6 +1530,7 @@
             "modified": "2014-02-06T15:44:40.980Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "If the stock-out lasted less than one month (for example, a few days or weeks), enter \"1\"."
         }
@@ -1450,6 +1546,7 @@
             "modified": "2014-02-06T15:44:40.984Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Districts can experience stock-outs even if there was no stock-out at the national level. Therefore, the answer in column C may be \"yes\" even if the answer in column A is \"no\".\nIf a vaccine is not currently in use, select \"NR\" (not relevant) from the drop-down menu in column C.\n\nIf a district has no permanent vaccine store (i.e., the store is located at the provincial or higher level) but health units have been affected by vaccine shortages, select \"yes\" from the drop-down menu in column C and count the district in column D."
         }
@@ -1465,6 +1562,7 @@
             "modified": "2014-02-06T15:44:40.989Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Districts can experience stock-outs even if there was no stock-out at the national level. Therefore, the answer in column C may be \"yes\" even if the answer in column A is \"no\".\nIf a vaccine is not currently in use, select \"NR\" (not relevant) from the drop-down menu in column C.\n\nIf a district has no permanent vaccine store (i.e., the store is located at the provincial or higher level) but health units have been affected by vaccine shortages, select \"yes\" from the drop-down menu in column C and count the district in column D."
         }
@@ -1480,6 +1578,7 @@
             "modified": "2014-02-06T15:44:40.993Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "List the percentage of vaccine wasted throughout the country in opened vials at the service delivery points. Enter \"ND\" if no data are available. Please enter a value for the wastage rate for each vaccine listed, even if the vaccines were given in combination."
         }
@@ -1495,6 +1594,7 @@
             "modified": "2014-02-06T15:44:41.004Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1510,6 +1610,7 @@
             "modified": "2014-02-06T15:44:41.008Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Adverse events review committee is an independent committee of recognized experts that provides technical advice and recommendations to the government regarding vaccine safety issues. The adverse events review committee is a tool that enables the government to assess vaccine safety issues through a transparent, systematic process. The adverse events review committees are composed of recognized national experts, independent from the immunization program and the national regulatory authority, and their primary function should focus on offering technical recommendations. Please note that countries that have an ad hoc committee should mark the \"No\" option, as the question is asking for existence of a standing committee."
         }
@@ -1525,6 +1626,7 @@
             "modified": "2014-02-06T15:44:41.012Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "A national system must include ALL of the following:<br/>1) written guidelines on monitoring and investigation of reported adverse events;<br/>2) a written list of events to monitor;<br/>3) an established mechanism to communicate data for regulatory action; and<br/>4) implementation of points 1, 2 and 3.<br/><br/>If any of the four conditions are not met, select \"no\"."
         }
@@ -1540,6 +1642,7 @@
             "modified": "2014-02-06T15:44:41.016Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1555,6 +1658,7 @@
             "modified": "2014-02-06T15:44:41.017Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1570,6 +1674,7 @@
             "modified": "2014-02-06T15:44:41.024Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1585,6 +1690,7 @@
             "modified": "2014-02-06T15:44:41.027Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1600,6 +1706,7 @@
             "modified": "2014-02-06T15:44:41.030Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1615,6 +1722,7 @@
             "modified": "2014-02-06T15:44:41.032Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1630,6 +1738,7 @@
             "modified": "2014-02-06T15:44:41.049Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1645,6 +1754,7 @@
             "modified": "2014-02-06T15:44:41.053Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1660,6 +1770,7 @@
             "modified": "2014-02-06T15:44:41.058Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1675,6 +1786,7 @@
             "modified": "2014-02-06T15:44:41.065Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1690,6 +1802,7 @@
             "modified": "2014-02-06T15:44:41.066Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1705,6 +1818,7 @@
             "modified": "2014-02-06T15:44:41.072Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1720,6 +1834,7 @@
             "modified": "2014-02-06T15:44:41.073Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1735,6 +1850,7 @@
             "modified": "2014-02-06T15:44:41.079Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Give the percentage of  expenditure on vaccines used in routine immunization that was financed solely with government funds. Government includes all administrative levels such as national and sub-national governments. The estimate can come from a previous year or a \"best guess\""
         }
@@ -1750,6 +1866,7 @@
             "modified": "2014-02-06T15:44:41.080Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1765,6 +1882,7 @@
             "modified": "2014-02-06T15:44:41.080Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1780,6 +1898,7 @@
             "modified": "2014-02-06T15:44:41.086Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1795,6 +1914,7 @@
             "modified": "2014-02-06T15:44:41.087Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1810,6 +1930,7 @@
             "modified": "2014-02-06T15:44:41.094Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Give the percentage of expenditure on routine immunization that was financed solely with government funds. Government includes all administrative levels such as national and sub-national governments. The estimate can come from a previous year or a \"best guess\"."
         }
@@ -1825,6 +1946,7 @@
             "modified": "2014-02-06T15:44:43.835Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1840,6 +1962,7 @@
             "modified": "2014-02-06T15:44:43.836Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Record the name of the activity (for example, NIDs, micronutrition day, child health day, or vaccination week) and the number of the round (for example, first, second or third). If an activity involved more than one vaccine or supplement, use multiple lines to describe it, placing each vaccine or supplement on a separate line."
         }
@@ -1855,6 +1978,7 @@
             "modified": "2014-02-06T15:44:43.837Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1870,6 +1994,7 @@
             "modified": "2014-02-06T15:44:43.838Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1885,6 +2010,7 @@
             "modified": "2014-02-06T15:44:43.839Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "If children are targeted, specify the age of the target group. If women are targeted, specify the age and/or pregnancy status of the target group, for example, women of childbearing age or pregnant women."
         }
@@ -1900,6 +2026,7 @@
             "modified": "2014-02-06T15:44:43.840Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1915,6 +2042,7 @@
             "modified": "2014-02-06T15:44:43.841Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1930,6 +2058,7 @@
             "modified": "2014-02-06T15:44:43.842Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "Enter the official coverage estimate for the vaccine or supplement (including measles, yellow fever, meningitis, and polio vaccines and Vitamin A). Do NOT complete for tetanus vaccine. These estimates can come from a coverage survey and thus may differ from the administrative calculation."
         }
@@ -1945,6 +2074,7 @@
             "modified": "2014-02-06T15:44:43.847Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1960,6 +2090,7 @@
             "modified": "2014-02-06T15:44:43.848Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1975,6 +2106,7 @@
             "modified": "2014-02-06T15:44:43.849Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -1990,6 +2122,7 @@
             "modified": "2014-02-06T15:44:43.850Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -2002,9 +2135,10 @@
             "UID": "C00023",
             "created": "2014-02-06T15:44:55.058Z",
             "text": "Name of person in Ministry of Health responsible for completing this form",
-            "modified": "2014-02-06T15:44:55.058Z",
+            "modified": "2014-02-11T15:55:09.986Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": true,
             "is_core": false,
             "instructions": "\nList the name of the person responsible for submitting the completed form.\nSince multiple departments in the Ministry of Health may have relevant data,\n this person should liaise with other departments to ensure that the form\n contains the most accurate and complete data possible. For example,\n information on Vitamin A may come from the nutrition department."
         }
@@ -2017,9 +2151,10 @@
             "UID": "C00024",
             "created": "2014-02-06T15:44:55.059Z",
             "text": "Position/title",
-            "modified": "2014-02-06T15:44:55.059Z",
+            "modified": "2014-02-11T15:54:53.099Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": true,
             "is_core": false,
             "instructions": null
         }
@@ -2032,9 +2167,10 @@
             "UID": "C00025",
             "created": "2014-02-06T15:44:55.060Z",
             "text": "Email address",
-            "modified": "2014-02-06T15:44:55.060Z",
+            "modified": "2014-02-11T15:54:36.620Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": true,
             "is_core": false,
             "instructions": null
         }
@@ -2050,6 +2186,7 @@
             "modified": "2014-02-06T15:44:55.061Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -2065,6 +2202,7 @@
             "modified": "2014-02-06T15:44:55.062Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -2080,6 +2218,7 @@
             "modified": "2014-02-06T15:44:55.063Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -2095,6 +2234,7 @@
             "modified": "2014-02-06T15:44:55.064Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": null
         }
@@ -2110,6 +2250,7 @@
             "modified": "2014-02-06T15:44:55.065Z",
             "short_instruction": null,
             "is_primary": false,
+            "is_required": false,
             "is_core": false,
             "instructions": "\n                                    A district is defined as the third administrative level (nation is the first, province is the second).\n                                    "
         }
@@ -6694,9 +6835,9 @@
         "fields": {
             "order": 4,
             "question": 97,
-            "modified": "2014-02-06T15:44:41.000Z",
+            "modified": "2014-02-06T15:44:41Z",
             "question_group": 32,
-            "created": "2014-02-06T15:44:41.000Z"
+            "created": "2014-02-06T15:44:41Z"
         }
     },
     {
@@ -7947,7 +8088,7 @@
             "name": null,
             "parent": null,
             "created": "2014-02-06T15:44:55.065Z",
-            "question": [134, 135, 136, 137, 138, 139, 140, 141],
+            "question": [137, 138, 139, 140, 141, 136, 135, 134],
             "modified": "2014-02-06T15:44:55.066Z",
             "subsection": 25,
             "order": 1,
