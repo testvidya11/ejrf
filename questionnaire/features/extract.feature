@@ -10,4 +10,4 @@ Feature: Export responses to DEF file
 		And I have questions and their answers
 	    When I click the extract link
 		Then I should see a list of questionnaires
-		Then I should be able to click the export data button
+		Then I should see the export data button

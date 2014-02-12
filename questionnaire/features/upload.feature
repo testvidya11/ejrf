@@ -9,7 +9,6 @@ Feature: Support document upload
    And I click upload button
    Then I should see the file was uploaded successfully
    And I clean up the files
-   And I should be able to download the file
 
   Scenario: Upload Unacceptable File Extension
     Given I am logged in as a data submitter

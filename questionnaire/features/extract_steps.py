@@ -58,7 +58,8 @@ def and_i_have_questions_and_their_answers(step):
 @step(u'When I click the extract link')
 def when_i_click_the_extract_link(step):
     world.page.click_by_css('#extract-link')
+    world.page = ExtractPage(world.browser)
 
-@step(u'Then I should be able to click the export data button')
-def then_i_should_be_able_to_click_the_export_data_button(step):
-    world.page.click_by_css("#export-data")
+@step(u'Then I should see the export data button')
+def then_i_should_see_the_export_data_button(step):
+    world.page.extract_button_present()
