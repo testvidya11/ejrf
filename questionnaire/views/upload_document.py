@@ -11,7 +11,7 @@ class UploadDocument(CreateView):
     model = SupportDocument
     template_name = 'questionnaires/entry/upload.html'
     form_class = SupportDocumentUploadForm
-    success_url = '/'
+    success_url = '/questionnaire/documents/upload/'
 
     def get_context_data(self, **kwargs):
         context = super(UploadDocument, self).get_context_data(**kwargs)
@@ -22,7 +22,7 @@ class UploadDocument(CreateView):
         except UserProfile.DoesNotExist:
             pass
         context.update({'upload_form': self.form_class(initial=upload_data_initial),
-                        'button_label': 'Upload', 'id': 'id-upload-form'})
+                        'button_label': 'Upload', 'id': 'id-upload-form', 'questionnaire': questionnaire})
         return context
 
     def form_valid(self, form):

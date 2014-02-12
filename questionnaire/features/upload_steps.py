@@ -24,6 +24,7 @@ def and_i_click_upload_button(step):
 
 @step(u'Then I should see the file was uploaded successfully')
 def then_i_should_see_the_file_was_uploaded_successfully(step):
+    world.page.is_text_present(world.filename)
     world.page.is_text_present("File was uploaded successfully")
 
 @step(u'And I have a pdf document')

@@ -23,6 +23,7 @@ class UploadSupportDocumentTest(BaseTest):
         templates = [template.name for template in response.templates]
         self.assertIn('questionnaires/entry/upload.html', templates)
         self.assertEqual('Upload', response.context['button_label'])
+        self.assertEqual(self.questionnaire, response.context['questionnaire'])
         self.assertIsInstance(response.context['upload_form'], SupportDocumentUploadForm)
 
     def test_upload_upload(self):
@@ -33,7 +34,7 @@ class UploadSupportDocumentTest(BaseTest):
             document = open(self.filename, 'rb')
         data = {'questionnaire': self.questionnaire.id, 'country': self.uganda.id, 'path': document}
         response = self.client.post('/questionnaire/documents/upload/', data=data)
-        self.assertRedirects(response, '/', status_code=302)
+        self.assertRedirects(response, '/questionnaire/documents/upload/', status_code=302)
         message = "File was uploaded successfully"
         self.assertIn(message, response.cookies['messages'].value)
 
