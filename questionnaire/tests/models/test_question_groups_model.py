@@ -139,3 +139,16 @@ class GroupedQuestionsTest(BaseTest):
         self.assertEqual(2, len(sub_group_question_orders))
         self.assertEqual(order2, sub_group_question_orders[0])
         self.assertEqual(order3, sub_group_question_orders[1])
+
+    def test_group_knows_if_it_has_more_than_one_question(self):
+        sub_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1, parent=self.parent_question_group)
+        question = Question.objects.create(text='question', UID='ab3123', answer_type='Text')
+        question2 = Question.objects.create(text='question2', UID='c00001', answer_type='Text')
+        sub_group.question.add(question, question2)
+
+        order1 = QuestionGroupOrder.objects.create(question=self.question, question_group=self.parent_question_group, order=1)
+        order2 = QuestionGroupOrder.objects.create(question=question, question_group=self.parent_question_group, order=2)
+        order3 = QuestionGroupOrder.objects.create(question=question2, question_group=self.parent_question_group, order=3)
+
+        self.assertTrue(sub_group.has_at_least_two_questions())
+        self.assertFalse(self.sub_grouped_question.has_at_least_two_questions())

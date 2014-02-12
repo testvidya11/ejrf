@@ -31,6 +31,11 @@ class QuestionGroup(BaseModel):
             return self.parent.orders.order_by('order').filter(question__in=self.all_questions()).select_related()
         return self.orders.order_by('order').select_related()
 
+    def has_at_least_two_questions(self):
+        return self.question.count() > 1
+
+
     class Meta:
         ordering = ('order',)
         app_label = 'questionnaire'
+
