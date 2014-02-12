@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" type="text/css" media="screen">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/application.css" type="text/css" media="screen">
     {% block extra_css %}{% endblock %}
+    <!--[if IE 8]>
+          <script src="{{ STATIC_URL }}html5shiv/html5shiv.js"></script>
+          <script src="{{ STATIC_URL }}Respond/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body id="login-body">
 <div class="container">
