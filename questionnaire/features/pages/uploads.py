@@ -10,3 +10,9 @@ class UploadDocumentPage(PageObject):
         for label, field in data.items():
             self.is_text_present(label)
             assert self.browser.find_by_name(field)
+
+
+class DeleteDocumentPage(PageObject):
+    def __init__(self, browser, document):
+        super(DeleteDocumentPage, self).__init__(browser)
+        self.url = '/questionnaire/document/%s/delete/' % document.id

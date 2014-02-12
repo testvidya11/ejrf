@@ -21,3 +21,13 @@ Feature: Support document upload
     And I click upload button
     Then I should see an error that the file type is not supported
     And I clean up the files
+
+  Scenario: Delete attachment
+    Given I am logged in as a data submitter
+    And I have a questionnaire with sections and subsections
+    And I have an attached file
+    And I visit the attachments page
+    And I click delete button next to that file
+    Then I should see a warning dialog
+    When I click confirm
+    Then I should see that file was deleted

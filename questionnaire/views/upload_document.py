@@ -1,7 +1,9 @@
 import os
 from django.contrib import messages
+from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import CreateView, View
+from django.views.generic import CreateView, View, DeleteView
 from django.views.static import serve
 from questionnaire.forms.support_document_upload_form import SupportDocumentUploadForm
 from questionnaire.models import SupportDocument, UserProfile, Questionnaire
@@ -38,3 +40,14 @@ class DownloadDocument(View):
     def get(self, *args, **kwargs):
         document = SupportDocument.objects.get(id=kwargs['document_id'], questionnaire=kwargs['questionnaire_id'])
         return serve(self.request, os.path.basename(document.path.url), os.path.dirname(document.path.url))
+
+
+class DeleteDocument(View):
+    model = SupportDocument
+
+    def get(self, *args, **kwargs):
+        document = self.model.objects.get(pk=kwargs['document_id'])
+        os.system("rm %s" % document.path.url)
+        document.delete()
+        messages.success(self.request, "Attachment was deleted successfully")
+        return HttpResponseRedirect(reverse_lazy('upload_document'))

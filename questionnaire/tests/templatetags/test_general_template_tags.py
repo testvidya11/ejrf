@@ -1,4 +1,4 @@
-from questionnaire.templatetags.general_template_tags import display_list, bootstrap_message
+from questionnaire.templatetags.generic_tags import display_list, bootstrap_message, get_url_with_ids
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -12,3 +12,7 @@ class GeneralTemplateTagTest(BaseTest):
         self.assertEqual('success', bootstrap_message('success'))
         self.assertEqual('danger', bootstrap_message('error'))
         self.assertEqual('warning', bootstrap_message('warning'))
+
+    def test_should_return_url_given_url_name_and_ids(self):
+        self.assertEqual('/questionnaire/document/1/delete/', get_url_with_ids(1, 'delete_document'))
+        self.assertEqual('/questionnaire/entry/1/section/2/', get_url_with_ids("1, 2", 'questionnaire_entry_page'))

@@ -1,7 +1,10 @@
 import os
+from time import sleep
+from django.core.files import File
 from lettuce import world, step, after
 from mock import mock_open, patch
-from questionnaire.features.pages.uploads import UploadDocumentPage
+from questionnaire.features.pages.uploads import UploadDocumentPage, DeleteDocumentPage
+from questionnaire.models import SupportDocument
 
 
 @step(u'And I click the upload support document link')
@@ -56,6 +59,36 @@ def then_i_should_see_an_error_that_the_file_type_is_not_supported(step):
 @step(u'And I visit the attachments page')
 def and_i_visit_the_attachments_page(step):
     world.page.click_by_id('id_attachments')
+
+@step(u'And I have an attached file')
+def and_i_have_an_attached_file(step):
+    world.filename = 'sample_document.pdf'
+    m = mock_open()
+    with patch('__main__.open', m, create=True):
+        with open(world.filename, 'w') as document:
+            document.write("Some stuff")
+            document = open(world.filename, 'rb')
+            world.document = SupportDocument.objects.create(path=File(document), country=world.uganda,
+                                                            questionnaire=world.questionnaire)
+
+@step(u'And I click delete button next to that file')
+def and_i_click_delete_button_next_to_that_file(step):
+    world.page.click_by_css('.glyphicon-trash')
+    sleep(3)
+
+@step(u'Then I should see a warning dialog')
+def then_i_should_see_a_warning_dialog(step):
+    world.page = DeleteDocumentPage(world.browser, world.document)
+    world.page.is_text_present("Are you sure you want to delete this Support Document?")
+
+@step(u'When I click confirm')
+def when_i_click_confirm(step):
+    world.page.click_by_id('confirm-delete-%s' % world.document.id)
+
+@step(u'Then I should see that file was deleted')
+def then_i_should_see_that_file_was_deleted(step):
+    world.page.is_text_present(os.path.basename(world.document.path.url), status=False)
+    world.page.is_text_present("Attachment was deleted successfully")
 
 @step(u'And I clean up the files')
 def and_i_clean_up_the_files(step):
