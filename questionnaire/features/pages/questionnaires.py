@@ -27,3 +27,8 @@ class QuestionnairePage(PageObject):
     def validate_alert_error(self):
         self.is_text_present("Draft NOT saved. See errors below")
         self.is_element_present_by_css(".alert-danger")
+
+    def validate_responses(self, data):
+        self.is_element_present_by_value(data.values()[0])
+        for i in range(1, 7):
+            self.is_text_present(str(data.values()[i]))

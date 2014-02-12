@@ -66,3 +66,6 @@ class PageObject(object):
 
     def input_file(self, filename):
         self.browser.attach_file('path', filename)
+
+    def is_element_present_by_value(self, value):
+        self.browser.is_element_present_by_value(value)
