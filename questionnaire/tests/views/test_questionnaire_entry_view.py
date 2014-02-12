@@ -116,7 +116,7 @@ class QuestionnaireEntryViewTest(BaseTest):
         expected_message = 'Draft saved.'
         self.assertIn(expected_message, response.content)
 
-    def test_post_failure_does_not_save_answers(self):
+    def test_post_failure_does_not_save_answers_and_does_not_redirect(self):
         data = self.data
         data[u'MultiChoice-0-response'] = -1
 
@@ -241,3 +241,23 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.assertEqual(1, answer_2.count())
         self.assertEqual(Answer.DRAFT_STATUS, answer_2[0].status)
         self.assertEqual(1, answer_2[0].version)
+
+    def test_post_saves_answers_and_redirect_if_given_redirect_url(self):
+        data = self.data
+        self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-1-response'])))
+
+        section_2 = Section.objects.create(name="haha", questionnaire=self.questionnaire, order=2)
+        data['redirect_url'] = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, section_2.id)
+
+        response = self.client.post(self.url, data=data)
+
+        self.failUnless(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response']), question=self.question1))
+        self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-0-response']), question=self.question2))
+        self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-1-response']), question=self.question3))
+
+        self.assertRedirects(response, data['redirect_url'])
+
+
+

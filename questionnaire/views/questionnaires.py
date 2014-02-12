@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.views.generic import FormView
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.models import Questionnaire, Section
@@ -50,6 +51,8 @@ class Entry(LoginRequiredMixin, FormView):
             user_questionnaire_service.submit()
             message = 'Questionnaire Submitted.'
         messages.success(request, message)
+        if request.POST.get('redirect_url', None):
+            return HttpResponseRedirect(request.POST['redirect_url'])
         return self.render_to_response(context)
 
     def _form_invalid(self, request, context):

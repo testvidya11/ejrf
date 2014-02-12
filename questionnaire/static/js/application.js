@@ -96,6 +96,7 @@ $("#questionnaire_entry").on('submit', function(){
 });
 
 function warnBeforeNavigatingAway(){
+    saveDraftOnclickOfSectionTab();
     window.onbeforeunload = function(){
       if(form_has_changed){
         return "Are you sure you want to navigate away from this page?\nAll unsaved changes will be lost.";
@@ -103,3 +104,15 @@ function warnBeforeNavigatingAway(){
    };
 }
 
+function saveDraftOnclickOfSectionTab(){
+    $('.section_tab').click(function(e){
+       e.preventDefault()
+       var url = $(this).attr('href');
+       if (form_has_changed){
+        $('#redirect_url').val(url);
+        $('#questionnaire_entry').submit();
+       }else{
+        window.location = url;
+       }
+    });
+}

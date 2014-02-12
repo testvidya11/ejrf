@@ -1,6 +1,6 @@
 <div class="wizard">
     {% for section_ in ordered_sections %}
-        <a {% if section_.id == section.id %}class="current"{% endif %}
+        <a class="{% if section_.id == section.id %}current {% endif %}section_tab"
            href="{% url 'questionnaire_entry_page' questionnaire.id section_.id %}"> {{ section_.name }}</a>
     {% endfor %}
 </div>

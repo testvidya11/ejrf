@@ -43,9 +43,10 @@ class AnswerForm(ModelForm):
         answer_group.answer.add(answer)
 
     def _get_question(self, kwargs):
-        if 'initial'in kwargs.keys() and 'question' in kwargs['initial'].keys():
-            return kwargs['initial']['question']
+        if 'initial'in kwargs.keys():
+            return kwargs['initial'].get('question', None)
         return None
+
 
 class NumericalAnswerForm(AnswerForm):
     class Meta:
@@ -55,6 +56,7 @@ class NumericalAnswerForm(AnswerForm):
 
 class TextAnswerForm(AnswerForm):
     response = forms.CharField( widget=forms.Textarea )
+
     class Meta:
         model = TextAnswer
         exclude = ('question', 'status', 'country', 'version', 'code')
