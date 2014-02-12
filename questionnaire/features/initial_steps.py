@@ -35,5 +35,8 @@ def clear_cookies(scenario):
 
 @after.all
 def close_browser(total):
-    os.system("rm -rf media/user_uploads/*")
     world.browser.quit()
+
+@after.all
+def tear_down(step):
+    os.system("rm -rf media/user_uploads/*")

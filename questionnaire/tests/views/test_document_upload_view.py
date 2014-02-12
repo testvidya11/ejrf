@@ -18,7 +18,7 @@ class UploadSupportDocumentTest(BaseTest):
         self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", year=2013)
 
     def test_get_upload_view(self):
-        response = self.client.get('/questionnaire/entry/%s/documents/upload/' % self.questionnaire.id)
+        response = self.client.get('/questionnaire/documents/upload/')
         self.assertEqual(200, response.status_code)
         templates = [template.name for template in response.templates]
         self.assertIn('questionnaires/entry/upload.html', templates)
@@ -32,7 +32,7 @@ class UploadSupportDocumentTest(BaseTest):
                 document.write("Some stuff")
             document = open(self.filename, 'rb')
         data = {'questionnaire': self.questionnaire.id, 'country': self.uganda.id, 'path': document}
-        response = self.client.post('/questionnaire/entry/%s/documents/upload/' % self.questionnaire.id, data=data)
+        response = self.client.post('/questionnaire/documents/upload/', data=data)
         self.assertRedirects(response, '/', status_code=302)
         message = "File was uploaded successfully"
         self.assertIn(message, response.cookies['messages'].value)
@@ -44,7 +44,7 @@ class UploadSupportDocumentTest(BaseTest):
                 document.write("Some stuff")
             document = open(self.filename, 'rb')
         data = {'questionnaire': self.questionnaire.id, 'country': '', 'path': document}
-        response = self.client.post('/questionnaire/entry/%s/documents/upload/' % self.questionnaire.id, data=data)
+        response = self.client.post('/questionnaire/documents/upload/', data=data)
         self.assertEqual(200, response.status_code)
 
     def test_download_attachment_view(self):

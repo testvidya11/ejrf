@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.generic import CreateView, View
 from django.views.static import serve
 from questionnaire.forms.support_document_upload_form import SupportDocumentUploadForm
-from questionnaire.models import SupportDocument, UserProfile
+from questionnaire.models import SupportDocument, UserProfile, Questionnaire
 
 
 class UploadDocument(CreateView):
@@ -15,7 +15,7 @@ class UploadDocument(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(UploadDocument, self).get_context_data(**kwargs)
-        questionnaire = self.kwargs['questionnaire_id']
+        questionnaire = Questionnaire.objects.order_by('-created')[0]
         upload_data_initial = {'questionnaire': questionnaire}
         try:
             upload_data_initial.update({'country': self.request.user.user_profile.country})

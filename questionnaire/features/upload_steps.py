@@ -1,4 +1,5 @@
-from lettuce import world, step
+import os
+from lettuce import world, step, after
 from mock import mock_open, patch
 from questionnaire.features.pages.uploads import UploadDocumentPage
 
@@ -9,7 +10,7 @@ def and_i_click_the_upload_support_document_link(step):
 
 @step(u'Then I should see the upload form')
 def then_i_should_see_the_upload_form(step):
-    world.page = UploadDocumentPage(world.browser, world.questionnaire)
+    world.page = UploadDocumentPage(world.browser)
     world.page.validate_url()
     world.page.validate_upload_form({'Support document': 'path'})
 
@@ -49,3 +50,12 @@ def and_i_have_a_zip_file(step):
 def then_i_should_see_an_error_that_the_file_type_is_not_supported(step):
     world.page.is_element_present_by_css('.error')
     world.page.is_text_present('file type is not an allowed')
+
+
+@step(u'And I visit the attachments page')
+def and_i_visit_the_attachments_page(step):
+    world.page.click_by_id('id_attachments')
+
+@step(u'And I clean up the files')
+def and_i_clean_up_the_files(step):
+    os.system("rm -rf %s" % world.filename)
