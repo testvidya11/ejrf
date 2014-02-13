@@ -31,6 +31,8 @@ def given_i_have_a_questionnaire_with_questions(step):
                                        If no data are available, enter "ND" (no data).<br/>
                                         If the number of cases is zero, enter 0.""",
                         questionnaire=world.questionnaire, name="Cover page")
+    world.section_2 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
+                                              questionnaire=world.questionnaire, name="Reported Cases")
     world.sub_section = SubSection.objects.create(order=1, section=world.section_1)
 
     world.question1 = Question.objects.create(text='Name of person in Ministry of Health responsible for completing this form',
@@ -114,3 +116,7 @@ def when_i_enter_invalid_responses_to_the_questions(step):
 @step(u'Then I should see a save draft error message')
 def then_i_should_see_a_save_draft_error_message(step):
     world.page.validate_alert_error()
+
+@step(u'And I switch to another section')
+def and_i_switch_to_another_section(step):
+    world.page.click_link_by_partial_href('section/2')
