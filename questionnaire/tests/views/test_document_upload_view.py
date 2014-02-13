@@ -36,6 +36,9 @@ class UploadSupportDocumentTest(BaseTest):
     def test_upload_upload(self):
         data = {'questionnaire': self.questionnaire.id, 'country': self.uganda.id, 'path': self.document}
         response = self.client.post('/questionnaire/documents/upload/', data=data)
+        _file = SupportDocument.objects.get(country=self.uganda, questionnaire=self.questionnaire)
+        self.failUnless(_file)
+        self.assertTrue(os.path.exists(_file.path.url))
         self.assertRedirects(response, '/questionnaire/documents/upload/', status_code=302)
         message = "File was uploaded successfully"
         self.assertIn(message, response.cookies['messages'].value)

@@ -39,4 +39,5 @@ def close_browser(total):
 
 @after.all
 def tear_down(step):
+    os.system('rm *.pdf')
     os.system("rm -rf media/user_uploads/*")

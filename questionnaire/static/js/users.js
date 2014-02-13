@@ -25,8 +25,8 @@ function getRegionsFor(organization, region){
      country_template = $('#country-template').html(),
      region_template = $('#region-template').html();
 
-function loadCountryAndRegionTemplate(country_template) {
-    $(this).parents('ul').after(country_template);
+function loadCountryOrRegionTemplate(template) {
+    $(this).parents('ul').after(template);
 }
 
 function loadRoleTemplate(){
@@ -37,13 +37,13 @@ function loadRoleTemplate(){
             select_element.prev('label').remove();
             select_element.parents('p').remove();
         if($selected_role === "Global Admin"){
-            loadCountryAndRegionTemplate.call(this, template);
+            loadCountryOrRegionTemplate.call(this, template);
         } else if ($selected_role == "Regional Admin") {
-            loadCountryAndRegionTemplate.call(this, region_template);
+            loadCountryOrRegionTemplate.call(this, region_template);
         }else if ($selected_role == "Country Admin") {
-            loadCountryAndRegionTemplate.call(this, country_template);
+            loadCountryOrRegionTemplate.call(this, country_template);
         }else if ($selected_role == "Data Submitter") {
-            loadCountryAndRegionTemplate.call(this, country_template);
+            loadCountryOrRegionTemplate.call(this, country_template);
         }
     });
 }
