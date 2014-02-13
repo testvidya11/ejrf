@@ -81,7 +81,7 @@ def and_i_should_see_the_subgroup_title_and_description(step):
 
 @step(u'When I click on a different section tab')
 def when_i_click_on_a_different_section_tab(step):
-    world.page.click_link_by_text(" " + world.section_2.name)
+    world.page.click_by_id("section-%s" % world.section_2.id)
 
 @step(u'Then I should see that section page')
 def then_i_should_see_that_section_page(step):

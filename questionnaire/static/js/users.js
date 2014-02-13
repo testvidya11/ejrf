@@ -15,9 +15,9 @@ function getRegionsFor(organization, region){
         $.get(url, function(data){
             region_select.html(' ');
             region_select.html('<option value="">All </option>');
-            data.forEach(function(region){
-                region_select.append('<option value='+ region.id +'>'+ region.name +'</option>')
-            });
+            for(var i=0; i< data.length; i++){
+                region_select.append('<option value='+ data[i].id +'>'+ data[i].name +'</option>')
+            }
         })
 }
 
