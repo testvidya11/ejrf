@@ -116,3 +116,24 @@ function saveDraftOnclickOfSectionTab(){
        }
     });
 }
+$('#export-section').on('click', function(event) {
+    var filename = "";
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "/export-section",
+        success: function(data){
+            var obj = JSON.parse(data);
+            filename = obj['filename']
+            console.log(filename);
+        }
+    });
+
+    setTimeout(function(){
+      return_file(filename)
+    }, 3000);
+});
+
+function return_file(filename){
+    window.location = "/export-section/"+filename;
+}

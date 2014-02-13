@@ -244,11 +244,19 @@ form ul li{
 }
 textarea{
     height: 34px;
-}form input[type=file]{
+}
+form input[type=file]{
     margin-left: 154px;
     margin-top: -28px;
 }
 
 #id-upload-form label{
     width: 770px;
+}
+.export-section{
+    margin-left: 10px;
+}
+.section-buttons{
+    display: block;
+    overflow: auto;
 }

@@ -1,11 +1,19 @@
 {% extends 'base/layout.html' %}
 {% block extra_css %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/wizzard.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/wizzard.css" type="text/css" media="all">
+    {% if printable %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/print.css" type="text/css" media="all">
+    {% endif %}
 {% endblock %}
 {% block content %}
 {% load questionnaire_entry_tags %}
 
     {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
+
+    <div class="section-buttons">
+        <a class="btn btn-default pull-right export-section" id="export-section"><span class="cyan"><span class="glyphicon glyphicon-file red"></span> Export Section as PDF </span> </a>
+        <a href="{% url 'upload_document' %}" class="btn btn-default pull-right" id="upload-file"><span class="cyan"><span class="glyphicon glyphicon-open"></span> Upload a document</span> </a>
+    </div>
     <h3>{{ section.order}}. {{ section.title | safe }}</h3>
     {% if section.description %}
         <div class="">
@@ -13,6 +21,8 @@
         </div>
     {% endif %}
     <form class="form-horizontal" id="questionnaire_entry" role="form" method="post">
+    <input type='hidden' name='questionnaire-id' value={{ questionnaire.id }} />
+    <input type='hidden' name='section-id' value={{ section.id }} />
     {% csrf_token %}
     {% for form_type, form_set in formsets.formsets.items %}
         {{ form_set.management_form }}

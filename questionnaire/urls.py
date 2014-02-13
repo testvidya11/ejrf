@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from questionnaire.views.export_to_text import ExportToTextView
+from questionnaire.views.export_to_text import ExportToTextView, ExportSectionPDF, DownloadSectionPDF
 from questionnaire.views.home import Home
 from questionnaire.views.locations import ListRegions, ListCountries, RegionsForOrganization
 from questionnaire.views.questionnaires import Entry
@@ -10,6 +10,8 @@ urlpatterns = patterns('',
     url(r'^$',  Home.as_view(), name="home_page"),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'users/login.html'}, name="login_page"),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/accounts/login/'}, name="logout_page"),
+    url(r'^export-section/$', ExportSectionPDF.as_view(), name="questionnaire_export_page"),
+    url(r'^export-section/(?P<filename>[\.\w]+)$', DownloadSectionPDF.as_view()),
     url(r'^extract/$', ExportToTextView.as_view(), name="export_page"),
     url(r'^locations/region/$', ListRegions.as_view(), name='list_region_page'),
     url(r'^locations/organization/(?P<organization_id>\d+)/region/$', RegionsForOrganization.as_view()),

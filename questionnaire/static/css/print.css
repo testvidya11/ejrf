@@ -1,0 +1,27 @@
+.login-nav{
+    display: none !important;
+}
+.navbar{
+    display: none !important;
+}
+#header-row {
+    border-bottom: 0px;
+}
+#content {
+    margin-top: 0px;
+}
+.wizard{
+    display: none !important;
+}
+.instructions{
+    display: none !important;
+}
+.btn-default{
+    display: none !important;
+}
+.section-buttons{
+    display: none !important;
+}
+footer{
+    display: none !important;
+}
