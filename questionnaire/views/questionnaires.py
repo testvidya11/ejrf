@@ -5,7 +5,7 @@ from questionnaire.services.questionnaire_entry_form_service import Questionnair
 from questionnaire.models import Questionnaire, Section
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
 from django.forms.formsets import formset_factory
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from questionnaire.services.users import UserQuestionnaireService
 
 ANSWER_FORM = {'Number': NumericalAnswerForm,
@@ -15,9 +15,9 @@ ANSWER_FORM = {'Number': NumericalAnswerForm,
                }
 
 
-class Entry(LoginRequiredMixin, FormView):
+class Entry(PermissionRequiredMixin, FormView):
     template_name = 'questionnaires/entry/index.html'
-
+    permission_required = 'auth.can_view_questionnaire'
     def get(self, request, *args, **kwargs):
         questionnaire = Questionnaire.objects.get(id=self.kwargs['questionnaire_id'])
         section = Section.objects.get(id=self.kwargs['section_id'])

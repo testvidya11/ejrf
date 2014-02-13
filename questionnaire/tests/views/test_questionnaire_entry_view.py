@@ -40,7 +40,9 @@ class QuestionnaireEntryViewTest(BaseTest):
 
         self.client = Client()
         self.user, self.country = self.create_user_with_no_permissions()
-        self.login_user()
+
+        self.assign('can_view_questionnaire', self.user)
+        self.client.login(username=self.user.username, password='pass')
 
         self.data = {u'MultiChoice-MAX_NUM_FORMS': u'1', u'MultiChoice-TOTAL_FORMS': u'1',
                 u'MultiChoice-INITIAL_FORMS': u'1', u'MultiChoice-0-response': self.option1.id,
@@ -68,6 +70,10 @@ class QuestionnaireEntryViewTest(BaseTest):
 
     def test_login_required(self):
         self.assert_login_required('/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id))
+
+    def test_permission_required(self):
+        self.assert_permission_required('/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id))
+
 
     def test_post_saves_answers(self):
         data = self.data

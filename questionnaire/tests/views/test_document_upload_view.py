@@ -72,4 +72,4 @@ class UploadSupportDocumentTest(BaseTest):
 
     def tear_down(self):
         os.system("rm -rf %s" % self.filename)
-        os.system("rm -rf media/user_uploads/test_*")
+        os.system("rm -rf media/user_uploads/*")

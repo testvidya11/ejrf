@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission, Group
+from django.contrib.contenttypes.models import ContentType
 from lettuce import step, world
 from questionnaire.features.pages.locations import ListRegionsPage, ListCountriesPage
 from questionnaire.features.pages.users import LoginPage
@@ -6,12 +7,18 @@ from questionnaire.models import UserProfile
 from questionnaire.models.locations import Region, Country, Organization
 
 
-@step(u'Given I am logged in')
+@step(u'Given I am logged in as a data submitter')
 def given_i_am_logged_in(step):
     password = 'I_Rock'
     world.uganda = Country.objects.create(name="Uganda")
     user = User.objects.create_user('Rajni', 'rajni@kant.com', password)
     UserProfile.objects.create(user=user, country=world.uganda)
+    auth_content = ContentType.objects.get_for_model(Permission)
+    group = Group.objects.create(name="Data Submitter")
+    permission, out = Permission.objects.get_or_create(codename='can_view_questionnaire', content_type=auth_content)
+    group.permissions.add(permission)
+    group.user_set.add(user)
+
     world.page = LoginPage(world.browser)
     world.page.visit()
     world.page.login(user, password)
