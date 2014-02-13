@@ -10,9 +10,8 @@
     {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
 
     <div class="section-buttons">
-        <a class="btn btn-default pull-right export-section" id="export-section"><span class="cyan"><span class="glyphicon glyphicon-file red"></span> Export Section as PDF </span> </a>
+        <a class="btn btn-default pull-right export-section has-spinner" id="export-section"><span class="spinner"><i class="glyphicon glyphicon-refresh spinner"></i></span><span class="cyan"><span class="glyphicon glyphicon-file red"></span> Export Section as PDF </span> </a>
     </div>
-    questionnaire/views/questionnaires.py
     <h3>{{ section.order}}. {{ section.title | safe }}</h3>
     {% if section.description %}
         <div class="">

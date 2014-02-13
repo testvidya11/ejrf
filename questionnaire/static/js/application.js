@@ -117,6 +117,7 @@ function saveDraftOnclickOfSectionTab(){
     });
 }
 $('#export-section').on('click', function(event) {
+    $(this).toggleClass('active');
     var filename = "";
     $.ajax({
         type: "GET",
@@ -130,8 +131,9 @@ $('#export-section').on('click', function(event) {
     });
 
     setTimeout(function(){
+      $('#export-section').toggleClass('active');
       return_file(filename)
-    }, 3000);
+    }, 5000);
 });
 
 function return_file(filename){
