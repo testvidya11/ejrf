@@ -43,9 +43,7 @@ class AnswerForm(ModelForm):
         answer_group.answer.add(answer)
 
     def _get_question(self, kwargs):
-        if 'initial'in kwargs.keys():
-            return kwargs['initial'].get('question', None)
-        return None
+        return kwargs['initial'].get('question', None)
 
 
 class NumericalAnswerForm(AnswerForm):

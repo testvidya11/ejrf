@@ -124,7 +124,7 @@ class GroupedQuestionsTest(BaseTest):
         self.assertEqual(order2, orders_of_questions_including_those_of_sub_groups[1])
         self.assertEqual(order3, orders_of_questions_including_those_of_sub_groups[2])
 
-    def test_subgroups_ordered_questions(self):
+    def test_subgroups_question_orders(self):
         sub_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1, parent=self.parent_question_group)
         question = Question.objects.create(text='question', UID='ab3123', answer_type='Text')
         question2 = Question.objects.create(text='question2', UID='c00001', answer_type='Text')

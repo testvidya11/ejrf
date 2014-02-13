@@ -26,6 +26,9 @@ class QuestionnaireTest(BaseTest):
         self.question1_answer_2 = NumericalAnswer.objects.create(question=self.question1, country=self.country,
                                                                  status=Answer.SUBMITTED_STATUS, response=1)
 
+    def test_questionnaire_unicode(self):
+        self.assertEqual(str(self.questionnaire), "JRF 2013 Core English".encode('utf8'))
+
     def test_questionnaire_fields(self):
         fields = [str(item.attname) for item in Questionnaire._meta.fields]
         self.assertEqual(6, len(fields))
