@@ -7,11 +7,14 @@
 {% endblock %}
 {% block content %}
 {% load questionnaire_entry_tags %}
-    {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
 
     <div class="section-buttons">
         <a class="btn btn-default pull-right export-section has-spinner" id="export-section"><span class="spinner"><i class="glyphicon glyphicon-refresh spinner"></i></span><span class="cyan"><span class="glyphicon glyphicon-file red"></span> Export Section as PDF </span> </a>
     </div>
+
+    {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
+
+    <div class="form-content">
     <h3>{{ section.order}}. {{ section.title | safe }}</h3>
     {% if section.description %}
         <div class="">
@@ -79,6 +82,7 @@
             <hr class="group-hr"/>
         {% endfor %}
     {% endfor %}
+    </div>
     <input type=hidden id="redirect_url" name="redirect_url" />
     <div class="form-group top-padding">
     <div class="col-sm-offset-2 col-sm-4 pull-right">

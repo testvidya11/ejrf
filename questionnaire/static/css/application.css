@@ -309,3 +309,7 @@ form input[type=file]{
 .has-spinner.active .glyphicon-file {
     display: none;
 }
+.form-content{
+    overflow: hidden;
+    padding-left: 20px;
+}
