@@ -118,9 +118,7 @@ class MultiChoiceAnswerForm(AnswerForm):
         return forms.Select()
 
     def _get_response_choices(self, kwargs):
-        if self.question:
-            return self.question.options.all()
-        return QuestionOption.objects.all()
+        return self.question.options.all()
 
     class Meta:
         model = MultiChoiceAnswer
