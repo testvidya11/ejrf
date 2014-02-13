@@ -12,7 +12,6 @@ $(document).ready(function() {
         }
     });
 
-
     $(function () {
         $("#id-upload-form").validate({
                 rules: {
@@ -24,10 +23,20 @@ $(document).ready(function() {
     });
 
     jQuery.validator.addMethod('fileSize', function(value, element, param) {
-        return this.optional(element) || (getFileSizeInMegabytes(element.files[0]) < param)
+        if(getIEVersion() == 8){
+            var fileSize = 0
+        }else{
+        fileSize  = getFileSizeInMegabytes(element.files[0])
+        }
+        return this.optional(element) || (fileSize < param)
     }, "The file is too large, Please upload files not larger than 50 Megabytes");
 });
 
+
+function getIEVersion () {
+  var myNav = navigator.userAgent.toLowerCase();
+  return (myNav.indexOf('msie') != -1) ? parseInt(myNav.split('msie')[1]) : false;
+}
 
 function getFileSizeInMegabytes(file){
     var fileSizeInBytes = file.size / (1024*1024).toFixed(2);
