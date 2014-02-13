@@ -70,6 +70,6 @@ class UploadSupportDocumentTest(BaseTest):
         self.assertRaises(SupportDocument.DoesNotExist, SupportDocument.objects.get, id=_document.id)
         self.assertFalse(os.path.exists(_document.path.url))
 
-    def tear_down(self):
+    def tearDown(self):
         os.system("rm -rf %s" % self.filename)
         os.system("rm -rf media/user_uploads/*")

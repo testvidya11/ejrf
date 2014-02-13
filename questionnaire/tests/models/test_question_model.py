@@ -26,6 +26,9 @@ class QuestionTest(BaseTest):
         self.question1_answer_2 = NumericalAnswer.objects.create(question=self.question1, country=self.country,
                                                                  status=Answer.SUBMITTED_STATUS, response=1)
 
+    def test_question_unicode(self):
+        self.assertEqual(str(self.question1), 'B. Number of cases tested'.encode('utf8'))
+
     def test_question_fields(self):
         question = Question()
         fields = [str(item.attname) for item in question._meta.fields]
