@@ -15,7 +15,7 @@ def given_i_am_logged_in(step):
     UserProfile.objects.create(user=user, country=world.uganda)
     auth_content = ContentType.objects.get_for_model(Permission)
     group = Group.objects.create(name="Data Submitter")
-    permission, out = Permission.objects.get_or_create(codename='can_view_questionnaire', content_type=auth_content)
+    permission, out = Permission.objects.get_or_create(codename='can_submit_responses', content_type=auth_content)
     group.permissions.add(permission)
     group.user_set.add(user)
 

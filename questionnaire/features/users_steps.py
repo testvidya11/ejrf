@@ -10,9 +10,15 @@ from questionnaire.models import Region, Country, UserProfile, Organization
 
 @step(u'Given I am registered user')
 def given_i_am_registered_user(step):
-    world.user = User.objects.create(username="user", email="user@mail.com")
-    world.user.set_password("pass")
-    world.user.save()
+    password = 'pass'
+    world.uganda = Country.objects.create(name="Uganda")
+    world.user = User.objects.create_user('Rajni', 'rajni@kant.com', password)
+    UserProfile.objects.create(user=world.user, country=world.uganda)
+    auth_content = ContentType.objects.get_for_model(Permission)
+    group = Group.objects.create(name="Data Submitter")
+    permission, out = Permission.objects.get_or_create(codename='can_submit_responses', content_type=auth_content)
+    group.permissions.add(permission)
+    group.user_set.add(world.user)
 
 @step(u'And I visit the login page')
 def and_i_visit_the_login_page(step):

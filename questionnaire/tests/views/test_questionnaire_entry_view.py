@@ -41,7 +41,7 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.client = Client()
         self.user, self.country = self.create_user_with_no_permissions()
 
-        self.assign('can_view_questionnaire', self.user)
+        self.assign('can_submit_responses', self.user)
         self.client.login(username=self.user.username, password='pass')
 
         self.data = {u'MultiChoice-MAX_NUM_FORMS': u'1', u'MultiChoice-TOTAL_FORMS': u'1',
