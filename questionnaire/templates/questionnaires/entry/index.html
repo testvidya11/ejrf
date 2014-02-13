@@ -7,13 +7,12 @@
 {% endblock %}
 {% block content %}
 {% load questionnaire_entry_tags %}
-
     {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
 
     <div class="section-buttons">
         <a class="btn btn-default pull-right export-section" id="export-section"><span class="cyan"><span class="glyphicon glyphicon-file red"></span> Export Section as PDF </span> </a>
-        <a href="{% url 'upload_document' %}" class="btn btn-default pull-right" id="upload-file"><span class="cyan"><span class="glyphicon glyphicon-open"></span> Upload a document</span> </a>
     </div>
+    questionnaire/views/questionnaires.py
     <h3>{{ section.order}}. {{ section.title | safe }}</h3>
     {% if section.description %}
         <div class="">

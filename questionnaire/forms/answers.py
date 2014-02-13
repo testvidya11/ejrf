@@ -53,7 +53,7 @@ class NumericalAnswerForm(AnswerForm):
 
 
 class TextAnswerForm(AnswerForm):
-    response = forms.CharField( widget=forms.Textarea )
+    response = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = TextAnswer

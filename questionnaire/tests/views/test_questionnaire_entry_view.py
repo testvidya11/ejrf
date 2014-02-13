@@ -67,13 +67,18 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.assertEqual(self.section_1, response.context['ordered_sections'][0])
         self.assertEqual(section2, response.context['ordered_sections'][1])
         self.assertEqual(section3, response.context['ordered_sections'][2])
+        self.assertEqual(False, response.context['printable'])
+
+    def test_gets_printable_as_true_if_set_in_request(self):
+        url = '/questionnaire/entry/%d/section/%d/?printable=true' % (self.questionnaire.id, self.section_1.id)
+        response = self.client.get(url)
+        self.assertEqual(True, response.context['printable'])
 
     def test_login_required(self):
         self.assert_login_required('/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id))
 
     def test_permission_required(self):
         self.assert_permission_required('/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id))
-
 
     def test_post_saves_answers(self):
         data = self.data
@@ -265,5 +270,15 @@ class QuestionnaireEntryViewTest(BaseTest):
 
         self.assertRedirects(response, data['redirect_url'])
 
+    def test_post_submit_answers_and_redirect_with_error_message_when_form_is_invalid(self):
+        data = self.data.copy()
+        data['final_submit'] = True
+        data['MultiChoice-0-response'] = 'Stuff'
+        section_2 = Section.objects.create(name="haha", questionnaire=self.questionnaire, order=2)
+        data['redirect_url'] = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, section_2.id)
 
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response'])))
 
+        message = 'Submission NOT completed. See errors below.'
+        response = self.client.post(self.url, data=data)
+        self.assertIn(message, response.content)
