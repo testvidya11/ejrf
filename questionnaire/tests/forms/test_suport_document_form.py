@@ -2,7 +2,7 @@ import os
 from mock import mock_open, patch
 from django.core.files.uploadedfile import SimpleUploadedFile
 from eJRF.settings import ACCEPTED_EXTENSIONS
-from questionnaire.forms.support_document_upload_form import SupportDocumentUploadForm
+from questionnaire.forms.support_documents import SupportDocumentUploadForm
 from questionnaire.models import Questionnaire, Country
 from questionnaire.tests.base_test import BaseTest
 

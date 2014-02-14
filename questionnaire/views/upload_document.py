@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import CreateView, View, DeleteView
 from django.views.static import serve
-from questionnaire.forms.support_document_upload_form import SupportDocumentUploadForm
+from questionnaire.forms.support_documents import SupportDocumentUploadForm
 from questionnaire.models import SupportDocument, UserProfile, Questionnaire
 
 

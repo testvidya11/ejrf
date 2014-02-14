@@ -3,7 +3,7 @@ from django.core.files import File
 from django.core.urlresolvers import reverse_lazy
 from django.test import Client
 from mock import mock_open, patch
-from questionnaire.forms.support_document_upload_form import SupportDocumentUploadForm
+from questionnaire.forms.support_documents import SupportDocumentUploadForm
 
 from questionnaire.tests.base_test import BaseTest
 from questionnaire.models import Questionnaire, Country, SupportDocument
