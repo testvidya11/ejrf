@@ -10,7 +10,7 @@ class NewSection(CreateView):
         super(NewSection, self).__init__(**kwargs)
         self.form_class = SectionForm
         self.object = Section
-        self.template_name = "questionnaires/sections/new.html"
+        self.template_name = "base/modals/_create.html"
 
     def form_valid(self, form):
         section = form.save(commit=False)

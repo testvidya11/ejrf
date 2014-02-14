@@ -31,7 +31,6 @@ def then_i_should_see_a_new_section_modal(step):
 
 @step(u'When i fill in the section data')
 def when_i_fill_in_the_section_data(step):
-    world.page.select('questionnaire', world.questionnaire.id)
     data = {'name': 'Some section',
             'title': 'Some title',
             'description': 'some description'}
@@ -45,3 +44,15 @@ def then_i_should_see_the_section_i_created(step):
 @step(u'And I save the section')
 def and_i_save_the_section(step):
     world.page.click_by_id('save-section')
+
+@step(u'And I fill in invalid data')
+def and_i_fill_in_invalid_data(step):
+    data = {'name': '',
+            'title': '',
+            'description': 'some description'}
+    world.page = CreateSectionPage(world.browser, world.questionnaire)
+    world.page.fill_form(data)
+
+@step(u'Then I should see error messages against the fields')
+def then_i_should_see_error_messages_against_the_fields(step):
+    world.page.is_text_present('This field is required')

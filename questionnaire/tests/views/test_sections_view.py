@@ -26,7 +26,7 @@ class SectionsViewTest(BaseTest):
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
         templates = [template.name for template in response.templates]
-        self.assertIn('questionnaires/sections/new.html', templates)
+        self.assertIn('base/modals/_create.html', templates)
         self.assertIsNotNone(response.context['form'])
         self.assertIsInstance(response.context['form'], SectionForm)
 
