@@ -2,6 +2,8 @@ import json
 import os
 import subprocess
 import time
+import urllib
+import urlparse
 
 from django.core.files import File
 from django.http import HttpResponse
@@ -33,7 +35,15 @@ class ExportSectionPDF(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         session_id = request.COOKIES['sessionid']
         file_name = 'eJRF_export_%s.pdf' % str(time.time())
-        url = (request.META['HTTP_REFERER'] +'?printable=yes')
+
+        # In case other get params recreate url string for printable param
+        url_parts = list(urlparse.urlparse(request.META['HTTP_REFERER']))
+        query = dict(urlparse.parse_qsl(url_parts[4]))
+        query.update({'printable': '1'})
+        url_parts[4] = urllib.urlencode(query)
+        export_url = urlparse.urlunparse(url_parts)
+
+        url = (export_url)
         domain = request.META['REMOTE_ADDR']
         phantomjs_script = 'questionnaire/static/js/export-section.js'
         command = ["phantomjs", phantomjs_script, url, file_name, session_id, domain, "&> /dev/null &"]

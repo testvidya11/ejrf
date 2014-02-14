@@ -27,10 +27,13 @@ class Entry(PermissionRequiredMixin, FormView):
         formsets = QuestionnaireEntryFormService(section, initial=initial)
 
         printable = False
+        preview = False
         if 'printable' in request.GET:
             printable = True
+        if 'preview' in request.GET:
+            preview = True
 
-        context = {'questionnaire': questionnaire, 'section': section, 'printable': printable,
+        context = {'questionnaire': questionnaire, 'section': section, 'printable': printable, 'preview': preview,
                    'formsets': formsets, 'ordered_sections': Section.objects.order_by('order')}
 
         return self.render_to_response(context)

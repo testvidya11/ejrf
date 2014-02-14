@@ -125,7 +125,7 @@
 }
 
 .indent{
-    margin-left: 40px;
+    margin-left: 10px;
 }
 .group-hr{
     border: 1px solid #000;
@@ -253,7 +253,7 @@ form input[type=file]{
 #id-upload-form label{
     width: 770px;
 }
-.export-section{
+.button-section{
     margin-left: 10px;
 }
 .section-buttons{

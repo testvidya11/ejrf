@@ -39,7 +39,7 @@ class ExportSectionToPDFViewTest(BaseTest):
         self.assertTrue(file_name, content['filename'])
 
         session_id = response.client.cookies['sessionid'].value
-        url = (meta['HTTP_REFERER'] +'?printable=yes')
+        url = (meta['HTTP_REFERER'] +'?printable=1')
         domain = meta['REMOTE_ADDR']
         phantomjs_script = 'questionnaire/static/js/export-section.js'
         command = ["phantomjs", phantomjs_script, url, file_name, session_id, domain, "&> /dev/null &"]

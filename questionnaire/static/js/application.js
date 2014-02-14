@@ -108,7 +108,10 @@ function saveDraftOnclickOfSectionTab(){
     $('.section_tab').click(function(e){
        e.preventDefault()
        var url = $(this).attr('href');
-       if (form_has_changed){
+       if($("#preview").val() == 1){
+           window.location = url;
+       }
+       else if (form_has_changed){
         $('#redirect_url').val(url);
         $('#questionnaire_entry').submit();
        }else{
@@ -126,14 +129,13 @@ $('#export-section').on('click', function(event) {
         success: function(data){
             var obj = JSON.parse(data);
             filename = obj['filename']
-            console.log(filename);
         }
     });
 
     setTimeout(function(){
       $('#export-section').toggleClass('active');
       return_file(filename)
-    }, 5000);
+    }, 6000);
 });
 
 function return_file(filename){

@@ -1,6 +1,14 @@
 {% extends 'base/layout.html' %}
+{% block javascripts %}
+    {% if preview %}
+        <script src="{{ STATIC_URL }}js/preview.js" type="text/javascript" charset="utf-8"></script>
+    {% endif %}
+{% endblock %}
 {% block extra_css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/wizzard.css" type="text/css" media="all">
+    {% if preview %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/preview.css" type="text/css" media="all">
+    {% endif %}
     {% if printable %}
         <link rel="stylesheet" href="{{ STATIC_URL }}css/print.css" type="text/css" media="all">
     {% endif %}
@@ -9,7 +17,12 @@
 {% load questionnaire_entry_tags %}
 
     <div class="section-buttons">
-        <a class="btn btn-default pull-right export-section has-spinner" id="export-section"><span class="spinner"><i class="glyphicon glyphicon-refresh spinner"></i></span><span class="cyan"><span class="glyphicon glyphicon-file red"></span> Export Section as PDF </span> </a>
+        {% if preview %}
+            <a href="{% url 'questionnaire_entry_page' questionnaire.id section.id %}" class="btn btn-default pull-right button-section" id="exit-preview-questionnaire"><span class="glyphicon glyphicon-eye-close"></span> Exit Preview </span> </a>
+       {% else %}
+            <a href="{% url 'questionnaire_entry_page' questionnaire.id section.id %}?preview=1" class="btn btn-default pull-right button-section" id="preview-questionnaire"><span class="glyphicon glyphicon-eye-open"></span> Preview </span> </a>
+       {% endif %}
+        <a class="btn btn-default pull-right button-section has-spinner" id="export-section"><span class="spinner"><i class="glyphicon glyphicon-refresh spinner"></i></span><span class="cyan"><span class="glyphicon glyphicon-file red"></span> Export Section as PDF </span> </a>
     </div>
 
     {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
@@ -22,8 +35,9 @@
         </div>
     {% endif %}
     <form class="form-horizontal" id="questionnaire_entry" role="form" method="post">
-    <input type='hidden' name='questionnaire-id' value={{ questionnaire.id }} />
-    <input type='hidden' name='section-id' value={{ section.id }} />
+    {% if preview %}
+        <input type='hidden' name='preview' id="preview" value={{ preview }} />
+    {% endif %}
     {% csrf_token %}
     {% for form_type, form_set in formsets.formsets.items %}
         {{ form_set.management_form }}
