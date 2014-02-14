@@ -280,3 +280,6 @@ form input[type=file]{
 .has-spinner.active .glyphicon-file {
     display: none;
 }
+form textarea{
+    width: 220px;
+}

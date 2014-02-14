@@ -37,7 +37,8 @@ class Entry(MultiplePermissionsRequiredMixin, FormView):
         context = {'questionnaire': questionnaire,
                    'section': section, 'printable': printable,
                    'preview': preview, 'formsets': formsets,
-                   'ordered_sections': Section.objects.order_by('order'), 'form': SectionForm(),
+                   'ordered_sections': Section.objects.order_by('order'),
+                   'form': SectionForm(initial={'questionnaire': questionnaire}),
                    'action': '/questionnaire/entry/%s/section/new/' % questionnaire.id}
 
         return self.render_to_response(context)

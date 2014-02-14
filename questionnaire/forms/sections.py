@@ -12,7 +12,7 @@ class SectionForm(ModelForm):
     class Meta:
         model = Section
         fields = ['questionnaire', 'name', 'title', 'description']
-        widgets = {'order': forms.HiddenInput()}
+        widgets = {'questionnaire': forms.HiddenInput()}
 
     def clean_order(self):
         order = self.cleaned_data['order']
