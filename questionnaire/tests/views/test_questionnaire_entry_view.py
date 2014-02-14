@@ -68,11 +68,13 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.assertEqual(section2, response.context['ordered_sections'][1])
         self.assertEqual(section3, response.context['ordered_sections'][2])
         self.assertEqual(False, response.context['printable'])
+        self.assertEqual(False, response.context['preview'])
 
     def test_gets_printable_as_true_if_set_in_request(self):
-        url = '/questionnaire/entry/%d/section/%d/?printable=1' % (self.questionnaire.id, self.section_1.id)
+        url = '/questionnaire/entry/%d/section/%d/?printable=true&preview=true' % (self.questionnaire.id, self.section_1.id)
         response = self.client.get(url)
         self.assertEqual(True, response.context['printable'])
+        self.assertEqual(True, response.context['preview'])
 
     def test_login_required(self):
         self.assert_login_required('/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id))
