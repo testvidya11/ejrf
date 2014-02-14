@@ -44,7 +44,7 @@ class ExportSectionPDF(LoginRequiredMixin, View):
         export_url = urlparse.urlunparse(url_parts)
 
         url = (export_url)
-        domain = request.META['REMOTE_ADDR']
+        domain = str(request.META['HTTP_HOST']).split(':')[0]
         phantomjs_script = 'questionnaire/static/js/export-section.js'
         command = ["phantomjs", phantomjs_script, url, file_name, session_id, domain, "&> /dev/null &"]
         subprocess.Popen(command)

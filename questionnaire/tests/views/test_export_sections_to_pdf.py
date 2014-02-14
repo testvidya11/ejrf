@@ -23,7 +23,7 @@ class ExportSectionToPDFViewTest(BaseTest):
                                                 questionnaire=self.questionnaire, name="Reported Cases")
 
     def test_get(self):
-        meta ={'HTTP_REFERER': 'http://', 'REMOTE_ADDR': 'http://'}
+        meta ={'HTTP_REFERER': 'http://', 'HTTP_HOST': 'somehost'}
 
         mock_time = '123'
         with patch.object(time, 'time', return_value=mock_time):
@@ -40,7 +40,7 @@ class ExportSectionToPDFViewTest(BaseTest):
 
         session_id = response.client.cookies['sessionid'].value
         url = (meta['HTTP_REFERER'] +'?printable=1')
-        domain = meta['REMOTE_ADDR']
+        domain = meta['HTTP_HOST']
         phantomjs_script = 'questionnaire/static/js/export-section.js'
         command = ["phantomjs", phantomjs_script, url, file_name, session_id, domain, "&> /dev/null &"]
 
