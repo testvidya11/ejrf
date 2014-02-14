@@ -266,7 +266,10 @@ form input[type=file]{
 .spinner-image{
    height: 20px;
 }
-
+.form-content{
+   overflow: hidden;
+   padding-left: 20px;
+}
 .has-spinner.active {
   cursor:progress;
 }
