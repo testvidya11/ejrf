@@ -71,7 +71,7 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.assertEqual(False, response.context['preview'])
 
     def test_gets_printable_as_true_if_set_in_request(self):
-        url = '/questionnaire/entry/%d/section/%d/?printable=true&preview=true' % (self.questionnaire.id, self.section_1.id)
+        url = '/questionnaire/entry/%d/section/%d/?printable=true&preview=1' % (self.questionnaire.id, self.section_1.id)
         response = self.client.get(url)
         self.assertEqual(True, response.context['printable'])
         self.assertEqual(True, response.context['preview'])

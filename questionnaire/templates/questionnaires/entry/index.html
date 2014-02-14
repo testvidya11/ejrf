@@ -26,7 +26,7 @@
     </div>
 
     {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
-
+    {% include 'base/modals/_create.html' with a_form=form action=action%}
     <div class="form-content">
     <h3>{{ section.order}}. {{ section.title | safe }}</h3>
     {% if section.description %}

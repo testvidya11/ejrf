@@ -35,7 +35,7 @@
                         </div>
                     </td>
                 </tr>
-                {% include 'base/delete_modal.html' with object_type='Support Document' title='Confirm Delete' action="delete" object=document  url=document.id|get_url_with_ids:"delete_document"  confirm='Yes'%}
+                {% include 'base/modals/_delete.html' with object_type='Support Document' title='Confirm Delete' action="delete" object=document  url=document.id|get_url_with_ids:"delete_document"  confirm='Yes'%}
             {% endfor %}
           </tbody>
       </table>

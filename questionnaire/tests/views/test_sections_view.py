@@ -1,4 +1,5 @@
 from django.test import Client
+from questionnaire.forms.sections import SectionForm
 from questionnaire.models import Region, Country, Questionnaire, Section
 from questionnaire.tests.base_test import BaseTest
 
@@ -26,6 +27,8 @@ class SectionsViewTest(BaseTest):
         self.assertEqual(200, response.status_code)
         templates = [template.name for template in response.templates]
         self.assertIn('questionnaires/sections/new.html', templates)
+        self.assertIsNotNone(response.context['form'])
+        self.assertIsInstance(response.context['form'], SectionForm)
 
     def test_post_create_section(self):
         self.failIf(Section.objects.filter(**self.form_data))

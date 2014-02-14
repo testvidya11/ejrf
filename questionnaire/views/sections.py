@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView
 from questionnaire.forms.sections import SectionForm
@@ -15,6 +16,7 @@ class NewSection(CreateView):
         section = form.save(commit=False)
         section.order = Section.get_next_order(form.cleaned_data['questionnaire'])
         section.save()
+        messages.success(self.request,"Section created successfully" )
         return super(NewSection, self).form_valid(form)
 
     def form_invalid(self, form):

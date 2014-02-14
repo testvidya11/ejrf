@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.views.generic import FormView
-from braces.views import PermissionRequiredMixin
+from braces.views import PermissionRequiredMixin, MultiplePermissionsRequiredMixin
+from questionnaire.forms.sections import SectionForm
 
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.models import Questionnaire, Section
@@ -16,9 +17,9 @@ ANSWER_FORM = {'Number': NumericalAnswerForm,
                }
 
 
-class Entry(PermissionRequiredMixin, FormView):
+class Entry(MultiplePermissionsRequiredMixin, FormView):
     template_name = 'questionnaires/entry/index.html'
-    permission_required = 'auth.can_submit_responses'
+    permissions = {'any': ('auth.can_submit_responses', 'auth.can_view_users')}
 
     def get(self, request, *args, **kwargs):
         questionnaire = Questionnaire.objects.get(id=self.kwargs['questionnaire_id'])
@@ -33,8 +34,11 @@ class Entry(PermissionRequiredMixin, FormView):
         if 'preview' in request.GET:
             preview = True
 
-        context = {'questionnaire': questionnaire, 'section': section, 'printable': printable, 'preview': preview,
-                   'formsets': formsets, 'ordered_sections': Section.objects.order_by('order')}
+        context = {'questionnaire': questionnaire,
+                   'section': section, 'printable': printable,
+                   'preview': preview, 'formsets': formsets,
+                   'ordered_sections': Section.objects.order_by('order'), 'form': SectionForm(),
+                   'action': '/questionnaire/entry/%s/section/new/' % questionnaire.id}
 
         return self.render_to_response(context)
 
