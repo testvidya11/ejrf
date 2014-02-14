@@ -21,7 +21,7 @@ class QuestionnairePage(PageObject):
         self.is_text_present(question.instructions)
 
     def validate_alert_success(self):
-        self.is_text_present("Draft saved")
+        self.is_text_present("Draft saved.")
         self.is_element_present_by_css(".alert-success")
 
     def validate_alert_error(self):

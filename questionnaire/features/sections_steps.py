@@ -1,6 +1,8 @@
+from time import sleep
 from django.contrib.auth.models import User, Permission, Group
 from django.contrib.contenttypes.models import ContentType
 from lettuce import step, world
+from questionnaire.features.pages.questionnaires import QuestionnairePage
 from questionnaire.features.pages.sections import CreateSectionPage
 from questionnaire.features.pages.users import LoginPage
 from questionnaire.models import Country, UserProfile
@@ -27,6 +29,7 @@ def and_i_click_add_new_section_link(step):
 
 @step(u'Then I should see a new section modal')
 def then_i_should_see_a_new_section_modal(step):
+    world.page = CreateSectionPage(world.browser, world.questionnaire)
     world.page.is_text_present("New Section", "Description", "Name", "Title")
 
 @step(u'When i fill in the section data')
@@ -34,11 +37,12 @@ def when_i_fill_in_the_section_data(step):
     data = {'name': 'Some section',
             'title': 'Some title',
             'description': 'some description'}
-    world.page = CreateSectionPage(world.browser, world.questionnaire)
     world.page.fill_form(data)
+
 
 @step(u'Then I should see the section I created')
 def then_i_should_see_the_section_i_created(step):
+    world.page = QuestionnairePage(world.browser, world.section_1)
     world.page.is_text_present('Section created successfully', 'Some section')
 
 @step(u'And I save the section')
