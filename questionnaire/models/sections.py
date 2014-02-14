@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from questionnaire.models import Questionnaire, Question
 from questionnaire.models.base import BaseModel
 from django.db import models
@@ -34,6 +35,15 @@ class Section(BaseModel):
 
     def has_at_least_two_subsections(self):
         return self.sub_sections.count() > 1
+
+    def get_absolute_url(self):
+        args = self.questionnaire.id, self.id
+        return reverse('questionnaire_entry_page', args=args)
+
+    @classmethod
+    def get_next_order(cls, questionnaire):
+        sections = Section.objects.filter(questionnaire=questionnaire).reverse()
+        return sections[0].order + 1 if sections else 0
 
 
 class SubSection(BaseModel):
