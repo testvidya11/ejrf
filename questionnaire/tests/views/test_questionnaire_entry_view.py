@@ -1,4 +1,5 @@
 from django.test import Client
+from questionnaire.forms.sections import SectionForm
 from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionOption, MultiChoiceAnswer, NumericalAnswer, QuestionGroupOrder, AnswerGroup, Answer
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.tests.base_test import BaseTest
@@ -69,6 +70,9 @@ class QuestionnaireEntryViewTest(BaseTest):
         self.assertEqual(section3, response.context['ordered_sections'][2])
         self.assertEqual(False, response.context['printable'])
         self.assertEqual(False, response.context['preview'])
+        self.assertEqual(False, response.context['preview'])
+        self.assertIsInstance(response.context['form'], SectionForm)
+        self.assertEqual(response.context['action'], '/questionnaire/entry/%s/section/new/' % self.questionnaire.id)
 
     def test_gets_printable_as_true_if_set_in_request(self):
         url = '/questionnaire/entry/%d/section/%d/?printable=true&preview=1' % (self.questionnaire.id, self.section_1.id)

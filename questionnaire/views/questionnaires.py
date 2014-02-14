@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import FormView
 from braces.views import PermissionRequiredMixin, MultiplePermissionsRequiredMixin
@@ -39,7 +40,7 @@ class Entry(MultiplePermissionsRequiredMixin, FormView):
                    'preview': preview, 'formsets': formsets,
                    'ordered_sections': Section.objects.order_by('order'),
                    'form': SectionForm(initial={'questionnaire': questionnaire}),
-                   'action': '/questionnaire/entry/%s/section/new/' % questionnaire.id}
+                   'action': reverse('new_section_page', args=(questionnaire.id, ))}
 
         return self.render_to_response(context)
 

@@ -34,16 +34,18 @@ def then_i_should_see_a_new_section_modal(step):
 
 @step(u'When i fill in the section data')
 def when_i_fill_in_the_section_data(step):
-    data = {'name': 'Some section',
-            'title': 'Some title',
+    data = {'title': 'Some title',
             'description': 'some description'}
+
+    world.page.fill_form({'name': 'Some section'})
     world.page.fill_form(data)
 
 
 @step(u'Then I should see the section I created')
 def then_i_should_see_the_section_i_created(step):
     world.page = QuestionnairePage(world.browser, world.section_1)
-    world.page.is_text_present('Section created successfully', 'Some section')
+    world.page.is_text_present('Section created successfully')
+    world.page.is_text_present('Some section')
 
 @step(u'And I save the section')
 def and_i_save_the_section(step):
