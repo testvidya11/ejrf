@@ -25,3 +25,6 @@
 footer{
     display: none !important;
 }
+.checked-box{
+    height: 20px;
+}

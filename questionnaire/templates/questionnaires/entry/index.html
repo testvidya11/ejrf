@@ -3,6 +3,9 @@
     {% if preview %}
         <script src="{{ STATIC_URL }}js/preview.js" type="text/javascript" charset="utf-8"></script>
     {% endif %}
+    {% if printable %}
+        <script src="{{ STATIC_URL }}js/printable.js" type="text/javascript" charset="utf-8"></script>
+    {% endif %}
 {% endblock %}
 {% block extra_css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/wizzard.css" type="text/css" media="all">
