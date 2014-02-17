@@ -297,3 +297,7 @@ form input[type=file]{
 .submit-btn{
     border: 1px #CC0000 solid;
 }
+
+table #text-td{
+    max-width: 400px;
+}

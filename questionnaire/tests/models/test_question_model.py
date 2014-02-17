@@ -106,11 +106,11 @@ class QuestionTest(BaseTest):
         group2.question.add(question3)
 
         question1_answer = NumericalAnswer.objects.create(question=question1, country=self.country,
-                                                               status=Answer.DRAFT_STATUS, response=23)
+                                                          status=Answer.DRAFT_STATUS, response=23)
         question2_answer = NumericalAnswer.objects.create(question=question2, country=self.country,
-                                                               status=Answer.DRAFT_STATUS, response=1)
+                                                          status=Answer.DRAFT_STATUS, response=1)
         question3_answer = NumericalAnswer.objects.create(question=question3, country=self.country,
-                                                               status=Answer.SUBMITTED_STATUS, response=11)
+                                                          status=Answer.SUBMITTED_STATUS, response=11)
 
         answer_group1 = AnswerGroup.objects.create(grouped_question=self.parent_group, row=1)
         answer_group1.answer.add(question1_answer, question2_answer)
@@ -121,6 +121,20 @@ class QuestionTest(BaseTest):
         self.assertEqual(question1_answer, question1.draft_answer(self.parent_group))
         self.assertEqual(question2_answer, question2.draft_answer(self.parent_group))
         self.assertIsNone(question3.draft_answer(group2))
+
+    def test_get_largest_uid(self):
+        self.assertEqual('00003', Question.largest_uid())
+
+    def test_get_largest_uid_given_more_than_one_question(self):
+        Question.objects.create(text='question 3', UID='C00005', answer_type='Number')
+        self.assertEqual('00005', Question.largest_uid())
+
+    def test_get_next_uid_given_given_largest_uid_question(self):
+        self.assertEqual('00004', Question.next_uid())
+
+    def test_get_next_uid_given_given_largest_uid_is_9th(self):
+        Question.objects.create(text='question 3', UID='C00009', answer_type='Number')
+        self.assertEqual('00010', Question.next_uid())
 
 
 class QuestionOptionTest(BaseTest):

@@ -19,6 +19,7 @@
 {% load generic_tags %}
 <div id="questionnaire" class="container boundary">
     {% include 'base/header.html' %}
+    {% include 'base/modals/_confirm_submit.html' with class=class%}
     <div id="content" class="container">
         <div class="container">
             {% if messages %}

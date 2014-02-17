@@ -93,7 +93,7 @@ def given_i_have_a_global_admin_user(step):
     world.user.save()
     world.global_admin = Group.objects.create(name='Global Admin')
     auth_content = ContentType.objects.get_for_model(Permission)
-    permission, out = Permission.objects.get_or_create(codename='is_global_admin', content_type=auth_content)
+    permission, out = Permission.objects.get_or_create(codename='can_view_users', content_type=auth_content)
     world.global_admin.permissions.add(permission)
     world.global_admin.user_set.add(world.user)
 
