@@ -86,7 +86,7 @@ def and_i_enter_valid_responses_to_the_questions(step):
 
 @step(u'And I click the save button')
 def when_i_click_the_save_button(step):
-    world.page.click_by_id("save_draft_button")
+    world.page.click_by_id('save_draft_button')
 
 @step(u'Then I should see a message that a draft of my responses has been saved')
 def then_i_should_see_a_message_that_a_draft_of_my_responses_has_been_saved(step):

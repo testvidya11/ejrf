@@ -69,3 +69,6 @@ class PageObject(object):
 
     def is_element_present_by_value(self, value):
         self.browser.is_element_present_by_value(value)
+
+    def is_element_present_by_id(self, element_id):
+        self.browser.is_element_present_by_value(element_id)
