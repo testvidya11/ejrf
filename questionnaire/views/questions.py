@@ -27,11 +27,11 @@ class CreateQuestion(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateQuestion, self).get_context_data(**kwargs)
-        context.update({'btn_label': 'CREATE'})
+        context.update({'btn_label': 'CREATE', 'id': 'id-new-question-form'})
         return context
 
     def post(self, request, *args, **kwargs):
-        self.form = QuestionForm(instance=Question(UID=Question.next_uid()), data=request.POST)
+        self.form = QuestionForm(data=request.POST)
         if self.form.is_valid():
             return self._form_valid()
         return self._form_invalid()
@@ -43,5 +43,5 @@ class CreateQuestion(CreateView):
 
     def _form_invalid(self):
         messages.error(self.request, "Question NOT created. See errors below.")
-        context = {'form': self.form, 'btn_label': "CREATE"}
+        context = {'form': self.form, 'btn_label': "CREATE", 'id': 'id-new-question-form'}
         return self.render_to_response(context)

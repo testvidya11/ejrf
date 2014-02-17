@@ -36,6 +36,7 @@ class SectionsViewTest(BaseTest):
         self.assertIn('questions/new.html', templates)
         self.assertIsNotNone(response.context['form'])
         self.assertEqual('CREATE', response.context['btn_label'])
+        self.assertEqual("id-new-question-form", response.context['id'])
 
     def test_post_create_question(self):
         self.assertRaises(Question.DoesNotExist, Question.objects.get, **self.form_data)
@@ -54,3 +55,4 @@ class SectionsViewTest(BaseTest):
         self.assertIn('Question NOT created. See errors below.', response.content)
         self.assertIsInstance(response.context['form'], QuestionForm)
         self.assertEqual("CREATE", response.context['btn_label'])
+        self.assertEqual("id-new-question-form", response.context['id'])
