@@ -1,11 +1,11 @@
-from braces.views import PermissionRequiredMixin
+from braces.views import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib import messages
-
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import CreateView
+
 from questionnaire.forms.sections import SectionForm, SubSectionForm
-from questionnaire.models import Section, SubSection, Questionnaire
+from questionnaire.models import Section, SubSection
 
 
 class NewSection(PermissionRequiredMixin, CreateView):
@@ -35,7 +35,9 @@ class NewSection(PermissionRequiredMixin, CreateView):
                    'form': form, 'btn_label': "CREATE", }
         return self.render_to_response(context)
 
-class NewSubSection(CreateView):
+class NewSubSection(PermissionRequiredMixin, CreateView):
+    permission_required = 'auth.can_edit_questionnaire'
+
     def __init__(self, **kwargs):
         super(NewSubSection, self).__init__(**kwargs)
         self.object = SubSection
@@ -52,7 +54,7 @@ class NewSubSection(CreateView):
         section_id = kwargs.get('section_id')
         section = Section.objects.get(id=section_id)
         next_order = SubSection.get_next_order(section_id)
-        self.form = SubSectionForm(instance=SubSection(section=section, order=next_order), data=request.POST)
+        self.form = SubSectionForm(instance=SubSection(section=section), data=request.POST)
         self.referer_url = reverse('questionnaire_entry_page', args=(questionnaire_id, section_id))
         if self.form.is_valid():
             return self._form_valid()

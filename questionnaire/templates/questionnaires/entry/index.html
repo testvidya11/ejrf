@@ -31,7 +31,11 @@
     {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
     {% include 'base/modals/_create.html' with a_form=form action=action modal_id="new-section-modal" modal_title="New Section"%}
     <div class="form-content">
-    <h3>{{ section.order}}. {{ section.title | safe }} <a href="" id="new-subsection" class="btn btn-default pull-right" data-toggle="modal" data-target="#new-subsection-modal"><span class="cyan"><span class="glyphicon glyphicon-plus-sign"></span> New Subsection</span></a></h3>
+    <h3>{{ section.order}}. {{ section.title | safe }}
+        {% if perms.auth.can_edit_questionnaire %}
+            <a href="" id="new-subsection" class="btn btn-default pull-right" data-toggle="modal" data-target="#new-subsection-modal"><span class="cyan"><span class="glyphicon glyphicon-plus-sign"></span> New Subsection</span></a>
+        {% endif %}
+    </h3>
     {% include 'base/modals/_create.html' with a_form=subsection_form action=subsection_action modal_id="new-subsection-modal" modal_title="New Subsection" %}
     {% if section.description %}
         <div class="">

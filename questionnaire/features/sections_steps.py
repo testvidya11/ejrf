@@ -16,7 +16,9 @@ def given_i_am_logged_in_as_a_global_admin(step):
     auth_content = ContentType.objects.get_for_model(Permission)
     group = Group.objects.create(name="Data Submitter")
     permission, out = Permission.objects.get_or_create(codename='can_view_users', content_type=auth_content)
-    group.permissions.add(permission)
+    permission_edit_questionnaire, out = Permission.objects.get_or_create(codename='can_edit_questionnaire',
+                                                                          content_type=auth_content)
+    group.permissions.add(permission, permission_edit_questionnaire)
     group.user_set.add(user)
 
     world.page = LoginPage(world.browser)

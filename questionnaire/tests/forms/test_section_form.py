@@ -1,5 +1,5 @@
 from questionnaire.forms.sections import SectionForm, SubSectionForm
-from questionnaire.models import Questionnaire, Section
+from questionnaire.models import Questionnaire, Section, SubSection
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -50,3 +50,14 @@ class CoreSubSectionFormTest(BaseTest):
         subsection_form = SubSectionForm(initial={'section': self.section.id}, data=data)
 
         self.assertTrue(subsection_form.is_valid())
+
+    def test_save_increment_order(self):
+        existing_subs = SubSection.objects.create(title="subsection 1", section=self.section, order=1)
+        data = self.form_data.copy()
+
+        subsection_form = SubSectionForm(instance=SubSection(section=self.section), data=data)
+        subsection_form.save()
+        new_subs = SubSection.objects.filter(section=self.section, **data)
+        self.failUnless(new_subs)
+        self.assertEqual(1, new_subs.count())
+        self.assertEqual(existing_subs.order + 1, new_subs[0].order)

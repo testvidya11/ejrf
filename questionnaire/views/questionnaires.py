@@ -21,7 +21,7 @@ ANSWER_FORM = {'Number': NumericalAnswerForm,
 
 class Entry(MultiplePermissionsRequiredMixin, FormView):
     template_name = 'questionnaires/entry/index.html'
-    permissions = {'any': ('auth.can_submit_responses', 'auth.can_view_users')}
+    permissions = {'any': ('auth.can_submit_responses', 'auth.can_view_users', 'auth.can_edit_questionnaire')}
 
     def get(self, request, *args, **kwargs):
         questionnaire = Questionnaire.objects.get(id=self.kwargs['questionnaire_id'])

@@ -49,6 +49,7 @@ class SectionsViewTest(BaseTest):
 
     def test_permission_required_for_create_section(self):
         self.assert_login_required(self.url)
+        self.assert_permission_required(self.url)
 
     def test_post_invalid(self):
         Section.objects.create(name="Some", order=1, questionnaire=self.questionnaire)
@@ -70,7 +71,7 @@ class SubSectionsViewTest(BaseTest):
         self.client = Client()
         self.user, self.country = self.create_user_with_no_permissions()
 
-        self.assign('can_submit_responses', self.user)
+        self.assign('can_edit_questionnaire', self.user)
         self.client.login(username=self.user.username, password='pass')
 
         self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", year=2013)
@@ -81,6 +82,9 @@ class SubSectionsViewTest(BaseTest):
                           'title': 'some title',
                         }
 
+    def test_permission_required_for_create_section(self):
+        self.assert_login_required(self.url)
+        self.assert_permission_required(self.url)
 
     def test_get_create_subsection(self):
         response = self.client.get(self.url)
