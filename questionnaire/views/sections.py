@@ -1,11 +1,13 @@
+from braces.views import PermissionRequiredMixin
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.views.generic import CreateView
 from questionnaire.forms.sections import SectionForm
 from questionnaire.models import Section
 
 
-class NewSection(CreateView):
+class NewSection(PermissionRequiredMixin, CreateView):
+    permission_required = 'auth.can_view_users'
+
     def __init__(self, **kwargs):
         super(NewSection, self).__init__(**kwargs)
         self.form_class = SectionForm
