@@ -1,12 +1,8 @@
 $(function(){
-    $('#create-section-modal').validate({
-        rules: {
-            'name': 'required',
-            'title': 'required'
-        },
-        messages:{
-            'name': 'This field is required',
-            'title': 'This field is required'
-        }
-    })
-})
+    $('#new-section-modal-form').validate({
+        rules: { 'name': 'required', 'title': 'required'}
+    });
+    $('#new-subsection-modal-form').validate({
+        rules: { 'title': 'required'}
+    });
+});

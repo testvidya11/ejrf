@@ -89,7 +89,7 @@ class SectionTest(BaseTest):
     def test_gets_next_order(self):
         self.assertEqual(2, Section.get_next_order(self.questionnaire))
 
-    def test_starts_from_0_if_no_sections_exists_in_a_questionnaire(self):
+    def test_next_order_starts_from_0_if_no_sections_exists_in_a_questionnaire(self):
         Section.objects.filter(questionnaire=self.questionnaire).delete()
         self.assertEqual(0, Section.get_next_order(self.questionnaire))
 
@@ -159,3 +159,10 @@ class SubSectionTest(BaseTest):
 
         self.assertTrue(self.sub_section.has_at_least_two_groups())
         self.assertFalse(sub_section2.has_at_least_two_groups())
+
+    def test_gets_next_order(self):
+        self.assertEqual(2, SubSection.get_next_order(self.section.id))
+
+    def test_next_order_starts_from_0_if_no_sections_exists_in_a_questionnaire(self):
+        SubSection.objects.filter(section=self.section).delete()
+        self.assertEqual(0, SubSection.get_next_order(self.section.id))

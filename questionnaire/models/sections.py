@@ -42,7 +42,7 @@ class Section(BaseModel):
 
     @classmethod
     def get_next_order(cls, questionnaire):
-        sections = Section.objects.filter(questionnaire=questionnaire).reverse()
+        sections = cls.objects.filter(questionnaire=questionnaire).reverse()
         return sections[0].order + 1 if sections else 0
 
 
@@ -70,3 +70,10 @@ class SubSection(BaseModel):
 
     def has_at_least_two_groups(self):
         return self.parent_question_groups().count() > 1
+
+    @classmethod
+    def get_next_order(cls, section_id):
+        subsections = cls.objects.filter(section__id=section_id)
+        if subsections.exists():
+            return subsections.latest('order').order + 1
+        return 0

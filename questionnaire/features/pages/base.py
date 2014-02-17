@@ -49,6 +49,11 @@ class PageObject(object):
     def fill_form(self, data):
         self.browser.fill_form(data)
 
+    def fill_this_form(self, form_css, data):
+        for name, value in data.items():
+            the_form_element = self.browser.find_by_css('%s #id_%s' % (form_css, name))
+            the_form_element.fill(value)
+
     def click_by_id(self, id):
         self.browser.find_by_id(id).first.click()
 

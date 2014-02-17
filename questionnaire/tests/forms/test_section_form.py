@@ -1,4 +1,4 @@
-from questionnaire.forms.sections import SectionForm
+from questionnaire.forms.sections import SectionForm, SubSectionForm
 from questionnaire.models import Questionnaire, Section
 from questionnaire.tests.base_test import BaseTest
 
@@ -19,3 +19,34 @@ class CoreSectionFormTest(BaseTest):
     def test_valid_with_initial(self):
         section_form = SectionForm(data=self.form_data, initial={'questionnaire': self.questionnaire.id})
         self.assertTrue(section_form.is_valid())
+
+class CoreSubSectionFormTest(BaseTest):
+
+    def setUp(self):
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", year=2013)
+        self.section = Section.objects.create(name="section", questionnaire=self.questionnaire, order=1)
+        self.form_data = {
+                          'description': 'funny subsection',
+                          'title': 'some subsection',}
+
+    def test_valid(self):
+        subsection_form = SubSectionForm(initial={'section': self.section.id}, data=self.form_data)
+        self.assertTrue(subsection_form.is_valid())
+
+    def test_empty_title_is_invalid(self):
+        data = self.form_data.copy()
+        data['title'] = ''
+
+        subsection_form = SubSectionForm(initial={'section': self.section.id}, data=data)
+
+        self.assertFalse(subsection_form.is_valid())
+        message = 'This field is required.'
+        self.assertEqual([message], subsection_form.errors['title'])
+
+    def test_empty_description_is_invalid(self):
+        data = self.form_data.copy()
+        data['description'] = ''
+
+        subsection_form = SubSectionForm(initial={'section': self.section.id}, data=data)
+
+        self.assertTrue(subsection_form.is_valid())

@@ -29,9 +29,11 @@
     </div>
 
     {% include 'questionnaires/entry/section_breadcrumps_wizzard.html' %}
-    {% include 'base/modals/_create.html' with a_form=form action=action%}
+    {% include 'base/modals/_create.html' with a_form=form action=action modal_id="new-section-modal" modal_title="New Section"%}
     <div class="form-content">
     <h3>{{ section.order}}. {{ section.title | safe }}</h3>
+    <a href="" id="new-subsection" class="btn btn-default" data-toggle="modal" data-target="#new-subsection-modal"><span class="cyan"><span class="glyphicon glyphicon-plus-sign"></span> New Subsection</span></a>
+    {% include 'base/modals/_create.html' with a_form=subsection_form action=subsection_action modal_id="new-subsection-modal" modal_title="New Subsection" %}
     {% if section.description %}
         <div class="">
            {{ section.description| safe }}

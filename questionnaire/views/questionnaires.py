@@ -3,9 +3,9 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import FormView
 from django.views.generic import View
-
 from braces.views import MultiplePermissionsRequiredMixin, LoginRequiredMixin
-from questionnaire.forms.sections import SectionForm
+
+from questionnaire.forms.sections import SectionForm, SubSectionForm
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.models import Questionnaire, Section
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
@@ -38,7 +38,9 @@ class Entry(MultiplePermissionsRequiredMixin, FormView):
                    'preview': preview, 'formsets': formsets,
                    'ordered_sections': Section.objects.order_by('order'),
                    'form': SectionForm(initial={'questionnaire': questionnaire}),
-                   'action': reverse('new_section_page', args=(questionnaire.id, ))}
+                   'action': reverse('new_section_page', args=(questionnaire.id, )),
+                   'subsection_form': SubSectionForm(),
+                   'subsection_action': reverse('new_subsection_page', args=(questionnaire.id, section.id)),}
 
         return self.render_to_response(context)
 

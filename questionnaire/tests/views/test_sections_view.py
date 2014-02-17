@@ -1,8 +1,9 @@
 from django.test import Client
-from questionnaire.forms.sections import SectionForm
-from questionnaire.models import Questionnaire, Section
-from questionnaire.tests.base_test import BaseTest
 
+from questionnaire.forms.sections import SectionForm, SubSectionForm
+from questionnaire.models import Questionnaire, Section, SubSection
+from questionnaire.tests.base_test import BaseTest
+ 
 
 class SectionsViewTest(BaseTest):
 
@@ -47,3 +48,63 @@ class SectionsViewTest(BaseTest):
 
     def test_permission_required_for_create_section(self):
         self.assert_login_required(self.url)
+
+
+class SubSectionsViewTest(BaseTest):
+
+    def setUp(self):
+        self.client = Client()
+        self.user, self.country = self.create_user_with_no_permissions()
+
+        self.assign('can_submit_responses', self.user)
+        self.client.login(username=self.user.username, password='pass')
+
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", year=2013)
+        self.section = Section.objects.create(name="section", questionnaire=self.questionnaire, order=1)
+        self.url = '/questionnaire/entry/%s/section/%s/subsection/new/' % (self.questionnaire.id, self.section.id)
+        self.form_data = {
+                          'description': 'funny section',
+                          'title': 'some title',
+                        }
+
+
+    def test_get_create_subsection(self):
+        response = self.client.get(self.url)
+        self.assertEqual(200, response.status_code)
+        templates = [template.name for template in response.templates]
+        self.assertIn("sections/subsections/new.html", templates)
+        self.assertIsNotNone(response.context['form'])
+        self.assertIsInstance(response.context['form'], SubSectionForm)
+
+    def test_post_create_subsection(self):
+        self.failIf(SubSection.objects.filter(section=self.section, **self.form_data))
+        response = self.client.post(self.url, data=self.form_data)
+        subsection = SubSection.objects.filter(section=self.section, **self.form_data)
+        self.failUnless(subsection)
+        self.assertEqual(1, subsection.count())
+        self.assertIn('Subsection successfully created.', response.cookies['messages'].value)
+        self.assertRedirects(response,expected_url='/questionnaire/entry/%s/section/%s/' % (self.questionnaire.id ,self.section.id))
+
+    def test_post_with_form_increments_order_before_saving(self):
+        SubSection.objects.create(title="Some", order=1, section=self.section)
+        form_data = self.form_data.copy()
+        form_data['title'] = 'Another subsection'
+        self.failIf(SubSection.objects.filter(section=self.section, **form_data))
+        response = self.client.post(self.url, data=form_data)
+        subsection = SubSection.objects.filter(order=2, title=form_data['title'])
+        self.failUnless(subsection)
+        self.assertEqual(1, subsection.count())
+        self.assertRedirects(response,expected_url='/questionnaire/entry/%s/section/%s/' % (self.questionnaire.id ,self.section.id))
+
+    def test_post_invalid(self):
+        SubSection.objects.create(title="Some", order=1, section=self.section)
+        form_data = self.form_data.copy()
+        form_data['title'] = ''
+        self.failIf(SubSection.objects.filter(section=self.section, **form_data))
+        response = self.client.post(self.url, data=form_data)
+        subsection = SubSection.objects.filter(order=2, title=form_data['title'])
+        self.failIf(subsection)
+        self.assertIn('Subsection NOT created. See errors below.', response.content)
+        self.assertIsInstance(response.context['form'], SubSectionForm)
+        self.assertEqual("new-subsection-modal", response.context['id'])
+        self.assertEqual("Create", response.context['btn_label'])
