@@ -7,4 +7,4 @@ Feature: Subsection feature
         Then I should see a new subsection modal
         When i fill in the subsection data
         And I save the subsection
-        Then I should see the subsection I created
+        Then I should see the subsection I just created

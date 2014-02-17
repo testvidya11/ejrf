@@ -122,6 +122,10 @@ class QuestionTest(BaseTest):
         self.assertEqual(question2_answer, question2.draft_answer(self.parent_group))
         self.assertIsNone(question3.draft_answer(group2))
 
+    def test_get_largest_uid_returns_00001_if_no_quests_exists(self):
+        Question.objects.all().delete()
+        self.assertEqual('00001', Question.largest_uid())
+
     def test_get_largest_uid(self):
         self.assertEqual('00003', Question.largest_uid())
 

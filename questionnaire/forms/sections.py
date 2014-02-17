@@ -11,6 +11,7 @@ class SectionForm(ModelForm):
         widgets = {'questionnaire': forms.HiddenInput(),
                    'description': forms.Textarea(attrs={"rows": 4, "cols": 50})}
 
+
 class SubSectionForm(ModelForm):
 
     def save(self, commit=True, *args, **kwargs):
@@ -22,5 +23,4 @@ class SubSectionForm(ModelForm):
     class Meta:
         model = SubSection
         fields = ['title', 'description']
-        widgets = {
-                   'description': forms.Textarea(attrs={"rows": 4, "cols": 50})}
+        widgets = {'description': forms.Textarea(attrs={"rows": 4, "cols": 50})}

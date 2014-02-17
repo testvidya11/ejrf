@@ -35,6 +35,7 @@ class NewSection(PermissionRequiredMixin, CreateView):
                    'form': form, 'btn_label': "CREATE", }
         return self.render_to_response(context)
 
+
 class NewSubSection(PermissionRequiredMixin, CreateView):
     permission_required = 'auth.can_edit_questionnaire'
 
@@ -53,7 +54,6 @@ class NewSubSection(PermissionRequiredMixin, CreateView):
         questionnaire_id = kwargs.get('questionnaire_id')
         section_id = kwargs.get('section_id')
         section = Section.objects.get(id=section_id)
-        next_order = SubSection.get_next_order(section_id)
         self.form = SubSectionForm(instance=SubSection(section=section), data=request.POST)
         self.referer_url = reverse('questionnaire_entry_page', args=(questionnaire_id, section_id))
         if self.form.is_valid():
@@ -62,13 +62,11 @@ class NewSubSection(PermissionRequiredMixin, CreateView):
 
     def _form_valid(self):
         self.form.save()
-        messages.success(self.request,"Subsection successfully created." )
+        messages.success(self.request, "Subsection successfully created." )
         return HttpResponseRedirect(self.referer_url)
 
     def _form_invalid(self):
-        messages.error(self.request,"Subsection NOT created. See errors below." )
+        messages.error(self.request, "Subsection NOT created. See errors below." )
         context = {'id':  "new-subsection-modal",
                    'form': self.form, 'btn_label': "CREATE", }
         return self.render_to_response(context)
-
-

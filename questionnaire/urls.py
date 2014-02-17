@@ -3,7 +3,7 @@ from questionnaire.views.export_to_text import ExportToTextView, ExportSectionPD
 from questionnaire.views.home import Home
 from questionnaire.views.locations import ListRegions, ListCountries, RegionsForOrganization
 from questionnaire.views.sections import NewSection, NewSubSection
-from questionnaire.views.questions import QuestionList
+from questionnaire.views.questions import QuestionList, CreateQuestion
 from questionnaire.views.questionnaires import Entry, SubmitQuestionnaire
 from questionnaire.views.upload_document import UploadDocument, DownloadDocument, DeleteDocument
 from questionnaire.views.users import UsersList, CreateUser
@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^questionnaire/document/(?P<document_id>\d+)/delete/$',
         DeleteDocument.as_view(), name='delete_document'),
     url(r'^questions/$', QuestionList.as_view(), name='list_questions_page'),
+    url(r'^questions/new/$', CreateQuestion.as_view(), name='new_question_page'),
     url(r'^submit/$', SubmitQuestionnaire.as_view(), name="submit_questionnaire_page"),
     url(r'^users/$', UsersList.as_view(), name="list_users_page"),
     url(r'^users/new/$', CreateUser.as_view(), name="create_user_page"),

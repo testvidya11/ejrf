@@ -2,6 +2,8 @@ import re
 from django.db import models
 from questionnaire.models.base import BaseModel
 
+INITIAL_UID = '00001'
+
 MAX_UID_LENGTH = 5
 
 
@@ -56,7 +58,7 @@ class Question(BaseModel):
         all_question_uids = Question.objects.all().values_list('UID', flat=True)
         for uid in all_question_uids:
             uid_numbers.extend([num[0] for num in re.findall(r'(\d+)|([\+-]?\d+)', uid)])
-        return max(uid_numbers)
+        return max(uid_numbers) if len(uid_numbers) > 0 else INITIAL_UID
 
     @classmethod
     def next_uid(cls):
