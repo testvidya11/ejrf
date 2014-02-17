@@ -15,7 +15,12 @@ class NewSection(PermissionRequiredMixin, CreateView):
         super(NewSection, self).__init__(**kwargs)
         self.form_class = SectionForm
         self.object = Section
-        self.template_name = "base/modals/_create.html"
+        self.template_name = "sections/subsections/new.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(NewSection, self).get_context_data(**kwargs)
+        context['btn_label'] = "CREATE"
+        return context
 
     def form_valid(self, form):
         section = form.save(commit=False)
@@ -25,7 +30,10 @@ class NewSection(PermissionRequiredMixin, CreateView):
         return super(NewSection, self).form_valid(form)
 
     def form_invalid(self, form):
-        return super(NewSection, self).form_invalid(form)
+        messages.error(self.request,"Section NOT created. See errors below." )
+        context = {'id':  "new-section-modal",
+                   'form': form, 'btn_label': "CREATE", }
+        return self.render_to_response(context)
 
 class NewSubSection(CreateView):
     def __init__(self, **kwargs):
@@ -33,6 +41,11 @@ class NewSubSection(CreateView):
         self.object = SubSection
         self.form_class = SubSectionForm
         self.template_name = "sections/subsections/new.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(NewSubSection, self).get_context_data(**kwargs)
+        context['btn_label'] = "CREATE"
+        return context
 
     def post(self, request, *args, **kwargs):
         questionnaire_id = kwargs.get('questionnaire_id')
@@ -53,7 +66,7 @@ class NewSubSection(CreateView):
     def _form_invalid(self):
         messages.error(self.request,"Subsection NOT created. See errors below." )
         context = {'id':  "new-subsection-modal",
-                   'form': self.form, 'btn_label': "Create", }
+                   'form': self.form, 'btn_label': "CREATE", }
         return self.render_to_response(context)
 
 

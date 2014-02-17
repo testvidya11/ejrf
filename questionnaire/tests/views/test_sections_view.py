@@ -25,9 +25,10 @@ class SectionsViewTest(BaseTest):
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
         templates = [template.name for template in response.templates]
-        self.assertIn('base/modals/_create.html', templates)
+        self.assertIn("sections/subsections/new.html", templates)
         self.assertIsNotNone(response.context['form'])
         self.assertIsInstance(response.context['form'], SectionForm)
+        self.assertEqual("CREATE", response.context['btn_label'])
 
     def test_post_create_section(self):
         self.failIf(Section.objects.filter(**self.form_data))
@@ -48,6 +49,19 @@ class SectionsViewTest(BaseTest):
 
     def test_permission_required_for_create_section(self):
         self.assert_login_required(self.url)
+
+    def test_post_invalid(self):
+        Section.objects.create(name="Some", order=1, questionnaire=self.questionnaire)
+        form_data = self.form_data.copy()
+        form_data['name'] = ''
+        self.failIf(Section.objects.filter(**form_data))
+        response = self.client.post(self.url, data=form_data)
+        section = Section.objects.filter(order=2, name=form_data['name'])
+        self.failIf(section)
+        self.assertIn('Section NOT created. See errors below.', response.content)
+        self.assertIsInstance(response.context['form'], SectionForm)
+        self.assertEqual("new-section-modal", response.context['id'])
+        self.assertEqual("CREATE", response.context['btn_label'])
 
 
 class SubSectionsViewTest(BaseTest):
@@ -75,6 +89,7 @@ class SubSectionsViewTest(BaseTest):
         self.assertIn("sections/subsections/new.html", templates)
         self.assertIsNotNone(response.context['form'])
         self.assertIsInstance(response.context['form'], SubSectionForm)
+        self.assertEqual("CREATE", response.context['btn_label'])
 
     def test_post_create_subsection(self):
         self.failIf(SubSection.objects.filter(section=self.section, **self.form_data))
@@ -107,4 +122,4 @@ class SubSectionsViewTest(BaseTest):
         self.assertIn('Subsection NOT created. See errors below.', response.content)
         self.assertIsInstance(response.context['form'], SubSectionForm)
         self.assertEqual("new-subsection-modal", response.context['id'])
-        self.assertEqual("Create", response.context['btn_label'])
+        self.assertEqual("CREATE", response.context['btn_label'])
