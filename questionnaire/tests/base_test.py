@@ -14,8 +14,9 @@ class BaseTest(TestCase):
             _file.writerows(data)
             fp.close()
 
-    def create_user_with_no_permissions(self):
-        user = User.objects.create(username="user", email="user@mail.com")
+    def create_user_with_no_permissions(self, username=None):
+        username = username if username else "user"
+        user = User.objects.create(username=username, email="user@mail.com")
         uganda = Country.objects.create(name="Uganda")
         UserProfile.objects.create(user=user, country=uganda)
         user.set_password("pass")
