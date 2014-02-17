@@ -41,8 +41,10 @@
                           {% if perms.auth.can_view_users  %}
                                <li><a href="{% url 'list_users_page' %}">USERS</a></li>
                           {% endif %}
-                       <li> <button class="btn btn-default indent submit-btn" id="submit_modal_button"
-                                    data-toggle="modal" data-target="#submit_modal"><span class="red bold"> SUBMIT</span></button>
+                       <li>
+                        {% if perms.auth.can_submit_responses %}
+                            <button class="btn btn-default indent submit-btn" id="submit_modal_button" data-toggle="modal" data-target="#submit_modal"><span class="red bold"> SUBMIT</span></button>
+                        {% endif %}
                       </li>
                       </ul>
 
