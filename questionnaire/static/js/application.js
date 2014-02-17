@@ -96,7 +96,7 @@ $("#questionnaire_entry").on('submit', function(){
 });
 
 function warnBeforeNavigatingAway(){
-    saveDraftOnclickOfSectionTab();
+    saveDraftOnTabNavigation();
     window.onbeforeunload = function(){
       if(form_has_changed){
         return "Are you sure you want to navigate away from this page?\nAll unsaved changes will be lost.";
@@ -104,19 +104,29 @@ function warnBeforeNavigatingAway(){
    };
 }
 
-function saveDraftOnclickOfSectionTab(){
-    $('.section_tab').click(function(e){
+function saveDraftOnTabNavigation(){
+    $('.section_tab ').click(function(e){
        e.preventDefault()
        var url = $(this).attr('href');
        if($("#preview").val() == 1){
            window.location = url;
        }
        else if (form_has_changed){
-        $('#redirect_url').val(url);
-        $('#questionnaire_entry').submit();
-       }else{
-        window.location = url;
-       }
+            $('#redirect_url').val(url);
+            $('#questionnaire_entry').submit();
+       }else
+            window.location = url;
+    });
+
+    $('#preview-questionnaire').click(function(e){
+       e.preventDefault()
+       var url = $(this).attr('href');
+
+       if (form_has_changed){
+            $('#redirect_url').val(url);
+            $('#questionnaire_entry').submit();
+       }else
+            window.location = url;
     });
 }
 $('#export-section').on('click', function(event) {
@@ -135,7 +145,7 @@ $('#export-section').on('click', function(event) {
     setTimeout(function(){
       $('#export-section').toggleClass('active');
       return_file(filename)
-    }, 6000);
+    }, 8000);
 });
 
 function return_file(filename){
