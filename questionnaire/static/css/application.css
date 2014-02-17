@@ -284,7 +284,7 @@ form input[type=file]{
 #create-section-modal input[type=text]{
     width: 320px;
 }
-#create-section-modal, textarea{
+#create-section-modal textarea{
     width: 320px;
     height: 80px;
 }

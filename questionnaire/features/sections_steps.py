@@ -39,8 +39,9 @@ def when_i_fill_in_the_section_data(step):
     data = {'title': 'Some title',
             'description': 'some description'}
 
-    world.page.fill_form({'name': 'Some section'})
     world.page.fill_form(data)
+    sleep(3)
+    world.page.fill_form({'name': 'Some section'})
 
 
 @step(u'Then I should see the section I created')
@@ -51,6 +52,7 @@ def then_i_should_see_the_section_i_created(step):
 
 @step(u'And I save the section')
 def and_i_save_the_section(step):
+    world.page.fill_form({'name': 'Some section'})
     world.page.click_by_id('save-new-section-modal')
 
 @step(u'And I fill in invalid data')
