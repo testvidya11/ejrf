@@ -6,6 +6,7 @@ class Questionnaire(BaseModel):
     name = models.CharField(max_length=256, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
     year = models.PositiveIntegerField(null=True, blank=True)
+    is_open = models.BooleanField(blank=False, null=False, default=False)
 
     def __unicode__(self):
         return '%s' % self.name

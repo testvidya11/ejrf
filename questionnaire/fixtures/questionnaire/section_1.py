@@ -9,7 +9,8 @@ QuestionGroup.objects.all().delete()
 QuestionOption.objects.all().delete()
 QuestionGroupOrder.objects.all().delete()
 
-questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan", year=2013)
+questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan",
+                                             year=2013, is_open=True)
 
 ########################################################################################################
 # SECTION: Reported Cases of Selected Vaccine Preventable Diseases (VPDs)

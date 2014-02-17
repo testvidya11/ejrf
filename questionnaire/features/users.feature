@@ -46,7 +46,7 @@ Feature: User management
         And I click an new user button
         And I fill in the user information
         And I select global admin role
-        And I submit the form
+        And I click the create button
         Then I should see that the user was successfully created
         And I should see the user listed on the listing page
 
@@ -63,7 +63,7 @@ Feature: User management
         Then I should see only organization and region fields
         When I select the organization
         And I select the region for the new user
-        And I submit the form
+        And I click the create button
         Then I should see that the data regional admin was successfully created
 
     Scenario: Create a data submitter user
@@ -77,7 +77,7 @@ Feature: User management
         And I fill in data submitter information
         And I select data submitter role
         When I select a country
-        And I submit the form
+        And I click the create button
         Then I should see that the data submitter was successfully created
 
     Scenario: Filter users list by organization, region and role

@@ -364,3 +364,7 @@ def and_i_have_countries_in_afro_region(step):
     world.uganda = Country.objects.create(name="Uganda")
     world.rwanda = Country.objects.create(name="Rwanda")
     world.region.countries.add(world.uganda, world.rwanda)
+
+@step(u'And I click the create button')
+def and_i_click_the_create_button(step):
+    world.page.click_by_css('button.submit')

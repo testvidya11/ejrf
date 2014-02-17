@@ -12,13 +12,14 @@ ANSWER_FORM ={
 
 class QuestionnaireEntryFormService(object):
 
-    def __init__(self, section, initial={}, data=None):
+    def __init__(self, section, initial={}, data=None, highlight=False):
         self.initial = initial
         self.data = data
         self.section = section
         self.question_orders = section.question_orders()
         self.formsets = self._formsets()
         self.ANSWER_FORM_COUNTER = self._initialize_form_counter()
+        self._highlight_required_answers(highlight)
 
     def next_ordered_form(self, question):
         next_question_type_count = self.ANSWER_FORM_COUNTER[question.answer_type]
@@ -57,3 +58,12 @@ class QuestionnaireEntryFormService(object):
         for formset in self.formsets.values():
             for form in formset:
                 answer = form.save()
+
+    def show_is_required_errors(self):
+        for formset in self.formsets.values():
+            for form in formset:
+                form.show_is_required_errors()
+
+    def _highlight_required_answers(self, highlight):
+        if highlight:
+            self.show_is_required_errors()

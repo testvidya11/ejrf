@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from questionnaire.models import Questionnaire, Section, SubSection, QuestionGroup, Question, QuestionGroupOrder, Country, QuestionOption, MultiChoiceAnswer, NumericalAnswer, AnswerGroup, UserProfile, Answer
+from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.services.users import UserQuestionnaireService
 from questionnaire.tests.base_test import BaseTest
 
@@ -150,7 +151,7 @@ class UserServiceTest(BaseTest):
         user_service = UserQuestionnaireService(self.user, self.questionnaire)
         self.assertEqual(0, user_service.answer_version())
 
-    def test_user_knows_answer_version_of_questionnaire_is_the_same_as_draft_if_draf_exists(self):
+    def test_user_knows_answer_version_of_questionnaire_is_the_same_as_draft_if_draft_exists(self):
         data = self.data
 
         old_primary = MultiChoiceAnswer.objects.create(response=self.option1, question=self.question1, **self.initial)
@@ -164,7 +165,7 @@ class UserServiceTest(BaseTest):
         self.assertEqual(self.initial['version'], user_service.answer_version())
 
     def test_user_knows_answer_version_of_questionnaire_is_plus_1_of_the_latest_submitted_answers(self):
-        data = self.data
+        data = self.data.copy()
 
         old_primary = MultiChoiceAnswer.objects.create(response=self.option1, question=self.question1, **self.initial)
         old_answer_1 = NumericalAnswer.objects.create(response=int(data['Number-0-response']), question=self.question2, **self.initial)
@@ -177,4 +178,41 @@ class UserServiceTest(BaseTest):
         user_service.submit()
 
         self.assertEqual(self.initial['version']+1, user_service.answer_version())
+
+    def test_knows_unanswered_required_question_in_section(self):
+        data = self.data.copy()
+
+        old_primary = MultiChoiceAnswer.objects.create(response=self.option1, question=self.question1, **self.initial)
+        old_answer_1 = NumericalAnswer.objects.create(response=int(data['Number-0-response']), question=self.question2, **self.initial)
+        old_answer_2 = NumericalAnswer.objects.create(response=int(data['Number-1-response']), question=self.question3, **self.initial)
+
+        answer_group = AnswerGroup.objects.create(grouped_question=self.question_group)
+        answer_group.answer.add(old_primary, old_answer_1, old_answer_2)
+
+        required_question = Question.objects.create(text='required', UID='C00330', answer_type='Number', is_required=True)
+        self.question_group.question.add(required_question)
+        QuestionGroupOrder.objects.create(question_group=self.question_group, question=required_question, order=4)
+
+        user_service = UserQuestionnaireService(self.user, self.questionnaire)
+
+        self.assertFalse(user_service.answered_required_questions_in(self.section_1))
+
+    def test_should_return_invalid_section_answers_and_the_corresponding_formset(self):
+        data = self.data.copy()
+
+        old_primary = MultiChoiceAnswer.objects.create(response=self.option1, question=self.question1, **self.initial)
+        old_answer_1 = NumericalAnswer.objects.create(response=int(data['Number-0-response']), question=self.question2, **self.initial)
+        old_answer_2 = NumericalAnswer.objects.create(response=int(data['Number-1-response']), question=self.question3, **self.initial)
+
+        answer_group = AnswerGroup.objects.create(grouped_question=self.question_group)
+        answer_group.answer.add(old_primary, old_answer_1, old_answer_2)
+
+        required_question = Question.objects.create(text='required', UID='C00330', answer_type='Number', is_required=True)
+        self.question_group.question.add(required_question)
+        QuestionGroupOrder.objects.create(question_group=self.question_group, question=required_question, order=4)
+
+        user_service = UserQuestionnaireService(self.user, self.questionnaire)
+
+        self.assertFalse(user_service.required_sections_answered())
+        self.assertEqual(self.section_1, user_service.unanswered_section)
 

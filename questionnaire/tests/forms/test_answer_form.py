@@ -45,6 +45,24 @@ class NumericalAnswerFormTest(BaseTest):
         self.assertEqual([message], answer_form.errors['response'])
 
 
+    def test_required_question_shows_field_required_error_when_no_data_is_posted_and_no_initial_passed_in(self):
+        self.question.is_required = True
+        self.question.save()
+        answer_form_without_data = NumericalAnswerForm(initial=self.initial)
+        answer_form_without_data.show_is_required_errors()
+        self.assertEqual(['This field is required.'], answer_form_without_data.errors['response'])
+
+        answer_form_with_data = NumericalAnswerForm(data={'response': 1},initial=self.initial)
+        answer_form_with_data.show_is_required_errors()
+        self.assertEqual({}, answer_form_with_data.errors)
+
+        _initial=self.initial.copy()
+        _initial['response'] = '1'
+        answer_form_with_initial = NumericalAnswerForm(initial=_initial)
+        answer_form_with_initial.show_is_required_errors()
+        self.assertEqual({}, answer_form_with_initial.errors)
+
+
 class TextAnswerFormTest(BaseTest):
     def setUp(self):
         self.country = Country.objects.create(name="Peru")

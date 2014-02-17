@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.test import Client
 from questionnaire.forms.sections import SectionForm
 from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionOption, MultiChoiceAnswer, NumericalAnswer, QuestionGroupOrder, AnswerGroup, Answer
@@ -5,9 +6,9 @@ from questionnaire.services.questionnaire_entry_form_service import Questionnair
 from questionnaire.tests.base_test import BaseTest
 
 
-class QuestionnaireEntryViewTest(BaseTest):
+class QuestionnaireEntrySaveDraftTest(BaseTest):
     def setUp(self):
-        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English",
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", is_open=True,
                                                           description="From dropbox as given by Rouslan")
 
         self.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)",
@@ -180,55 +181,11 @@ class QuestionnaireEntryViewTest(BaseTest):
         answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
         self.assertEqual(1, answer_group.count())
 
-    def test_post_submit_save_draft_and_changes_all_answers_statuses_to_submitted(self):
-        other_section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)",
-                                                 order=2, questionnaire=self.questionnaire, name="Reported Cases")
-        other_sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1,
-                                                      section=other_section_1)
-        other_question1 = Question.objects.create(text='other question 1', UID='C00011', answer_type='Number')
-        other_question2 = Question.objects.create(text='other question 2', UID='C00012', answer_type='Number')
+    def XXXtest_post_after_submit_save_new_draft_version(self):
 
-        other_question_group = QuestionGroup.objects.create(subsection=other_sub_section, order=1)
-        other_question_group.question.add(other_question1, other_question2)
+        self.client.post('/submit/')
 
-        QuestionGroupOrder.objects.create(question=other_question1, order=1, question_group=other_question_group)
-        QuestionGroupOrder.objects.create(question=other_question2, order=2, question_group=other_question_group)
-
-        other_answer_1 = NumericalAnswer.objects.create(response=1, question=other_question1, status=Answer.DRAFT_STATUS, country=self.country, version=0)
-        other_answer_2 = NumericalAnswer.objects.create(response=2, question=other_question2, status=Answer.DRAFT_STATUS, country=self.country, version=0)
-
-        answer_group = AnswerGroup.objects.create(grouped_question=other_question_group)
-        answer_group.answer.add(other_answer_1, other_answer_2)
-
-        data = self.data
-        data['final_submit'] = True
-        self.client.post(self.url, data=data)
-
-        old_primary = MultiChoiceAnswer.objects.get(response__id=int(data['MultiChoice-0-response']), question=self.question1, version=0)
-        old_answer_1 = NumericalAnswer.objects.get(response=int(data['Number-0-response']), question=self.question2, version=0)
-        old_answer_2 = NumericalAnswer.objects.get(response=int(data['Number-1-response']), question=self.question3, version=0)
-
-        self.assertEqual(Answer.SUBMITTED_STATUS, old_primary.status)
-        self.assertEqual(Answer.SUBMITTED_STATUS, old_answer_1.status)
-        self.assertEqual(Answer.SUBMITTED_STATUS, old_answer_2.status)
-
-        answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
-        self.assertEqual(1, answer_group.count())
-
-        other_answer_1 = NumericalAnswer.objects.get(response=1, question=other_question1, country=self.country, version=0)
-        other_answer_2 = NumericalAnswer.objects.get(response=2, question=other_question2, country=self.country, version=0)
-
-        self.assertEqual(Answer.SUBMITTED_STATUS, other_answer_1.status)
-        self.assertEqual(Answer.SUBMITTED_STATUS, other_answer_2.status)
-
-        answer_group = AnswerGroup.objects.filter(grouped_question=other_question_group)
-        self.assertEqual(1, answer_group.count())
-
-    def test_post_after_submit_save_new_draft_version(self):
         data = self.data.copy()
-        data['final_submit'] = True
-        self.client.post(self.url, data=data)
-
         old_primary = MultiChoiceAnswer.objects.get(response__id=int(data['MultiChoice-0-response']), question=self.question1, version=0)
         old_answer_1 = NumericalAnswer.objects.get(response=int(data['Number-0-response']), question=self.question2, version=0)
         old_answer_2 = NumericalAnswer.objects.get(response=int(data['Number-1-response']), question=self.question3, version=0)
@@ -276,15 +233,136 @@ class QuestionnaireEntryViewTest(BaseTest):
 
         self.assertRedirects(response, data['redirect_url'])
 
-    def test_post_submit_answers_and_redirect_with_error_message_when_form_is_invalid(self):
+
+class QuestionnaireEntrySubmitTest(BaseTest):
+    def setUp(self):
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", is_open=True,
+                                                          description="From dropbox as given by Rouslan")
+
+        self.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)",
+                                                order=1,
+                                                questionnaire=self.questionnaire, name="Reported Cases")
+
+        self.sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1,
+                                                     section=self.section_1)
+
+        self.question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice')
+        self.question2 = Question.objects.create(text='B. Number of cases tested',
+                                                 instructions="Enter the total number of cases for which specimens were collected, and tested in laboratory",
+                                                 UID='C00003', answer_type='Number')
+
+        self.question3 = Question.objects.create(text='C. Number of cases positive',
+                                                 instructions="Include only those cases found positive for the infectious agent.",
+                                                 UID='C00004', answer_type='Number')
+
+        self.option1 = QuestionOption.objects.create(text='tusker lager', question=self.question1)
+        self.option2 = QuestionOption.objects.create(text='tusker lager1', question=self.question1)
+        self.option3 = QuestionOption.objects.create(text='tusker lager2', question=self.question1)
+
+        self.question_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1)
+        self.question_group.question.add(self.question1, self.question3, self.question2)
+
+        QuestionGroupOrder.objects.create(question_group=self.question_group, question=self.question1, order=1)
+        QuestionGroupOrder.objects.create(question_group=self.question_group, question=self.question2, order=2)
+        QuestionGroupOrder.objects.create(question_group=self.question_group, question=self.question3, order=3)
+
+        self.url = '/submit/'
+
+        self.client = Client()
+        self.user, self.country = self.create_user_with_no_permissions()
+
+        self.assign('can_submit_responses', self.user)
+        self.client.login(username=self.user.username, password='pass')
+
+        self.data = {u'MultiChoice-MAX_NUM_FORMS': u'1', u'MultiChoice-TOTAL_FORMS': u'1',
+                u'MultiChoice-INITIAL_FORMS': u'1', u'MultiChoice-0-response': self.option1.id,
+                u'Number-INITIAL_FORMS': u'2', u'Number-TOTAL_FORMS': u'2', u'Number-MAX_NUM_FORMS': u'2',
+                u'Number-0-response': u'2', u'Number-1-response': u'33'}
+
+    def test_login_required(self):
+        self.assert_login_required(self.url)
+
+    def test_submit_changes_all_answers_statuses_to_submitted(self):
+        other_section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)",
+                                                 order=2, questionnaire=self.questionnaire, name="Reported Cases")
+        other_sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1,
+                                                      section=other_section_1)
+        other_question1 = Question.objects.create(text='other question 1', UID='C00011', answer_type='Number')
+        other_question2 = Question.objects.create(text='other question 2', UID='C00012', answer_type='Number')
+
+        other_question_group = QuestionGroup.objects.create(subsection=other_sub_section, order=1)
+        other_question_group.question.add(other_question1, other_question2)
+
+        QuestionGroupOrder.objects.create(question=other_question1, order=1, question_group=other_question_group)
+        QuestionGroupOrder.objects.create(question=other_question2, order=2, question_group=other_question_group)
+
+        other_answer_1 = NumericalAnswer.objects.create(response=1, question=other_question1, status=Answer.DRAFT_STATUS, country=self.country, version=0)
+        other_answer_2 = NumericalAnswer.objects.create(response=2, question=other_question2, status=Answer.DRAFT_STATUS, country=self.country, version=0)
+
+        answer_group = AnswerGroup.objects.create(grouped_question=other_question_group)
+        answer_group.answer.add(other_answer_1, other_answer_2)
+
+        self.client.post(self.url)
+
+        other_answer_1 = NumericalAnswer.objects.get(response=1, question=other_question1, country=self.country, version=0)
+        other_answer_2 = NumericalAnswer.objects.get(response=2, question=other_question2, country=self.country, version=0)
+
+        self.assertEqual(Answer.SUBMITTED_STATUS, other_answer_1.status)
+        self.assertEqual(Answer.SUBMITTED_STATUS, other_answer_2.status)
+
+        answer_group = AnswerGroup.objects.filter(grouped_question=other_question_group)
+        self.assertEqual(1, answer_group.count())
+
+    def test_submit_on_success_redirect_to_referer_if_given(self):
+        referer_url = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id)
+        meta ={'HTTP_REFERER': referer_url}
+        response = self.client.post(self.url, **meta)
+        self.assertRedirects(response, referer_url)
+
+    def test_submit_on_success_redirect_to_referer_but_does_not_highlight_errors_no_more(self):
+        referer_url = '/questionnaire/entry/%d/section/%d/?show=errors' % (self.questionnaire.id, self.section_1.id)
+        referer_url_no_show_erorrs = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id)
+        meta ={'HTTP_REFERER': referer_url}
+        response = self.client.post(self.url, **meta)
+        self.assertRedirects(response, referer_url_no_show_erorrs)
+
+    def test_submit_on_success_redirect_to_homepage_if_referer_not_given(self):
+        response = self.client.post(self.url)
+        self.assertRedirects(response, '/', target_status_code=302)
+
+    def test_submit_success_message(self):
+        response = self.client.post(self.url)
+        success_message = 'Questionnaire Submitted.'
+        self.assertIn(success_message, response.cookies['messages'].value)
+
+    def test_submit_fails_and_shows_sections_with_error_message_and_error_fields_when_a_section_has_unanswered_required_questions(self):
         data = self.data.copy()
-        data['final_submit'] = True
-        data['MultiChoice-0-response'] = 'Stuff'
-        section_2 = Section.objects.create(name="haha", questionnaire=self.questionnaire, order=2)
-        data['redirect_url'] = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, section_2.id)
+        initial = {'country': self.country, 'status': 'Draft', 'version':1, 'code': 'ABC123'}
+        old_primary = MultiChoiceAnswer.objects.create(response=self.option1, question=self.question1, **initial)
+        old_answer_1 = NumericalAnswer.objects.create(response=int(data['Number-0-response']), question=self.question2, **initial)
+        old_answer_2 = NumericalAnswer.objects.create(response=int(data['Number-1-response']), question=self.question3, **initial)
 
-        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response'])))
+        answer_group = AnswerGroup.objects.create(grouped_question=self.question_group)
+        answer_group.answer.add(old_primary, old_answer_1, old_answer_2)
 
-        message = 'Submission NOT completed. See errors below.'
-        response = self.client.post(self.url, data=data)
-        self.assertIn(message, response.content)
+        required_question = Question.objects.create(text='required', UID='C00330', answer_type='Number', is_required=True)
+        self.question_group.question.add(required_question)
+        QuestionGroupOrder.objects.create(question_group=self.question_group, question=required_question, order=4)
+
+        response = self.client.post(self.url)
+        section_with_errrors_url = '/questionnaire/entry/%d/section/%d/?show=errors' % (self.questionnaire.id, self.section_1.id)
+
+        self.assertRedirects(response, section_with_errrors_url)
+        error_message = 'Questionnaire NOT submitted. See errors below.'
+        self.assertIn(error_message, response.cookies['messages'].value)
+
+        submitted_attributes = initial.copy()
+        submitted_attributes['status'] = 'Submitted'
+
+        primary = MultiChoiceAnswer.objects.filter(response=self.option1, question=self.question1, **submitted_attributes)
+        answer_1 = NumericalAnswer.objects.filter(response=int(data['Number-0-response']), question=self.question2, **submitted_attributes)
+        answer_2 = NumericalAnswer.objects.filter(response=int(data['Number-1-response']), question=self.question3, **submitted_attributes)
+
+        self.failIf(primary)
+        self.failIf(answer_1)
+        self.failIf(answer_2)

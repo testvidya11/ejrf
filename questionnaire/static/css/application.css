@@ -280,10 +280,20 @@ form input[type=file]{
 .has-spinner.active .glyphicon-file {
     display: none;
 }
+
 #create-section-modal input[type=text]{
     width: 320px;
 }
 #create-section-modal textarea{
     width: 320px;
     height: 100px;
+}
+
+.form-content{
+    overflow: hidden;
+    padding-left: 20px;
+}
+
+.submit-btn{
+    border: 1px #CC0000 solid;
 }

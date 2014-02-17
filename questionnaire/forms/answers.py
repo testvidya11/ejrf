@@ -1,14 +1,15 @@
 from django import forms
+from django.forms.util import ErrorDict
 from django.forms import ModelForm, ModelChoiceField
 from django.utils.html import format_html
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 
-from questionnaire.models import NumericalAnswer, TextAnswer, DateAnswer, MultiChoiceAnswer, QuestionOption, AnswerGroup
+from questionnaire.models import NumericalAnswer, TextAnswer, DateAnswer, MultiChoiceAnswer, AnswerGroup
 
 
 class AnswerForm(ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self,  *args, **kwargs):
         super(AnswerForm, self).__init__(*args, **kwargs)
         self.question = self._get_question(kwargs)
         self.fields['response'].required = self.question.is_required
@@ -21,6 +22,11 @@ class AnswerForm(ModelForm):
         if 'answer' in self._initial:
             self.is_editing = True
             self.instance = self._initial['answer']
+
+    def show_is_required_errors(self):
+        if self.question.is_required and not self.data and not self._initial.get('response', None):
+            self._errors = self._errors or ErrorDict()
+            self._errors['response'] = self.error_class(['This field is required.'])
 
     def save(self, commit=True, *args, **kwargs):
         if self.is_editing:

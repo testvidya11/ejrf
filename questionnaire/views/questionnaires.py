@@ -2,9 +2,10 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import FormView
-from braces.views import PermissionRequiredMixin, MultiplePermissionsRequiredMixin
-from questionnaire.forms.sections import SectionForm
+from django.views.generic import View
 
+from braces.views import PermissionRequiredMixin, MultiplePermissionsRequiredMixin, LoginRequiredMixin
+from questionnaire.forms.sections import SectionForm
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.models import Questionnaire, Section
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
@@ -26,14 +27,11 @@ class Entry(MultiplePermissionsRequiredMixin, FormView):
         questionnaire = Questionnaire.objects.get(id=self.kwargs['questionnaire_id'])
         section = Section.objects.get(id=self.kwargs['section_id'])
         initial = {'status': 'Draft',}
-        formsets = QuestionnaireEntryFormService(section, initial=initial)
+        required_answers = 'show' in request.GET
+        formsets = QuestionnaireEntryFormService(section, initial=initial, highlight=required_answers)
 
-        printable = False
-        preview = False
-        if 'printable' in request.GET:
-            printable = True
-        if 'preview' in request.GET:
-            preview = True
+        printable = 'printable' in request.GET
+        preview = 'preview' in request.GET
 
         context = {'questionnaire': questionnaire,
                    'section': section, 'printable': printable,
@@ -76,3 +74,28 @@ class Entry(MultiplePermissionsRequiredMixin, FormView):
             message = 'Submission NOT completed. See errors below.'
         messages.error(request, message)
         return self.render_to_response(context)
+
+
+class SubmitQuestionnaire(LoginRequiredMixin, View):
+
+    def post(self, request, *args, **kwargs):
+        questionnaire = Questionnaire.objects.get(is_open=True)
+        user_questionnaire = UserQuestionnaireService(self.request.user, questionnaire)
+        if not user_questionnaire.required_sections_answered():
+            return self._reload_section_with_required_answers_errors(request, user_questionnaire, *args, **kwargs)
+        return self._submit_answers(request, user_questionnaire, *args, **kwargs)
+
+    def _submit_answers(self, request, user_questionnaire_service, *args, **kwargs):
+        user_questionnaire_service.submit()
+        referer_url = request.META.get('HTTP_REFERER', None)
+        redirect_url = referer_url or reverse('home_page')
+        messages.success(request, 'Questionnaire Submitted.')
+        return HttpResponseRedirect(redirect_url.replace('?show=errors', ''))
+
+    def _reload_section_with_required_answers_errors(self, request, user_questionnaire_service, *args, **kwargs):
+        section = user_questionnaire_service.unanswered_section
+        questionnaire = user_questionnaire_service.questionnaire
+        messages.error(request, 'Questionnaire NOT submitted. See errors below.')
+        redirect_url = reverse('questionnaire_entry_page', args=(questionnaire.id, section.id))
+        return HttpResponseRedirect('%s?show=errors'%redirect_url)
+
