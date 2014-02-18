@@ -56,3 +56,31 @@ class SectionsViewTest(BaseTest):
         self.assertIsInstance(response.context['form'], QuestionForm)
         self.assertEqual("CREATE", response.context['btn_label'])
         self.assertEqual("id-new-question-form", response.context['id'])
+
+    def test_post_multichoice_question_with_options(self):
+        form_data = self.form_data.copy()
+        form_data['answer_type'] = 'MultiChoice'
+        question_options = ['yes', 'No', 'Maybe', 'Nr', 'Chill']
+        self.assertRaises(Question.DoesNotExist, Question.objects.get, **form_data)
+        form_data['options'] = question_options
+        response = self.client.post(self.url + 'new/', data=form_data)
+        self.assertRedirects(response, self.url)
+        questions = Question.objects.filter(text=form_data['text'], instructions=form_data['instructions'],
+                                            answer_type=form_data['answer_type'])
+        self.assertEqual(1, len(questions))
+        options = questions[0].options.all()
+
+        self.assertEqual(5, options.count())
+        [self.assertIn(option.text, question_options) for option in options]
+
+    def test_post_multichoice_question_with_options_with_form_errors(self):
+        form_data = self.form_data.copy()
+        form_data['answer_type'] = 'MultiChoice'
+        self.assertRaises(Question.DoesNotExist, Question.objects.get, **form_data)
+        form_data['options'] = ['']
+        response = self.client.post(self.url + 'new/', data=form_data)
+        self.assertRaises(Question.DoesNotExist, Question.objects.get, text=form_data['text'], instructions=form_data['instructions'], answer_type=form_data['answer_type'])
+        self.assertIn('Question NOT created. See errors below.', response.content)
+        self.assertIsInstance(response.context['form'], QuestionForm)
+        self.assertEqual("CREATE", response.context['btn_label'])
+        self.assertEqual("id-new-question-form", response.context['id'])

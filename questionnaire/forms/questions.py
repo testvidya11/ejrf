@@ -24,7 +24,7 @@ class QuestionForm(ModelForm):
 
     def _clean_options(self):
         answer_type = self.cleaned_data['answer_type']
-        options = self.data.get('options', [])
+        options = dict(self.data).get('options', [])
         multichoice = 'MultiChoice'
         if answer_type == multichoice and options[0] == '':
             raise ValidationError("MultiChoice questions must have at least one option")
@@ -39,7 +39,7 @@ class QuestionForm(ModelForm):
         return question
 
     def _save_options_if_multichoice(self, question):
-        options = self.data.get('options', [])
+        options = dict(self.data).get('options', [])
         if options and question.answer_type == 'MultiChoice':
             for option in options:
                 QuestionOption.objects.create(text=option, question=question)
