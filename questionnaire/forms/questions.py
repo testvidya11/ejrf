@@ -25,8 +25,9 @@ class QuestionForm(ModelForm):
         return super(QuestionForm, self).clean()
 
     def _clean_options(self):
-        answer_type = self.data.get('answer_type', None)
+        answer_type = self.data.get('answer_type', [])
         options = dict(self.data).get('options', [])
+        options = [option for option in options if option]
         multichoice = 'MultiChoice'
         if (answer_type and answer_type == multichoice) and len(options) < 1:
             message = "MultiChoice questions must have at least one option"

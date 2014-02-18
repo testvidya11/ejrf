@@ -61,8 +61,7 @@ class QuestionsFormTest(BaseTest):
                 'instructions': 'Some instructions',
                 'short_instruction': 'short version',
                 'answer_type': 'MultiChoice',
-                'options': []}
-
+                'options': ['', '']}
         section_form = QuestionForm(data=form)
 
         self.assertFalse(section_form.is_valid())
