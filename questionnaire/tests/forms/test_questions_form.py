@@ -30,6 +30,13 @@ class QuestionsFormTest(BaseTest):
         self.assertFalse(section_form.is_valid())
         self.assertIn("This field is required.", section_form.errors['text'])
 
+    def test_clean_answer_type(self):
+        data = self.form_data.copy()
+        data['answer_type'] = ''
+        section_form = QuestionForm(data=data)
+        self.assertFalse(section_form.is_valid())
+        self.assertIn("This field is required.", section_form.errors['answer_type'])
+
     def test_answer_type_choices_has_empty_label(self):
         section_form = QuestionForm()
         self.assertIn(('', 'Response type'), section_form.fields['answer_type'].choices)
