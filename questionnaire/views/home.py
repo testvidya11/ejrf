@@ -12,10 +12,9 @@ class Home(MultiplePermissionsRequiredMixin, View):
     template_name = "home/index.html"
 
     def get(self, request, *args, **kwargs):
-        if request.user.has_perm('auth.can_submit_responses'):
-            questionnaires = Questionnaire.objects.all()
-            sections = Section.objects.order_by('order')
-            if questionnaires.exists() and sections.exists():
-                args = (questionnaires.latest('created').id, sections[0].id)
-                return HttpResponseRedirect(reverse('questionnaire_entry_page', args=args))
+        questionnaires = Questionnaire.objects.all()
+        sections = Section.objects.order_by('order')
+        if questionnaires.exists() and sections.exists():
+            args = (questionnaires.latest('created').id, sections[0].id)
+            return HttpResponseRedirect(reverse('questionnaire_entry_page', args=args))
         return render(request, self.template_name)
