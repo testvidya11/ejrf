@@ -28,7 +28,7 @@ class QuestionForm(ModelForm):
         answer_type = self.data.get('answer_type', None)
         options = dict(self.data).get('options', [])
         multichoice = 'MultiChoice'
-        if answer_type and answer_type == multichoice and options[0] == '':
+        if answer_type and answer_type == multichoice and options and options[0] == '':
             raise ValidationError("MultiChoice questions must have at least one option")
         return options
 
