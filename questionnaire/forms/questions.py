@@ -28,8 +28,10 @@ class QuestionForm(ModelForm):
         answer_type = self.data.get('answer_type', None)
         options = dict(self.data).get('options', [])
         multichoice = 'MultiChoice'
-        if answer_type and answer_type == multichoice and options and options[0] == '':
-            raise ValidationError("MultiChoice questions must have at least one option")
+        if (answer_type and answer_type == multichoice) and len(options) < 1:
+            message = "MultiChoice questions must have at least one option"
+            self._errors['answer_type'] = self.error_class([message])
+            del self.cleaned_data['answer_type']
         return options
 
     def save(self, commit=True):

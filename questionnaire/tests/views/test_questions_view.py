@@ -77,7 +77,7 @@ class SectionsViewTest(BaseTest):
         form_data = self.form_data.copy()
         form_data['answer_type'] = 'MultiChoice'
         self.assertRaises(Question.DoesNotExist, Question.objects.get, **form_data)
-        form_data['options'] = ['']
+        form_data['options'] = []
         response = self.client.post(self.url + 'new/', data=form_data)
         self.assertRaises(Question.DoesNotExist, Question.objects.get, text=form_data['text'], instructions=form_data['instructions'], answer_type=form_data['answer_type'])
         self.assertIn('Question NOT created. See errors below.', response.content)

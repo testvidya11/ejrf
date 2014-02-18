@@ -61,10 +61,10 @@ class QuestionsFormTest(BaseTest):
                 'instructions': 'Some instructions',
                 'short_instruction': 'short version',
                 'answer_type': 'MultiChoice',
-                'options': ['', ]}
+                'options': []}
 
         section_form = QuestionForm(data=form)
 
         self.assertFalse(section_form.is_valid())
         message = "MultiChoice questions must have at least one option"
-        self.assertIn(message, section_form.errors['__all__'][0])
+        self.assertIn(message, section_form.errors['answer_type'][0])
