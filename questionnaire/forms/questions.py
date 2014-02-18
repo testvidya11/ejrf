@@ -10,6 +10,7 @@ class QuestionForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields['answer_type'].choices = self._set_answer_type_choices()
+        self.fields['answer_type'].label = 'Response Type'
 
     class Meta:
         model = Question
@@ -47,5 +48,5 @@ class QuestionForm(ModelForm):
 
     def _set_answer_type_choices(self):
         choices = self.fields['answer_type'].choices
-        choices[0] = ('', 'Answer type', )
+        choices[0] = ('', 'Response type', )
         return choices

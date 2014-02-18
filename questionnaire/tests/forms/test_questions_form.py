@@ -32,7 +32,7 @@ class QuestionsFormTest(BaseTest):
 
     def test_answer_type_choices_has_empty_label(self):
         section_form = QuestionForm()
-        self.assertIn(('', 'Answer type'), section_form.fields['answer_type'].choices)
+        self.assertIn(('', 'Response type'), section_form.fields['answer_type'].choices)
 
     def test_save_multichoice_question_saves_options(self):
         options = ['Yes', 'No', 'Maybe']
