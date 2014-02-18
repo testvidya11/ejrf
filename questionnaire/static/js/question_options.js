@@ -15,8 +15,14 @@ jQuery(function($){
         assignOptionNumbers();
     }
 
-    $("#id_answer_type").on('change', function(){
+    $('#id_answer_type').on('change', function(){
         if($(this).val() == 'MultiChoice'){
+            $('#option-choices').addClass('show')
+        }
+    });
+
+    $('input[type=radio]').on('change', function(){
+        if($(this).val() == 'custom'){
             addQuestionOption($("div.form-actions"));
         }else{
             $form.find("div#option-input-group").remove();
@@ -31,4 +37,6 @@ jQuery(function($){
         $(this).parents("div#option-input-group").remove();
         assignOptionNumbers();
     });
+
+    $
 });

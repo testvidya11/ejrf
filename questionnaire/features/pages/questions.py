@@ -12,4 +12,4 @@ class CreateQuestionPage(PageObject):
         self.browser.find_by_css(selector)[number].click()
 
     def fill_first_visible_option(self, name, value):
-        self.browser.find_by_name(name)[0].fill(value)
+        self.browser.find_by_name(name).last.fill(value)

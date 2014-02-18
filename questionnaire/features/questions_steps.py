@@ -75,3 +75,7 @@ def and_i_fill_in_the_multichoice_question_form_data(step):
             'instructions': 'Just give an answer',
             'short_instruction': 'Answer please'}
     world.page.fill_form(data)
+
+@step(u'And I check custom option')
+def and_i_check_custom_option(step):
+    world.page.check('custom')

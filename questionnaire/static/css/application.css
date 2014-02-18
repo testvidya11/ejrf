@@ -310,7 +310,7 @@ table #text-td{
     font-weight: normal;
 }
 .input-group-addon{
-    width: 0px !important;
+    width: 0 !important;
 }
 
 #option-input-group{
@@ -319,4 +319,12 @@ table #text-td{
 div.pagination{
     display: table;
     margin: 0 auto;
+}
+.radio-inline{
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+}
+#option-choices-label{
+    width: 140px;
+    font-weight: normal !important;
 }

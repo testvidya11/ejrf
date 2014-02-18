@@ -22,6 +22,7 @@ Feature: Questions feature
       And I click add new question page
       And I fill in the multichoice question form data
       And I select Multi-choice answer type
+      And I check custom option
       Then I should see the option field
       When Fill in the option
       When I click add more button
