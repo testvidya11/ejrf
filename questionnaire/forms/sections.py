@@ -19,6 +19,7 @@ class SubSectionForm(ModelForm):
         subsection.order = SubSection.get_next_order(self.instance.section.id)
         if commit:
             subsection.save()
+        return subsection
 
     class Meta:
         model = SubSection
