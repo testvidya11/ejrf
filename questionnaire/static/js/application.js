@@ -1,7 +1,7 @@
 var form_has_changed = false;
 
 $(document).ready(function() {
-
+    $('.pagination').children('ul').addClass('pagination')
     $('a[data-toggle=popover]').popover();
     loadRoleTemplate();
     $('p:empty').remove();

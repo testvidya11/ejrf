@@ -1,5 +1,5 @@
 from lettuce import step, world
-from questionnaire.features.pages.questions import QuestionListingPage
+from questionnaire.features.pages.questions import QuestionListingPage, CreateQuestionPage
 from questionnaire.models import Question
 
 
@@ -39,3 +39,39 @@ def then_i_should_see_the_question_created(step):
 @step(u'And I click save question button')
 def and_i_click_save_question_button(step):
     world.page.click_by_css('.submit')
+
+@step(u'And I select Multi-choice answer type')
+def and_i_select_multi_choice_answer_type(step):
+    world.page.select('answer_type', 'MultiChoice')
+
+@step(u'Then I should see the option field')
+def then_i_should_see_the_option_field(step):
+    world.page.is_text_present('Option 1')
+
+@step(u'When Fill in the option')
+def when_fill_in_the_option(step):
+    world.page = CreateQuestionPage(world.browser)
+    world.page.fill_first_visible_option('options', 'Yes')
+
+@step(u'When I click add more button')
+def when_i_click_add_more_button(step):
+    world.page.click_by_css('.add-option')
+
+@step(u'Then I should see another option field')
+def then_i_should_see_another_option_field(step):
+    world.page.is_text_present('Option 2')
+
+@step(u'When I click remove the added option field')
+def when_i_click_remove_the_added_option_field(step):
+    world.page.remove_option_field('.remove-option', 1)
+
+@step(u'Then I should not see that option field')
+def then_i_should_not_see_that_option_field(step):
+    world.page.is_text_present('Option 2', status=False)
+
+@step(u'And I fill in the multichoice question form data')
+def and_i_fill_in_the_multichoice_question_form_data(step):
+    data = {'text': 'How many measles cases did you find this year',
+            'instructions': 'Just give an answer',
+            'short_instruction': 'Answer please'}
+    world.page.fill_form(data)

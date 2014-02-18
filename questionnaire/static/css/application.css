@@ -179,6 +179,7 @@ label.error{
 
 .form-horizontal select{
     max-width: 223px;
+    display: inline-block !important;
 }
 
 a[data-toggle='popover']{
@@ -300,4 +301,22 @@ form input[type=file]{
 
 table #text-td{
     max-width: 400px;
+}
+.option-control-label{
+    display: inline-block !important;
+    width: 150px;
+    margin: 3px;
+    padding: 3px;
+    font-weight: normal;
+}
+.input-group-addon{
+    width: 0px !important;
+}
+
+#option-input-group{
+    padding: 3px 0;
+}
+div.pagination{
+    display: table;
+    margin: 0 auto;
 }

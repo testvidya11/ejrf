@@ -16,7 +16,8 @@ class QuestionForm(ModelForm):
         fields = ('text', 'instructions', 'short_instruction', 'answer_type', 'options')
         widgets = {'text':  forms.Textarea(attrs={"rows": 6, "cols": 50}),
                    'instructions':  forms.Textarea(attrs={"rows": 6, "cols": 50}),
-                   'short_instruction':  forms.Textarea(attrs={"rows": 2, "cols": 50})}
+                   'short_instruction':  forms.Textarea(attrs={"rows": 2, "cols": 50}),
+                   'answer_type': forms.Select(attrs={'class': 'form-control'})}
 
     def clean(self):
         self._clean_options()
@@ -31,11 +32,11 @@ class QuestionForm(ModelForm):
         return options
 
     def save(self, commit=True):
-        question = super(QuestionForm, self).save(commit)
+        question = super(QuestionForm, self).save(commit=False)
+        question.UID = Question.next_uid()
         if commit:
-            question.UID = Question.next_uid()
-            self._save_options_if_multichoice(question)
             question.save()
+            self._save_options_if_multichoice(question)
         return question
 
     def _save_options_if_multichoice(self, question):
