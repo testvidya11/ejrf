@@ -36,13 +36,14 @@ class ExportSectionToPDFViewTest(BaseTest):
         self.assertEqual('filename', content.keys()[0])
 
         file_name = 'eJRF_export_%s.pdf' % mock_time
+        export_file_name = 'export/' + file_name
         self.assertTrue(file_name, content['filename'])
 
         session_id = response.client.cookies['sessionid'].value
         url = (meta['HTTP_REFERER'] +'?printable=1')
         domain = meta['HTTP_HOST']
         phantomjs_script = 'questionnaire/static/js/export-section.js'
-        command = ["phantomjs", phantomjs_script, url, file_name, session_id, domain, "&> /dev/null &"]
+        command = ["phantomjs", phantomjs_script, url, export_file_name, session_id, domain, "&> /dev/null &"]
 
         mock_popen.assert_called_once_with(command)
 
@@ -58,11 +59,11 @@ class DownloadSectionPDFViewTest(BaseTest):
 
     def test_get(self):
         filename = "haha.pdf"
-        os.system("echo 'haha' > %s" % filename)
+        os.system("echo 'haha' > export/%s" % filename)
 
         response = self.client.get('/export-section/%s' % filename)
         self.assertEqual('attachment; filename=%s' % filename, response.get('Content-Disposition'))
-        self.assertFalse(os.path.isfile(filename))
+        self.assertFalse(os.path.isfile('export/'+filename))
 
     def test_login_required(self):
         self.assert_login_required('/export-section/hahaha.pdf')

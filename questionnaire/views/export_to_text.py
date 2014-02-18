@@ -35,6 +35,7 @@ class ExportSectionPDF(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         session_id = request.COOKIES['sessionid']
         file_name = 'eJRF_export_%s.pdf' % str(time.time())
+        export_file = 'export/' + file_name
 
         # In case other get params recreate url string for printable param
         url_parts = list(urlparse.urlparse(request.META['HTTP_REFERER']))
@@ -46,7 +47,7 @@ class ExportSectionPDF(LoginRequiredMixin, View):
         url = (export_url)
         domain = str(request.META['HTTP_HOST']).split(':')[0]
         phantomjs_script = 'questionnaire/static/js/export-section.js'
-        command = ["phantomjs", phantomjs_script, url, file_name, session_id, domain, "&> /dev/null &"]
+        command = ["phantomjs", phantomjs_script, url, export_file, session_id, domain, "&> /dev/null &"]
         subprocess.Popen(command)
         return HttpResponse(json.dumps({'filename': file_name}))
 
@@ -54,8 +55,8 @@ class ExportSectionPDF(LoginRequiredMixin, View):
 class DownloadSectionPDF(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         filename = kwargs.get('filename', None)
-        return_file = File(open(filename, 'r'))
+        return_file = File(open('export/' + filename, 'r'))
         response = HttpResponse(return_file, mimetype='application/force-download')
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
-        os.system("rm -rf %s" % filename)
+        os.system("rm -rf export/%s" % filename)
         return response
