@@ -24,8 +24,10 @@ jQuery(function($){
     $('input[type=radio]').on('change', function(){
         if($(this).val() == 'custom'){
             addQuestionOption($("div.form-actions"));
+            $form.find('input[name=options]').prop('checked', false)
         }else{
             $form.find("div#option-input-group").remove();
+            $form.find('input[name=options-custom]').prop('checked', false)
         }
     });
 
