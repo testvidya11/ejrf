@@ -28,3 +28,22 @@ class HomePageViewTest(BaseTest):
 
     def test_login_required_for_home_get(self):
         self.assert_login_required('/')
+
+
+class GlobalAdminHomePageViewTest(BaseTest):
+
+    def setUp(self):
+        self.client = Client()
+        self.user, self.country = self.create_user_with_no_permissions()
+        self.assign('can_view_users', self.user)
+        self.client.login(username=self.user.username, password='pass')
+
+    def test_get(self):
+        questionnaire1 = Questionnaire.objects.create(name="JRF Jamaica", description="bla", year=2012, finalized=True)
+        questionnaire2 = Questionnaire.objects.create(name="JRF Brazil", description="bla", year=2013, finalized=False)
+        response = self.client.get("/")
+        self.assertEqual(200, response.status_code)
+        templates = [template.name for template in response.templates]
+        self.assertIn('home/global/index.html', templates)
+        self.assertIn(questionnaire1, response.context['finalized_questionnaires'])
+        self.assertIn(questionnaire2, response.context['not_finalized_questionnaires'])
