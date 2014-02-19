@@ -17,6 +17,7 @@ class SectionsViewTest(BaseTest):
         self.form_data = {'text': 'How many kids were immunised this year?',
                           'instructions': 'Some instructions',
                           'short_instruction': 'short version',
+                          'export_label': 'blah',
                           'answer_type': 'Number'}
 
     def test_get_list_question(self):

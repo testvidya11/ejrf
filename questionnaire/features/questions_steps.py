@@ -24,11 +24,13 @@ def then_i_should_see_all_questions_paginated(step):
 def and_i_click_add_new_question_page(step):
     world.page.click_by_id('id-add-new-question-link')
 
+world.data = {'text': 'How many measles cases did you find this year',
+              'instructions': 'Just give an answer',
+              'short_instruction': 'Answer please',
+              'export_label': 'blah'}
+
 @step(u'And I fill in the question details')
 def and_i_fill_in_the_question_details(step):
-    world.data = {'text': 'How many measles cases did you find this year',
-                  'instructions': 'Just give an answer',
-                  'short_instruction': 'Answer please'}
     world.page.fill_form(world.data)
     world.page.select('answer_type', 'Number')
 
@@ -73,6 +75,7 @@ def then_i_should_not_see_that_option_field(step):
 def and_i_fill_in_the_multichoice_question_form_data(step):
     data = {'text': 'How many measles cases did you find this year',
             'instructions': 'Just give an answer',
+            'export_label': 'blah',
             'short_instruction': 'Answer please'}
     world.page.fill_form(data)
 

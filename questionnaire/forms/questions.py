@@ -11,17 +11,21 @@ class QuestionForm(ModelForm):
         super(QuestionForm, self).__init__(*args, **kwargs)
         self.fields['answer_type'].choices = self._set_answer_type_choices()
         self.fields['answer_type'].label = 'Response Type'
+        self.fields['text'].label = 'Display label (Online)'
+        self.fields['export_label'].label = 'Export label (Detail)'
 
     class Meta:
         model = Question
-        fields = ('text', 'instructions', 'short_instruction', 'answer_type', 'options')
+        fields = ('text', 'export_label', 'instructions', 'short_instruction', 'answer_type', 'options')
         widgets = {'text':  forms.Textarea(attrs={"rows": 6, "cols": 50}),
                    'instructions':  forms.Textarea(attrs={"rows": 6, "cols": 50}),
                    'short_instruction':  forms.Textarea(attrs={"rows": 2, "cols": 50}),
-                   'answer_type': forms.Select(attrs={'class': 'form-control'})}
+                   'answer_type': forms.Select(attrs={'class': 'form-control'}),
+                   'export_label': forms.Textarea(attrs={"rows": 2, "cols": 50})}
 
     def clean(self):
         self._clean_options()
+        self._clean_export_label()
         return super(QuestionForm, self).clean()
 
     def _clean_options(self):
@@ -34,6 +38,14 @@ class QuestionForm(ModelForm):
             self._errors['answer_type'] = self.error_class([message])
             del self.cleaned_data['answer_type']
         return options
+
+    def _clean_export_label(self):
+        export_label = self.data.get('export_label', "")
+        if not export_label:
+            message = "All questions must have export label."
+            self._errors['export_label'] = self.error_class([message])
+            del self.cleaned_data['export_label']
+        return export_label
 
     def save(self, commit=True):
         question = super(QuestionForm, self).save(commit=False)

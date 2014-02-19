@@ -10,6 +10,7 @@ class QuestionsFormTest(BaseTest):
                           'instructions': 'Some instructions',
                           'short_instruction': 'short version',
                           'answer_type': 'Number',
+                          'export_label': 'Some export text',
                           'options': ['', ]}
 
     def test_valid(self):
@@ -37,6 +38,13 @@ class QuestionsFormTest(BaseTest):
         self.assertFalse(section_form.is_valid())
         self.assertIn("This field is required.", section_form.errors['answer_type'])
 
+    def test_clean_export_label(self):
+        data = self.form_data.copy()
+        data['export_label'] = ''
+        section_form = QuestionForm(data=data)
+        self.assertFalse(section_form.is_valid())
+        self.assertIn("All questions must have export label.", section_form.errors['export_label'])
+
     def test_answer_type_choices_has_empty_label(self):
         section_form = QuestionForm()
         self.assertIn(('', 'Response type'), section_form.fields['answer_type'].choices)
@@ -46,6 +54,7 @@ class QuestionsFormTest(BaseTest):
         form = {'text': 'How many kids were immunised this year?',
                 'instructions': 'Some instructions',
                 'short_instruction': 'short version',
+                'export_label': 'blah',
                 'answer_type': 'MultiChoice',
                 'options': options}
 
@@ -60,6 +69,7 @@ class QuestionsFormTest(BaseTest):
         form = {'text': 'How many kids were immunised this year?',
                 'instructions': 'Some instructions',
                 'short_instruction': 'short version',
+                'export_label': 'blah',
                 'answer_type': 'MultiChoice',
                 'options': ['', '']}
         section_form = QuestionForm(data=form)
