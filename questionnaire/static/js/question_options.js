@@ -2,8 +2,9 @@
 jQuery(function($){
     $("#id_options").remove();
     var $form = $("#id-new-question-form"),
-        template = $("#question-option-template").html();
-
+        template = $("#question-option-template").html(),
+        answerTypeSelect = $('#id_answer_type');
+        answerTypeSelect.prop('selectedIndex',0);
     function assignOptionNumbers(){
         $form.find("span.number").each(function(i, element){
             $(element).text(++i);
@@ -15,9 +16,11 @@ jQuery(function($){
         assignOptionNumbers();
     }
 
-    $('#id_answer_type').on('change', function(){
+    answerTypeSelect.on('change', function(){
         if($(this).val() == 'MultiChoice'){
-            $('#option-choices').addClass('show')
+            $('#option-choices').addClass('show').removeClass('hide')
+        }else{
+            $('#option-choices').removeClass('show').addClass('hide')
         }
     });
 
