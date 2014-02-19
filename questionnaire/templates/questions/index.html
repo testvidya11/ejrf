@@ -11,7 +11,7 @@
           <thead>
           <tr>
             <th>UID</th>
-            <th>Text</th>
+            <th>Export Label (Detail)</th>
             <th>Response Type</th>
             <th>Actions</th>
           </tr>
@@ -20,7 +20,7 @@
             {% for question in questions %}
                 <tr>
                     <td>{{ question.UID }} </td>
-                    <td id="text-td">{{ question.text }}</td>
+                    <td id="text-td">{{ question.export_label }}</td>
                     <td>{{ question.answer_type }}</td>
                     <td>
                         <div class="btn-group">
