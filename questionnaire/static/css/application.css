@@ -268,8 +268,8 @@ form input[type=file]{
    height: 20px;
 }
 .form-content{
-   overflow: hidden;
    padding-left: 20px;
+   display: table-cell;
 }
 .has-spinner.active {
   cursor:progress;
@@ -288,11 +288,6 @@ form input[type=file]{
 #create-section-modal textarea{
     width: 320px;
     height: 80px;
-}
-
-.form-content{
-    overflow: hidden;
-    padding-left: 20px;
 }
 
 .submit-btn{

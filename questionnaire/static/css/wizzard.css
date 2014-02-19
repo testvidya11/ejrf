@@ -1,5 +1,6 @@
 .nav-wizard{
-    float: left;
+    width: 165px !important;
+    display: table-cell;
 }
 
 .wizard a {
