@@ -42,6 +42,4 @@ jQuery(function($){
         $(this).parents("div#option-input-group").remove();
         assignOptionNumbers();
     });
-
-    $
 });

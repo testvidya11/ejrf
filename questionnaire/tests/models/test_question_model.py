@@ -32,9 +32,9 @@ class QuestionTest(BaseTest):
     def test_question_fields(self):
         question = Question()
         fields = [str(item.attname) for item in question._meta.fields]
-        self.assertEqual(11, len(fields))
+        self.assertEqual(12, len(fields))
         for field in ['id', 'created', 'modified', 'text', 'instructions', 'UID', 'answer_type', 'short_instruction',
-                      'is_core', 'is_primary', 'is_required']:
+                      'is_core', 'is_primary', 'is_required', 'export_label']:
             self.assertIn(field, fields)
 
     def test_question_store(self):
