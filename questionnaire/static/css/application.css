@@ -323,3 +323,7 @@ div.pagination{
     width: 140px;
     font-weight: normal !important;
 }
+.form-table{
+    display: table;
+    width: 100%;
+}
