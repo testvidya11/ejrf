@@ -2,6 +2,7 @@ from django.conf.urls import patterns, url
 from questionnaire.views.export_to_text import ExportToTextView, ExportSectionPDF, DownloadSectionPDF
 from questionnaire.views.home import Home
 from questionnaire.views.locations import ListRegions, ListCountries, RegionsForOrganization
+from questionnaire.views.questionnaire_preview import PreviewQuestionnaire
 from questionnaire.views.sections import NewSection, NewSubSection
 from questionnaire.views.questions import QuestionList, CreateQuestion
 from questionnaire.views.questionnaires import Entry, SubmitQuestionnaire
@@ -23,6 +24,8 @@ urlpatterns = patterns('',
     url(r'^questionnaire/entry/(?P<questionnaire_id>\d+)/section/new/$', NewSection.as_view(), name="new_section_page"),
     url(r'^questionnaire/entry/(?P<questionnaire_id>\d+)/section/(?P<section_id>\d+)/subsection/new/$',
         NewSubSection.as_view(), name="new_subsection_page"),
+    url(r'^questionnaire/(?P<questionnaire_id>\d+)/preview/$', PreviewQuestionnaire.as_view(),
+        name="preview_questionnaire"),
     url(r'^questionnaire/documents/upload/$', UploadDocument.as_view(), name='upload_document'),
     url(r'^questionnaire/entry/(?P<questionnaire_id>\d+)/documents/(?P<document_id>\d+)/download/$',
         DownloadDocument.as_view(), name='download_document'),

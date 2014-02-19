@@ -1,4 +1,6 @@
+from django.utils.datastructures import SortedDict
 from questionnaire.models import Answer, AnswerGroup
+from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 
 
 class UserQuestionnaireService(object):
@@ -45,3 +47,12 @@ class UserQuestionnaireService(object):
     def answered_required_questions_in(self, section):
         required_question_in_section = filter(lambda question: question.is_required, section.ordered_questions())
         return self.answers.filter(question__in=required_question_in_section).count() == len(required_question_in_section)
+
+    def all_sections_questionnaires(self):
+        initial = {'country': self.country, 'status': 'Draft', 'version': self.version}
+        questionnaires = SortedDict()
+        for section in self.questionnaire.sections.order_by('order'):
+            questionnaires[section] = QuestionnaireEntryFormService(section, initial=initial)
+        return questionnaires
+
+

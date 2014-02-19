@@ -216,3 +216,17 @@ class UserServiceTest(BaseTest):
         self.assertFalse(user_service.required_sections_answered())
         self.assertEqual(self.section_1, user_service.unanswered_section)
 
+    def test_knows_all_sections_questionnaire_entry_services(self):
+        section_2 = Section.objects.create(title="section 2", order=2, questionnaire=self.questionnaire, name="section 2")
+        section_3 = Section.objects.create(title="section 3", order=3, questionnaire=self.questionnaire, name="section 3")
+
+        user_service = UserQuestionnaireService(self.user, self.questionnaire)
+        all_section_questionnaires = user_service.all_sections_questionnaires()
+
+        self.assertEqual(3, len(all_section_questionnaires))
+        self.assertIsInstance(all_section_questionnaires[self.section_1], QuestionnaireEntryFormService)
+        self.assertEqual(self.section_1, all_section_questionnaires[self.section_1].section)
+        self.assertIsInstance(all_section_questionnaires[section_2], QuestionnaireEntryFormService)
+        self.assertEqual(section_2, all_section_questionnaires[section_2].section)
+        self.assertIsInstance(all_section_questionnaires[section_3], QuestionnaireEntryFormService)
+        self.assertEqual(section_3, all_section_questionnaires[section_3].section)
