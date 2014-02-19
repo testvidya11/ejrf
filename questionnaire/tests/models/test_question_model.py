@@ -96,7 +96,7 @@ class QuestionTest(BaseTest):
         QuestionOption.objects.create(text='tusker lager', question=question)
         self.assertFalse(question.has_question_option_instructions())
 
-    def test_question_knows_answer_draft_given_group(self):
+    def test_question_knows_answer_draft_given_group_and_country(self):
         question1 = Question.objects.create(text='question1', UID='C00015', answer_type='Number', is_primary=True)
         question2 = Question.objects.create(text='question2', UID='C00016', answer_type='Number')
         question3 = Question.objects.create(text='question3', UID='C00017', answer_type='Number')
@@ -118,9 +118,21 @@ class QuestionTest(BaseTest):
         answer_group2 = AnswerGroup.objects.create(grouped_question=group2, row=1)
         answer_group2.answer.add(question3_answer)
 
-        self.assertEqual(question1_answer, question1.draft_answer(self.parent_group))
-        self.assertEqual(question2_answer, question2.draft_answer(self.parent_group))
-        self.assertIsNone(question3.draft_answer(group2))
+        country_2 = Country.objects.create(name="Uganda 2")
+        question1_answer_2 = NumericalAnswer.objects.create(question=question1, country=country_2,
+                                                          status=Answer.DRAFT_STATUS, response=23)
+        question2_answer_2 = NumericalAnswer.objects.create(question=question2, country=country_2,
+                                                          status=Answer.DRAFT_STATUS, response=1)
+        answer_group_2 = AnswerGroup.objects.create(grouped_question=self.parent_group, row=2)
+        answer_group_2.answer.add(question1_answer_2, question2_answer_2)
+
+        self.assertEqual(question1_answer, question1.draft_answer(self.parent_group, self.country))
+        self.assertEqual(question2_answer, question2.draft_answer(self.parent_group, self.country))
+        self.assertIsNone(question3.draft_answer(group2, self.country))
+
+        self.assertEqual(question1_answer_2, question1.draft_answer(self.parent_group, country_2))
+        self.assertEqual(question2_answer_2, question2.draft_answer(self.parent_group, country_2))
+
 
     def test_get_largest_uid_returns_00001_if_no_quests_exists(self):
         Question.objects.all().delete()

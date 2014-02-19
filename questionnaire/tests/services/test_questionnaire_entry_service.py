@@ -46,9 +46,10 @@ class QuestionnaireEntryAsServiceTest(BaseTest):
         QuestionGroupOrder.objects.create(question=self.question6, question_group=self.question_group3, order=1)
 
         self.country = Country.objects.create(name="Uganda")
+        self.initial = {'status': 'Draft', 'country': self.country}
 
     def test_questionnaire_entry_form_formset_size_per_answer_type_should_match_number_of_question_per_answer_type(self):
-        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1, initial=self.initial)
         formsets = questionnaire_entry_form._formsets()
         self.assertEqual(2, len(formsets['Number']))
         self.assertEqual(1, len(formsets['Text']))
@@ -56,7 +57,7 @@ class QuestionnaireEntryAsServiceTest(BaseTest):
         self.assertEqual(2, len(formsets['MultiChoice']))
 
     def test_questionnaire_entry_form_generates_all_answer_type_formsets(self):
-        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1, initial=self.initial)
         formsets = questionnaire_entry_form._formsets()
         self.assertIsInstance(formsets['Number'][0], NumericalAnswerForm)
         self.assertIsInstance(formsets['Text'][0], TextAnswerForm)
@@ -64,7 +65,7 @@ class QuestionnaireEntryAsServiceTest(BaseTest):
         self.assertIsInstance(formsets['MultiChoice'][0], MultiChoiceAnswerForm)
 
     def test_should_order_forms(self):
-        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1, initial=self.initial)
         formsets = questionnaire_entry_form._formsets()
 
         self.assertEqual(self.question1, formsets['MultiChoice'][0].initial['question'])
@@ -75,7 +76,7 @@ class QuestionnaireEntryAsServiceTest(BaseTest):
         self.assertEqual(self.question6, formsets['Date'][0].initial['question'])
 
     def test_should_give_correct_form_for_question(self):
-        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1, initial=self.initial)
 
         question_form = questionnaire_entry_form.next_ordered_form(self.question1)
         self.assertIsInstance(question_form, MultiChoiceAnswerForm)
@@ -102,7 +103,7 @@ class QuestionnaireEntryAsServiceTest(BaseTest):
         self.assertEqual(self.question6, question_form.initial['question'])
 
     def test_should_append_groups_in_initial(self):
-        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1, initial=self.initial)
         formsets = questionnaire_entry_form._formsets()
 
         self.assertEqual(self.question_group, formsets['MultiChoice'][0].initial['group'])
@@ -112,7 +113,7 @@ class QuestionnaireEntryAsServiceTest(BaseTest):
         self.assertEqual(self.question_group2, formsets['Number'][1].initial['group'])
         self.assertEqual(self.question_group3, formsets['Date'][0].initial['group'])
 
-    def test_initial_gets_response_if_there_is_draft_answer(self):
+    def test_initial_gets_response_if_there_is_draft_answer_for_country(self):
         question2_answer = TextAnswer.objects.create(question=self.question2, country=self.country,
                                                                status=Answer.DRAFT_STATUS, response="ayoyoyo")
         question3_answer = NumericalAnswer.objects.create(question=self.question3, country=self.country,
@@ -120,7 +121,15 @@ class QuestionnaireEntryAsServiceTest(BaseTest):
         answer_group1 = AnswerGroup.objects.create(grouped_question=self.question_group, row=1)
         answer_group1.answer.add(question2_answer, question3_answer)
 
-        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1)
+        country_2 = Country.objects.create(name="Uganda 2")
+        question1_answer_2 = NumericalAnswer.objects.create(question=self.question1, country=country_2,
+                                                          status=Answer.DRAFT_STATUS, response=23)
+        question2_answer_2 = NumericalAnswer.objects.create(question=self.question2, country=country_2,
+                                                          status=Answer.DRAFT_STATUS, response=1)
+        answer_group_2 = AnswerGroup.objects.create(grouped_question=self.question_group, row=2)
+        answer_group_2.answer.add(question1_answer_2, question2_answer_2)
+
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1, initial=self.initial)
         formsets = questionnaire_entry_form._formsets()
 
         self.assertEqual(self.question1, formsets['MultiChoice'][0].initial['question'])
@@ -134,6 +143,7 @@ class QuestionnaireEntryAsServiceTest(BaseTest):
         self.assertNotIn('response', formsets['MultiChoice'][0].initial.keys())
         self.assertEqual(question2_answer.response, formsets['Text'][0].initial['response'])
         self.assertEqual(question3_answer.response, formsets['Number'][0].initial['response'])
+
         self.assertNotIn('response', formsets['MultiChoice'][1].initial.keys())
         self.assertNotIn('response', formsets['Number'][1].initial.keys())
         self.assertNotIn('response', formsets['Date'][0].initial.keys())

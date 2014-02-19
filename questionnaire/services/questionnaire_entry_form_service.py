@@ -43,7 +43,7 @@ class QuestionnaireEntryFormService(object):
         return [dict(self.initial.items() + self._question_initial(order).items()) for order in orders]
 
     def _question_initial(self, order):
-        existing_draft_answer = order.question.draft_answer(order.question_group)
+        existing_draft_answer = order.question.draft_answer(order.question_group, self.initial['country'])
         initial = {'group': order.question_group, 'question': order.question}
         if existing_draft_answer:
             initial['response'] = existing_draft_answer.response
