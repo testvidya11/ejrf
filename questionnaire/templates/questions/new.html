@@ -1,5 +1,7 @@
 {% extends 'base/form.html' %}
 {% block display_form_fields %}
+    <h3>New Question</h3>
+    <hr/>
     {% include 'base/naked_form.html' with a_form=form %}
     {% include 'base/_question_options.html' %}
     <script type="text/template" id="question-option-template">
