@@ -11,13 +11,13 @@ def given_i_have_four_finalised_questionnaires(step):
     Section.objects.create(title="School Based Section1", order=0, questionnaire=world.questionnaire1, name="Name")
 
     world.questionnaire2 = Questionnaire.objects.create(name="JRF Brazil version", description="description",
-                                                        year=2013, finalized=True)
+                                                        year=2009, finalized=True)
     Section.objects.create(title="School Section1", order=0, questionnaire=world.questionnaire2, name="Section1 name")
     world.questionnaire3 = Questionnaire.objects.create(name="JRF Bolivia version", description="some more description",
-                                                        year=2013, finalized=True)
+                                                        year=2011, finalized=True)
     Section.objects.create(title="Section1", order=0, questionnaire=world.questionnaire3, name="School Imm. Delivery")
     world.questionnaire4 = Questionnaire.objects.create(name="JRF kampala version", description="description",
-                                                        year=2013, finalized=True)
+                                                        year=2010, finalized=True)
     Section.objects.create(title="Section1", order=0, questionnaire=world.questionnaire4, name="School Imm. Delivery")
 
 
@@ -35,13 +35,12 @@ def and_i_have_two_draft_questionnaires_for_two_years(step):
 def then_i_should_see_manage_jrf_users_question_bank_extract_and_attachments_links(step):
     world.page.is_text_present("HOME", "EXTRACT", "ATTACHMENTS", "MANAGE JRF", "USERS", "QUESTION BANK")
 
-@step(u'And I should see a list of finalised questionnaires')
-def and_i_should_see_a_list_of_finalised_questionnaires(step):
+@step(u'Then I should see a list of the three most recent finalised questionnaires')
+def then_i_should_see_a_list_of_the_three_most_recent_finalised_questionnaires(step):
     world.page = HomePage(world.browser)
     world.page.links_present_by_text(["%s %s" % (world.questionnaire1.name, world.questionnaire1.year),
                                      "%s %s" % (world.questionnaire2.name, world.questionnaire2.year),
-                                     "%s %s" % (world.questionnaire3.name, world.questionnaire3.year),
-                                     "%s %s" % (world.questionnaire4.name, world.questionnaire4.year)])
+                                     "%s %s" % (world.questionnaire3.name, world.questionnaire3.year)])
 
 @step(u'And I should see a list of draft questionnaires')
 def and_i_should_see_a_list_of_draft_questionnaires(step):
@@ -52,3 +51,11 @@ def and_i_should_see_a_list_of_draft_questionnaires(step):
 @step(u'And I visit manage JRF page')
 def and_i_visit_manage_jrf_page(step):
     world.page.click_by_id('id-manage-jrf')
+
+@step(u'And When I click Older')
+def and_when_i_click_older(step):
+    world.page.click_by_id('id-older-jrf')
+
+@step(u'Then I should also see the fourth finalised questionnaire')
+def then_i_should_also_see_the_fourth_finalised_questionnaire(step):
+    world.page.links_present_by_text(["%s %s" % (world.questionnaire4.name, world.questionnaire4.year)])

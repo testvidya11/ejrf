@@ -336,3 +336,10 @@ div.pagination{
 .modal-lg{
     min-width: 1000px;
 }
+
+li.more-toggle{
+    text-align: center;
+}
+li.more-toggle a{
+    color: #000000 !important;
+}

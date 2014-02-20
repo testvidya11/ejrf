@@ -151,3 +151,9 @@ $('#export-section').on('click', function(event) {
 function return_file(filename){
     window.location = "/export-section/"+filename;
 }
+
+$('#id-older-jrf').on('click', function(event) {
+    $('.hide').toggleClass('show');
+    $(this).html($(this).html() === "More" ? "Less" : "More");
+    event.preventDefault()
+});

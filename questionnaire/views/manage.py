@@ -8,7 +8,7 @@ class ManageJRF(View):
         super(ManageJRF, self).__init__(**kwargs)
         self.permissions = {'any': ('auth.can_view_users', )}
         self.template_name = 'home/global/index.html'
-        self.questionnaires = Questionnaire.objects.all().order_by('year')
+        self.questionnaires = Questionnaire.objects.all().order_by('-year')
         self.sections = Section.objects.order_by('order')
 
     def get(self, *args, **kwargs):
