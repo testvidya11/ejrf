@@ -62,9 +62,6 @@ class Entry(MultiplePermissionsRequiredMixin, FormView):
     def _form_valid(self, request, formsets, user_questionnaire_service, context):
         formsets.save()
         message = 'Draft saved.'
-        if 'final_submit' in request.POST:
-            user_questionnaire_service.submit()
-            message = 'Questionnaire Submitted.'
         messages.success(request, message)
         if request.POST.get('redirect_url', None):
             return HttpResponseRedirect(request.POST['redirect_url'])
@@ -72,8 +69,6 @@ class Entry(MultiplePermissionsRequiredMixin, FormView):
 
     def _form_invalid(self, request, context):
         message = 'Draft NOT saved. See errors below.'
-        if 'final_submit' in request.POST:
-            message = 'Submission NOT completed. See errors below.'
         messages.error(request, message)
         return self.render_to_response(context)
 
@@ -91,8 +86,9 @@ class SubmitQuestionnaire(LoginRequiredMixin, View):
         user_questionnaire_service.submit()
         referer_url = request.META.get('HTTP_REFERER', None)
         redirect_url = referer_url or reverse('home_page')
+        redirect_url = self._format_redirect_url(redirect_url)
         messages.success(request, 'Questionnaire Submitted.')
-        return HttpResponseRedirect(redirect_url.replace('?show=errors', ''))
+        return HttpResponseRedirect(redirect_url)
 
     def _reload_section_with_required_answers_errors(self, request, user_questionnaire_service, *args, **kwargs):
         section = user_questionnaire_service.unanswered_section
@@ -101,3 +97,6 @@ class SubmitQuestionnaire(LoginRequiredMixin, View):
         redirect_url = reverse('questionnaire_entry_page', args=(questionnaire.id, section.id))
         return HttpResponseRedirect('%s?show=errors'%redirect_url)
 
+    def _format_redirect_url(self, redirect_url):
+        redirect_url =  redirect_url.replace('?show=errors', '')
+        return ("%s?preview=1"%redirect_url)

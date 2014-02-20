@@ -1,7 +1,5 @@
-from django.core.urlresolvers import reverse
 from django.test import Client
-from questionnaire.forms.sections import SectionForm, SubSectionForm
-from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionOption, MultiChoiceAnswer, NumericalAnswer, QuestionGroupOrder, AnswerGroup, Answer
+from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionOption, QuestionGroupOrder
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.tests.base_test import BaseTest
 
@@ -38,7 +36,7 @@ class QuestionnairePreviewTest(BaseTest):
         QuestionGroupOrder.objects.create(question_group=self.question_group, question=self.question2, order=2)
         QuestionGroupOrder.objects.create(question_group=self.question_group, question=self.question3, order=3)
 
-        self.url = '/questionnaire/%d/preview/' % (self.questionnaire.id)
+        self.url = '/questionnaire/preview/'
 
         self.client = Client()
         self.user, self.country = self.create_user_with_no_permissions()
@@ -84,7 +82,7 @@ class QuestionnairePreviewTest(BaseTest):
 
 
     def test_login_required(self):
-        self.assert_login_required('/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id))
+        self.assert_login_required('/questionnaire/preview/')
 
     def test_permission_required(self):
-        self.assert_permission_required('/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id))
+        self.assert_permission_required('/questionnaire/preview/')

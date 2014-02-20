@@ -10,36 +10,53 @@
                     <h3>Electronic Joint Reporting Form</h3>
                 </div>
                 {% if user.is_authenticated %}
-                <div class="pull-right login-nav">
-                  Logged in as <a href="#">{{ user.get_username }}<b class="caret"></b></a> | <a href="{% url 'logout_page' %}">Logout</a>
-                </div>
+                    <div class="pull-right login-nav">
+                        Logged in as <a href="#">{{ user.get_username }}<b class="caret"></b></a> | <a
+                            href="{% url 'logout_page' %}">Logout</a>
+                    </div>
                 {% endif %}
                 <br style="clear: both"/>
+
                 <div class="navbar" role="navigation" id="top-nav-menu">
                     <div class="navbar-header">
-                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                      </button>
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                     </div>
                     <div class="navbar-collapse collapse">
-                      <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="{% url 'home_page' %}">HOME</a></li>
-                        <li class="active"><a href="{% url 'export_page' %}" id="extract-link">EXTRACT</a></li>
-                        <li class="active"><a href="{% url 'upload_document' %}" id="id_attachments">ATTACHMENTS</a></li>
-                          {% if perms.auth.can_view_users  %}
-                               <li><a href="{% url 'manage_jrf_page' %}" id="id-manage-jrf">MANAGE JRF</a></li>
-                               <li><a href="{% url 'list_users_page' %}">USERS</a></li>
-                               <li><a href="{% url 'list_questions_page' %}" id="id-question-bank-link">QUESTION BANK</a></li>
-                          {% endif %}
-                       <li>
-                        {% if perms.auth.can_submit_responses %}
-                            <button class="btn btn-default indent submit-btn" id="submit_modal_button" data-toggle="modal" data-target="#submit_modal"><span class="red bold"> SUBMIT</span></button>
-                        {% endif %}
-                      </li>
-                      </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="{% url 'home_page' %}">HOME</a></li>
+                            {% if perms.auth.can_edit_questionnaire %}
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">QUESTIONNAIRE<b
+                                            class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">CORE QUESTIONS</a></li>
+                                        <li><a href="#">REGIONAL QUESTIONS</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            <li class="active"><a href="{% url 'export_page' %}" id="extract-link">EXTRACT</a></li>
+                            <li class="active"><a href="{% url 'upload_document' %}" id="id_attachments">ATTACHMENTS</a>
+                            </li>
+                            {% if perms.auth.can_view_users %}
+                                <li><a href="{% url 'list_users_page' %}">USERS</a></li>
+                                <li><a href="{% url 'list_questions_page' %}" id="id-question-bank-link">QUESTION
+                                    BANK</a></li>
+                            {% endif %}
+                            <li>
+                                {% if perms.auth.can_submit_responses %}
+                                    <button class="btn btn-default button-section pull-right" id="preview_modal_btn"
+                                            data-toggle="modal" data-target="#preview_modal">
+                                        <span class="green bold"><i class="glyphicon glyphicon-ok"></i> SUBMIT</span>
+                                    </button>
+                                {% endif %}
+                            </li>
+                        </ul>
 
                     </div>
                 </div>

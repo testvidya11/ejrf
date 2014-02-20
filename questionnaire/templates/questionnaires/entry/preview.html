@@ -43,9 +43,9 @@
                                                     <label class="col-sm-6 control-label">
                                                         <div class="question-number">
                                                             {{ section.order }}
-                                                                    {% if section.has_at_least_two_subsections %}
-                                                                        .
-                                                                        {{ subsection.order }}{% endif %}.
+                                                            {% if section.has_at_least_two_subsections %}
+                                                                .
+                                                                {{ subsection.order }}{% endif %}.
                                                             {% if subsection.has_at_least_two_groups %}
                                                                 {{ group.order }}.{% endif %}
                                                             {% if group.has_at_least_two_questions %}
@@ -91,6 +91,11 @@
                                     <hr class="group-hr"/>
                                 {% endfor %}
                             {% endfor %}
+                            <div class="alert alert-danger"><span class="red bold">Note:</span> You will not be able to
+                                edit the form after submitting. Any changes thereafter will require submitting a new
+                                version of the form.
+                            </div>
+
                         </div>
                     {% endfor %}
                 </div>

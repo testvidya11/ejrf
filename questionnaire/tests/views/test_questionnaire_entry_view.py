@@ -194,11 +194,12 @@ class QuestionnaireEntrySaveDraftTest(BaseTest):
         answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
         self.assertEqual(1, answer_group.count())
 
-    def XXXtest_post_after_submit_save_new_draft_version(self):
+    def test_post_after_submit_save_new_draft_version(self):
+        data = self.data.copy()
+        self.client.post(self.url, data=data)
 
         self.client.post('/submit/')
 
-        data = self.data.copy()
         old_primary = MultiChoiceAnswer.objects.get(response__id=int(data['MultiChoice-0-response']), question=self.question1, version=0)
         old_answer_1 = NumericalAnswer.objects.get(response=int(data['Number-0-response']), question=self.question2, version=0)
         old_answer_2 = NumericalAnswer.objects.get(response=int(data['Number-1-response']), question=self.question3, version=0)
@@ -330,18 +331,18 @@ class QuestionnaireEntrySubmitTest(BaseTest):
         referer_url = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id)
         meta ={'HTTP_REFERER': referer_url}
         response = self.client.post(self.url, **meta)
-        self.assertRedirects(response, referer_url)
+        self.assertRedirects(response, referer_url + "?preview=1")
 
-    def test_submit_on_success_redirect_to_referer_but_does_not_highlight_errors_no_more(self):
+    def test_submit_on_success_redirect_to_referer__does_not_highlight_errors_and_shows_preview(self):
         referer_url = '/questionnaire/entry/%d/section/%d/?show=errors' % (self.questionnaire.id, self.section_1.id)
-        referer_url_no_show_erorrs = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section_1.id)
+        referer_url_no_error_yes_preview= '/questionnaire/entry/%d/section/%d/?preview=1' % (self.questionnaire.id, self.section_1.id)
         meta ={'HTTP_REFERER': referer_url}
         response = self.client.post(self.url, **meta)
-        self.assertRedirects(response, referer_url_no_show_erorrs)
+        self.assertRedirects(response, referer_url_no_error_yes_preview)
 
     def test_submit_on_success_redirect_to_homepage_if_referer_not_given(self):
         response = self.client.post(self.url)
-        self.assertRedirects(response, '/', target_status_code=302)
+        self.assertRedirects(response, '/?preview=1', target_status_code=302)
 
     def test_submit_success_message(self):
         response = self.client.post(self.url)
