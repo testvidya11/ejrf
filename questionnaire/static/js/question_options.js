@@ -16,11 +16,18 @@ jQuery(function($){
         assignOptionNumbers();
     }
 
+    function removeOptions(){
+        $("div.input-group").each(function(){
+           $(this).remove();
+        });
+    }
+
     answerTypeSelect.on('change', function(){
         if($(this).val() == 'MultiChoice'){
             $('#option-choices').addClass('show').removeClass('hide')
         }else{
             $('#option-choices').removeClass('show').addClass('hide')
+            removeOptions();
         }
     });
 
@@ -29,8 +36,8 @@ jQuery(function($){
             addQuestionOption($("div.form-actions"));
             $form.find('input[name=options]').prop('checked', false)
         }else{
-            $form.find("div#option-input-group").remove();
             $form.find('input[name=options-custom]').prop('checked', false)
+            removeOptions()
         }
     });
 
