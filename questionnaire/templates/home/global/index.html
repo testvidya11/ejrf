@@ -1,9 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base/layout.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Core template</h2>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>
+                        <h3 class="panel-title">In progress<a class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-plus-sign"></span> Create new</a></h3>
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {% for questionnaire in draft_questionnaires %}
+                            <li class="list-group-item">
+                                {% with questionnaire.sections.all|first as first_section %}
+                                    <a href="{% url 'questionnaire_entry_page' questionnaire.id first_section.id %}">{{ questionnaire.name }} {{ questionnaire.year }}</a>
+                                {% endwith %}
+                                <span class="pull-right">
+                                    <a href="" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                                    <a href="" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-thumbs-up"></span> Finalize</a>
+                                </span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Finalized</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {% for questionnaire in finalized_questionnaires %}
+                            <li class="list-group-item">
+                                {% with questionnaire.sections.all|first as first_section %}
+                                    <a href="{% url 'questionnaire_entry_page' questionnaire.id first_section.id %}">{{ questionnaire.name }} {{ questionnaire.year }}</a>
+                                {% endwith %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

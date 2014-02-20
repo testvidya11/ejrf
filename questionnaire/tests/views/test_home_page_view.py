@@ -41,9 +41,11 @@ class GlobalAdminHomePageViewTest(BaseTest):
     def test_get(self):
         questionnaire1 = Questionnaire.objects.create(name="JRF Jamaica", description="bla", year=2012, finalized=True)
         questionnaire2 = Questionnaire.objects.create(name="JRF Brazil", description="bla", year=2013, finalized=False)
+        Section.objects.create(title="section", order=1, questionnaire=questionnaire1, name="section")
+        Section.objects.create(title="section", order=1, questionnaire=questionnaire2, name="section")
         response = self.client.get("/")
         self.assertEqual(200, response.status_code)
         templates = [template.name for template in response.templates]
         self.assertIn('home/global/index.html', templates)
         self.assertIn(questionnaire1, response.context['finalized_questionnaires'])
-        self.assertIn(questionnaire2, response.context['not_finalized_questionnaires'])
+        self.assertIn(questionnaire2, response.context['draft_questionnaires'])

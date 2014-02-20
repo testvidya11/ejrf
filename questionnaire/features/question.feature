@@ -1,14 +1,12 @@
 Feature: Questions feature
   Scenario: List questions
-    Given I have a global admin user
+    Given I am logged in as a global admin
     And I have 100 questions
-    And I logged in the user
     And I visit the question listing page
     Then I should see all questions paginated
 
   Scenario: Create a simple question
-    Given I have a global admin user
-    And I logged in the user
+    Given I am logged in as a global admin
     And I visit the question listing page
     And I click add new question page
     And I fill in the question details
@@ -16,8 +14,7 @@ Feature: Questions feature
     Then I should see the question created
 
     Scenario: Create a simple multiChoice question
-      Given I have a global admin user
-      And I logged in the user
+      Given I am logged in as a global admin
       And I visit the question listing page
       And I click add new question page
       And I fill in the multichoice question form data

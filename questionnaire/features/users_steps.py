@@ -1,4 +1,3 @@
-from time import sleep
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from lettuce import step, world

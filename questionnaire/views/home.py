@@ -25,7 +25,7 @@ class Home(MultiplePermissionsRequiredMixin, View):
     def _render_global_admin_home(self):
         global_admin_template = 'home/global/index.html'
         context = {'finalized_questionnaires': self.questionnaires.filter(finalized=True),
-                   'not_finalized_questionnaires': self.questionnaires.filter(finalized=False)}
+                   'draft_questionnaires': self.questionnaires.filter(finalized=False)}
         return render(self.request, global_admin_template, context)
 
     def _render_questionnaire_section(self):
