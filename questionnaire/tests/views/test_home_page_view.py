@@ -30,7 +30,7 @@ class HomePageViewTest(BaseTest):
         self.assert_login_required('/')
 
 
-class GlobalAdminHomePageViewTest(BaseTest):
+class ManageJRFViewTest(BaseTest):
 
     def setUp(self):
         self.client = Client()
@@ -43,7 +43,7 @@ class GlobalAdminHomePageViewTest(BaseTest):
         questionnaire2 = Questionnaire.objects.create(name="JRF Brazil", description="bla", year=2013, finalized=False)
         Section.objects.create(title="section", order=1, questionnaire=questionnaire1, name="section")
         Section.objects.create(title="section", order=1, questionnaire=questionnaire2, name="section")
-        response = self.client.get("/")
+        response = self.client.get("/manage/")
         self.assertEqual(200, response.status_code)
         templates = [template.name for template in response.templates]
         self.assertIn('home/global/index.html', templates)
