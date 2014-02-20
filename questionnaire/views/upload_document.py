@@ -3,10 +3,10 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import CreateView, View, DeleteView
+from django.views.generic import CreateView, View
 from django.views.static import serve
 from questionnaire.forms.support_documents import SupportDocumentUploadForm
-from questionnaire.models import SupportDocument, UserProfile, Questionnaire
+from questionnaire.models import SupportDocument, Questionnaire
 
 
 class UploadDocument(CreateView):
@@ -17,7 +17,7 @@ class UploadDocument(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(UploadDocument, self).get_context_data(**kwargs)
-        questionnaire = Questionnaire.objects.order_by('-created')[0]
+        questionnaire = Questionnaire.objects.all().latest('created')
         upload_data_initial = {'questionnaire': questionnaire, 'country': self.request.user.user_profile.country}
         context.update({'upload_form': self.form_class(initial=upload_data_initial),
                         'button_label': 'Upload', 'id': 'id-upload-form', 'questionnaire': questionnaire})
