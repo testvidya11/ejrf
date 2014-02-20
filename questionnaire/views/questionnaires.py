@@ -36,11 +36,11 @@ class Entry(MultiplePermissionsRequiredMixin, FormView):
         context = {'questionnaire': questionnaire,
                    'section': section, 'printable': printable,
                    'preview': preview, 'formsets': formsets,
-                   'ordered_sections': Section.objects.order_by('order'),
+                   'ordered_sections': questionnaire.sections.order_by('order'),
                    'form': SectionForm(initial={'questionnaire': questionnaire}),
                    'action': reverse('new_section_page', args=(questionnaire.id, )),
                    'subsection_form': SubSectionForm(),
-                   'subsection_action': reverse('new_subsection_page', args=(questionnaire.id, section.id)),}
+                   'subsection_action': reverse('new_subsection_page', args=(questionnaire.id, section.id))}
 
         return self.render_to_response(context)
 

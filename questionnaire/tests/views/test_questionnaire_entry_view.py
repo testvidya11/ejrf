@@ -78,6 +78,16 @@ class QuestionnaireEntrySaveDraftTest(BaseTest):
         self.assertEqual(response.context['subsection_action'], '/questionnaire/entry/%s/section/%s/subsection/new/' %
                                                                 (self.questionnaire.id, self.section_1.id))
 
+    def test_gets_ordered_sections_for_only_the_questionnaire_in_get_params(self):
+        questionnaire_2 = Questionnaire.objects.create(name="JRF 2013 Core English", is_open=True,
+                                                       description="From dropbox as given by Rouslan")
+        questionnaire_2_section = Section.objects.create(title="section 3", order=3, questionnaire=questionnaire_2)
+
+        response = self.client.get(self.url)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(self.section_1, response.context['ordered_sections'][0])
+        self.assertNotIn(questionnaire_2_section, response.context['ordered_sections'])
+
     def test_gets_printable_as_true_if_set_in_request(self):
         url = '/questionnaire/entry/%d/section/%d/?printable=true&preview=1' % (self.questionnaire.id, self.section_1.id)
         response = self.client.get(url)
