@@ -82,3 +82,26 @@ def and_i_fill_in_the_multichoice_question_form_data(step):
 @step(u'And I check custom option')
 def and_i_check_custom_option(step):
     world.page.check('custom')
+
+@step(u'And I have a question without answers')
+def and_i_have_a_question_without_answers(step):
+    data = {'text': 'B. Number of cases tested',
+            'instructions': "Enter the total number of cases",
+            'UID': '00001', 'answer_type': 'Number'}
+    world.question = Question.objects.create(**data)
+
+@step(u'And I click delete on that question')
+def and_i_click_delete_on_that_question(step):
+    world.page.click_by_id('delete-question-%s' % world.question.id)
+
+@step(u'Then I should see that question was deleted successfully')
+def then_i_should_see_that_question_was_deleted_successfully(step):
+    world.page.is_text_present("Question was deleted successfully")
+
+@step(u'Then I should see a delete confirmation modal')
+def then_i_should_see_a_delete_confirmation_modal(step):
+    world.page.confirm_delete('Question')
+
+@step(u'When I confirm delete')
+def when_i_confirm_delete(step):
+    world.page.click_by_css('.confirm-delete')

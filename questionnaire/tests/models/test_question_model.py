@@ -157,6 +157,16 @@ class QuestionTest(BaseTest):
         Question.objects.create(text='question 3', UID='C00009', answer_type='Number')
         self.assertEqual('00010', Question.next_uid())
 
+    def test_knows_can_be_deleted(self):
+        question = Question.objects.create(text='what do you drink?', UID='C_2014', answer_type='MultiChoice')
+        self.assertTrue(question.can_be_deleted())
+
+    def test_knows_can_not_be_deleted_when_answered(self):
+        question = Question.objects.create(text='what do you drink?', UID='C_2014', answer_type='MultiChoice')
+        country = Country.objects.create(name="Peru")
+        Answer.objects.create(question=question, country=country, status="Submitted")
+        self.assertFalse(question.can_be_deleted())
+
 
 class QuestionOptionTest(BaseTest):
 

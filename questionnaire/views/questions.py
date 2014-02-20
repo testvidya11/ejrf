@@ -1,7 +1,7 @@
 from django.contrib import messages
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DeleteView
 from questionnaire.forms.questions import QuestionForm
 from questionnaire.models import Question
 
@@ -45,3 +45,16 @@ class CreateQuestion(CreateView):
         messages.error(self.request, "Question NOT created. See errors below.")
         context = {'form': self.form, 'btn_label': "CREATE", 'id': 'id-new-question-form'}
         return self.render_to_response(context)
+
+
+class DeleteQuestion(DeleteView):
+    model = Question
+
+    def get(self, *args, **kwargs):
+        question = self.model.objects.get(pk=kwargs['question_id'])
+        if question.can_be_deleted():
+            question.delete()
+            messages.success(self.request, "Question was deleted successfully")
+            return HttpResponseRedirect(reverse_lazy('list_questions_page'))
+        messages.error(self.request, "Question was not deleted because it has responses")
+        return HttpResponseRedirect(reverse_lazy('list_questions_page'))

@@ -1,4 +1,4 @@
-<div class="modal fade" id="delete-file-modal-{{ object.id }}" tabindex="-1" role="dialog" aria-labelledby="delete_modal_label" aria-hidden="true">
+<div class="modal fade" id="delete-modal-{{ object.id }}" tabindex="-1" role="dialog" aria-labelledby="delete_modal_label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,7 +10,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="{{ url }}" class="btn btn-default" id="confirm-{{ action }}-{{ object.id }}" name="final_submit"><span
+                <a href="{{ url }}" class="btn btn-default confirm-delete" id="confirm-{{ action }}-{{ object.id }}" name="final_submit"><span
                         class="green bold"><i class="glyphicon glyphicon-ok"></i> {{ confirm }}</span></a>
             </div>
         </div>

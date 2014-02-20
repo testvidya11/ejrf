@@ -28,3 +28,13 @@ Feature: Questions feature
       Then I should not see that option field
       And I click save question button
       Then I should see the question created
+      
+    Scenario: Delete a simple question
+      Given I am logged in as a global admin
+      And I have a question without answers
+      And I visit the question listing page
+      And I click delete on that question
+      Then I should see a delete confirmation modal
+      When I confirm delete
+      Then I should see that question was deleted successfully
+      

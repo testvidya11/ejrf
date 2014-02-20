@@ -1,6 +1,6 @@
 from django.test import Client
 from questionnaire.forms.questions import QuestionForm
-from questionnaire.models import Question
+from questionnaire.models import Question, QuestionGroup, Questionnaire, Section, SubSection, Country, Answer
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -85,3 +85,28 @@ class SectionsViewTest(BaseTest):
         self.assertIsInstance(response.context['form'], QuestionForm)
         self.assertEqual("CREATE", response.context['btn_label'])
         self.assertEqual("id-new-question-form", response.context['id'])
+
+    def test_delete_question(self):
+        data = {'text': 'B. Number of cases tested',
+                'instructions': "Enter the total number of cases",
+                'UID': '00001', 'answer_type': 'Number'}
+        question = Question.objects.create(**data)
+        response = self.client.get('/questions/%s/delete/' % question.id)
+        self.assertRedirects(response, self.url)
+        self.assertRaises(Question.DoesNotExist, Question.objects.get, **data)
+        message = "Question was deleted successfully"
+        self.assertIn(message, response.cookies['messages'].value)
+
+    def test_does_not_delete_question_when_it_has_answers(self):
+        data = {'text': 'B. Number of cases tested',
+                'instructions': "Enter the total number of cases",
+                'UID': '00001', 'answer_type': 'Number'}
+        question = Question.objects.create(**data)
+        country = Country.objects.create(name="Peru")
+        Answer.objects.create(question=question, country=country, status="Submitted")
+
+        response = self.client.get('/questions/%s/delete/' % question.id)
+        self.assertRedirects(response, self.url)
+        self.failUnless(Question.objects.get(**data))
+        message = "Question was not deleted because it has responses"
+        self.assertIn(message, response.cookies['messages'].value)

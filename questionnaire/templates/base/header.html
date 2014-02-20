@@ -28,38 +28,29 @@
                         </button>
                     </div>
                     <div class="navbar-collapse collapse">
-
-                        <div class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li class="active"><a href="{% url 'home_page' %}">HOME</a></li>
-                                <li class="active"><a href="{% url 'export_page' %}" id="extract-link">EXTRACT</a></li>
-                                <li class="active"><a href="{% url 'upload_document' %}"
-                                                      id="id_attachments">ATTACHMENTS</a></li>
-                                {% if perms.auth.can_view_users %}
-                                    <li><a href="{% url 'manage_jrf_page' %}" id="id-manage-jrf">MANAGE JRF</a></li>
-                                    <li><a href="{% url 'list_users_page' %}">USERS</a></li>
-                                    <li><a href="{% url 'list_questions_page' %}" id="id-question-bank-link">QUESTION
-                                        BANK</a></li>
-                                {% endif %}
-                                <li>
-                                    {% if perms.auth.can_view_users %}
-                                        <li><a href="{% url 'list_users_page' %}">USERS</a></li>
-                                        <li><a href="{% url 'list_questions_page' %}" id="id-question-bank-link">QUESTION
-                                            BANK</a></li>
-                                    {% endif %}
-                                <li>
-                                    {% if perms.auth.can_submit_responses %}
-                                        <button class="btn btn-default button-section pull-right" id="preview_modal_btn"
-                                                data-toggle="modal" data-target="#preview_modal">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="{% url 'home_page' %}">HOME</a></li>
+                            <li class="active"><a href="{% url 'export_page' %}" id="extract-link">EXTRACT</a></li>
+                            <li class="active"><a href="{% url 'upload_document' %}"
+                                                  id="id_attachments">ATTACHMENTS</a></li>
+                            {% if perms.auth.can_view_users %}
+                                <li><a href="{% url 'manage_jrf_page' %}" id="id-manage-jrf">MANAGE JRF</a></li>
+                                <li><a href="{% url 'list_users_page' %}">USERS</a></li>
+                                <li><a href="{% url 'list_questions_page' %}" id="id-question-bank-link">QUESTION
+                                    BANK</a></li>
+                            {% endif %}
+                            {% if perms.auth.can_submit_responses %}
+                                <button class="btn btn-default button-section pull-right" id="preview_modal_btn"
+                                        data-toggle="modal" data-target="#preview_modal">
                                             <span class="green bold"><i
                                                     class="glyphicon glyphicon-ok"></i> SUBMIT</span>
-                                        </button>
-                                    {% endif %}
-                                </li>
-                            </ul>
-                        </div>
+                                </button>
+                            {% endif %}
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </header>

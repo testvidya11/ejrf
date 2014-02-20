@@ -3,6 +3,7 @@
 {% block content %}
 
     {% load pagination_tags %}
+    {% load generic_tags %}
     {% autopaginate questions 50 %}
     <div class="table-responsive">
     <span class="pull-left"><h3>Question List</h3>
@@ -29,10 +30,11 @@
                     <td>
                         <div class="btn-group">
                             <a href="" class="btn btn-sm btn-default"> <span class="glyphicon glyphicon-pencil"></span> Edit</a>
-                            <a href="" class="btn btn-sm btn-default"> <span class="glyphicon glyphicon-trash"></span> Delete</a>
+                            <a data-target="#delete-modal-{{ question.id }}" data-toggle="modal" class="btn btn-sm btn-default red" id="delete-question-{{ question.id }}"> <span class="glyphicon glyphicon-trash"></span> Delete</a>
                         </div>
                     </td>
                 </tr>
+                {% include 'base/modals/_delete.html' with object_type='Question' title='Confirm Delete' action="delete" object=question  url=question.id|get_url_with_ids:"delete_question_page"  confirm='Yes'%}
             {% endfor %}
           </tbody>
       </table>

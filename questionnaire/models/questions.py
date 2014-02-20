@@ -71,6 +71,9 @@ class Question(BaseModel):
     def stringify(cls, uid):
         return "0" * (MAX_UID_LENGTH - len(str(uid))) + str(uid)
 
+    def can_be_deleted(self):
+        return not self.all_answers().exists()
+
 
 class QuestionOption(BaseModel):
     text = models.CharField(max_length=100, blank=False, null=False)
