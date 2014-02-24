@@ -20,26 +20,31 @@ class QuestionnaireClonerService(object):
 
     def clone_sections(self):
         sections = self.original_questionnaire.sections.all()
-        bulk_sections = dict((section, Section.objects.create(questionnaire=self.questionnaire, **self._querable_fields(section, ['name', 'title', 'description', 'order']))) for section in sections)
-        return bulk_sections
+        fields = ['name', 'title', 'description', 'order']
+        return self._create_copy_of(fields, sections, Section, questionnaire=self.questionnaire)
 
     def clone_sub_sections(self):
         sub_sections_map = {}
+        fields = ['title', 'description', 'order']
         for old_section, new_section in self.sections.items():
             sub_sections = old_section.sub_sections.all()
-            sub_sections_map.update(dict((sub_section, SubSection.objects.create(section=new_section, **self._querable_fields(sub_section, ['title', 'description', 'order']))) for sub_section in sub_sections))
+            sub_sections_map.update(self._create_copy_of(fields, sub_sections, SubSection, section=new_section))
         return sub_sections_map
 
     def clone_question_groups(self):
         question_groups_map = {}
+        fields = ['name', 'instructions', 'parent', 'order', 'allow_multiples']
         for old_sub_section, new_sub_section in self.sub_sections.items():
             question_groups = old_sub_section.all_question_groups()
-            question_groups_map.update(dict((question_group, QuestionGroup.objects.create(subsection=new_sub_section, **self._querable_fields(question_group, ['name', 'instructions', 'parent', 'order', 'allow_multiples']))) for question_group in question_groups))
+            question_groups_map.update(self._create_copy_of(fields, question_groups, QuestionGroup, subsection=new_sub_section))
         return question_groups_map
-
-
-    def _get_fields_to_query(self, fields_to_query, model):
-        return dict((key, value) for key, value in model.__dict__.iteritems() if value and key in fields_to_query)
 
     def _querable_fields(self, model, fields):
         return dict((field, getattr(model,field)) for field in fields)
+
+    def _create_copy_of(self, fields, objects, klass, **kwargs):
+        copy_map = {}
+        for model in objects:
+            kwargs.update(**self._querable_fields(model, fields))
+            copy_map[model] = klass.objects.create(**kwargs)
+        return copy_map
