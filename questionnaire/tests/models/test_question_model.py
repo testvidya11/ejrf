@@ -133,23 +133,6 @@ class QuestionTest(BaseTest):
         self.assertEqual(question1_answer_2, question1.draft_answer(self.parent_group, country_2))
         self.assertEqual(question2_answer_2, question2.draft_answer(self.parent_group, country_2))
 
-
-    def test_get_largest_uid_returns_00001_if_no_quests_exists(self):
-        Question.objects.all().delete()
-        self.assertEqual(int('00001'), Question.largest_uid())
-
-    def test_get_largest_uid(self):
-        self.assertEqual(int('00003'), Question.largest_uid())
-
-    def test_get_largest_uid_given_more_than_one_question(self):
-        Question.objects.create(text='question 3', UID='C00005', answer_type='Number')
-        self.assertEqual(int('00005'), Question.largest_uid())
-
-    def test_get_largest_uid_given_more_than_one_question_with_letters(self):
-        Question.objects.create(text='question 3', UID='C0005b', answer_type='Number')
-        Question.objects.create(text='question 3', UID='C00006', answer_type='Number')
-        self.assertEqual(int('00006'), Question.largest_uid())
-
     def test_get_next_uid_given_given_largest_uid_question(self):
         self.assertEqual('00004', Question.next_uid())
 

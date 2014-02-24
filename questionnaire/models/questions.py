@@ -1,10 +1,7 @@
 import re
 from django.db import models
 from questionnaire.models.base import BaseModel
-
-INITIAL_UID = 1
-
-MAX_UID_LENGTH = 5
+from questionnaire.utils.question_util import largest_uid, stringify
 
 
 class Question(BaseModel):
@@ -55,21 +52,8 @@ class Question(BaseModel):
         return None
 
     @classmethod
-    def largest_uid(cls):
-        uid_numbers = []
-        all_question_uids = Question.objects.all().values_list('UID', flat=True)
-        for uid in all_question_uids:
-            uid_numbers.extend([int(num[0]) for num in re.findall(r'(\d+)|([\+-]?\d+)', uid)])
-        return max(uid_numbers) if len(uid_numbers) > 0 else INITIAL_UID
-
-    @classmethod
     def next_uid(cls):
-        largest_uid = cls.largest_uid()
-        return cls.stringify(largest_uid + 1)
-
-    @classmethod
-    def stringify(cls, uid):
-        return "0" * (MAX_UID_LENGTH - len(str(uid))) + str(uid)
+        return stringify(largest_uid(cls) + 1)
 
     def can_be_deleted(self):
         return not self.all_answers().exists()
