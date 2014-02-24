@@ -13,7 +13,10 @@ class QuestionnaireClonerServiceTest(BaseTest):
         self.section_2 = Section.objects.create(title="Cured Cases of Measles", order=1,
                                                 questionnaire=self.questionnaire, name="Cured Cases")
 
-        self.sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1, section=self.section_1)
+        self.sub_section1 = SubSection.objects.create(title="Reported cases for the year 2013", order=1, section=self.section_1)
+        self.sub_section2 = SubSection.objects.create(title="Reported cases for the year", order=2, section=self.section_1)
+        self.sub_section3 = SubSection.objects.create(title="Reported cures 2014", order=1, section=self.section_2)
+        self.sub_section4 = SubSection.objects.create(title="Reported cures", order=2, section=self.section_2)
         self.primary_question = Question.objects.create(text='Disease', UID='C00003', answer_type='MultiChoice',
                                                         is_primary=True)
         self.option = QuestionOption.objects.create(text="Measles", question=self.primary_question, UID="QO1")
@@ -26,9 +29,6 @@ class QuestionnaireClonerServiceTest(BaseTest):
                                                  Include only those cases found positive for the infectious agent.
                                                  """,
                                                  UID='C00005', answer_type='Number')
-
-        self.parent = QuestionGroup.objects.create(subsection=self.sub_section, order=1)
-        self.parent.question.add(self.question1, self.question2, self.primary_question)
 
     def test_returns_all_a_new_questionnaire_instance_when_clone_is_called(self):
         questionnaire, old = QuestionnaireClonerService(self.questionnaire).clone()
@@ -54,3 +54,24 @@ class QuestionnaireClonerServiceTest(BaseTest):
         section_values = old_sections.values('title', 'name', 'description')
         for section_data in section_values:
             self.assertEqual(2, Section.objects.filter(**section_data).count())
+
+    def test_returns_all_a_old_sub_sections_on_the_new_questionnaire_instance_when_clone_is_called(self):
+        self.assertEqual(4, SubSection.objects.all().count())
+
+        new, old = QuestionnaireClonerService(self.questionnaire).clone()
+
+        self.assertEqual(8, SubSection.objects.all().count())
+
+        old_sections = old.sections.all()
+        for section in old_sections:
+            subsections = section.sub_sections.all()
+            self.assertEqual(2, subsections.count())
+            for subsection_values in subsections.values('title', 'description'):
+                self.assertEqual(2, SubSection.objects.filter(**subsection_values).count())
+
+        new_sections = new.sections.all()
+        for section in new_sections:
+            subsections = section.sub_sections.all()
+            self.assertEqual(2, subsections.count())
+            for subsection_values in subsections.values('title', 'description'):
+                self.assertEqual(2, SubSection.objects.filter(**subsection_values).count())

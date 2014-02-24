@@ -9,7 +9,7 @@ class SectionForm(ModelForm):
         model = Section
         fields = ['questionnaire', 'name', 'title', 'description']
         widgets = {'questionnaire': forms.HiddenInput(),
-                   'description': forms.Textarea(attrs={"rows": 4, "cols": 50})}
+                   'description': forms.Textarea(attrs={"rows": 4, "cols": 40})}
 
 
 class SubSectionForm(ModelForm):
