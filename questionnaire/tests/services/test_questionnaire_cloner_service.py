@@ -92,7 +92,7 @@ class QuestionnaireClonerServiceTest(BaseTest):
             for subsection_values in subsections.values('title', 'description', 'order'):
                 self.assertEqual(2, SubSection.objects.filter(**subsection_values).count())
 
-    def test_clones_all_groups_and_sub_groups_from_questionnaire(self):
+    def test_clones_all_groups_from_questionnaire(self):
         self.assertEqual(10, QuestionGroup.objects.all().count())
         new, old = QuestionnaireClonerService(self.questionnaire).clone()
         self.assertEqual(20, QuestionGroup.objects.all().count())
@@ -110,3 +110,21 @@ class QuestionnaireClonerServiceTest(BaseTest):
             for subsection in subsections:
                 for group_values in subsection.all_question_groups().values('name', 'instructions', 'parent', 'order', 'allow_multiples'):
                     self.assertEqual(10, QuestionGroup.objects.filter(**group_values).count())
+
+    def test_clones_sub_groups_of_groups_from_questionnaire(self):
+        sub_group1 = QuestionGroup.objects.create(subsection=self.sub_section1, order=1, parent=self.parent10)
+        sub_group2 = QuestionGroup.objects.create(subsection=self.sub_section1, order=1, parent=self.parent12)
+        self.assertEqual(1, QuestionGroup.objects.filter(parent=self.parent10).count())
+        self.assertEqual(1, QuestionGroup.objects.filter(parent=self.parent12).count())
+
+        self.assertEqual(12, QuestionGroup.objects.all().count())
+        new, old = QuestionnaireClonerService(self.questionnaire).clone()
+        self.assertEqual(24, QuestionGroup.objects.all().count())
+        self.assertEqual(2, QuestionGroup.objects.filter(subsection=self.sub_section1, parent__in=[self.parent10, self.parent12]).count())
+        self.assertEqual(12, len(old.all_groups()))
+        self.assertIn(sub_group1, old.all_groups())
+        self.assertIn(sub_group2, old.all_groups())
+        self.assertEqual(12, len(new.all_groups()))
+        self.assertNotIn(sub_group1, new.all_groups())
+        self.assertNotIn(sub_group2, new.all_groups())
+        self.assertEqual(2, QuestionGroup.objects.filter(subsection__section__in=new.sections.all(), parent__isnull=False).count())
