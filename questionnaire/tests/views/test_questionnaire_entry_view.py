@@ -433,7 +433,7 @@ class QuestionnaireCloneViewTest(BaseTest):
         self.assertEqual(2, QuestionGroup.objects.all().count())
         self.assertEqual(5, Question.objects.all().count())
 
-        response = self.client.post('/questionnaire/entry/%s/duplicate/' % self.questionnaire.id, data=form_data)
+        response = self.client.post('/questionnaire/entry/duplicate/', data=form_data)
         self.assertEqual(2, Questionnaire.objects.all().count())
         self.assertEqual(4, Section.objects.all().count())
         self.assertEqual(8, SubSection.objects.all().count())
@@ -457,7 +457,7 @@ class QuestionnaireCloneViewTest(BaseTest):
         self.assertEqual(2, QuestionGroup.objects.all().count())
         self.assertEqual(5, Question.objects.all().count())
 
-        response = self.client.post('/questionnaire/entry/%s/duplicate/' % self.questionnaire.id, data=form_data)
+        response = self.client.post('/questionnaire/entry/duplicate/', data=form_data)
         self.assertEqual(1, Questionnaire.objects.all().count())
         self.assertEqual(2, Section.objects.all().count())
         self.assertEqual(4, SubSection.objects.all().count())

@@ -15,9 +15,9 @@ class UserFilterForm(forms.Form):
 
 
 class QuestionnaireFilterForm(forms.Form):
+    year = forms.ChoiceField(widget=forms.Select(attrs={"class": 'form-control'}), required=False, choices=[])
     questionnaire = forms.ModelChoiceField(queryset=Questionnaire.objects.filter(finalized=True), empty_label="All",
                                            widget=forms.Select(attrs={"class": 'form-control'}), required=True)
-    year = forms.ChoiceField(widget=forms.Select(attrs={"class": 'form-control'}), required=False, choices=[])
 
     def __init__(self, *args, **kwargs):
         super(QuestionnaireFilterForm, self).__init__(*args, **kwargs)

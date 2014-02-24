@@ -1,5 +1,7 @@
+from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.views.generic import View
+from questionnaire.forms.filter import QuestionnaireFilterForm
 from questionnaire.models import Section, Questionnaire
 
 
@@ -13,5 +15,8 @@ class ManageJRF(View):
 
     def get(self, *args, **kwargs):
         context = {'finalized_questionnaires': self.questionnaires.filter(finalized=True),
-                   'draft_questionnaires': self.questionnaires.filter(finalized=False)}
+                   'draft_questionnaires': self.questionnaires.filter(finalized=False),
+                   'filter_form': QuestionnaireFilterForm(),
+                   'btn_label': 'Duplicate',
+                   'action': reverse('duplicate_questionnaire_page')}
         return render(self.request, self.template_name, context)

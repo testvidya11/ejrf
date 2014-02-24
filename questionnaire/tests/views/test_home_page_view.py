@@ -1,4 +1,6 @@
+from django.core.urlresolvers import reverse
 from django.test import Client
+from questionnaire.forms.filter import QuestionnaireFilterForm
 from questionnaire.models import Questionnaire, Section
 from questionnaire.tests.base_test import BaseTest
 
@@ -49,3 +51,5 @@ class ManageJRFViewTest(BaseTest):
         self.assertIn('home/global/index.html', templates)
         self.assertIn(questionnaire1, response.context['finalized_questionnaires'])
         self.assertIn(questionnaire2, response.context['draft_questionnaires'])
+        self.assertIsInstance(response.context['filter_form'], QuestionnaireFilterForm)
+        self.assertEqual(reverse('duplicate_questionnaire_page'), response.context['action'])
