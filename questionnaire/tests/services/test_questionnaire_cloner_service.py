@@ -128,3 +128,13 @@ class QuestionnaireClonerServiceTest(BaseTest):
         self.assertNotIn(sub_group1, new.all_groups())
         self.assertNotIn(sub_group2, new.all_groups())
         self.assertEqual(2, QuestionGroup.objects.filter(subsection__section__in=new.sections.all(), parent__isnull=False).count())
+
+    def test_clones_questions_in_the_questionnaire_with_their_order_objects(self):
+        question3 = Question.objects.create(text='B. Number of cases tested', UID=Question.next_uid(), answer_type='Number')
+        question4 = Question.objects.create(text='C. Number of cases positive', UID=Question.next_uid(), answer_type='Number')
+        self.assertEqual(5, Question.objects.all().count())
+        self.parent10.question.add(question3, question4, self.question1, self.question1)
+        new, old = QuestionnaireClonerService(self.questionnaire).clone()
+        self.assertEqual(5, Question.objects.all().count())
+        self.assertEqual(5, len(old.get_all_questions()))
+        self.assertEqual(5, len(new.get_all_questions()))

@@ -17,6 +17,7 @@ class QuestionnaireClonerService(object):
         self.sub_sections = self.clone_sub_sections()
         self.question_groups = self.clone_question_groups()
         self.assign_sub_groups()
+        self.assign_questions_to_groups()
         return self.questionnaire, self.original_questionnaire
 
     def clone_sections(self):
@@ -40,13 +41,13 @@ class QuestionnaireClonerService(object):
             question_groups_map.update(self._create_copy_of(fields, question_groups, QuestionGroup, subsection=new_sub_section))
         return question_groups_map
 
-    def _querable_fields(self, model, fields):
-        return dict((field, getattr(model,field)) for field in fields)
+    def _query_params(self, model, fields):
+        return dict((field, getattr(model, field)) for field in fields)
 
     def _create_copy_of(self, fields, objects, klass, **kwargs):
         copy_map = {}
         for model in objects:
-            kwargs.update(**self._querable_fields(model, fields))
+            kwargs.update(**self._query_params(model, fields))
             copy_map[model] = klass.objects.create(**kwargs)
         return copy_map
 
@@ -55,3 +56,7 @@ class QuestionnaireClonerService(object):
             if old.parent:
                 new.parent = self.question_groups.get(old.parent)
                 new.save()
+
+    def assign_questions_to_groups(self):
+        for old, new in self.question_groups.items():
+            new.question.add(*old.all_questions())

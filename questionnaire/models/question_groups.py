@@ -34,7 +34,6 @@ class QuestionGroup(BaseModel):
     def has_at_least_two_questions(self):
         return self.question.count() > 1
 
-
     class Meta:
         ordering = ('order',)
         app_label = 'questionnaire'
