@@ -6,7 +6,7 @@ from questionnaire.views.manage import ManageJRF
 from questionnaire.views.questionnaire_preview import PreviewQuestionnaire
 from questionnaire.views.sections import NewSection, NewSubSection
 from questionnaire.views.questions import QuestionList, CreateQuestion, DeleteQuestion
-from questionnaire.views.questionnaires import Entry, SubmitQuestionnaire
+from questionnaire.views.questionnaires import Entry, SubmitQuestionnaire, DuplicateQuestionnaire
 from questionnaire.views.upload_document import UploadDocument, DownloadDocument, DeleteDocument
 from questionnaire.views.users import UsersList, CreateUser
 
@@ -33,6 +33,7 @@ urlpatterns = patterns('',
         DownloadDocument.as_view(), name='download_document'),
     url(r'^questionnaire/document/(?P<document_id>\d+)/delete/$',
         DeleteDocument.as_view(), name='delete_document'),
+    url(r'^questionnaire/entry/(?P<questionnaire_id>\d+)/duplicate/$',  DuplicateQuestionnaire.as_view(), name='duplicate_questionnaire'),
     url(r'^questions/$', QuestionList.as_view(), name='list_questions_page'),
     url(r'^questions/new/$', CreateQuestion.as_view(), name='new_question_page'),
     url(r'^questions/(?P<question_id>\d+)/delete/$', DeleteQuestion.as_view(), name='delete_question_page'),

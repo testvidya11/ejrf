@@ -1,4 +1,5 @@
 import copy
+from questionnaire.models import QuestionGroupOrder
 from questionnaire.utils.cloner_util import create_copies
 
 
@@ -12,6 +13,7 @@ class QuestionnaireClonerService(object):
 
     def clone(self):
         self.questionnaire.pk = None
+        self.questionnaire.finalized = False
         self.questionnaire.save()
         self.sections = self.clone_sections()
         self.sub_sections = self.clone_sub_sections()
@@ -49,4 +51,6 @@ class QuestionnaireClonerService(object):
 
     def assign_questions_to_groups(self):
         for old, new in self.question_groups.items():
-            new.question.add(*old.all_questions())
+            for index, question in enumerate(old.ordered_questions()):
+                new.question.add(question)
+                QuestionGroupOrder.objects.create(order=index + 1, question_group=new, question=question)

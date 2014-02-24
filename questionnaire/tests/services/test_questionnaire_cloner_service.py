@@ -1,4 +1,4 @@
-from questionnaire.models import Question, QuestionGroup, Questionnaire, SubSection, Section, QuestionOption
+from questionnaire.models import Question, QuestionGroup, Questionnaire, SubSection, Section, QuestionOption, QuestionGroupOrder
 from questionnaire.services.questionnaire_cloner import QuestionnaireClonerService
 from questionnaire.tests.base_test import BaseTest
 
@@ -30,7 +30,7 @@ class QuestionnaireClonerServiceTest(BaseTest):
                                                  UID='C00005', answer_type='Number')
 
         self.parent10 = QuestionGroup.objects.create(subsection=self.sub_section1, order=1)
-        self.parent12 = QuestionGroup.objects.create(subsection=self.sub_section1, order=2)
+        self.parent120 = QuestionGroup.objects.create(subsection=self.sub_section1, order=2)
 
         self.parent11 = QuestionGroup.objects.create(subsection=self.sub_section2, order=1)
         self.parent12 = QuestionGroup.objects.create(subsection=self.sub_section2, order=2)
@@ -132,6 +132,12 @@ class QuestionnaireClonerServiceTest(BaseTest):
     def test_clones_questions_in_the_questionnaire_with_their_order_objects(self):
         question3 = Question.objects.create(text='B. Number of cases tested', UID=Question.next_uid(), answer_type='Number')
         question4 = Question.objects.create(text='C. Number of cases positive', UID=Question.next_uid(), answer_type='Number')
+        QuestionGroupOrder.objects.create(order=1, question_group=self.parent10, question=self.primary_question)
+        QuestionGroupOrder.objects.create(order=2, question_group=self.parent10, question=self.question1)
+        QuestionGroupOrder.objects.create(order=3, question_group=self.parent10, question=self.question2)
+        QuestionGroupOrder.objects.create(order=4, question_group=self.parent120, question=question3)
+        QuestionGroupOrder.objects.create(order=5, question_group=self.parent120, question=question4)
+
         self.assertEqual(5, Question.objects.all().count())
         self.parent10.question.add(question3, question4, self.question1, self.question1)
         new, old = QuestionnaireClonerService(self.questionnaire).clone()

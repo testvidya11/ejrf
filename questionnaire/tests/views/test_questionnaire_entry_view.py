@@ -336,7 +336,7 @@ class QuestionnaireEntrySubmitTest(BaseTest):
     def test_submit_on_success_redirect_to_referer__does_not_highlight_errors_and_shows_preview(self):
         referer_url = '/questionnaire/entry/%d/section/%d/?show=errors' % (self.questionnaire.id, self.section_1.id)
         referer_url_no_error_yes_preview= '/questionnaire/entry/%d/section/%d/?preview=1' % (self.questionnaire.id, self.section_1.id)
-        meta ={'HTTP_REFERER': referer_url}
+        meta = {'HTTP_REFERER': referer_url}
         response = self.client.post(self.url, **meta)
         self.assertRedirects(response, referer_url_no_error_yes_preview)
 
@@ -380,3 +380,90 @@ class QuestionnaireEntrySubmitTest(BaseTest):
         self.failIf(primary)
         self.failIf(answer_1)
         self.failIf(answer_2)
+
+
+class QuestionnaireCloneViewTest(BaseTest):
+    def setUp(self):
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", finalized=True, year=2013)
+        self.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
+                                                      questionnaire=self.questionnaire, name="Reported Cases")
+        self.section_2 = Section.objects.create(title="Cured Cases of Measles", order=1,
+                                                questionnaire=self.questionnaire, name="Cured Cases")
+
+        self.sub_section1 = SubSection.objects.create(title="Reported cases for the year 2013", order=1, section=self.section_1)
+        self.sub_section2 = SubSection.objects.create(title="Reported cases for the year", order=2, section=self.section_1)
+        self.sub_section3 = SubSection.objects.create(title="Reported cures 2014", order=1, section=self.section_2)
+        self.sub_section4 = SubSection.objects.create(title="Reported cures", order=2, section=self.section_2)
+        self.primary_question = Question.objects.create(text='Disease', UID='C00003', answer_type='MultiChoice',
+                                                        is_primary=True)
+        self.option = QuestionOption.objects.create(text="Measles", question=self.primary_question, UID="QO1")
+        self.option2 = QuestionOption.objects.create(text="TB", question=self.primary_question, UID="QO2")
+
+        self.question1 = Question.objects.create(text='B. Number of cases tested', UID='C00004', answer_type='Number')
+
+        self.question2 = Question.objects.create(text='C. Number of cases positive',
+                                                 instructions="""
+                                                 Include only those cases found positive for the infectious agent.
+                                                 """,
+                                                 UID='C00005', answer_type='Number')
+        self.parent10 = QuestionGroup.objects.create(subsection=self.sub_section1, order=1)
+        self.parent12 = QuestionGroup.objects.create(subsection=self.sub_section1, order=2)
+        self.question3 = Question.objects.create(text='B. Number of cases tested', UID=Question.next_uid(), answer_type='Number')
+        self.question4 = Question.objects.create(text='C. Number of cases positive', UID=Question.next_uid(), answer_type='Number')
+        QuestionGroupOrder.objects.create(order=1, question_group=self.parent10, question=self.primary_question)
+        QuestionGroupOrder.objects.create(order=2, question_group=self.parent10, question=self.question1)
+        QuestionGroupOrder.objects.create(order=3, question_group=self.parent10, question=self.question2)
+        QuestionGroupOrder.objects.create(order=4, question_group=self.parent12, question=self.question3)
+        QuestionGroupOrder.objects.create(order=5, question_group=self.parent12, question=self.question4)
+        self.parent10.question.add(self.question3, self.question4, self.question2, self.question1, self.primary_question)
+        self.client = Client()
+        self.user, self.country = self.create_user_with_no_permissions()
+
+        self.assign('can_view_users', self.user)
+        self.client.login(username=self.user.username, password='pass')
+
+    def test_post_clone_questionnaire(self):
+        form_data = {
+            'questionnaire': self.questionnaire.id,
+            'year': 2013
+        }
+        self.assertEqual(1, Questionnaire.objects.all().count())
+        self.assertEqual(2, Section.objects.all().count())
+        self.assertEqual(4, SubSection.objects.all().count())
+        self.assertEqual(2, QuestionGroup.objects.all().count())
+        self.assertEqual(5, Question.objects.all().count())
+
+        response = self.client.post('/questionnaire/entry/%s/duplicate/' % self.questionnaire.id, data=form_data)
+        self.assertEqual(2, Questionnaire.objects.all().count())
+        self.assertEqual(4, Section.objects.all().count())
+        self.assertEqual(8, SubSection.objects.all().count())
+        self.assertEqual(4, QuestionGroup.objects.all().count())
+        self.assertEqual(5, Question.objects.all().count())
+        questionnaire = Questionnaire.objects.all().exclude(id=self.questionnaire.id)[0]
+        section = questionnaire.sections.all()[0]
+        url = '/questionnaire/entry/%d/section/%d/' % (questionnaire.id, section.id)
+        self.assertRedirects(response, url)
+        messages = "New the questionnaire has been duplicated successfully, You can now go ahead and edit it"
+        self.assertIn(messages, response.cookies['messages'].value)
+
+    def test_post_clone_questionnaire_with_invalid_form(self):
+        form_data = {
+            'questionnaire': self.questionnaire.id,
+            'year': 2030
+        }
+        self.assertEqual(1, Questionnaire.objects.all().count())
+        self.assertEqual(2, Section.objects.all().count())
+        self.assertEqual(4, SubSection.objects.all().count())
+        self.assertEqual(2, QuestionGroup.objects.all().count())
+        self.assertEqual(5, Question.objects.all().count())
+
+        response = self.client.post('/questionnaire/entry/%s/duplicate/' % self.questionnaire.id, data=form_data)
+        self.assertEqual(1, Questionnaire.objects.all().count())
+        self.assertEqual(2, Section.objects.all().count())
+        self.assertEqual(4, SubSection.objects.all().count())
+        self.assertEqual(2, QuestionGroup.objects.all().count())
+        self.assertEqual(5, Question.objects.all().count())
+        url = '/manage/'
+        self.assertRedirects(response, url)
+        messages = "Questionnaire could not be duplicated see errors below"
+        self.assertIn(messages, response.cookies['messages'].value)

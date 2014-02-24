@@ -4,8 +4,10 @@ from django.http import HttpResponseRedirect
 from django.views.generic import FormView
 from django.views.generic import View
 from braces.views import MultiplePermissionsRequiredMixin, LoginRequiredMixin
+from questionnaire.forms.filter import QuestionnaireFilterForm
 
 from questionnaire.forms.sections import SectionForm, SubSectionForm
+from questionnaire.services.questionnaire_cloner import QuestionnaireClonerService
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.models import Questionnaire, Section
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
@@ -95,8 +97,22 @@ class SubmitQuestionnaire(LoginRequiredMixin, View):
         questionnaire = user_questionnaire_service.questionnaire
         messages.error(request, 'Questionnaire NOT submitted. See errors below.')
         redirect_url = reverse('questionnaire_entry_page', args=(questionnaire.id, section.id))
-        return HttpResponseRedirect('%s?show=errors'%redirect_url)
+        return HttpResponseRedirect('%s?show=errors' % redirect_url)
 
     def _format_redirect_url(self, redirect_url):
-        redirect_url =  redirect_url.replace('?show=errors', '')
-        return ("%s?preview=1"%redirect_url)
+        redirect_url = redirect_url.replace('?show=errors', '')
+        return "%s?preview=1" % redirect_url
+
+
+class DuplicateQuestionnaire(View):
+    def post(self, *args, **kwargs):
+        form = QuestionnaireFilterForm(self.request.POST)
+        if form.is_valid():
+            duplicate, _ = QuestionnaireClonerService(form.cleaned_data['questionnaire']).clone()
+            message = "New the questionnaire has been duplicated successfully, You can now go ahead and edit it"
+            messages.success(self.request, message)
+            redirect_url = reverse('questionnaire_entry_page', args=(duplicate.id, duplicate.sections.all()[0].id))
+            return HttpResponseRedirect(redirect_url)
+        message = "Questionnaire could not be duplicated see errors below"
+        messages.success(self.request, message)
+        return HttpResponseRedirect(reverse('manage_jrf_page'))
