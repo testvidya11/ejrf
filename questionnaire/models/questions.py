@@ -49,10 +49,6 @@ class Question(BaseModel):
             return answer.latest('modified')
         return None
 
-    @classmethod
-    def next_uid(cls):
-        return stringify(largest_uid(cls) + 1)
-
     def can_be_deleted(self):
         return not self.all_answers().exists()
 
@@ -60,6 +56,10 @@ class Question(BaseModel):
         from questionnaire.models import Questionnaire
         finalized_questionnaire = Questionnaire.objects.filter(finalized=True).latest('created')
         return self in finalized_questionnaire.get_all_questions()
+
+    @classmethod
+    def next_uid(cls):
+        return stringify(largest_uid(cls) + 1)
 
 
 class QuestionOption(BaseModel):
