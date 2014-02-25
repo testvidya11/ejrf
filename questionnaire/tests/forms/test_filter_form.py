@@ -69,17 +69,19 @@ class QuestionnaireFilterFormTest(BaseTest):
         self.assertFalse(questionnaire_filter.is_valid())
         self.assertIn("This field is required.", questionnaire_filter.errors['questionnaire'])
 
-    def test_valid_when_year_is_blank(self):
+    def test_invalid_when_year_is_blank(self):
         form_data = self.form_data.copy()
         form_data['year'] = ''
         questionnaire_filter = QuestionnaireFilterForm(form_data)
-        self.assertTrue(questionnaire_filter.is_valid())
+        self.assertFalse(questionnaire_filter.is_valid())
+        self.assertIn("This field is required.", questionnaire_filter.errors['year'])
 
     def test_valid_when_name_is_blank(self):
         form_data = self.form_data.copy()
         form_data['name'] = ''
         questionnaire_filter = QuestionnaireFilterForm(form_data)
-        self.assertTrue(questionnaire_filter.is_valid())
+        self.assertFalse(questionnaire_filter.is_valid())
+        self.assertIn("This field is required.", questionnaire_filter.errors['name'])
 
     def test_valid_when_year_selected_has_existing_questionnaire(self):
         Questionnaire.objects.create(name="JRF 2013 Core English", finalized=False, year=2014)
