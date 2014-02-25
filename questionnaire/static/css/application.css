@@ -344,3 +344,7 @@ li.more-toggle{
 li.more-toggle a{
     color: #000000 !important;
 }
+
+#select_survey_wizard-form label{
+    width: 196px;
+}
