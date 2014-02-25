@@ -425,7 +425,7 @@ class QuestionnaireCloneViewTest(BaseTest):
     def test_post_clone_questionnaire(self):
         form_data = {
             'questionnaire': self.questionnaire.id,
-            'year': 2013
+            'year': 2014
         }
         self.assertEqual(1, Questionnaire.objects.all().count())
         self.assertEqual(2, Section.objects.all().count())

@@ -1,3 +1,4 @@
+from datetime import date
 from django.contrib.auth.models import Group
 from questionnaire.forms.filter import UserFilterForm, QuestionnaireFilterForm
 from questionnaire.models import Region, Organization, Questionnaire
@@ -46,7 +47,7 @@ class QuestionnaireFilterFormTest(BaseTest):
 
         self.form_data = {
             'questionnaire': self.questionnaire.id,
-            'year': 2013,
+            'year': date.today().year + 1,
             'name': 'New JRF'
         }
 
@@ -55,11 +56,11 @@ class QuestionnaireFilterFormTest(BaseTest):
         self.assertTrue(questionnaire_filter.is_valid())
 
     def test_has_years_of_existing_questionnaires(self):
-        questionnaire = Questionnaire.objects.create(name="JRF 2011 Core English", finalized=True, year=2011)
         questionnaire_filter = QuestionnaireFilterForm(self.form_data)
         self.assertIn(('', 'Choose a year'), questionnaire_filter.fields['year'].choices)
-        self.assertIn((self.questionnaire.year, self.questionnaire.year), questionnaire_filter.fields['year'].choices)
-        self.assertIn((questionnaire.year, questionnaire.year), questionnaire_filter.fields['year'].choices)
+        for count in range(0, 10):
+            year_option = date.today().year + count
+            self.assertIn((year_option, year_option), questionnaire_filter.fields['year'].choices)
 
     def test_invalid_when_questionniare_is_blank(self):
         form_data = self.form_data.copy()

@@ -110,6 +110,7 @@ class DuplicateQuestionnaire(View):
         if form.is_valid():
             duplicate, _ = QuestionnaireClonerService(form.cleaned_data['questionnaire']).clone()
             duplicate.name = form.cleaned_data['name']
+            duplicate.year = form.cleaned_data['year']
             duplicate.save()
             message = "New the questionnaire has been duplicated successfully, You can now go ahead and edit it"
             messages.success(self.request, message)

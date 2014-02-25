@@ -157,10 +157,10 @@ $('#id-older-jrf').on('click', function(event) {
     $(this).html($(this).html() === "More" ? "Less" : "More");
     event.preventDefault()
 });
-
-var selectQuestionnaireElement = $('#select_survey_wizard-form #id_questionnaire'),
+var elementID = '#select_survey_wizard-form #id_questionnaire',
+    selectQuestionnaireElement = $(elementID),
    questionnaireNameElement = $('#id_name');
    selectQuestionnaireElement.on('change', function(){
-   questionnaireNameElement.val($('#select_survey_wizard-form #id_questionnaire option:selected').text() + " Copy");
-   questionnaireNameElement.attr('type', 'text').wrap("<p></p>").before("<label>Questionnaire name</label>");
+   questionnaireNameElement.val($(elementID + ' option:selected').text() + " Copy");
+   questionnaireNameElement.attr('type', 'text').wrap("<p></p>").before("<label>New Questionnaire</label>");
 });
