@@ -83,10 +83,11 @@ class QuestionnaireFilterFormTest(BaseTest):
         self.assertFalse(questionnaire_filter.is_valid())
         self.assertIn("This field is required.", questionnaire_filter.errors['name'])
 
-    def test_valid_when_year_selected_has_existing_questionnaire(self):
-        Questionnaire.objects.create(name="JRF 2013 Core English", finalized=False, year=2014)
-        form_data = self.form_data.copy()
-        form_data['year'] = 2014
-        questionnaire_filter = QuestionnaireFilterForm(form_data)
-        self.assertFalse(questionnaire_filter.is_valid())
-        self.assertIn("A questionnaire already exists for %d." % form_data['year'], questionnaire_filter.errors['year'])
+    def test_has_years_choices_exclude_existing_questionnaires_years(self):
+        Questionnaire.objects.create(name="JRF 2013 Core English", finalized=True, year=date.today().year + 1)
+        questionnaire_filter = QuestionnaireFilterForm(self.form_data)
+        self.assertIn(('', 'Choose a year'), questionnaire_filter.fields['year'].choices)
+        for count in range(2, 9):
+            year_option = date.today().year + count
+            self.assertIn((year_option, year_option), questionnaire_filter.fields['year'].choices)
+        self.assertNotIn((date.today().year + 1, date.today().year + 1), questionnaire_filter.fields['year'].choices)
