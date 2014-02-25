@@ -24,6 +24,7 @@ class QuestionnaireFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(QuestionnaireFilterForm, self).__init__(*args, **kwargs)
         self.fields['year'].choices = self._set_year_choices()
+        self.fields['year'].label = "Response Year"
         self.fields['questionnaire'].label = "Finalized Questionnaires"
 
     def clean_year(self):

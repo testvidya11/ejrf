@@ -26,7 +26,6 @@ def and_i_click_add_new_question_page(step):
 
 world.data = {'text': 'How many measles cases did you find this year',
               'instructions': 'Just give an answer',
-              'short_instruction': 'Answer please',
               'export_label': 'blah'}
 
 @step(u'And I fill in the question details')
@@ -75,8 +74,7 @@ def then_i_should_not_see_that_option_field(step):
 def and_i_fill_in_the_multichoice_question_form_data(step):
     data = {'text': 'How many measles cases did you find this year',
             'instructions': 'Just give an answer',
-            'export_label': 'blah',
-            'short_instruction': 'Answer please'}
+            'export_label': 'blah'}
     world.page.fill_form(data)
 
 @step(u'And I check custom option')

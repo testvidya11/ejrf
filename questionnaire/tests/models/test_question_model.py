@@ -32,8 +32,8 @@ class QuestionTest(BaseTest):
     def test_question_fields(self):
         question = Question()
         fields = [str(item.attname) for item in question._meta.fields]
-        self.assertEqual(12, len(fields))
-        for field in ['id', 'created', 'modified', 'text', 'instructions', 'UID', 'answer_type', 'short_instruction',
+        self.assertEqual(11, len(fields))
+        for field in ['id', 'created', 'modified', 'text', 'instructions', 'UID', 'answer_type',
                       'is_core', 'is_primary', 'is_required', 'export_label']:
             self.assertIn(field, fields)
 
@@ -42,7 +42,6 @@ class QuestionTest(BaseTest):
         self.failUnless(question.id)
         self.assertEqual('Uganda Revision 2014 what what?', question.text)
         self.assertIsNone(question.instructions)
-        self.assertIsNone(question.short_instruction)
         self.assertEqual('abc123', question.UID)
         self.assertFalse(question.is_core)
         self.assertFalse(question.is_primary)

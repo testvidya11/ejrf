@@ -16,10 +16,9 @@ class QuestionForm(ModelForm):
 
     class Meta:
         model = Question
-        fields = ('text', 'export_label', 'instructions', 'short_instruction', 'answer_type', 'options')
+        fields = ('text', 'export_label', 'instructions', 'answer_type', 'options')
         widgets = {'text':  forms.Textarea(attrs={"rows": 6, "cols": 50}),
                    'instructions':  forms.Textarea(attrs={"rows": 6, "cols": 50}),
-                   'short_instruction':  forms.Textarea(attrs={"rows": 2, "cols": 50}),
                    'answer_type': forms.Select(attrs={'class': 'form-control'}),
                    'export_label': forms.Textarea(attrs={"rows": 2, "cols": 50})}
 
