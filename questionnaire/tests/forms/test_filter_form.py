@@ -80,3 +80,11 @@ class QuestionnaireFilterFormTest(BaseTest):
         form_data['name'] = ''
         questionnaire_filter = QuestionnaireFilterForm(form_data)
         self.assertTrue(questionnaire_filter.is_valid())
+
+    def test_valid_when_year_selected_has_existing_questionnaire(self):
+        Questionnaire.objects.create(name="JRF 2013 Core English", finalized=False, year=2014)
+        form_data = self.form_data.copy()
+        form_data['year'] = 2014
+        questionnaire_filter = QuestionnaireFilterForm(form_data)
+        self.assertFalse(questionnaire_filter.is_valid())
+        self.assertIn("A questionnaire already exists for %d." % form_data['year'], questionnaire_filter.errors['year'])

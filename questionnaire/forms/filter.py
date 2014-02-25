@@ -25,6 +25,13 @@ class QuestionnaireFilterForm(forms.Form):
         super(QuestionnaireFilterForm, self).__init__(*args, **kwargs)
         self.fields['year'].choices = self._set_year_choices()
 
+    def clean_year(self):
+        year = self.cleaned_data['year']
+        if year and Questionnaire.objects.filter(year=year).exists():
+            message = "A questionnaire already exists for %d." % int(year)
+            self._errors['year'] = self.error_class([message])
+            del self.cleaned_data['year']
+
     def _set_year_choices(self):
         choices = []
         choices.insert(0, ('', 'Choose a year', ))
