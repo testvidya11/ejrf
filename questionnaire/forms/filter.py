@@ -18,6 +18,7 @@ class QuestionnaireFilterForm(forms.Form):
     year = forms.ChoiceField(widget=forms.Select(attrs={"class": 'form-control'}), required=False, choices=[])
     questionnaire = forms.ModelChoiceField(queryset=Questionnaire.objects.filter(finalized=True), empty_label="All",
                                            widget=forms.Select(attrs={"class": 'form-control'}), required=True)
+    name = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, *args, **kwargs):
         super(QuestionnaireFilterForm, self).__init__(*args, **kwargs)
@@ -26,6 +27,6 @@ class QuestionnaireFilterForm(forms.Form):
     def _set_year_choices(self):
         choices = []
         choices.insert(0, ('', 'Choose a year', ))
-        choices.extend((year, year) for year in list(
-            Questionnaire.objects.filter(finalized=True).values_list('year', flat=True)))
+        questionnaires_years = Questionnaire.objects.filter(finalized=True).values_list('year', flat=True)
+        choices.extend((year, year) for year in list(questionnaires_years))
         return choices

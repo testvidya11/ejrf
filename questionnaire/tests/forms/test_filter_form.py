@@ -46,7 +46,8 @@ class QuestionnaireFilterFormTest(BaseTest):
 
         self.form_data = {
             'questionnaire': self.questionnaire.id,
-            'year': 2013
+            'year': 2013,
+            'name': 'New JRF'
         }
 
     def test_valid(self):
@@ -70,5 +71,11 @@ class QuestionnaireFilterFormTest(BaseTest):
     def test_valid_when_year_is_blank(self):
         form_data = self.form_data.copy()
         form_data['year'] = ''
+        questionnaire_filter = QuestionnaireFilterForm(form_data)
+        self.assertTrue(questionnaire_filter.is_valid())
+
+    def test_valid_when_name_is_blank(self):
+        form_data = self.form_data.copy()
+        form_data['name'] = ''
         questionnaire_filter = QuestionnaireFilterForm(form_data)
         self.assertTrue(questionnaire_filter.is_valid())

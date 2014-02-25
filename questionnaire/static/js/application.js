@@ -157,3 +157,10 @@ $('#id-older-jrf').on('click', function(event) {
     $(this).html($(this).html() === "More" ? "Less" : "More");
     event.preventDefault()
 });
+
+var selectQuestionnaireElement = $('#select_survey_wizard-form #id_questionnaire'),
+   questionnaireNameElement = $('#id_name');
+   selectQuestionnaireElement.on('change', function(){
+   questionnaireNameElement.val($('#select_survey_wizard-form #id_questionnaire option:selected').text() + " Copy");
+   questionnaireNameElement.attr('type', 'text').wrap("<p></p>").before("<label>Questionnaire name</label>");
+});

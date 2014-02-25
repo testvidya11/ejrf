@@ -109,6 +109,8 @@ class DuplicateQuestionnaire(View):
         form = QuestionnaireFilterForm(self.request.POST)
         if form.is_valid():
             duplicate, _ = QuestionnaireClonerService(form.cleaned_data['questionnaire']).clone()
+            duplicate.name = form.cleaned_data['name']
+            duplicate.save()
             message = "New the questionnaire has been duplicated successfully, You can now go ahead and edit it"
             messages.success(self.request, message)
             redirect_url = reverse('questionnaire_entry_page', args=(duplicate.id, duplicate.sections.all()[0].id))
