@@ -14,6 +14,7 @@ class QuestionnaireClonerService(object):
     def clone(self):
         self.questionnaire.pk = None
         self.questionnaire.finalized = False
+        self.questionnaire.is_open = False
         self.questionnaire.save()
         self.sections = self.clone_sections()
         self.sub_sections = self.clone_sub_sections()

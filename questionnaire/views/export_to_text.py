@@ -30,6 +30,7 @@ class ExportToTextView(LoginRequiredMixin, TemplateView):
         response.write("\r\n".join(formatted_responses))
         return response
 
+
 class ExportSectionPDF(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
@@ -53,8 +54,9 @@ class ExportSectionPDF(LoginRequiredMixin, View):
 
 
 class DownloadSectionPDF(LoginRequiredMixin, View):
+
     def get(self, request, *args, **kwargs):
-        filename = kwargs.get('filename', None)
+        filename = kwargs.get('filename', '')
         return_file = File(open('export/' + filename, 'r'))
         response = HttpResponse(return_file, mimetype='application/force-download')
         response['Content-Disposition'] = 'attachment; filename=%s' % filename
