@@ -444,7 +444,7 @@ class QuestionnaireCloneViewTest(BaseTest):
         section = questionnaire.sections.all()[0]
         url = '/questionnaire/entry/%d/section/%d/' % (questionnaire.id, section.id)
         self.assertRedirects(response, url)
-        messages = "New the questionnaire has been duplicated successfully, You can now go ahead and edit it"
+        messages = "The questionnaire has been duplicated successfully, You can now go ahead and edit it"
         self.assertIn(messages, response.cookies['messages'].value)
 
     def test_post_clone_questionnaire_with_invalid_form(self):

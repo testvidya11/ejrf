@@ -112,10 +112,10 @@ class DuplicateQuestionnaire(View):
             duplicate.name = form.cleaned_data['name']
             duplicate.year = form.cleaned_data['year']
             duplicate.save()
-            message = "New the questionnaire has been duplicated successfully, You can now go ahead and edit it"
+            message = "The questionnaire has been duplicated successfully, You can now go ahead and edit it"
             messages.success(self.request, message)
             redirect_url = reverse('questionnaire_entry_page', args=(duplicate.id, duplicate.sections.all()[0].id))
             return HttpResponseRedirect(redirect_url)
         message = "Questionnaire could not be duplicated see errors below"
-        messages.success(self.request, message)
+        messages.error(self.request, message)
         return HttpResponseRedirect(reverse('manage_jrf_page'))

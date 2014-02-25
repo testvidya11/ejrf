@@ -51,6 +51,8 @@ class QuestionnaireClonerService(object):
 
     def assign_questions_to_groups(self):
         for old, new in self.question_groups.items():
-            for index, question in enumerate(old.ordered_questions()):
-                new.question.add(question)
-                QuestionGroupOrder.objects.create(order=index + 1, question_group=new, question=question)
+            new.question.add(*old.all_questions())
+            if not old.parent:
+                for order in old.question_orders():
+                    QuestionGroupOrder.objects.create(order=order.order, question_group=self.question_groups.get(old),
+                                                      question=order.question)

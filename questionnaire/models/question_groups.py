@@ -37,4 +37,3 @@ class QuestionGroup(BaseModel):
     class Meta:
         ordering = ('order',)
         app_label = 'questionnaire'
-
