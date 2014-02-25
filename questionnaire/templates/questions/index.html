@@ -4,7 +4,7 @@
 
     {% load pagination_tags %}
     {% load generic_tags %}
-    {% autopaginate questions 50 %}
+    {% autopaginate questions 30 %}
     <div class="table-responsive">
     <span class="pull-left"><h3>Question List</h3>
         <br/>
@@ -12,7 +12,7 @@
     <a href="{% url 'new_question_page' %}" class="btn btn-default btn-lg  pull-right" id="id-add-new-question-link">
         <span class="cyan"><i class="glyphicon glyphicon-plus-sign"></i> New Question</span></a>
     <br/>
-      <table class="table table-hover table-striped table-bordered">
+      <table class="table table-hover table-bordered">
           <thead>
           <tr>
             <th>UID</th>
@@ -23,7 +23,7 @@
           </thead>
           <tbody>
             {% for question in questions %}
-                <tr>
+                <tr {% if question.is_in_active_questionnaire %} class="success" {% endif %}>
                     <td>{{ question.UID }} </td>
                     <td id="text-td">{{ question.export_label }}</td>
                     <td>{{ question.answer_type }}</td>

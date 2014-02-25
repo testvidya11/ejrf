@@ -58,6 +58,11 @@ class Question(BaseModel):
     def can_be_deleted(self):
         return not self.all_answers().exists()
 
+    def is_in_active_questionnaire(self):
+        from questionnaire.models import Questionnaire
+        finalized_questionnaire = Questionnaire.objects.filter(finalized=True).latest('created')
+        return self in finalized_questionnaire.get_all_questions()
+
 
 class QuestionOption(BaseModel):
     text = models.CharField(max_length=100, blank=False, null=False)
