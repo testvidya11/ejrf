@@ -44,9 +44,9 @@ def then_i_should_see_a_list_of_the_three_most_recent_finalised_questionnaires(s
 
 @step(u'And I should see a list of draft questionnaires')
 def and_i_should_see_a_list_of_draft_questionnaires(step):
-    world.page.links_present_by_text(["%s %s" % (world.questionnaire6.name, world.questionnaire6.year),
-                                     "%s %s" % (world.questionnaire5.name, world.questionnaire5.year)])
-    world.page.links_present_by_text([" Edit", " Finalize"])
+    world.page.is_element_present_by_id(["questionnaire-%s" % world.questionnaire6.id,
+                                     "questionnaire-%s" % world.questionnaire6.id])
+    world.page.is_element_present_by_id([" id-edit", " id-finalize"])
 
 @step(u'I visit the manage JRF page')
 def and_i_visit_manage_jrf_page(step):
@@ -91,7 +91,8 @@ def then_i_should_see_a_message_that_the_questionnaire_was_duplicated_successful
 
 @step(u'Then I should see the new questionnaire listed')
 def then_i_should_see_the_new_questionnaire_listed(step):
-    world.page.is_text_present('Latest Questionnaire %s' % str(world.questionnaire1.year+2))
+    world.latest_questionnaire = Questionnaire.objects.filter(finalized=False).latest('created')
+    world.page.is_element_present_by_id("questionnaire-%s" % world.latest_questionnaire.id)
 
 @step(u'Then I should a validation error message')
 def then_i_should_a_validation_error_message(step):
