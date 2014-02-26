@@ -18,9 +18,11 @@ class UploadDocument(CreateView):
     def get_context_data(self, **kwargs):
         context = super(UploadDocument, self).get_context_data(**kwargs)
         questionnaire = Questionnaire.objects.all().latest('created')
-        upload_data_initial = {'questionnaire': questionnaire, 'country': self.request.user.user_profile.country}
+        users_country = self.request.user.user_profile.country
+        upload_data_initial = {'questionnaire': questionnaire, 'country': users_country}
         context.update({'upload_form': self.form_class(initial=upload_data_initial),
-                        'button_label': 'Upload', 'id': 'id-upload-form', 'questionnaire': questionnaire})
+                        'button_label': 'Upload', 'id': 'id-upload-form', 'questionnaire': questionnaire,
+                        'documents': self.model.objects.filter(country=users_country)})
         return context
 
     def form_valid(self, form):

@@ -25,7 +25,7 @@
           </thead>
 
           <tbody>
-            {% for document in questionnaire.support_documents.all %}
+            {% for document in documents %}
                 <tr>
                 <td>{% if questionnaire %}
                     <a href="{% url 'download_document' questionnaire.id document.id %}" >{{ document.path|_filename }}</a>

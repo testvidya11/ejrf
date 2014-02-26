@@ -16,7 +16,8 @@ class UserFilterForm(forms.Form):
 
 
 class QuestionnaireFilterForm(forms.Form):
-    questionnaire = forms.ModelChoiceField(queryset=Questionnaire.objects.filter(finalized=True), empty_label="All",
+    questionnaire = forms.ModelChoiceField(queryset=Questionnaire.objects.filter(finalized=True),
+                                           empty_label="Select Questionnaire",
                                            widget=forms.Select(attrs={"class": 'form-control'}), required=True)
     year = forms.ChoiceField(widget=forms.Select(attrs={"class": 'form-control'}), required=True, choices=[])
     name = forms.CharField(widget=forms.HiddenInput(), required=True)
