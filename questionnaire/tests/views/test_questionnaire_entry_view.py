@@ -230,7 +230,7 @@ class QuestionnaireEntrySaveDraftTest(BaseTest):
         self.assertEqual(Answer.DRAFT_STATUS, answer_2[0].status)
         self.assertEqual(1, answer_2[0].version)
 
-    def test_post_saves_answers_and_redirect_if_given_redirect_url(self):
+    def test_post_saves_answers_and_redirect_to_no_preview_if_given_redirect_url(self):
         data = self.data
         self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response'])))
         self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response'])))
@@ -239,7 +239,7 @@ class QuestionnaireEntrySaveDraftTest(BaseTest):
         section_2 = Section.objects.create(name="haha", questionnaire=self.questionnaire, order=2)
         data['redirect_url'] = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, section_2.id)
 
-        response = self.client.post(self.url, data=data)
+        response = self.client.post(self.url + "?preview=1", data=data)
 
         self.failUnless(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response']), question=self.question1))
         self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-0-response']), question=self.question2))

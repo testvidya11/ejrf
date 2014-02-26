@@ -42,10 +42,9 @@ class Question(BaseModel):
     def has_question_option_instructions(self):
         return self.options.exclude(instructions=None)
 
-    def draft_answer(self, parent_group, country):
-        from questionnaire.models import Answer
+    def latest_answer(self, parent_group, country):
         answer = self.answers.filter(answergroup__grouped_question=parent_group,
-                                     status=Answer.DRAFT_STATUS, country=country).select_subclasses()
+                                     country=country).select_subclasses()
         if answer.exists():
             return answer.latest('modified')
         return None

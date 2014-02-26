@@ -1,18 +1,22 @@
 from django.db import IntegrityError
-from questionnaire.models import Questionnaire, Section, SubSection, Organization, Region, Country, QuestionGroup, NumericalAnswer, Answer, QuestionGroupOrder, AnswerGroup
+from questionnaire.models import Questionnaire, Section, SubSection, Organization, Region, Country, QuestionGroup, \
+    NumericalAnswer, Answer, QuestionGroupOrder, AnswerGroup
 from questionnaire.models.questions import Question, QuestionOption
 from questionnaire.tests.base_test import BaseTest
 
 
 class QuestionTest(BaseTest):
     def setUp(self):
-        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan")
-        self.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English",
+                                                          description="From dropbox as given by Rouslan")
+        self.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)",
+                                                order=1,
                                                 questionnaire=self.questionnaire, name="Reported Cases")
-        self.sub_section_1 = SubSection.objects.create(title="Reported cases for the year 2013", order=1, section=self.section_1)
+        self.sub_section_1 = SubSection.objects.create(title="Reported cases for the year 2013", order=1,
+                                                       section=self.section_1)
         self.sub_section_2 = SubSection.objects.create(title="Another", order=2, section=self.section_1)
         self.organisation = Organization.objects.create(name="WHO")
-        self.regions = Region.objects.create(name="The Afro",organization=self.organisation)
+        self.regions = Region.objects.create(name="The Afro", organization=self.organisation)
         self.country = Country.objects.create(name="Uganda")
         self.regions.countries.add(self.country)
         self.question1 = Question.objects.create(text='B. Number of cases tested',
@@ -22,7 +26,7 @@ class QuestionTest(BaseTest):
         self.parent_group.question.add(self.question1)
 
         self.question1_answer = NumericalAnswer.objects.create(question=self.question1, country=self.country,
-                                                               status=Answer.SUBMITTED_STATUS,  response=23)
+                                                               status=Answer.SUBMITTED_STATUS, response=23)
         self.question1_answer_2 = NumericalAnswer.objects.create(question=self.question1, country=self.country,
                                                                  status=Answer.SUBMITTED_STATUS, response=1)
 
@@ -60,7 +64,8 @@ class QuestionTest(BaseTest):
     def test_question_knows_if_it_is_first_in_its_group(self):
         question2 = Question.objects.create(text='question 2', UID='C00004', answer_type='Number')
         question3 = Question.objects.create(text='question 3', UID='C00005', answer_type='Number')
-        self.sub_group = QuestionGroup.objects.create(subsection=self.sub_section_1, name="subgroup", parent=self.parent_group)
+        self.sub_group = QuestionGroup.objects.create(subsection=self.sub_section_1, name="subgroup",
+                                                      parent=self.parent_group)
         self.sub_group.question.add(question2, question3)
 
         QuestionGroupOrder.objects.create(question=self.question1, question_group=self.parent_group, order=1)
@@ -74,7 +79,8 @@ class QuestionTest(BaseTest):
     def test_question_knows_if_it_is_last_in_its_group(self):
         question2 = Question.objects.create(text='question 2', UID='C00004', answer_type='Number')
         question3 = Question.objects.create(text='question 3', UID='C00005', answer_type='Number')
-        self.sub_group = QuestionGroup.objects.create(subsection=self.sub_section_1, name="subgroup", parent=self.parent_group)
+        self.sub_group = QuestionGroup.objects.create(subsection=self.sub_section_1, name="subgroup",
+                                                      parent=self.parent_group)
         self.sub_group.question.add(question2, question3)
 
         QuestionGroupOrder.objects.create(question=self.question1, question_group=self.parent_group, order=1)
@@ -95,7 +101,7 @@ class QuestionTest(BaseTest):
         QuestionOption.objects.create(text='tusker lager', question=question)
         self.assertFalse(question.has_question_option_instructions())
 
-    def test_question_knows_answer_draft_given_group_and_country(self):
+    def test_question_knows_latest_answer_for_draft_given_group_and_country(self):
         question1 = Question.objects.create(text='question1', UID='C00015', answer_type='Number', is_primary=True)
         question2 = Question.objects.create(text='question2', UID='C00016', answer_type='Number')
         question3 = Question.objects.create(text='question3', UID='C00017', answer_type='Number')
@@ -119,18 +125,18 @@ class QuestionTest(BaseTest):
 
         country_2 = Country.objects.create(name="Uganda 2")
         question1_answer_2 = NumericalAnswer.objects.create(question=question1, country=country_2,
-                                                          status=Answer.DRAFT_STATUS, response=23)
+                                                            status=Answer.DRAFT_STATUS, response=23)
         question2_answer_2 = NumericalAnswer.objects.create(question=question2, country=country_2,
-                                                          status=Answer.DRAFT_STATUS, response=1)
+                                                            status=Answer.DRAFT_STATUS, response=1)
         answer_group_2 = AnswerGroup.objects.create(grouped_question=self.parent_group, row=2)
         answer_group_2.answer.add(question1_answer_2, question2_answer_2)
 
-        self.assertEqual(question1_answer, question1.draft_answer(self.parent_group, self.country))
-        self.assertEqual(question2_answer, question2.draft_answer(self.parent_group, self.country))
-        self.assertIsNone(question3.draft_answer(group2, self.country))
+        self.assertEqual(question1_answer, question1.latest_answer(self.parent_group, self.country))
+        self.assertEqual(question2_answer, question2.latest_answer(self.parent_group, self.country))
+        self.assertEqual(question3_answer, question3.latest_answer(group2, self.country))
 
-        self.assertEqual(question1_answer_2, question1.draft_answer(self.parent_group, country_2))
-        self.assertEqual(question2_answer_2, question2.draft_answer(self.parent_group, country_2))
+        self.assertEqual(question1_answer_2, question1.latest_answer(self.parent_group, country_2))
+        self.assertEqual(question2_answer_2, question2.latest_answer(self.parent_group, country_2))
 
     def test_get_next_uid_given_given_largest_uid_question(self):
         self.assertEqual('00004', Question.next_uid())

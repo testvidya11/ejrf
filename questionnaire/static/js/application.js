@@ -157,3 +157,10 @@ $('#id-older-jrf').on('click', function(event) {
     $(this).html($(this).html() === "More" ? "Less" : "More");
     event.preventDefault()
 });
+
+function disableInputFields(status) {
+    $(this).find('.form-content :input').each(function () {
+        $(this).prop('disabled', status);
+    });
+    $('.add-more').prop('disabled', status);
+}

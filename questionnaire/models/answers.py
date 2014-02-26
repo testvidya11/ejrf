@@ -19,6 +19,9 @@ class Answer(BaseModel):
     version = models.IntegerField(blank=False, null=True, default=1)
     code = models.CharField(blank=False, max_length=20, null=True)
 
+    def is_draft(self):
+        return self.status == self.DRAFT_STATUS
+
 
 class NumericalAnswer(Answer):
     response = models.DecimalField(max_digits=9, decimal_places=2, null=True)

@@ -23,6 +23,16 @@ class AnswerTest(TestCase):
         self.assertEqual(country, answer.country)
         self.assertEqual(None, answer.code)
 
+    def test_knows_is_draft(self):
+        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Number')
+        country = Country.objects.create(name="Peru")
+        draft_answer = Answer.objects.create(question=question, country=country, status=Answer.DRAFT_STATUS)
+        submitted_answer = Answer.objects.create(question=question, country=country, status=Answer.SUBMITTED_STATUS)
+        self.failUnless(draft_answer.id)
+        self.failUnless(submitted_answer.id)
+        self.assertTrue(draft_answer.is_draft())
+        self.assertFalse(submitted_answer.is_draft())
+
 
 class NumericalAnswerTest(TestCase):
 

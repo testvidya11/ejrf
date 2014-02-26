@@ -66,7 +66,7 @@ class Entry(MultiplePermissionsRequiredMixin, FormView):
         message = 'Draft saved.'
         messages.success(request, message)
         if request.POST.get('redirect_url', None):
-            return HttpResponseRedirect(request.POST['redirect_url'])
+            return HttpResponseRedirect(request.POST['redirect_url'].replace('preview=1',''))
         return self.render_to_response(context)
 
     def _form_invalid(self, request, context):

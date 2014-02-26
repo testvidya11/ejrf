@@ -1,10 +1,13 @@
-
-$(document).ready(function() {
-    $('.add-more').attr('disabled','disabled');
-    var edit = '<span class="green bold"><i class="glyphicon glyphicon-floppy-disk"></i>EDIT</span>'
-    $('#save_draft_button').html(edit);
-    $('#preview_modal_btn').html(edit);
-
-    $("body").show();
-    $('textarea').autosize().trigger('autosize.resize');
+$(function(){
+    disableInputFields(true);
+    $('#edit_questionnaire_link').on('click', function(){
+        disableInputFields(false);
+    });
 });
+
+function disableInputFields(status) {
+    $('.form-content :input').each(function () {
+        $(this).prop('disabled', status);
+    });
+    $('.add-more').prop('disabled', status);
+}
