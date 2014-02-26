@@ -190,9 +190,9 @@ class QuestionnaireEntryAsFormTest(BaseTest):
         QuestionGroupOrder.objects.create(question_group=self.question_group, question=self.question3, order=3)
 
         self.data = {u'MultiChoice-MAX_NUM_FORMS': u'1', u'MultiChoice-TOTAL_FORMS': u'1',
-                u'MultiChoice-INITIAL_FORMS': u'1', u'MultiChoice-0-response': self.option1.id,
-                u'Number-INITIAL_FORMS': u'2', u'Number-TOTAL_FORMS': u'2', u'Number-MAX_NUM_FORMS': u'2',
-                u'Number-0-response': u'2', u'Number-1-response': u'33'}
+                     u'MultiChoice-INITIAL_FORMS': u'1', u'MultiChoice-0-response': self.option1.id,
+                     u'Number-INITIAL_FORMS': u'2', u'Number-TOTAL_FORMS': u'2', u'Number-MAX_NUM_FORMS': u'2',
+                     u'Number-0-response': u'2', u'Number-1-response': u'33'}
 
         self.country = Country.objects.create(name="Uganda")
 
@@ -305,3 +305,29 @@ class QuestionnaireEntryAsFormTest(BaseTest):
 
         answer_group = AnswerGroup.objects.filter(grouped_question=self.question_group)
         self.assertEqual(1, answer_group.count())
+
+    def test_integer_casting_of_numeric_responses(self):
+        question5 = Question.objects.create(text='C. Number of cases positive', UID='C00333', answer_type='Text')
+        self.question_group.question.add(question5)
+        QuestionGroupOrder.objects.create(question_group=self.question_group, question=question5, order=4)
+        self.data.update({u'Text-MAX_NUM_FORMS': u'1', u'Text-TOTAL_FORMS': u'1', u'Text-INITIAL_FORMS': u'1'})
+
+        data = self.data
+        data_modified = data.copy()
+        data_modified['MultiChoice-0-response'] = self.option2.id
+        data_modified['Number-0-response'] = 3.0
+        data_modified['Number-1-response'] = 3.05
+        data_modified['Text-0-response'] = 'haha'
+
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section_1, initial=self.initial, data=data_modified)
+        questionnaire_entry_form.save()
+
+        question1_form = questionnaire_entry_form.next_ordered_form(self.question1)
+        question2_form = questionnaire_entry_form.next_ordered_form(self.question2)
+        question3_form = questionnaire_entry_form.next_ordered_form(self.question3)
+        question5_form = questionnaire_entry_form.next_ordered_form(question5)
+
+        self.assertEqual(self.option2.id,  question1_form['response'].value())
+        self.assertEqual(3, question2_form['response'].value())
+        self.assertEqual(3.05, question3_form['response'].value())
+        self.assertEqual("haha", question5_form['response'].value())

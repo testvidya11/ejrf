@@ -8,7 +8,7 @@
             "created": "2014-02-06T15:44:14.056Z",
             "text": "Disease",
             "modified": "2014-02-06T15:44:14.056Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -24,7 +24,6 @@
             "created": "2014-02-06T15:44:14.057Z",
             "text": "Total Cases",
             "modified": "2014-02-06T15:44:14.057Z",
-            "short_instruction": "Include clinically, epidemiologically, and laboratory-confirmed cases. Do not include suspect cases.",
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -40,7 +39,7 @@
             "created": "2014-02-06T15:44:14.058Z",
             "text": "Number of cases tested",
             "modified": "2014-02-06T15:44:14.058Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -56,7 +55,7 @@
             "created": "2014-02-06T15:44:14.059Z",
             "text": "Number of cases positive",
             "modified": "2014-02-06T15:44:14.059Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -72,7 +71,7 @@
             "created": "2014-02-06T15:44:14.083Z",
             "text": "Is there a surveillance system in place for invasive bacterial diseases (for example bacterial meningitis,\nsepsis or bacteremic pneumonia), in which suspected cases are confirmed by laboratory and surveillance data could provide information to allow evaluation\nof the impact of vaccination against Hib and/or Pneumococcus?",
             "modified": "2014-02-06T15:44:14.083Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -88,7 +87,7 @@
             "created": "2014-02-06T15:44:14.091Z",
             "text": "Is there a surveillance system in place for rotavirus diarrhoea, in which suspected cases are confirmed\n by laboratory and surveillance data could provide information to allow evaluation of the impact of vaccination against rotavirus?",
             "modified": "2014-02-06T15:44:14.092Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -104,7 +103,7 @@
             "created": "2014-02-06T15:44:16.899Z",
             "text": "Vaccine, Supplement, or Injection Equipment",
             "modified": "2014-02-06T15:44:16.900Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -120,7 +119,7 @@
             "created": "2014-02-06T15:44:16.900Z",
             "text": "Type",
             "modified": "2014-02-06T15:44:16.901Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -136,7 +135,7 @@
             "created": "2014-02-06T15:44:16.901Z",
             "text": "1st dose",
             "modified": "2014-02-06T15:44:16.902Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -152,7 +151,7 @@
             "created": "2014-02-06T15:44:16.902Z",
             "text": "2nd dose",
             "modified": "2014-02-06T15:44:16.902Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -168,7 +167,7 @@
             "created": "2014-02-06T15:44:16.903Z",
             "text": "3rd dose",
             "modified": "2014-02-06T15:44:16.903Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -184,7 +183,7 @@
             "created": "2014-02-06T15:44:16.904Z",
             "text": "4th dose",
             "modified": "2014-02-06T15:44:16.904Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -200,7 +199,7 @@
             "created": "2014-02-06T15:44:16.905Z",
             "text": "5th dose",
             "modified": "2014-02-06T15:44:16.905Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -216,7 +215,7 @@
             "created": "2014-02-06T15:44:16.906Z",
             "text": "6th dose",
             "modified": "2014-02-06T15:44:16.906Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -232,7 +231,7 @@
             "created": "2014-02-06T15:44:16.907Z",
             "text": "Planned introduction",
             "modified": "2014-02-06T15:44:16.907Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -248,7 +247,7 @@
             "created": "2014-02-06T15:44:16.908Z",
             "text": "Geo-graphic area",
             "modified": "2014-02-06T15:44:16.908Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -264,7 +263,7 @@
             "created": "2014-02-06T15:44:16.909Z",
             "text": "Specific target group",
             "modified": "2014-02-06T15:44:16.909Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -280,7 +279,7 @@
             "created": "2014-02-06T15:44:16.910Z",
             "text": "Name of manufacturer",
             "modified": "2014-02-06T15:44:16.910Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -296,7 +295,7 @@
             "created": "2014-02-06T15:44:16.911Z",
             "text": "Which agency procured the vaccine?",
             "modified": "2014-02-06T15:44:16.911Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -312,7 +311,7 @@
             "created": "2014-02-06T15:44:16.912Z",
             "text": "Total no. of doses procured at national level",
             "modified": "2014-02-06T15:44:16.912Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -328,7 +327,7 @@
             "created": "2014-02-06T15:44:16.980Z",
             "text": "AD equipment",
             "modified": "2014-02-06T15:44:16.980Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -344,7 +343,7 @@
             "created": "2014-02-06T15:44:16.983Z",
             "text": "Which agency procured the Syringes?",
             "modified": "2014-02-06T15:44:16.983Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -360,7 +359,7 @@
             "created": "2014-02-06T15:44:16.984Z",
             "text": "Total no. of syringes procured at national level",
             "modified": "2014-02-06T15:44:16.984Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -376,7 +375,7 @@
             "created": "2014-02-06T15:44:19.810Z",
             "text": "Are any routine doses of vaccine given to children at school?",
             "modified": "2014-02-06T15:44:19.810Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -392,7 +391,7 @@
             "created": "2014-02-06T15:44:19.819Z",
             "text": "Vaccine procurement",
             "modified": "2014-02-06T15:44:19.819Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -408,7 +407,7 @@
             "created": "2014-02-06T15:44:19.821Z",
             "text": "Vaccinators",
             "modified": "2014-02-06T15:44:19.821Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -424,7 +423,7 @@
             "created": "2014-02-06T15:44:19.824Z",
             "text": "Supervision",
             "modified": "2014-02-06T15:44:19.824Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -440,7 +439,7 @@
             "created": "2014-02-06T15:44:19.826Z",
             "text": "Planing",
             "modified": "2014-02-06T15:44:19.827Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -456,7 +455,7 @@
             "created": "2014-02-06T15:44:19.836Z",
             "text": "Is this part of a comprehensive school health program that delivers other health intervention also?",
             "modified": "2014-02-06T15:44:19.836Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -472,7 +471,7 @@
             "created": "2014-02-06T15:44:19.838Z",
             "text": "Which interventions are given in the school health program?",
             "modified": "2014-02-06T15:44:19.839Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -488,7 +487,7 @@
             "created": "2014-02-06T15:44:19.845Z",
             "text": "Vaccine",
             "modified": "2014-02-06T15:44:19.845Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -504,7 +503,7 @@
             "created": "2014-02-06T15:44:19.846Z",
             "text": "Grade/Level",
             "modified": "2014-02-06T15:44:19.846Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -520,7 +519,7 @@
             "created": "2014-02-06T15:44:19.847Z",
             "text": "Age Group",
             "modified": "2014-02-06T15:44:19.847Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -536,7 +535,7 @@
             "created": "2014-02-06T15:44:19.848Z",
             "text": "Sex",
             "modified": "2014-02-06T15:44:19.848Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -552,7 +551,7 @@
             "created": "2014-02-06T15:44:19.852Z",
             "text": "Geographic Area",
             "modified": "2014-02-06T15:44:19.852Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -568,7 +567,7 @@
             "created": "2014-02-06T15:44:19.855Z",
             "text": "Number in target group",
             "modified": "2014-02-06T15:44:19.855Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -584,7 +583,7 @@
             "created": "2014-02-06T15:44:19.856Z",
             "text": "Number of doses administered at school",
             "modified": "2014-02-06T15:44:19.856Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -600,7 +599,7 @@
             "created": "2014-02-06T15:44:19.856Z",
             "text": "Other interventions given with the vaccine",
             "modified": "2014-02-06T15:44:19.856Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -616,7 +615,7 @@
             "created": "2014-02-06T15:44:19.857Z",
             "text": "Does recorded on immunization or child death card",
             "modified": "2014-02-06T15:44:19.857Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -632,7 +631,7 @@
             "created": "2014-02-06T15:44:26.556Z",
             "text": "Vaccine/Supplement",
             "modified": "2014-02-06T15:44:26.556Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -648,7 +647,7 @@
             "created": "2014-02-06T15:44:26.577Z",
             "text": "Description of the denominator used in coverage calculation",
             "modified": "2014-02-06T15:44:26.577Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -664,7 +663,7 @@
             "created": "2014-02-06T15:44:26.583Z",
             "text": "Number in target group(denominator)",
             "modified": "2014-02-06T15:44:26.583Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -680,7 +679,7 @@
             "created": "2014-02-06T15:44:26.583Z",
             "text": "Number of doses administered through routine services (numerator)",
             "modified": "2014-02-06T15:44:26.584Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -696,7 +695,7 @@
             "created": "2014-02-06T15:44:26.584Z",
             "text": "Percent coverage (=C/B*100)",
             "modified": "2014-02-06T15:44:26.584Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -712,7 +711,7 @@
             "created": "2014-02-06T15:44:26.594Z",
             "text": "Describe any factors limiting the accuracy of the numerator: ",
             "modified": "2014-02-06T15:44:26.595Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -728,7 +727,7 @@
             "created": "2014-02-06T15:44:26.595Z",
             "text": "Describe any factors limiting the accuracy of the denominator: (denominator = number in target group)",
             "modified": "2014-02-06T15:44:26.595Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -744,7 +743,7 @@
             "created": "2014-02-06T15:44:26.605Z",
             "text": "Total number of district reports expected at the national level from all districts across repording periods in 2013 (e.g., # districts x 12 months)",
             "modified": "2014-02-06T15:44:26.605Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -760,7 +759,7 @@
             "created": "2014-02-06T15:44:26.606Z",
             "text": "Total number of district reports actually received at the national level from all districts across reporting periods in 2013",
             "modified": "2014-02-06T15:44:26.606Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -776,7 +775,7 @@
             "created": "2014-02-06T15:44:26.616Z",
             "text": "Vaccine administered (age in years)",
             "modified": "2014-02-06T15:44:26.616Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -792,7 +791,7 @@
             "created": "2014-02-06T15:44:26.624Z",
             "text": "1st dose",
             "modified": "2014-02-06T15:44:26.625Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -808,7 +807,7 @@
             "created": "2014-02-06T15:44:26.625Z",
             "text": "2d dose",
             "modified": "2014-02-06T15:44:26.625Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -824,7 +823,7 @@
             "created": "2014-02-06T15:44:26.626Z",
             "text": "3d dose",
             "modified": "2014-02-06T15:44:26.626Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -840,7 +839,7 @@
             "created": "2014-02-06T15:44:26.635Z",
             "text": "Describe any factors limiting the accuracy of the administered doses",
             "modified": "2014-02-06T15:44:26.635Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -856,7 +855,7 @@
             "created": "2014-02-06T15:44:26.641Z",
             "text": "Description of target population",
             "modified": "2014-02-06T15:44:26.641Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -872,7 +871,7 @@
             "created": "2014-02-06T15:44:26.648Z",
             "text": "Number in target group (denominator)",
             "modified": "2014-02-06T15:44:26.648Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -888,7 +887,7 @@
             "created": "2014-02-06T15:44:26.649Z",
             "text": "Number of doses administered through routine services (numerator)",
             "modified": "2014-02-06T15:44:26.649Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -904,7 +903,7 @@
             "created": "2014-02-06T15:44:26.650Z",
             "text": "Percent coverage (=C/B*100)",
             "modified": "2014-02-06T15:44:26.650Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -920,7 +919,7 @@
             "created": "2014-02-06T15:44:31.220Z",
             "text": "Year of most recent survey",
             "modified": "2014-02-06T15:44:31.220Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -936,7 +935,7 @@
             "created": "2014-02-06T15:44:31.225Z",
             "text": "Full title of survey in the language of the original report",
             "modified": "2014-02-06T15:44:31.225Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -952,7 +951,7 @@
             "created": "2014-02-06T15:44:31.226Z",
             "text": "Full title of survey in English",
             "modified": "2014-02-06T15:44:31.227Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -968,7 +967,7 @@
             "created": "2014-02-06T15:44:31.237Z",
             "text": "Is a coverage survey planned for the next 24 months?",
             "modified": "2014-02-06T15:44:31.237Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -984,7 +983,7 @@
             "created": "2014-02-06T15:44:31.240Z",
             "text": "What type of survey is planned? (e.g., MICS, DHS, EPI or CES)",
             "modified": "2014-02-06T15:44:31.240Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1000,7 +999,7 @@
             "created": "2014-02-06T15:44:36.876Z",
             "text": "Vaccine/Supplement",
             "modified": "2014-02-06T15:44:36.876Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1016,7 +1015,7 @@
             "created": "2014-02-06T15:44:36.897Z",
             "text": "Official coverage estimates (percent coverage)",
             "modified": "2014-02-06T15:44:36.898Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1032,7 +1031,7 @@
             "created": "2014-02-06T15:44:36.904Z",
             "text": "Please explain why these are your official estimates and where they come from",
             "modified": "2014-02-06T15:44:36.904Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1048,7 +1047,7 @@
             "created": "2014-02-06T15:44:40.820Z",
             "text": "Does the country have a  multi-year plan (MYP) for immunization?",
             "modified": "2014-02-06T15:44:40.820Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1064,7 +1063,7 @@
             "created": "2014-02-06T15:44:40.824Z",
             "text": "If yes, what years does the MYP cover?",
             "modified": "2014-02-06T15:44:40.824Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1080,7 +1079,7 @@
             "created": "2014-02-06T15:44:40.825Z",
             "text": "Did the country have an annual workplan for immunization activities in 2013?",
             "modified": "2014-02-06T15:44:40.825Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1096,7 +1095,7 @@
             "created": "2014-02-06T15:44:40.829Z",
             "text": "Number of districts with updated micro-plans to raise immunization coverage",
             "modified": "2014-02-06T15:44:40.829Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1112,7 +1111,7 @@
             "created": "2014-02-06T15:44:40.838Z",
             "text": "Did  your country have a standing technical advisory group on immunization in 2013? If no, please skip to next page",
             "modified": "2014-02-06T15:44:40.838Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1128,7 +1127,7 @@
             "created": "2014-02-06T15:44:40.841Z",
             "text": "Does the advisory group have formal written terms of reference?",
             "modified": "2014-02-06T15:44:40.841Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1144,7 +1143,7 @@
             "created": "2014-02-06T15:44:40.844Z",
             "text": "Are there legislative or administrative basis for the advisory group?",
             "modified": "2014-02-06T15:44:40.845Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1160,7 +1159,7 @@
             "created": "2014-02-06T15:44:40.848Z",
             "text": "pediatrics",
             "modified": "2014-02-06T15:44:40.848Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1176,7 +1175,7 @@
             "created": "2014-02-06T15:44:40.851Z",
             "text": "public health",
             "modified": "2014-02-06T15:44:40.851Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1192,7 +1191,7 @@
             "created": "2014-02-06T15:44:40.854Z",
             "text": "infectious diseases",
             "modified": "2014-02-06T15:44:40.855Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1208,7 +1207,7 @@
             "created": "2014-02-06T15:44:40.859Z",
             "text": "epidemiology",
             "modified": "2014-02-06T15:44:40.859Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1224,7 +1223,7 @@
             "created": "2014-02-06T15:44:40.862Z",
             "text": "immunology",
             "modified": "2014-02-06T15:44:40.862Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1240,7 +1239,7 @@
             "created": "2014-02-06T15:44:40.866Z",
             "text": "other: please specify under explanatory comments",
             "modified": "2014-02-06T15:44:40.866Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1256,7 +1255,7 @@
             "created": "2014-02-06T15:44:40.869Z",
             "text": "How many times did the advisory group meet in 2013?",
             "modified": "2014-02-06T15:44:40.869Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1272,7 +1271,7 @@
             "created": "2014-02-06T15:44:40.870Z",
             "text": "Were the agenda and background documents distributed (at least 1 week) prior to meetings in 2013?",
             "modified": "2014-02-06T15:44:40.870Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1288,7 +1287,7 @@
             "created": "2014-02-06T15:44:40.873Z",
             "text": "Are members of the advisory group required to disclose conflict of interest?",
             "modified": "2014-02-06T15:44:40.873Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1304,7 +1303,7 @@
             "created": "2014-02-06T15:44:40.877Z",
             "text": "Does the advisory group have a website or webpage? If yes, please provide the address in next box (explanatory comments)",
             "modified": "2014-02-06T15:44:40.877Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1320,7 +1319,7 @@
             "created": "2014-02-06T15:44:40.899Z",
             "text": "DTP3",
             "modified": "2014-02-06T15:44:40.900Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1336,7 +1335,7 @@
             "created": "2014-02-06T15:44:40.900Z",
             "text": "Coverage is <50%",
             "modified": "2014-02-06T15:44:40.900Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1352,7 +1351,7 @@
             "created": "2014-02-06T15:44:40.901Z",
             "text": "Coverage is 50-79%",
             "modified": "2014-02-06T15:44:40.901Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1368,7 +1367,7 @@
             "created": "2014-02-06T15:44:40.902Z",
             "text": "Coverage is 80-89%",
             "modified": "2014-02-06T15:44:40.902Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1384,7 +1383,7 @@
             "created": "2014-02-06T15:44:40.902Z",
             "text": "Coverage is 90-94%",
             "modified": "2014-02-06T15:44:40.903Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1400,7 +1399,7 @@
             "created": "2014-02-06T15:44:40.903Z",
             "text": "Coverage is >=95%",
             "modified": "2014-02-06T15:44:40.903Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1416,7 +1415,7 @@
             "created": "2014-02-06T15:44:40.904Z",
             "text": "number of districts not reporting",
             "modified": "2014-02-06T15:44:40.904Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1432,7 +1431,7 @@
             "created": "2014-02-06T15:44:40.917Z",
             "text": "Measles",
             "modified": "2014-02-06T15:44:40.918Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1448,7 +1447,7 @@
             "created": "2014-02-06T15:44:40.930Z",
             "text": "TT2+ (pregnant women)",
             "modified": "2014-02-06T15:44:40.930Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1464,7 +1463,7 @@
             "created": "2014-02-06T15:44:40.942Z",
             "text": "PAB (protection at birth)",
             "modified": "2014-02-06T15:44:40.943Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1480,7 +1479,7 @@
             "created": "2014-02-06T15:44:40.956Z",
             "text": "Number of districts reporting DTP drop-out rates greater than 10%",
             "modified": "2014-02-06T15:44:40.957Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1496,7 +1495,7 @@
             "created": "2014-02-06T15:44:40.963Z",
             "text": "Vaccine/Supplies",
             "modified": "2014-02-06T15:44:40.963Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1512,7 +1511,7 @@
             "created": "2014-02-06T15:44:40.976Z",
             "text": "Was there a stock-out (no remaining doses for any period of time) at the national level during 2013?",
             "modified": "2014-02-06T15:44:40.976Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1528,7 +1527,7 @@
             "created": "2014-02-06T15:44:40.979Z",
             "text": "public health",
             "modified": "2014-02-06T15:44:40.980Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1544,7 +1543,7 @@
             "created": "2014-02-06T15:44:40.984Z",
             "text": "Was there a stock-out in any district during 2013?",
             "modified": "2014-02-06T15:44:40.984Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1560,7 +1559,7 @@
             "created": "2014-02-06T15:44:40.988Z",
             "text": "If yes, indicate the number of districts with interruption of activities due to stock-outs",
             "modified": "2014-02-06T15:44:40.989Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1576,7 +1575,7 @@
             "created": "2014-02-06T15:44:40.993Z",
             "text": "Wastage (%) Please complete separately for each vaccine, even if they were given in combination",
             "modified": "2014-02-06T15:44:40.993Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1592,7 +1591,7 @@
             "created": "2014-02-06T15:44:41.004Z",
             "text": "In 2013 was a policy being implemented for immunization injection safety?",
             "modified": "2014-02-06T15:44:41.004Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1608,7 +1607,7 @@
             "created": "2014-02-06T15:44:41.008Z",
             "text": "Does your country have a vaccine adverse events review committee? ",
             "modified": "2014-02-06T15:44:41.008Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1624,7 +1623,7 @@
             "created": "2014-02-06T15:44:41.012Z",
             "text": "Is there a national system to monitor adverse events following immunization?",
             "modified": "2014-02-06T15:44:41.012Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1640,7 +1639,7 @@
             "created": "2014-02-06T15:44:41.016Z",
             "text": "If yes, how many total  adverse events, including suspected or confirmed, were reported to the national level in 2013?",
             "modified": "2014-02-06T15:44:41.016Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1656,7 +1655,7 @@
             "created": "2014-02-06T15:44:41.017Z",
             "text": "In 2013 was there  a national policy for waste from immunization activities?",
             "modified": "2014-02-06T15:44:41.017Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1672,7 +1671,7 @@
             "created": "2014-02-06T15:44:41.024Z",
             "text": "Incineration",
             "modified": "2014-02-06T15:44:41.024Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1688,7 +1687,7 @@
             "created": "2014-02-06T15:44:41.027Z",
             "text": "Open burning",
             "modified": "2014-02-06T15:44:41.027Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1704,7 +1703,7 @@
             "created": "2014-02-06T15:44:41.029Z",
             "text": "Burial",
             "modified": "2014-02-06T15:44:41.030Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1720,7 +1719,7 @@
             "created": "2014-02-06T15:44:41.032Z",
             "text": "Other",
             "modified": "2014-02-06T15:44:41.032Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1736,7 +1735,7 @@
             "created": "2014-02-06T15:44:41.049Z",
             "text": "the purchase of vaccines used in routine immunizations",
             "modified": "2014-02-06T15:44:41.049Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1752,7 +1751,7 @@
             "created": "2014-02-06T15:44:41.053Z",
             "text": "the purchase of injection supplies (such as syringes, needles, and safety boxes) for routine immunizations",
             "modified": "2014-02-06T15:44:41.053Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1768,7 +1767,7 @@
             "created": "2014-02-06T15:44:41.058Z",
             "text": "the health care waste management ",
             "modified": "2014-02-06T15:44:41.058Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1784,7 +1783,7 @@
             "created": "2014-02-06T15:44:41.065Z",
             "text": "Amount",
             "modified": "2014-02-06T15:44:41.065Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1800,7 +1799,7 @@
             "created": "2014-02-06T15:44:41.066Z",
             "text": "Currency",
             "modified": "2014-02-06T15:44:41.066Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1816,7 +1815,7 @@
             "created": "2014-02-06T15:44:41.072Z",
             "text": "Amount",
             "modified": "2014-02-06T15:44:41.072Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1832,7 +1831,7 @@
             "created": "2014-02-06T15:44:41.073Z",
             "text": "Currency",
             "modified": "2014-02-06T15:44:41.073Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1848,7 +1847,7 @@
             "created": "2014-02-06T15:44:41.079Z",
             "text": "If total amounts are not available for the previous questions please provide an estimated percentage of  total expenditure on vaccines financed by government funds",
             "modified": "2014-02-06T15:44:41.079Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1864,7 +1863,7 @@
             "created": "2014-02-06T15:44:41.079Z",
             "text": "Amount",
             "modified": "2014-02-06T15:44:41.080Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1880,7 +1879,7 @@
             "created": "2014-02-06T15:44:41.080Z",
             "text": "Currency",
             "modified": "2014-02-06T15:44:41.080Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1896,7 +1895,7 @@
             "created": "2014-02-06T15:44:41.086Z",
             "text": "Amount",
             "modified": "2014-02-06T15:44:41.086Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1912,7 +1911,7 @@
             "created": "2014-02-06T15:44:41.087Z",
             "text": "Currency",
             "modified": "2014-02-06T15:44:41.087Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1928,7 +1927,7 @@
             "created": "2014-02-06T15:44:41.094Z",
             "text": "If total amounts are not available for the previous question please provide an estimated percentage of total expenditure on routine immunization  financed by government funds?",
             "modified": "2014-02-06T15:44:41.094Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1944,7 +1943,7 @@
             "created": "2014-02-06T15:44:43.834Z",
             "text": "Vaccine/supplement",
             "modified": "2014-02-06T15:44:43.835Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1960,7 +1959,7 @@
             "created": "2014-02-06T15:44:43.835Z",
             "text": "Round and type of activity",
             "modified": "2014-02-06T15:44:43.836Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1976,7 +1975,7 @@
             "created": "2014-02-06T15:44:43.837Z",
             "text": "Date",
             "modified": "2014-02-06T15:44:43.837Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -1992,7 +1991,7 @@
             "created": "2014-02-06T15:44:43.838Z",
             "text": "Geographic Area",
             "modified": "2014-02-06T15:44:43.838Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2008,7 +2007,7 @@
             "created": "2014-02-06T15:44:43.839Z",
             "text": "Target population",
             "modified": "2014-02-06T15:44:43.839Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2024,7 +2023,7 @@
             "created": "2014-02-06T15:44:43.840Z",
             "text": "Estimated number in target population",
             "modified": "2014-02-06T15:44:43.840Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2040,7 +2039,7 @@
             "created": "2014-02-06T15:44:43.841Z",
             "text": "Total number of persons vaccinated or supplemented",
             "modified": "2014-02-06T15:44:43.841Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2056,7 +2055,7 @@
             "created": "2014-02-06T15:44:43.842Z",
             "text": "Coverage (%)",
             "modified": "2014-02-06T15:44:43.842Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2072,7 +2071,7 @@
             "created": "2014-02-06T15:44:43.847Z",
             "text": "TT1",
             "modified": "2014-02-06T15:44:43.847Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2088,7 +2087,7 @@
             "created": "2014-02-06T15:44:43.848Z",
             "text": "TT2",
             "modified": "2014-02-06T15:44:43.848Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2104,7 +2103,7 @@
             "created": "2014-02-06T15:44:43.849Z",
             "text": "TT3",
             "modified": "2014-02-06T15:44:43.849Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2120,7 +2119,7 @@
             "created": "2014-02-06T15:44:43.850Z",
             "text": "TT4 or more",
             "modified": "2014-02-06T15:44:43.850Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2136,7 +2135,7 @@
             "created": "2014-02-06T15:44:55.058Z",
             "text": "Name of person in Ministry of Health responsible for completing this form",
             "modified": "2014-02-11T15:55:09.986Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": true,
             "is_core": false,
@@ -2152,7 +2151,7 @@
             "created": "2014-02-06T15:44:55.059Z",
             "text": "Position/title",
             "modified": "2014-02-11T15:54:53.099Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": true,
             "is_core": false,
@@ -2168,7 +2167,7 @@
             "created": "2014-02-06T15:44:55.060Z",
             "text": "Email address",
             "modified": "2014-02-11T15:54:36.620Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": true,
             "is_core": false,
@@ -2184,7 +2183,7 @@
             "created": "2014-02-06T15:44:55.061Z",
             "text": "Name of UNICEF contact",
             "modified": "2014-02-06T15:44:55.061Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2200,7 +2199,7 @@
             "created": "2014-02-06T15:44:55.062Z",
             "text": "Email address of UNICEF contact",
             "modified": "2014-02-06T15:44:55.062Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2216,7 +2215,7 @@
             "created": "2014-02-06T15:44:55.063Z",
             "text": "Name of WHO contact",
             "modified": "2014-02-06T15:44:55.063Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2232,7 +2231,7 @@
             "created": "2014-02-06T15:44:55.064Z",
             "text": "Email address of WHO contact",
             "modified": "2014-02-06T15:44:55.064Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,
@@ -2248,7 +2247,7 @@
             "created": "2014-02-06T15:44:55.064Z",
             "text": "Total number of districts in the country",
             "modified": "2014-02-06T15:44:55.065Z",
-            "short_instruction": null,
+
             "is_primary": false,
             "is_required": false,
             "is_core": false,

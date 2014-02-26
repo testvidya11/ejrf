@@ -1,6 +1,6 @@
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
 from django.forms.formsets import formset_factory
-from questionnaire.models import AnswerGroup
+from questionnaire.models import AnswerGroup, Question
 
 ANSWER_FORM ={
     'Number': NumericalAnswerForm,
@@ -42,11 +42,16 @@ class QuestionnaireEntryFormService(object):
     def _get_initial(self, orders):
         return [dict(self.initial.items() + self._question_initial(order).items()) for order in orders]
 
+    def _attempt_integer_casting(self, existing_draft_answer, question):
+        if question.answer_type is 'Number' and existing_draft_answer.response and  existing_draft_answer.response._isinteger():
+            return int(existing_draft_answer.response)
+        return existing_draft_answer.response
+
     def _question_initial(self, order):
         existing_draft_answer = order.question.draft_answer(order.question_group, self.initial['country'])
         initial = {'group': order.question_group, 'question': order.question}
         if existing_draft_answer:
-            initial['response'] = existing_draft_answer.response
+            initial['response'] = self._attempt_integer_casting(existing_draft_answer, order.question)
             initial['answer'] = existing_draft_answer
         return initial
 
