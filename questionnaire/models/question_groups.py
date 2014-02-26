@@ -10,6 +10,8 @@ class QuestionGroup(BaseModel):
     parent = models.ForeignKey("QuestionGroup", null=True, related_name="sub_group")
     order = models.PositiveIntegerField(null=True, blank=False)
     allow_multiples = models.BooleanField(default=False)
+    grid = models.BooleanField(default=False)
+    display_all = models.BooleanField(default=False)
 
     def all_questions(self):
         return self.question.all()
