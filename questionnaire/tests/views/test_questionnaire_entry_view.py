@@ -8,7 +8,7 @@ from questionnaire.tests.base_test import BaseTest
 
 class QuestionnaireEntrySaveDraftTest(BaseTest):
     def setUp(self):
-        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", is_open=True,
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", status=Questionnaire.PUBLISHED,
                                                           description="From dropbox as given by Rouslan")
 
         self.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)",
@@ -79,7 +79,7 @@ class QuestionnaireEntrySaveDraftTest(BaseTest):
                                                                 (self.questionnaire.id, self.section_1.id))
 
     def test_gets_ordered_sections_for_only_the_questionnaire_in_get_params(self):
-        questionnaire_2 = Questionnaire.objects.create(name="JRF 2013 Core English", is_open=True,
+        questionnaire_2 = Questionnaire.objects.create(name="JRF 2013 Core English", status=Questionnaire.FINALIZED,
                                                        description="From dropbox as given by Rouslan")
         questionnaire_2_section = Section.objects.create(title="section 3", order=3, questionnaire=questionnaire_2)
 
@@ -250,7 +250,7 @@ class QuestionnaireEntrySaveDraftTest(BaseTest):
 
 class QuestionnaireEntrySubmitTest(BaseTest):
     def setUp(self):
-        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", is_open=True,
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", status=Questionnaire.PUBLISHED,
                                                           description="From dropbox as given by Rouslan")
 
         self.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)",
@@ -384,7 +384,7 @@ class QuestionnaireEntrySubmitTest(BaseTest):
 
 class QuestionnaireCloneViewTest(BaseTest):
     def setUp(self):
-        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", finalized=True, year=2013)
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", status=Questionnaire.FINALIZED, year=2013)
         self.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
                                                       questionnaire=self.questionnaire, name="Reported Cases")
         self.section_2 = Section.objects.create(title="Cured Cases of Measles", order=1,

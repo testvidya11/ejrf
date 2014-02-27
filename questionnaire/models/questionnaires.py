@@ -1,14 +1,18 @@
+from model_utils import Choices
+from model_utils.fields import StatusField
 from questionnaire.models.base import BaseModel
 from django.db import models
 
 
 class Questionnaire(BaseModel):
+    DRAFT = 'draft'
+    PUBLISHED = 'published'
+    FINALIZED = 'finalized'
+    STATUS = Choices(FINALIZED, PUBLISHED, DRAFT)
     name = models.CharField(max_length=256, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
     year = models.PositiveIntegerField(null=True, blank=True)
-    is_open = models.BooleanField(blank=False, null=False, default=False)
-    finalized = models.BooleanField(blank=False, null=False, default=False)
-    published = models.BooleanField(blank=False, null=False, default=False)
+    status = StatusField(choices_name="STATUS", default=DRAFT)
 
     def __unicode__(self):
         return '%s' % self.name

@@ -6,7 +6,7 @@ from questionnaire.tests.base_test import BaseTest
 
 class QuestionnairePreviewTest(BaseTest):
     def setUp(self):
-        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", is_open=True,
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", status=Questionnaire.PUBLISHED,
                                                           description="From dropbox as given by Rouslan")
 
         self.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)",

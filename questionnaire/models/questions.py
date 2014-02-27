@@ -54,7 +54,7 @@ class Question(BaseModel):
 
     def is_in_active_questionnaire(self):
         from questionnaire.models import Questionnaire
-        finalized_questionnaire = Questionnaire.objects.filter(finalized=True).latest('created')
+        finalized_questionnaire = Questionnaire.objects.filter(status=Questionnaire.FINALIZED).latest('created')
         return self in finalized_questionnaire.get_all_questions()
 
     @classmethod

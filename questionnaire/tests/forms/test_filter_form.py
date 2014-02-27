@@ -43,7 +43,7 @@ class UserProfileFormTest(BaseTest):
 class QuestionnaireFilterFormTest(BaseTest):
 
     def setUp(self):
-        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", finalized=True, year=2013)
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", status=Questionnaire.FINALIZED, year=2013)
 
         self.form_data = {
             'questionnaire': self.questionnaire.id,
@@ -84,7 +84,7 @@ class QuestionnaireFilterFormTest(BaseTest):
         self.assertIn("This field is required.", questionnaire_filter.errors['name'])
 
     def test_has_years_choices_exclude_existing_questionnaires_years(self):
-        Questionnaire.objects.create(name="JRF 2013 Core English", finalized=True, year=date.today().year + 1)
+        Questionnaire.objects.create(name="JRF 2013 Core English", status=Questionnaire.FINALIZED, year=date.today().year + 1)
         questionnaire_filter = QuestionnaireFilterForm(self.form_data)
         self.assertIn(('', 'Choose a year'), questionnaire_filter.fields['year'].choices)
         for count in range(2, 9):

@@ -10,7 +10,7 @@ class PreviewQuestionnaire(PermissionRequiredMixin, View):
     permission_required = "auth.can_submit_responses"
 
     def get(self, request, *args, **kwargs):
-        questionnaire = Questionnaire.objects.get(is_open=True)
+        questionnaire = Questionnaire.objects.get(status=Questionnaire.PUBLISHED)
         user_questionnaire_service = UserQuestionnaireService(self.request.user, questionnaire)
         context = {'all_sections_questionnaires': user_questionnaire_service.all_sections_questionnaires(),
                    'ordered_sections': questionnaire.sections.order_by('order')}

@@ -6,26 +6,24 @@ from questionnaire.models import Questionnaire, Section, SubSection, Question, Q
 
 @step(u'And I have a questionnaire with sections and subsections')
 def and_i_have_a_questionnaire_with_sections_and_subsections(step):
-    world.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan")
-
+    world.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan",
+                                                       status=Questionnaire.PUBLISHED)
     world.section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
-                                                  questionnaire=world.questionnaire, name="Reported Cases",
-                                                  description="some description")
-
+                                             questionnaire=world.questionnaire, name="Reported Cases",
+                                             description="some description")
     world.section_2 = Section.objects.create(title="Section 2", order=2, questionnaire=world.questionnaire, name="Section2")
-
     world.sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1, section=world.section_1)
 
 @step(u'And I have a question group and questions in that group')
 def and_i_have_a_question_group_and_questions_in_that_group(step):
     world.question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice')
     world.question2 = Question.objects.create(text='B. Number of cases tested',
-                                instructions="Enter the total number of cases for which specimens were collected, and tested in laboratory",
-                                UID='C00003', answer_type='Number')
+                                              instructions="Enter the total number of cases for which",
+                                              UID='C00003', answer_type='Number')
 
     world.question3 = Question.objects.create(text='C. Number of cases positive',
-                                        instructions="Include only those cases found positive for the infectious agent.",
-                                        UID='C00004', answer_type='Number')
+                                              instructions="Include only those cases the infectious agent.",
+                                              UID='C00004', answer_type='Number')
 
     world.question_group = QuestionGroup.objects.create(subsection=world.sub_section, order=1, name="Immunization", allow_multiples=1)
     world.question_group.question.add(world.question1, world.question3, world.question2)

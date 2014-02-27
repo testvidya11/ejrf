@@ -31,14 +31,14 @@ class QuestionnaireTest(BaseTest):
 
     def test_questionnaire_fields(self):
         fields = [str(item.attname) for item in Questionnaire._meta.fields]
-        self.assertEqual(9, len(fields))
-        for field in ['id', 'created', 'modified', 'name', 'description', 'year', 'is_open', 'finalized', 'published']:
+        self.assertEqual(7, len(fields))
+        for field in ['id', 'created', 'modified', 'name', 'description', 'year', 'status']:
             self.assertIn(field, fields)
 
     def test_questionnaire_store(self):
         self.failUnless(self.questionnaire.id)
         self.assertEqual("JRF 2013 Core English", self.questionnaire.name)
-        self.assertFalse(self.questionnaire.is_open)
+        self.assertEqual(self.questionnaire.status, Questionnaire.DRAFT)
 
     def test_questionnaire_can_find_its_subsection(self):
         questionnaire_sub_sections = self.questionnaire.sub_sections()

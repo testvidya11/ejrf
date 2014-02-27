@@ -156,7 +156,7 @@ class QuestionTest(BaseTest):
         self.assertFalse(question.can_be_deleted())
 
     def test_knows_is_in_latest_finalized_questionnaire(self):
-        questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", year=2013, finalized=True)
+        questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", year=2013, status=Questionnaire.FINALIZED)
         section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
                                                       questionnaire=questionnaire, name="Reported Cases")
         sub_section = SubSection.objects.create(title="Another", order=2, section=section_1)

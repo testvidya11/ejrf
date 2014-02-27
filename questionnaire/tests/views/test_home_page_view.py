@@ -41,8 +41,8 @@ class ManageJRFViewTest(BaseTest):
         self.client.login(username=self.user.username, password='pass')
 
     def test_get(self):
-        questionnaire1 = Questionnaire.objects.create(name="JRF Jamaica", description="bla", year=2012, finalized=True)
-        questionnaire2 = Questionnaire.objects.create(name="JRF Brazil", description="bla", year=2013, finalized=False)
+        questionnaire1 = Questionnaire.objects.create(name="JRF Jamaica", description="bla", year=2012, status=Questionnaire.FINALIZED)
+        questionnaire2 = Questionnaire.objects.create(name="JRF Brazil", description="bla", year=2013, status=Questionnaire.DRAFT)
         Section.objects.create(title="section", order=1, questionnaire=questionnaire1, name="section")
         Section.objects.create(title="section", order=1, questionnaire=questionnaire2, name="section")
         response = self.client.get("/manage/")

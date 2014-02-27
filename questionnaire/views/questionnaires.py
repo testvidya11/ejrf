@@ -78,7 +78,7 @@ class Entry(MultiplePermissionsRequiredMixin, FormView):
 class SubmitQuestionnaire(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
-        questionnaire = Questionnaire.objects.get(is_open=True)
+        questionnaire = Questionnaire.objects.get(status=Questionnaire.PUBLISHED)
         user_questionnaire = UserQuestionnaireService(self.request.user, questionnaire)
         if not user_questionnaire.required_sections_answered():
             return self._reload_section_with_required_answers_errors(request, user_questionnaire, *args, **kwargs)

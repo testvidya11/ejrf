@@ -6,28 +6,28 @@ from questionnaire.models import Questionnaire, Section
 @step(u'I have four finalised questionnaires')
 def given_i_have_four_finalised_questionnaires(step):
     world.questionnaire1 = Questionnaire.objects.create(name="JRF Jamaica version", description="description",
-                                                        year=2012, finalized=True)
+                                                        year=2012, status=Questionnaire.FINALIZED)
 
     Section.objects.create(title="School Based Section1", order=0, questionnaire=world.questionnaire1, name="Name")
 
     world.questionnaire2 = Questionnaire.objects.create(name="JRF Brazil version", description="description",
-                                                        year=2009, finalized=True)
+                                                        year=2009, status=Questionnaire.FINALIZED)
     Section.objects.create(title="School Section1", order=0, questionnaire=world.questionnaire2, name="Section1 name")
     world.questionnaire3 = Questionnaire.objects.create(name="JRF Bolivia version", description="some more description",
-                                                        year=2011, finalized=True)
+                                                        year=2011, status=Questionnaire.FINALIZED)
     Section.objects.create(title="Section1", order=0, questionnaire=world.questionnaire3, name="School Imm. Delivery")
     world.questionnaire4 = Questionnaire.objects.create(name="JRF kampala version", description="description",
-                                                        year=2010, finalized=True)
+                                                        year=2010, status=Questionnaire.FINALIZED)
     Section.objects.create(title="Section1", order=0, questionnaire=world.questionnaire4, name="School Imm. Delivery")
 
 
 @step(u'And I have two draft questionnaires for two years')
 def and_i_have_two_draft_questionnaires_for_two_years(step):
     world.questionnaire5 = Questionnaire.objects.create(name="JRF Bolivia version", description="some more description",
-                                                        year=2013, finalized=False)
+                                                        year=2013, status=Questionnaire.DRAFT)
     Section.objects.create(title="Section1", order=0, questionnaire=world.questionnaire5, name="School Imm. Delivery")
     world.questionnaire6 = Questionnaire.objects.create(name="JRF kampala version", description="description",
-                                                        year=2013, finalized=False)
+                                                        year=2013, status=Questionnaire.DRAFT)
     Section.objects.create(title="Section1", order=0, questionnaire=world.questionnaire6, name="School Imm. Delivery")
 
 
@@ -91,7 +91,7 @@ def then_i_should_see_a_message_that_the_questionnaire_was_duplicated_successful
 
 @step(u'Then I should see the new questionnaire listed')
 def then_i_should_see_the_new_questionnaire_listed(step):
-    world.latest_questionnaire = Questionnaire.objects.filter(finalized=False).latest('created')
+    world.latest_questionnaire = Questionnaire.objects.filter(status=Questionnaire.FINALIZED).latest('created')
     world.page.is_element_present_by_id("questionnaire-%s" % world.latest_questionnaire.id)
 
 @step(u'Then I should a validation error message')
