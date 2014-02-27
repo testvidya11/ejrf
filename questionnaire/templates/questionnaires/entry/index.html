@@ -53,7 +53,13 @@
                 {% endfor %}
                 {% for subsection in section.sub_sections.all %}
                     <h4>{% if section.has_at_least_two_subsections %}{{ section.order }}.{{ subsection.order }}
-                        .{% endif %} {{ subsection.title }}</h4>
+                        .{% endif %} {{ subsection.title }}
+                        {% if perms.auth.can_edit_questionnaire %}
+                            <a href="" id="assign-question" class="btn btn-default pull-right" data-toggle="modal"
+                               data-target="#assign-question-modal"><span class="cyan"><span
+                                    class="glyphicon glyphicon-plus-sign"></span> Assign Question</span></a>
+                        {% endif %}
+                    </h4>
                     {% for group in subsection.parent_question_groups %}
                         {% if group.grid and group.display_all %}
                             {% include 'questionnaires/entry/grid.html' with a_group=group%}

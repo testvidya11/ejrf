@@ -25,3 +25,4 @@ class SubSectionForm(ModelForm):
         model = SubSection
         fields = ['title', 'description']
         widgets = {'description': forms.Textarea(attrs={"rows": 4, "cols": 50})}
+
