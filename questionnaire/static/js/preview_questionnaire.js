@@ -17,7 +17,7 @@ $(function(){
 });
 
 function disable_modal_input_fields(){
-    $('.tab-content :input').each(function() {
+    $('.preview-content :input').each(function() {
        $(this).attr('disabled','disabled');
     });
 };

@@ -1,0 +1,8 @@
+{% extends 'base/form.html' %}
+{% block title %}
+    Assign Questions to Subsection: {{ assign_question_form.subsection.title }}
+{% endblock %}
+{% block display_form_fields %}
+{#    {% include 'base/naked_form.html' with a_form=assign_question_form %}#}
+    {% include 'questionnaires/assign_questions_pagination.html' with questions=questions %}
+{% endblock %}

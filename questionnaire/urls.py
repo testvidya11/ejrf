@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from questionnaire.views.assign_questions import AssignQuestion
 from questionnaire.views.export_to_text import ExportToTextView, ExportSectionPDF, DownloadSectionPDF
 from questionnaire.views.home import Home
 from questionnaire.views.locations import ListRegions, ListCountries, RegionsForOrganization
@@ -38,6 +39,7 @@ urlpatterns = patterns('',
     url(r'^questions/new/$', CreateQuestion.as_view(), name='new_question_page'),
     url(r'^questions/(?P<question_id>\d+)/delete/$', DeleteQuestion.as_view(), name='delete_question_page'),
     url(r'^submit/$', SubmitQuestionnaire.as_view(), name="submit_questionnaire_page"),
+    url(r'^subsection/(?P<subsection_id>\d+)/assign_questions/$', AssignQuestion.as_view(), name="assign_question_to_subsection_page"),
     url(r'^users/$', UsersList.as_view(), name="list_users_page"),
     url(r'^users/new/$', CreateUser.as_view(), name="create_user_page"),
 )

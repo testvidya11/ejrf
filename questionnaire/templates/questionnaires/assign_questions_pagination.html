@@ -1,0 +1,37 @@
+{% load generic_tags %}
+
+<div class="tab-content">
+    {% for question_page in questions|divide_to_paginate %}
+        <div class="tab-pane {% if forloop.first %}active in{% endif %}" id="page_{{ forloop.counter }}">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th>Assign</th>
+                    <th>UID</th>
+                    <th>Export Label (Detail)</th>
+                    <th>Response Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for question in question_page %}
+                    <tr {% if question.is_in_active_questionnaire %} class="success" {% endif %}>
+                        <td><input type="checkbox" value="{{ question.id }}" name="questions" /></td>
+                        <td>{{ question.UID }} </td>
+                        <td id="text-td">{{ question.export_label }}</td>
+                        <td>{{ question.answer_type }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    {% endfor %}
+</div>
+<div class="pagination">
+    <ul class="pagination">
+        {% for question_page in questions|divide_to_paginate %}
+            <li {% if forloop.first %}class="active"{% endif %}><a href="#page_{{ forloop.counter }}"
+                                                                   data-toggle="tab">{{ forloop.counter }}</a></li>
+        {% endfor %}
+    </ul>
+</div>

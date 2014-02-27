@@ -32,6 +32,7 @@ class AssignQuestionFormTest(BaseTest):
         question_group = self.question1.question_group.all()
         self.assertEqual(1, question_group.count())
         self.assertEqual(question_group[0], self.question2.question_group.all()[0])
+        self.assertEqual(self.subsection, question_group[0].subsection)
 
     def test_does_not_create_groups_on_save_if_subsection_already_have_one(self):
         already_existing_group = QuestionGroup.objects.create(subsection=self.subsection, order=1)
