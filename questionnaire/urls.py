@@ -9,7 +9,7 @@ from questionnaire.views.sections import NewSection, NewSubSection
 from questionnaire.views.questions import QuestionList, CreateQuestion, DeleteQuestion
 from questionnaire.views.questionnaires import Entry, SubmitQuestionnaire, DuplicateQuestionnaire
 from questionnaire.views.upload_document import UploadDocument, DownloadDocument, DeleteDocument
-from questionnaire.views.users import UsersList, CreateUser
+from questionnaire.views.users import UsersList, CreateUser, EditUser
 
 urlpatterns = patterns('',
     url(r'^$',  Home.as_view(), name="home_page"),
@@ -42,4 +42,5 @@ urlpatterns = patterns('',
     url(r'^subsection/(?P<subsection_id>\d+)/assign_questions/$', AssignQuestion.as_view(), name="assign_question_to_subsection_page"),
     url(r'^users/$', UsersList.as_view(), name="list_users_page"),
     url(r'^users/new/$', CreateUser.as_view(), name="create_user_page"),
+    url(r'^users/(?P<pk>\d+)/edit/$', EditUser.as_view(), name="edit_user"),
 )

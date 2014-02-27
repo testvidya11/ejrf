@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 from questionnaire.forms.filter import UserFilterForm
 from questionnaire.forms.user_profile import UserProfileForm
 from questionnaire.models import Organization, Region, Country
@@ -73,3 +73,17 @@ class CreateUser(LoginRequiredMixin, CreateView):
                         'countries': Country.objects.all()}
         context.update(context_vars)
         return context
+
+class EditUser(LoginRequiredMixin, UpdateView):
+
+    def __init__(self, **kwargs):
+        super(EditUser, self).__init__(**kwargs)
+        self.model = User
+        self.slug_field = 'name_slug'
+        self.template_name_suffix = '_update_form'
+        self.template_name = 'users/new.html'
+        self.form_class = UserProfileForm
+
+    
+
+
