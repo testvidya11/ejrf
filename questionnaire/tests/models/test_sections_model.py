@@ -1,5 +1,5 @@
 from questionnaire.models.sections import Section, SubSection
-from questionnaire.models import Questionnaire, Question, QuestionGroup, QuestionGroupOrder
+from questionnaire.models import Questionnaire, Question, QuestionGroup, QuestionGroupOrder, QuestionOption
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -40,7 +40,6 @@ class SectionTest(BaseTest):
         QuestionGroupOrder.objects.create(question=self.question4, question_group=self.question_group2, order=1)
         QuestionGroupOrder.objects.create(question=self.question5, question_group=self.question_group2, order=2)
         QuestionGroupOrder.objects.create(question=self.question6, question_group=self.question_group3, order=1)
-
 
     def test_section_fields(self):
         section = Section()
@@ -93,6 +92,26 @@ class SectionTest(BaseTest):
         Section.objects.filter(questionnaire=self.questionnaire).delete()
         self.assertEqual(0, Section.get_next_order(self.questionnaire))
 
+    def test_section_gets_orders_for_each_question_option_for_each_answert_type(self):
+        QuestionGroupOrder.objects.all().delete()
+        question1 = Question.objects.create(text='Favorite beer 1', UID='C00323', answer_type='MultiChoice', is_primary=True)
+        option1 = QuestionOption.objects.create(text='tusker lager', question=question1)
+        option2 = QuestionOption.objects.create(text='tusker lager1', question=question1)
+        option3 = QuestionOption.objects.create(text='tusker lager2', question=question1)
+
+        question_group3 = QuestionGroup.objects.create(subsection=self.sub_section2, order=1, grid=True, display_all=True)
+
+        question_group3.question.add(self.question5, self.question2, self.question6, question1)
+        question_order1 = QuestionGroupOrder.objects.create(question=question1, question_group=question_group3, order=1)
+        question_order2 = QuestionGroupOrder.objects.create(question=self.question2, question_group=question_group3, order=2)
+        question_order3 = QuestionGroupOrder.objects.create(question=self.question5, question_group=question_group3, order=3)
+        question_order4 = QuestionGroupOrder.objects.create(question=self.question6, question_group=question_group3, order=4)
+
+        self.assertEqual(12, len(self.section.question_orders()))
+        for i in range(1, 4):
+            self.assertEqual(3, self.section.question_orders().count(eval('question_order%d' % i)))
+
+
 class SubSectionTest(BaseTest):
     def setUp(self):
         self.questionnaire = Questionnaire.objects.create(name="Uganda Revision 2014", description="some description")
@@ -102,7 +121,6 @@ class SubSectionTest(BaseTest):
         self.question1 = Question.objects.create(text='question 1', UID='C00001', answer_type='MultiChoice')
         self.question2 = Question.objects.create(text='question 2', instructions="instruction 2",
                                                     UID='C00002', answer_type='Text')
-
 
     def test_sub_section_fields(self):
         sub_section = SubSection()

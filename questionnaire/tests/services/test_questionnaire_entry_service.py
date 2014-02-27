@@ -331,3 +331,47 @@ class QuestionnaireEntryAsFormTest(BaseTest):
         self.assertEqual(3, question2_form['response'].value())
         self.assertEqual(3.05, question3_form['response'].value())
         self.assertEqual("haha", question5_form['response'].value())
+
+
+class GridQuestionGroupEntryServiceTest(BaseTest):
+    def setUp(self):
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English")
+
+        self.section1 = Section.objects.create(title="Reported Cases of Selected Vaccine", order=1,
+                                               questionnaire=self.questionnaire, name="Reported Cases")
+
+        self.sub_section = SubSection.objects.create(title="subsection 1", order=1, section=self.section1)
+        self.sub_section2 = SubSection.objects.create(title="subsection 2", order=2, section=self.section1)
+
+        self.question_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1, grid=True, display_all=True)
+
+        self.question1 = Question.objects.create(text='Favorite beer 1', UID='C00001', answer_type='MultiChoice', is_primary=True)
+        self.option1 = QuestionOption.objects.create(text='tusker lager', question=self.question1)
+        self.option2 = QuestionOption.objects.create(text='tusker lager1', question=self.question1)
+        self.option3 = QuestionOption.objects.create(text='tusker lager2', question=self.question1)
+
+        self.question2 = Question.objects.create(text='question 2', instructions="instruction 2",
+                                                 UID='C00002', answer_type='Text')
+
+        self.question3 = Question.objects.create(text='question 3', instructions="instruction 3",
+                                                 UID='C00003', answer_type='Number')
+
+        self.question4 = Question.objects.create(text='question 4', instructions="instruction 2",
+                                                 UID='C00005', answer_type='Date')
+        self.question_group.question.add(self.question1, self.question3, self.question2, self.question4)
+
+        QuestionGroupOrder.objects.create(question=self.question1, question_group=self.question_group, order=1)
+        QuestionGroupOrder.objects.create(question=self.question2, question_group=self.question_group, order=2)
+        QuestionGroupOrder.objects.create(question=self.question3, question_group=self.question_group, order=3)
+        QuestionGroupOrder.objects.create(question=self.question4, question_group=self.question_group, order=4)
+        self.country = Country.objects.create(name="Uganda")
+        self.initial = {'status': 'Draft', 'country': self.country}
+
+    def test_returns_multiple_forms_in_formsets_for_all_questions(self):
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1, initial=self.initial)
+        formsets = questionnaire_entry_form._formsets()
+
+        self.assertEqual(3, len(formsets['Number']))
+        self.assertEqual(3, len(formsets['Text']))
+        self.assertEqual(3, len(formsets['Date']))
+        self.assertEqual(3, len(formsets['MultiChoice']))

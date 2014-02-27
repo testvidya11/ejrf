@@ -36,6 +36,9 @@ class QuestionGroup(BaseModel):
     def has_at_least_two_questions(self):
         return self.question.count() > 1
 
+    def primary_question(self):
+        return self.question.filter(is_primary=True)
+
     class Meta:
         ordering = ('order',)
         app_label = 'questionnaire'

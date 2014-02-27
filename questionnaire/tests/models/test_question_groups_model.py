@@ -153,3 +153,12 @@ class GroupedQuestionsTest(BaseTest):
 
         self.assertTrue(sub_group.has_at_least_two_questions())
         self.assertFalse(self.sub_grouped_question.has_at_least_two_questions())
+
+    def test_group_knows_its_primary_question(self):
+        sub_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1)
+        question = Question.objects.create(text='question', UID='ab3123', answer_type='Text', is_primary=True)
+        question2 = Question.objects.create(text='question2', UID='c00001', answer_type='Text')
+        sub_group.question.add(question, question2)
+
+        self.assertTrue(1, sub_group.primary_question().count())
+        self.assertTrue(question, sub_group.primary_question())
