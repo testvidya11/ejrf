@@ -7,3 +7,4 @@ testsettings.py
 Vagrantfile
 .vagrant/
 screenshots/
+.ejrf-env
