@@ -71,7 +71,7 @@ class EditUserProfileForm(ModelForm):
 
     class Meta:
         model = User
-        fields = ("username", "email")
+        fields = ("username", "email", "is_active")
 
     def __init__(self, *args, **kwargs):
         super(EditUserProfileForm, self).__init__(*args, **kwargs)

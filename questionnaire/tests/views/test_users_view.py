@@ -52,8 +52,8 @@ class UsersViewTest(BaseTest):
         templates = [template.name for template in response.templates]
         self.assertIn('users/new.html', templates)
         self.assertIsInstance(response.context['form'], UserProfileForm)
-        self.assertIn('CREATE', response.context['btn_label'])
-        self.assertIn('Create new user', response.context['title'])
+        self.assertEqual('CREATE', response.context['btn_label'])
+        self.assertEqual('Create new user', response.context['title'])
         self.assertIn(self.organization, response.context['organizations'])
         self.assertIn(self.afro, response.context['regions'])
         self.assertIn(self.uganda, response.context['countries'])
@@ -74,8 +74,9 @@ class UsersViewTest(BaseTest):
         templates = [template.name for template in response.templates]
         self.assertIn('users/new.html', templates)
         self.assertIsInstance(response.context['form'], EditUserProfileForm)
-        self.assertIn('SAVE', response.context['btn_label'])
-        self.assertIn('Edit User', response.context['title'])
+        self.assertEqual('SAVE', response.context['btn_label'])
+        self.assertEqual('Edit User', response.context['title'])
+        self.assertEqual('/users/', response.context['cancel_url'])
 
     def test_post_update(self):
         saved_user = User.objects.create(username='user1', email= 'emily@gmail.com')

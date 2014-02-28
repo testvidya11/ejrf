@@ -91,7 +91,8 @@ class EditUser(LoginRequiredMixin, UpdateView):
         context = {'btn_label': "SAVE",
                    'title': "Edit User",
                    'request': self.request,
-                   'form': EditUserProfileForm(instance=user)}
+                   'form': EditUserProfileForm(instance=user),
+                   'cancel_url': reverse("list_users_page")}
         return self.render_to_response(context)
 
     def post(self, request, *args, **kwargs):
