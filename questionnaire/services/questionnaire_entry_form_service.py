@@ -45,23 +45,7 @@ class QuestionnaireEntryFormService(object):
         return formsets
 
     def _get_initial(self, orders):
-        return [dict(self.initial.items() + self._question_initial(order).items()) for order in orders]
-
-    def _attempt_integer_casting(self, existing_draft_answer, question):
-        if question.answer_type is 'Number' and existing_draft_answer.response and  existing_draft_answer.response._isinteger():
-            return int(existing_draft_answer.response)
-        return existing_draft_answer.response
-
-    def _question_initial(self, order):
-        existing_draft_answer = order.question.latest_answer(order.question_group, self.initial['country'])
-        initial = {'group': order.question_group, 'question': order.question}
-        if order.question.is_primary:
-            initial['response'] = order.question.get_option_at()
-        if existing_draft_answer:
-            initial['response'] = existing_draft_answer.response
-            if existing_draft_answer.is_draft():
-                initial['answer'] = existing_draft_answer
-        return initial
+        return [dict(self.initial.items() + order.question.get_initial(order=order, country=self.initial['country']).items()) for order in orders]
 
     def is_valid(self):
         formset_checks = [formset.is_valid() for formset in self.formsets.values()]

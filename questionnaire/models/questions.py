@@ -1,4 +1,3 @@
-import re
 from django.db import models
 from questionnaire.models.base import BaseModel
 from questionnaire.utils.question_util import largest_uid, stringify
@@ -58,6 +57,29 @@ class Question(BaseModel):
         if self.is_primary:
             all_options = self.options.order_by('text')
             return all_options[index - 1]
+
+    def draft_answer(self, parent_group, country):
+        from questionnaire.models import Answer
+        answer = self.answers.filter(answergroup__grouped_question=parent_group,
+                                     status=Answer.DRAFT_STATUS, country=country).select_subclasses()
+        if answer.exists():
+            return answer.latest('modified')
+        return None
+
+    def get_initial(self, order, option_index=1, country=None):
+        answer = self.latest_answer(order.question_group, country)
+        initial = {'question': self, 'group': order.question_group, 'country': country}
+        if self.is_primary and order.question_group.grid and order.question_group.display_all:
+            initial['response'] = self.get_option_at(option_index)
+        if answer and answer.is_draft():
+            initial['response'] = self.cast_to_integer(answer)
+            initial['answer'] = answer
+        return initial
+
+    def cast_to_integer(self, answer):
+        if self.answer_type is Question.NUMBER and answer.response and answer.response.is_integer():
+            return int(answer.response)
+        return answer.response if answer else 0
 
     @classmethod
     def next_uid(cls):

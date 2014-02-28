@@ -265,6 +265,7 @@ class QuestionnaireEntryAsFormTest(BaseTest):
         data_modified['Number-1-response'] = '3'
 
         questionnaire_entry_form = QuestionnaireEntryFormService(self.section_1, initial=self.initial, data=data_modified)
+        questionnaire_entry_form.is_valid()
         questionnaire_entry_form.save()
 
         primary = MultiChoiceAnswer.objects.get(response__id=int(data_modified['MultiChoice-0-response']), question=self.question1)
