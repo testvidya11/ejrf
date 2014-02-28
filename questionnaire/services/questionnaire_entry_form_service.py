@@ -56,7 +56,7 @@ class QuestionnaireEntryFormService(object):
         existing_draft_answer = order.question.latest_answer(order.question_group, self.initial['country'])
         initial = {'group': order.question_group, 'question': order.question}
         if order.question.is_primary:
-            initial['response'] = order.question.get_option_at(1)
+            initial['response'] = order.question.get_option_at()
         if existing_draft_answer:
             initial['response'] = existing_draft_answer.response
             if existing_draft_answer.is_draft():
@@ -70,7 +70,7 @@ class QuestionnaireEntryFormService(object):
     def save(self):
         for formset in self.formsets.values():
             for form in formset:
-                answer = form.save()
+                form.save()
 
     def show_is_required_errors(self):
         for formset in self.formsets.values():

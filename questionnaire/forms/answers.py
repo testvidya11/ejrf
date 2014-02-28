@@ -13,10 +13,17 @@ class AnswerForm(ModelForm):
         super(AnswerForm, self).__init__(*args, **kwargs)
         self.question = self._get_question(kwargs)
         self.fields['response'].required = self.question.is_required
-        self._initial = kwargs['initial'] if 'initial' in kwargs else {}
+        self._initial = self._set_initial(kwargs)
         self.is_editing = False
         self._set_instance()
         self.question_group = self._initial['group'] if self._initial else None
+
+    def _set_initial(self, kwargs):
+        initial = kwargs['initial'] if 'initial' in kwargs else {}
+        if self.data and 'response' and self.data.keys():
+            if 'response' in initial.keys():
+                del initial['response']
+        return initial
 
     def _set_instance(self):
         if 'answer' in self._initial:

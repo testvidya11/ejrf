@@ -58,7 +58,7 @@ class Question(BaseModel):
         finalized_questionnaire = Questionnaire.objects.filter(status=Questionnaire.FINALIZED).latest('created')
         return self in finalized_questionnaire.get_all_questions()
 
-    def get_option_at(self, index):
+    def get_option_at(self, index=1):
         if self.is_primary:
             all_options = self.options.order_by('text')
             return all_options[index - 1]

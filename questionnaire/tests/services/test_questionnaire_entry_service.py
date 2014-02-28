@@ -1,6 +1,6 @@
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
-from questionnaire.models import Questionnaire, Section, SubSection, QuestionGroup, Question, QuestionGroupOrder, NumericalAnswer, Answer, AnswerGroup, Country, TextAnswer, QuestionOption, MultiChoiceAnswer
+from questionnaire.models import Questionnaire, Section, SubSection, QuestionGroup, Question, QuestionGroupOrder, NumericalAnswer, Answer, AnswerGroup, Country, TextAnswer, QuestionOption, MultiChoiceAnswer, DateAnswer
 from questionnaire.tests.base_test import BaseTest
 
 
@@ -365,7 +365,20 @@ class GridQuestionGroupEntryServiceTest(BaseTest):
         QuestionGroupOrder.objects.create(question=self.question3, question_group=self.question_group, order=3)
         QuestionGroupOrder.objects.create(question=self.question4, question_group=self.question_group, order=4)
         self.country = Country.objects.create(name="Uganda")
-        self.initial = {'status': 'Draft', 'country': self.country}
+        self.initial = {'country': self.country, 'status': 'Draft', 'version': 1, 'code': 'ABC123'}
+        self.data = {u'MultiChoice-MAX_NUM_FORMS': u'3', u'MultiChoice-TOTAL_FORMS': u'3',
+                     u'MultiChoice-INITIAL_FORMS': u'3', u'MultiChoice-0-response': self.option1.id,
+                     u'MultiChoice-1-response': self.option2.id,  u'MultiChoice-2-response': self.option3.id,
+                     u'Number-MAX_NUM_FORMS': u'3', u'Number-TOTAL_FORMS': u'3',
+                     u'Number-INITIAL_FORMS': u'3', u'Number-0-response': '22',
+                     u'Number-1-response': '44',  u'Number-2-response': '33',
+                     u'Text-MAX_NUM_FORMS': u'3', u'Text-TOTAL_FORMS': u'3',
+                     u'Text-INITIAL_FORMS': u'3', u'Text-0-response': 'Haha',
+                     u'Text-1-response': 'Hehe',  u'Text-2-response': 'hehehe',
+                     u'Date-MAX_NUM_FORMS': u'3', u'Date-TOTAL_FORMS': u'3',
+                     u'Date-INITIAL_FORMS': u'3', u'Date-0-response': '2014-2-2',
+                     u'Date-1-response': '2014-2-2',  u'Date-2-response': '2014-2-2',
+                     }
 
     def test_returns_multiple_forms_in_formsets_for_all_questions(self):
         questionnaire_entry_form = QuestionnaireEntryFormService(self.section1, initial=self.initial)
@@ -389,3 +402,30 @@ class GridQuestionGroupEntryServiceTest(BaseTest):
 
         formset_ = questionnaire_entry_form.next_ordered_form(self.question1)
         self.assertEqual(self.option3, formset_.initial['response'])
+
+    def test_returns_save_grid_with_display_all(self):
+        data = self.data
+        self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response'])))
+        self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-1-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response'])))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-1-response'])))
+
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1, initial=self.initial, data=data)
+        questionnaire_entry_form.is_valid()
+        questionnaire_entry_form.save()
+
+        self.failUnless(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response']), question=self.question1))
+        self.failUnless(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-1-response']), question=self.question1))
+        self.failUnless(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-2-response']), question=self.question1))
+
+        self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-0-response']), question=self.question3))
+        self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-1-response']), question=self.question3))
+        self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-2-response']), question=self.question3))
+
+        self.failUnless(TextAnswer.objects.filter(response=data['Text-0-response'], question=self.question2))
+        self.failUnless(TextAnswer.objects.filter(response=data['Text-1-response'], question=self.question2))
+        self.failUnless(TextAnswer.objects.filter(response=data['Text-2-response'], question=self.question2))
+
+        self.failUnless(DateAnswer.objects.filter(response=data['Date-0-response'], question=self.question4))
+        self.failUnless(DateAnswer.objects.filter(response=data['Date-1-response'], question=self.question4))
+        self.failUnless(DateAnswer.objects.filter(response=data['Date-2-response'], question=self.question4))
