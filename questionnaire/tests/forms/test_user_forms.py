@@ -1,11 +1,10 @@
 from django.contrib.auth.models import User, Group, Permission
-from questionnaire.forms.user_profile import UserProfileForm
+from questionnaire.forms.user_profile import UserProfileForm, EditUserProfileForm
 from questionnaire.models import Country, Region, UserProfile, Organization
 from questionnaire.tests.base_test import BaseTest
 
 
 class UserProfileFormTest(BaseTest):
-
     def setUp(self):
         self.region = Region.objects.create(name="Afro")
         self.uganda = Country.objects.create(name="uganda", code="UGX")
@@ -91,3 +90,38 @@ class UserProfileFormTest(BaseTest):
         self.assertFalse(user_form.is_valid())
         message = "This field is required."
         self.assertEquals(user_form.errors['groups'], [message])
+
+
+class EditUserProfileFormTest(BaseTest):
+    def setUp(self):
+        self.region = Region.objects.create(name="Afro")
+        self.uganda = Country.objects.create(name="uganda", code="UGX")
+        self.global_admin = Group.objects.create(name='Global Admin')
+        self.organization = Organization.objects.create(name="UNICEF")
+
+        self.region.countries.add(self.uganda)
+        self.form_data = {
+            'username': 'user',
+            'email': 'raj@ni.kant',
+            'country': self.uganda.id,
+            'region': self.region.id,
+            'organization': self.organization.id,
+            'groups': self.global_admin.id
+        }
+
+    def test_valid(self):
+
+        saved_user = User.objects.create(username='user1', email= 'emily@gmail.com')
+        edit_user_profile_form = EditUserProfileForm(instance=saved_user, data=self.form_data)
+        user = edit_user_profile_form.save()
+
+        self.assertTrue(edit_user_profile_form.is_valid())
+        self.failUnless(saved_user.id)
+        self.assertEqual(1, len(saved_user.groups.all()))
+        self.assertIn(self.global_admin, saved_user.groups.all())
+
+        user_profile = UserProfile.objects.filter(user=user)
+        self.failUnless(user_profile)
+        self.assertEqual(user_profile[0].region, self.region)
+        self.assertEqual(user_profile[0].country, self.uganda)
+        self.assertEqual(user_profile[0].organization, self.organization)

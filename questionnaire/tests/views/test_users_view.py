@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.test import Client
 from questionnaire.forms.filter import UserFilterForm
-from questionnaire.forms.user_profile import UserProfileForm
+from questionnaire.forms.user_profile import UserProfileForm, EditUserProfileForm
 from questionnaire.models import Organization, Region, Country, UserProfile
 from questionnaire.tests.base_test import BaseTest
 
@@ -68,6 +68,18 @@ class UsersViewTest(BaseTest):
 
     def test_assert_login_required_for_create_new_user(self):
         self.assert_login_required('/users/new/')
+
+    def test_get_edit_user(self):
+        response = self.client.get('/users/%d/edit/' % self.user.pk)
+        self.assertEqual(200, response.status_code)
+        templates = [template.name for template in response.templates]
+        self.assertIn('users/new.html', templates)
+        self.assertIsInstance(response.context['form'], EditUserProfileForm)
+        self.assertIn('SAVE', response.context['btn_label'])
+        self.assertIn('Edit User', response.context['title'])
+        self.assertIn(self.organization, response.context['organizations'])
+        self.assertIn(self.afro, response.context['regions'])
+        self.assertIn(self.uganda, response.context['countries'])
 
 
 class FilterUsersViewTest(BaseTest):

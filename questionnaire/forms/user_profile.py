@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
 from django import forms
+from django.forms import ModelForm
 from questionnaire.models import Region, Country, UserProfile, Organization
 
 
@@ -64,3 +65,34 @@ class UserProfileForm(UserCreationForm):
     def _add_error_country_messages(self, message):
         del self.cleaned_data['country']
         self._errors['country'] = self.error_class([message])
+
+
+class EditUserProfileForm(ModelForm):
+    region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=None, required=False,
+                                    widget=forms.HiddenInput())
+    organization = forms.ModelChoiceField(queryset=Organization.objects.all(), empty_label=None, required=False,
+                                          widget=forms.HiddenInput())
+    country = forms.ModelChoiceField(queryset=Country.objects.all(), empty_label=None, required=False,
+                                     widget=forms.HiddenInput())
+    groups = forms.ModelChoiceField(queryset=Group.objects.all(), empty_label=None, required=True,
+                                    widget=forms.RadioSelect(attrs={'class': 'radio-roles'}), label="Roles")
+
+
+    class Meta:
+        model = User
+        fields = ("username", "email")
+
+    def __init__(self, *args, **kwargs):
+        super(EditUserProfileForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        user = super(EditUserProfileForm, self).save(commit = False)
+        if commit:
+            user.groups.add(self.cleaned_data['groups'])
+            user.save()
+            user_profile, b = UserProfile.objects.get_or_create(user=user)
+            user_profile.region = self.cleaned_data['region']
+            user_profile.country = self.cleaned_data['country']
+            user_profile.organization = self.cleaned_data['organization']
+            user_profile.save()
+        return user
