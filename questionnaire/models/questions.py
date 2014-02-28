@@ -49,9 +49,11 @@ class Question(BaseModel):
             return answer.latest('modified')
         return None
 
+    def is_in_subgroup(self):
+        return self.question_group.exclude(parent=None).exists()
+
     def can_be_deleted(self):
         return not self.all_answers().exists()
-
 
     def get_option_at(self, index=1):
         if self.is_primary:

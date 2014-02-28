@@ -16,8 +16,7 @@ questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", descr
 # SECTION: Reported Cases of Selected Vaccine Preventable Diseases (VPDs)
 ########################################################################################################
 section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
-                                              questionnaire=questionnaire, name="Reported Cases")
-
+                                   questionnaire=questionnaire, name="Reported Cases")
 sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1, section=section_1)
 
 question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice')

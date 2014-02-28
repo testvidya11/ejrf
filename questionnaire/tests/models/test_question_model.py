@@ -76,6 +76,21 @@ class QuestionTest(BaseTest):
         self.assertTrue(question2.is_first_in_group())
         self.assertFalse(question3.is_first_in_group())
 
+    def test_question_knows_if_its_in_a_sub_group(self):
+        question2 = Question.objects.create(text='question 2', UID='C00004', answer_type='Number')
+        self.sub_group = QuestionGroup.objects.create(subsection=self.sub_section_1, name="subgroup",
+                                                      parent=self.parent_group)
+        self.sub_group.question.add(question2)
+
+        self.assertTrue(question2.is_in_subgroup())
+
+        question3 = Question.objects.create(text='question 3', UID='C00005', answer_type='Number')
+        self.assertFalse(question3.is_in_subgroup())
+
+        question4 = Question.objects.create(text='question 3', UID='C00077', answer_type='Number')
+        self.parent_group.question.add(question4)
+        self.assertFalse(question4.is_in_subgroup())
+
     def test_question_knows_if_it_is_last_in_its_group(self):
         question2 = Question.objects.create(text='question 2', UID='C00004', answer_type='Number')
         question3 = Question.objects.create(text='question 3', UID='C00005', answer_type='Number')

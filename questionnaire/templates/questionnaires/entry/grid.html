@@ -2,28 +2,49 @@
 
 <table class="table table-hover table-striped table-bordered">
     <thead>
+    {% if a_group.has_subgroups %}
         <tr>
             {% for order in a_group.question_orders %}
-                <th>{{ order.question.text }}</th>
+                {% if order.question.is_in_subgroup and order.question.is_first_in_group %}
+                    <th colspan="2">{{ order.question.group.name }}</th>
+                {% endif %}
+                {% if not order.question.is_in_subgroup %}
+                    <th rowspan="2">{{ order.question.text }}</th>
+                {% endif %}
             {% endfor %}
         </tr>
+        <tr>
+            {% for order in a_group.question_orders %}
+                {% if  order.question.is_in_subgroup %}
+                    <th>{{ order.question.text }}</th>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    {% else %}
+        <tr>
+        {% for order in a_group.question_orders %}
+            <th>{{ order.question.text }}</th>
+        {% endfor %}
+        </tr>
+    {% endif %}
+
     </thead>
     <tbody>
-        {% for order in a_group.question_orders %}
-            {% if  order.question.is_primary %}
-                {% for option in order.question.options.all %}
-                    <tr>
-                    {% for field in order.question|get_form:formsets %}
+    {% for order in a_group.question_orders %}
+        {% if  order.question.is_primary %}
+            {% for option in order.question.options.all %}
+                <tr>
+                {% for field in order.question|get_form:formsets %}
+                    <td>{{ field }}</td>
+                {% endfor %}
+                {% for question in a_group.all_non_primary_questions %}
+                    {% for field in question|get_form:formsets %}
                         <td>{{ field }}</td>
                     {% endfor %}
-                    {% for question in a_group.all_non_primary_questions %}
-                        {% for field in question|get_form:formsets %}
-                            <td>{{ field }}</td>
-                        {% endfor %}
-                    {% endfor %}
                 {% endfor %}
-            {% endif %}
-            </tr>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </tr>
+    {% endfor %}
     </tbody>
 </table>

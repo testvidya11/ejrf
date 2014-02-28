@@ -354,7 +354,10 @@ li.more-toggle a{
 #select_survey_wizard-form label{
     width: 196px;
 }
-.unassign-question-div{
+
+table th{
+    text-align: center;
+}.unassign-question-div{
     display: inline-block;
     float: none;
 }

@@ -40,7 +40,11 @@ class QuestionGroup(BaseModel):
         return self.question.filter(is_primary=True)
 
     def all_non_primary_questions(self):
-        return self.question.filter(is_primary=False)
+        non_primary_questions = filter(lambda question: not question.is_primary, self.ordered_questions())
+        return non_primary_questions
+
+    def has_subgroups(self):
+        return QuestionGroup.objects.filter(parent=self).exists()
 
     class Meta:
         ordering = ('order',)

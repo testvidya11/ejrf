@@ -171,7 +171,9 @@ class QuestionGroupTest(BaseTest):
         self.parent_question_group.question.add(question1, question2, question3, question4)
         order2 = QuestionGroupOrder.objects.create(question=question1, question_group=self.parent_question_group, order=1)
         order3 = QuestionGroupOrder.objects.create(question=question2, question_group=self.parent_question_group, order=2)
-        self.assertEqual(3, self.parent_question_group.all_non_primary_questions().count())
+        order4 = QuestionGroupOrder.objects.create(question=question3, question_group=self.parent_question_group, order=3)
+        order5 = QuestionGroupOrder.objects.create(question=question4, question_group=self.parent_question_group, order=4)
+        self.assertEqual(3, len(self.parent_question_group.all_non_primary_questions()))
         self.assertNotIn(question1, self.parent_question_group.all_non_primary_questions())
         for i in range(2, 3):
             self.assertIn(eval("question%d" % i), self.parent_question_group.all_non_primary_questions())
@@ -181,5 +183,10 @@ class QuestionGroupTest(BaseTest):
 
         some_arbitrary_order = 20
         self.question.orders.create(question_group=self.parent_question_group, order=some_arbitrary_order)
-
         self.assertEqual(some_arbitrary_order, self.parent_question_group.max_questions_order())
+
+    def test_group_knows_if_it_has_sub_groups(self):
+        self.assertTrue(self.parent_question_group.has_subgroups())
+
+        sub_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1, parent=self.parent_question_group)
+        self.assertFalse(sub_group.has_subgroups())
