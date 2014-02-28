@@ -44,7 +44,7 @@ class QuestionGroup(BaseModel):
         return non_primary_questions
 
     def has_subgroups(self):
-        return QuestionGroup.objects.filter(parent=self).exists()
+        return self.sub_group.exists()
 
     class Meta:
         ordering = ('order',)
