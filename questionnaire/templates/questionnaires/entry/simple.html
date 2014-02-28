@@ -1,4 +1,5 @@
 {% load questionnaire_entry_tags %}
+
 {% for order in a_group.question_orders %}
     {% if order.question.is_first_in_group %}
         <h5>{% if subsection.has_at_least_two_groups and a_group.has_at_least_two_questions %}

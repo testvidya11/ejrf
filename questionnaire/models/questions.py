@@ -6,10 +6,11 @@ from questionnaire.utils.question_util import largest_uid, stringify
 
 class Question(BaseModel):
 
+    NUMBER = "Number"
     ANSWER_TYPES = (
         ("Date", "Date"),
         ("MultiChoice", "MultiChoice"),
-        ("Number", "Number"),
+        ("Number", NUMBER),
         ("Text", "Text"),
     )
 
@@ -56,6 +57,11 @@ class Question(BaseModel):
         from questionnaire.models import Questionnaire
         finalized_questionnaire = Questionnaire.objects.filter(status=Questionnaire.FINALIZED).latest('created')
         return self in finalized_questionnaire.get_all_questions()
+
+    def get_option_at(self, index):
+        if self.is_primary:
+            all_options = self.options.order_by('text')
+            return all_options[index - 1]
 
     @classmethod
     def next_uid(cls):

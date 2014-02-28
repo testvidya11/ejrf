@@ -1,8 +1,9 @@
 from django.forms.formsets import formset_factory
 from questionnaire.forms.answers import NumericalAnswerForm, TextAnswerForm, DateAnswerForm, MultiChoiceAnswerForm
+from questionnaire.models import Question
 
 
-ANSWER_FORM ={
+ANSWER_FORM = {
     'Number': NumericalAnswerForm,
     'Text': TextAnswerForm,
     'Date': DateAnswerForm,
@@ -24,9 +25,13 @@ class QuestionnaireEntryFormService(object):
     def next_ordered_form(self, question):
         next_question_type_count = self.ANSWER_FORM_COUNTER[question.answer_type]
         self.ANSWER_FORM_COUNTER[question.answer_type] += 1
-        return self.formsets[question.answer_type][next_question_type_count]
+        formset = self.formsets[question.answer_type][next_question_type_count]
+        if question.is_primary:
+            formset.initial['response'] = question.get_option_at(self.ANSWER_FORM_COUNTER[question.answer_type])
+        return formset
 
-    def _initialize_form_counter(self):
+    @staticmethod
+    def _initialize_form_counter():
         return {key: 0 for key in ANSWER_FORM.keys()}
 
     def _formsets(self):
@@ -50,6 +55,8 @@ class QuestionnaireEntryFormService(object):
     def _question_initial(self, order):
         existing_draft_answer = order.question.latest_answer(order.question_group, self.initial['country'])
         initial = {'group': order.question_group, 'question': order.question}
+        if order.question.is_primary:
+            initial['response'] = order.question.get_option_at(1)
         if existing_draft_answer:
             initial['response'] = existing_draft_answer.response
             if existing_draft_answer.is_draft():

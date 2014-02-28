@@ -168,6 +168,14 @@ class QuestionTest(BaseTest):
         self.assertTrue(question1.is_in_active_questionnaire())
         self.assertFalse(self.question1.is_in_active_questionnaire())
 
+    def test_question_can_get_nth_option(self):
+        question = Question.objects.create(text='what do you drink?', UID='C_2013', answer_type='MultiChoice', is_primary=True)
+        option1 = QuestionOption.objects.create(text='tusker lager', question=question)
+        option2 = QuestionOption.objects.create(text='tusker lite', question=question)
+        option3 = QuestionOption.objects.create(text='tusker malt', question=question)
+        self.assertEqual(option1, question.get_option_at(1))
+        self.assertEqual(option2, question.get_option_at(2))
+        self.assertEqual(option3, question.get_option_at(3))
 
 
 class QuestionOptionTest(BaseTest):

@@ -105,3 +105,38 @@ def when_i_click_the_sub_section_delete_button(step):
 @step(u'Then I should not see that question group')
 def then_i_should_not_see_that_question_group(step):
     assert(world.page.number_of_elements("Immunization"), 1)
+
+@step(u'And I have a grid group with all options of the primary question showable')
+def and_i_have_a_grid_group_with_all_options_of_the_primary_question_showable(step):
+    world.grid_group = QuestionGroup.objects.create(subsection=world.sub_section, order=1, grid=True, display_all=True)
+
+@step(u'And I have 3 questions in that group one of which is primary')
+def and_i_have_3_questions_in_that_group_one_of_which_is_primary(step):
+    question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice', is_primary=True)
+    question2 = Question.objects.create(text='Total Cases', UID='C00002', answer_type='Number')
+
+    question3 = Question.objects.create(text='Number of cases tested', instructions="Enter the total number of",
+                                        UID='C00003', answer_type='Number')
+
+    question4 = Question.objects.create(text='Number of cases positive',
+                                        instructions="Include only those cases found positive for the infectious agent.",
+                                        UID='C00004', answer_type='Number')
+
+    world.grid_group.question.add(question1, question2, question3, question4)
+
+    world.option1 = QuestionOption.objects.create(text="Diphteria", question=question1)
+    world.option2 = QuestionOption.objects.create(text="Measles", question=question1)
+    world.option3 = QuestionOption.objects.create(text="Pertussis", question=question1)
+    world.option4 = QuestionOption.objects.create(text="Yellow fever", question=question1)
+    world.option5 = QuestionOption.objects.create(text="Mumps", question=question1)
+    world.option6 = QuestionOption.objects.create(text="Rubella", question=question1)
+    QuestionGroupOrder.objects.create(question=question1, question_group=world.grid_group, order=1)
+    QuestionGroupOrder.objects.create(question=question2, question_group=world.grid_group, order=2)
+    QuestionGroupOrder.objects.create(question=question3, question_group=world.grid_group, order=3)
+    QuestionGroupOrder.objects.create(question=question4, question_group=world.grid_group, order=4)
+
+
+@step(u'Then I should see that grid with all the options of the primary question shown')
+def then_i_should_see_that_grid_with_all_the_options_of_the_primary_question_shown(step):
+    for i in range(1, 5):
+        world.page.is_text_present(eval("world.option%d" % i).text)

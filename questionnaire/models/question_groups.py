@@ -39,6 +39,9 @@ class QuestionGroup(BaseModel):
     def primary_question(self):
         return self.question.filter(is_primary=True)
 
+    def all_non_primary_questions(self):
+        return self.question.filter(is_primary=False)
+
     class Meta:
         ordering = ('order',)
         app_label = 'questionnaire'

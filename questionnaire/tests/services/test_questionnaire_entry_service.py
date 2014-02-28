@@ -375,3 +375,17 @@ class GridQuestionGroupEntryServiceTest(BaseTest):
         self.assertEqual(3, len(formsets['Text']))
         self.assertEqual(3, len(formsets['Date']))
         self.assertEqual(3, len(formsets['MultiChoice']))
+
+    def test_returns_multichoice_question_initial_for_all_question_options(self):
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1, initial=self.initial)
+        formsets = questionnaire_entry_form._formsets()
+        self.assertEqual(self.option1, formsets['MultiChoice'][0].initial['response'])
+
+        formset_ = questionnaire_entry_form.next_ordered_form(self.question1)
+        self.assertEqual(self.option1, formset_.initial['response'])
+
+        formset_ = questionnaire_entry_form.next_ordered_form(self.question1)
+        self.assertEqual(self.option2, formset_.initial['response'])
+
+        formset_ = questionnaire_entry_form.next_ordered_form(self.question1)
+        self.assertEqual(self.option3, formset_.initial['response'])

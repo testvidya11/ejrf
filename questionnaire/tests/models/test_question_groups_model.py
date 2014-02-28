@@ -3,7 +3,7 @@ from questionnaire.models.question_groups import QuestionGroup
 from questionnaire.tests.base_test import BaseTest
 
 
-class GroupedQuestionsTest(BaseTest):
+class QuestionGroupTest(BaseTest):
     def setUp(self):
         self.question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Text')
         self.questionnaire = Questionnaire.objects.create(name="Uganda Revision 2014", description="some description")
@@ -162,3 +162,16 @@ class GroupedQuestionsTest(BaseTest):
 
         self.assertTrue(1, sub_group.primary_question().count())
         self.assertTrue(question, sub_group.primary_question())
+
+    def test_group_knows_its_non_primary_questions(self):
+        question1 = Question.objects.create(text='question', UID='ab3123', answer_type='Text', is_primary=True)
+        question2 = Question.objects.create(text='question1', UID='c00w01', answer_type='Text')
+        question3 = Question.objects.create(text='question2', UID='c00s01', answer_type='Text')
+        question4 = Question.objects.create(text='question3', UID='c00a01', answer_type='Text')
+        self.parent_question_group.question.add(question1, question2, question3, question4)
+        order2 = QuestionGroupOrder.objects.create(question=question1, question_group=self.parent_question_group, order=1)
+        order3 = QuestionGroupOrder.objects.create(question=question2, question_group=self.parent_question_group, order=2)
+        self.assertEqual(3, self.parent_question_group.all_non_primary_questions().count())
+        self.assertNotIn(question1, self.parent_question_group.all_non_primary_questions())
+        for i in range(2, 3):
+            self.assertIn(eval("question%d" % i), self.parent_question_group.all_non_primary_questions())
