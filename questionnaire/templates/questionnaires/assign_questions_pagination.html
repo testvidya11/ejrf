@@ -16,7 +16,7 @@
                     <tbody>
                     {% for question in question_page %}
                         <tr {% if question in active_questions %} class="grey-bg" {% endif %}>
-                            <td><input type="checkbox" value="{{ question.id }}" name="questions" {% if question in active_questions %} disabled="disabled" {% endif %}/></td>
+                            <td><input type="checkbox" value="{{ question.id }}" name="questions" {% if question in active_questions %} disabled="disabled" checked {% endif %}/></td>
                             <td>{{ question.UID }} </td>
                             <td id="text-td">{{ question.export_label }}</td>
                             <td>{{ question.answer_type }}</td>
