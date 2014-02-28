@@ -175,3 +175,11 @@ class QuestionGroupTest(BaseTest):
         self.assertNotIn(question1, self.parent_question_group.all_non_primary_questions())
         for i in range(2, 3):
             self.assertIn(eval("question%d" % i), self.parent_question_group.all_non_primary_questions())
+
+    def test_group_knows_maximum_order_of_its_questions(self):
+        self.assertEqual(0, self.parent_question_group.max_questions_order())
+
+        some_arbitrary_order = 20
+        self.question.orders.create(question_group=self.parent_question_group, order=some_arbitrary_order)
+
+        self.assertEqual(some_arbitrary_order, self.parent_question_group.max_questions_order())

@@ -28,6 +28,27 @@ class SectionsViewTest(BaseTest):
         templates = [template.name for template in response.templates]
         self.assertIn('questions/index.html', templates)
         self.assertIn(questions, response.context['questions'])
+        self.assertIsNone(response.context['active_questions'])
+
+    def test_get_list_question_has_active_questions_from_finalized_questionnaire_in_context(self):
+        questions = Question.objects.create(text='B. Number of cases tested', UID='00001', answer_type='Number')
+
+        finalized_questionnaire = Questionnaire.objects.create(status=Questionnaire.FINALIZED, name="finalized")
+        section = Section.objects.create(name="section", questionnaire=finalized_questionnaire, order=1)
+        subsection = SubSection.objects.create(title="subsection 1", section=section, order=1)
+        question1 = Question.objects.create(text='Q1', UID='C00003', answer_type='Number')
+        question1.question_group.create(subsection=subsection)
+
+        response = self.client.get(self.url)
+        self.assertEqual(200, response.status_code)
+        templates = [template.name for template in response.templates]
+        self.assertIn('questions/index.html', templates)
+        self.assertEqual(2, len(response.context['questions']))
+        self.assertIn(questions, response.context['questions'])
+        self.assertIn(question1, response.context['questions'])
+
+        self.assertEqual(1, len(response.context['active_questions']))
+        self.assertIn(question1, response.context['active_questions'])
 
     def test_get_create_question(self):
         response = self.client.get(self.url + 'new/')

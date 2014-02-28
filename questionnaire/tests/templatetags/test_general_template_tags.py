@@ -17,9 +17,9 @@ class GeneralTemplateTagTest(BaseTest):
         self.assertEqual('/questionnaire/document/1/delete/', get_url_with_ids(1, 'delete_document'))
         self.assertEqual('/questionnaire/entry/1/section/2/', get_url_with_ids("1, 2", 'questionnaire_entry_page'))
 
-    def test_should_divide_questions_per_50(self):
-        arbitrary_number = 200
+    def test_should_divide_questions_per_30(self):
+        arbitrary_number = 220
         original_list = range(arbitrary_number)
-        for i in range(arbitrary_number / ASSIGN_QUESTION_PAGINATION_SIZE):
-            paginated_list = range(i* ASSIGN_QUESTION_PAGINATION_SIZE, (i+1)* ASSIGN_QUESTION_PAGINATION_SIZE)
+        for i in range(1 + arbitrary_number / ASSIGN_QUESTION_PAGINATION_SIZE):
+            paginated_list = range(i* ASSIGN_QUESTION_PAGINATION_SIZE, min((i+1)* ASSIGN_QUESTION_PAGINATION_SIZE, len(original_list)))
             self.assertEqual(paginated_list, divide_to_paginate(original_list)[i])

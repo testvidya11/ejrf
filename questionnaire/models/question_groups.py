@@ -45,3 +45,9 @@ class QuestionGroup(BaseModel):
     class Meta:
         ordering = ('order',)
         app_label = 'questionnaire'
+
+    def max_questions_order(self):
+        group_orders = self.orders.order_by('-order')
+        if group_orders.exists():
+            return group_orders[0].order
+        return 0

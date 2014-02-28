@@ -28,7 +28,7 @@ def get_url_with_ids(args, url_name):
 
 @register.filter
 def divide_to_paginate(questions):
-    size_of_paginated = len(questions)/ ASSIGN_QUESTION_PAGINATION_SIZE
+    size_of_paginated = 1 + len(questions)/ ASSIGN_QUESTION_PAGINATION_SIZE
     paginated = [questions[i* ASSIGN_QUESTION_PAGINATION_SIZE:(i+1)* ASSIGN_QUESTION_PAGINATION_SIZE] for i in range(size_of_paginated)]
     return paginated
 

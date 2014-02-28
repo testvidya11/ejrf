@@ -55,8 +55,8 @@
                     <h4>{% if section.has_at_least_two_subsections %}{{ section.order }}.{{ subsection.order }}
                         .{% endif %} {{ subsection.title }}
                         {% if perms.auth.can_edit_questionnaire %}
-                            <a href="" id="assign-question" class="btn btn-default pull-right" data-toggle="modal"
-                               data-target="#assign-question-modal"><span class="cyan"><span
+                            <a href=""  class="btn btn-default pull-right" data-toggle="modal"
+                               data-target="#assign-question-modal-{{ subsection.id }}"><span class="cyan"><span
                                     class="glyphicon glyphicon-plus-sign"></span> Assign Question</span></a>
                         {% endif %}
                     </h4>
@@ -144,4 +144,7 @@
 
     </div>
     </form>
+    {% for subsection in section.sub_sections.all %}
+            {% include 'questionnaires/assign_questions_modal.html' with subsection=subsection %}
+    {% endfor %}
 {% endblock %}

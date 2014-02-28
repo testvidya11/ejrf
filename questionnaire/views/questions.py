@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, CreateView, DeleteView
 from questionnaire.forms.questions import QuestionForm
-from questionnaire.models import Question
+from questionnaire.models import Question, Questionnaire
 
 
 class QuestionList(ListView):
@@ -12,7 +12,11 @@ class QuestionList(ListView):
     object_list = Question.objects.all()
 
     def get(self, *args, **kwargs):
-        context = {'request': self.request, 'questions': self.model.objects.all()}
+        finalized_questionnaire = Questionnaire.objects.filter(status=Questionnaire.FINALIZED)
+        active_questions = None
+        if finalized_questionnaire.exists():
+            active_questions = finalized_questionnaire.latest('created').get_all_questions()
+        context = {'request': self.request, 'questions': self.model.objects.all(), 'active_questions': active_questions}
         return self.render_to_response(context)
 
 

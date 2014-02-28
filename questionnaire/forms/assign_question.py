@@ -14,3 +14,9 @@ class AssignQuestionForm(Form):
         question_group = self.subsection.question_group.get_or_create()[0]
         args = list(self.cleaned_data['questions'])
         question_group.question.add(*args)
+        self._create_group_orders(question_group)
+
+    def _create_group_orders(self, question_group):
+        max_order = question_group.max_questions_order()
+        for index, question in enumerate(self.cleaned_data['questions']):
+            question.orders.create(question_group=question_group, order=max_order+index+1)

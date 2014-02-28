@@ -155,19 +155,6 @@ class QuestionTest(BaseTest):
         Answer.objects.create(question=question, country=country, status="Submitted")
         self.assertFalse(question.can_be_deleted())
 
-    def test_knows_is_in_latest_finalized_questionnaire(self):
-        questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", year=2013, status=Questionnaire.FINALIZED)
-        section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
-                                                      questionnaire=questionnaire, name="Reported Cases")
-        sub_section = SubSection.objects.create(title="Another", order=2, section=section_1)
-        question1 = Question.objects.create(text='B. Number of cases tested',
-                                                 instructions="Enter the total number of cases for which specimens were collected, and tested in laboratory",
-                                                 UID='C00030', answer_type='Number')
-        parent_group = QuestionGroup.objects.create(subsection=sub_section, name="Laboratory Investigation")
-        parent_group.question.add(question1)
-        self.assertTrue(question1.is_in_active_questionnaire())
-        self.assertFalse(self.question1.is_in_active_questionnaire())
-
     def test_question_can_get_nth_option(self):
         question = Question.objects.create(text='what do you drink?', UID='C_2013', answer_type='MultiChoice', is_primary=True)
         option1 = QuestionOption.objects.create(text='tusker lager', question=question)
