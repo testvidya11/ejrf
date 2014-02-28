@@ -8100,7 +8100,7 @@
         "fields": {
             "description": "From dropbox as given by Rouslan",
             "year": 2014,
-            "is_open": true,
+            "status": "published",
             "modified": "2014-02-06T15:44:14.051Z",
             "name": "JRF 2013 Core English",
             "created": "2014-02-06T15:44:14.051Z"
