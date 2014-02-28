@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import Client
 from questionnaire.forms.sections import SectionForm, SubSectionForm
-from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionOption, MultiChoiceAnswer, NumericalAnswer, QuestionGroupOrder, AnswerGroup, Answer
+from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroup, QuestionOption, MultiChoiceAnswer, NumericalAnswer, QuestionGroupOrder, AnswerGroup, Answer, Country, TextAnswer, DateAnswer
 from questionnaire.services.questionnaire_entry_form_service import QuestionnaireEntryFormService
 from questionnaire.tests.base_test import BaseTest
 
@@ -246,6 +246,101 @@ class QuestionnaireEntrySaveDraftTest(BaseTest):
         self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-1-response']), question=self.question3))
 
         self.assertRedirects(response, data['redirect_url'])
+
+
+class SaveGridDraftQuestionGroupEntryTest(BaseTest):
+
+    def setUp(self):
+        self.questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English")
+
+        self.section1 = Section.objects.create(title="Reported Cases of Selected Vaccine", order=1,
+                                               questionnaire=self.questionnaire, name="Reported Cases")
+
+        self.sub_section = SubSection.objects.create(title="subsection 1", order=1, section=self.section1)
+        self.sub_section2 = SubSection.objects.create(title="subsection 2", order=2, section=self.section1)
+
+        self.question_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1, grid=True, display_all=True)
+
+        self.question1 = Question.objects.create(text='Favorite beer 1', UID='C00001', answer_type='MultiChoice', is_primary=True)
+        self.option1 = QuestionOption.objects.create(text='tusker lager', question=self.question1)
+        self.option2 = QuestionOption.objects.create(text='tusker lager1', question=self.question1)
+        self.option3 = QuestionOption.objects.create(text='tusker lager2', question=self.question1)
+
+        self.question2 = Question.objects.create(text='question 2', instructions="instruction 2",
+                                                 UID='C00002', answer_type='Text')
+
+        self.question3 = Question.objects.create(text='question 3', instructions="instruction 3",
+                                                 UID='C00003', answer_type='Number')
+
+        self.question4 = Question.objects.create(text='question 4', instructions="instruction 2",
+                                                 UID='C00005', answer_type='Date')
+        self.question_group.question.add(self.question1, self.question3, self.question2, self.question4)
+
+        QuestionGroupOrder.objects.create(question=self.question1, question_group=self.question_group, order=1)
+        QuestionGroupOrder.objects.create(question=self.question2, question_group=self.question_group, order=2)
+        QuestionGroupOrder.objects.create(question=self.question3, question_group=self.question_group, order=3)
+        QuestionGroupOrder.objects.create(question=self.question4, question_group=self.question_group, order=4)
+        self.country = Country.objects.create(name="Uganda")
+        self.initial = {'country': self.country, 'status': 'Draft', 'version': 1, 'code': 'ABC123'}
+        self.data = {u'MultiChoice-MAX_NUM_FORMS': u'3', u'MultiChoice-TOTAL_FORMS': u'3',
+                     u'MultiChoice-INITIAL_FORMS': u'3', u'MultiChoice-0-response': self.option1.id,
+                     u'MultiChoice-1-response': self.option2.id,  u'MultiChoice-2-response': self.option3.id,
+                     u'Number-MAX_NUM_FORMS': u'3', u'Number-TOTAL_FORMS': u'3',
+                     u'Number-INITIAL_FORMS': u'3', u'Number-0-response': '22',
+                     u'Number-1-response': '44',  u'Number-2-response': '33',
+                     u'Text-MAX_NUM_FORMS': u'3', u'Text-TOTAL_FORMS': u'3',
+                     u'Text-INITIAL_FORMS': u'3', u'Text-0-response': 'Haha',
+                     u'Text-1-response': 'Hehe',  u'Text-2-response': 'hehehe',
+                     u'Date-MAX_NUM_FORMS': u'3', u'Date-TOTAL_FORMS': u'3',
+                     u'Date-INITIAL_FORMS': u'3', u'Date-0-response': '2014-2-2',
+                     u'Date-1-response': '2014-2-2',  u'Date-2-response': '2014-2-2',
+                     }
+        self.url = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section1.id)
+        self.client = Client()
+        self.user, self.country = self.create_user_with_no_permissions()
+
+        self.assign('can_submit_responses', self.user)
+        self.client.login(username=self.user.username, password='pass')
+
+    def test_post_grid_view_saves_drafts(self):
+        data = self.data
+        self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response']), question=self.question1))
+        self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-1-response']), question=self.question1))
+        self.failIf(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-2-response']), question=self.question1))
+
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-0-response']), question=self.question3))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-1-response']), question=self.question3))
+        self.failIf(NumericalAnswer.objects.filter(response=int(data['Number-2-response']), question=self.question3))
+
+        self.failIf(TextAnswer.objects.filter(response=data['Text-0-response'], question=self.question2))
+        self.failIf(TextAnswer.objects.filter(response=data['Text-1-response'], question=self.question2))
+        self.failIf(TextAnswer.objects.filter(response=data['Text-2-response'], question=self.question2))
+
+        self.failIf(DateAnswer.objects.filter(response=data['Date-0-response'], question=self.question4))
+        self.failIf(DateAnswer.objects.filter(response=data['Date-1-response'], question=self.question4))
+        self.failIf(DateAnswer.objects.filter(response=data['Date-2-response'], question=self.question4))
+
+        response = self.client.post(self.url, data=data)
+
+        self.failUnless(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-0-response']), question=self.question1))
+        self.failUnless(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-1-response']), question=self.question1))
+        self.failUnless(MultiChoiceAnswer.objects.filter(response__id=int(data['MultiChoice-2-response']), question=self.question1))
+
+        self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-0-response']), question=self.question3))
+        self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-1-response']), question=self.question3))
+        self.failUnless(NumericalAnswer.objects.filter(response=int(data['Number-2-response']), question=self.question3))
+
+        self.failUnless(TextAnswer.objects.filter(response=data['Text-0-response'], question=self.question2))
+        self.failUnless(TextAnswer.objects.filter(response=data['Text-1-response'], question=self.question2))
+        self.failUnless(TextAnswer.objects.filter(response=data['Text-2-response'], question=self.question2))
+
+        self.failUnless(DateAnswer.objects.filter(response=data['Date-0-response'], question=self.question4))
+        self.failUnless(DateAnswer.objects.filter(response=data['Date-1-response'], question=self.question4))
+        self.failUnless(DateAnswer.objects.filter(response=data['Date-2-response'], question=self.question4))
+
+        self.assertEqual(200, response.status_code)
+        expected_message = 'Draft saved.'
+        self.assertIn(expected_message, response.content)
 
 
 class QuestionnaireEntrySubmitTest(BaseTest):
