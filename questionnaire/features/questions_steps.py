@@ -98,7 +98,7 @@ def then_i_should_see_that_question_was_deleted_successfully(step):
 
 @step(u'Then I should see a delete confirmation modal')
 def then_i_should_see_a_delete_confirmation_modal(step):
-    world.page.confirm_delete('Question')
+    world.page.confirm_delete('question')
 
 @step(u'When I confirm delete')
 def when_i_confirm_delete(step):

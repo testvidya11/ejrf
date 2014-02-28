@@ -32,4 +32,8 @@ def divide_to_paginate(questions):
     paginated = [questions[i* ASSIGN_QUESTION_PAGINATION_SIZE:(i+1)* ASSIGN_QUESTION_PAGINATION_SIZE] for i in range(size_of_paginated)]
     return paginated
 
+@register.filter
+def add_string(int_1, int_2):
+   return "%s, %s"%(str(int_1), str(int_2))
+
 

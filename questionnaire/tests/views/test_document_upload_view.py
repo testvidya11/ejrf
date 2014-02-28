@@ -63,7 +63,7 @@ class UploadSupportDocumentTest(BaseTest):
         self.assertTrue(os.path.exists(_document.path.url))
 
         url = '/questionnaire/document/%s/delete/' % _document.id
-        response = self.client.get(url)
+        response = self.client.post(url)
         self.assertRedirects(response, '/questionnaire/documents/upload/')
 
         self.assertRaises(SupportDocument.DoesNotExist, SupportDocument.objects.get, id=_document.id)

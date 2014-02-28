@@ -49,10 +49,10 @@ class AssignQuestionFormTest(BaseTest):
         self.assertTrue(assign_question_form.is_valid())
         assign_question_form.save()
         question_group = self.question1.question_group.all()
-        self.assertEqual(0, self.question1.orders.get(question_group=question_group[0]).order)
-        self.assertEqual(1, self.question2.orders.get(question_group=question_group[0]).order)
+        self.assertEqual(1, self.question1.orders.get(question_group=question_group[0]).order)
+        self.assertEqual(2, self.question2.orders.get(question_group=question_group[0]).order)
 
-    def test_create_order_incrementally_on_save(self):
+    def test_create_order_incrementally_on_save_when_there_is_already_a_question(self):
         already_existing_group = QuestionGroup.objects.create(subsection=self.subsection, order=1)
         question_with_order = Question.objects.create(text='Q w/ order', UID='C00023', answer_type='Number')
         some_arbitrary_order = 50

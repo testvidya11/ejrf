@@ -43,7 +43,7 @@ class DownloadDocument(View):
 class DeleteDocument(View):
     model = SupportDocument
 
-    def get(self, *args, **kwargs):
+    def post(self, *args, **kwargs):
         document = self.model.objects.get(pk=kwargs['document_id'])
         os.system("rm %s" % document.path.url)
         document.delete()

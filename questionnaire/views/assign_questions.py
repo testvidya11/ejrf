@@ -1,14 +1,15 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic import View, DeleteView
 from questionnaire.forms.assign_question import AssignQuestionForm
 from questionnaire.models import SubSection, Question
 from braces.views import PermissionRequiredMixin
 
 
-class AssignQuestion(View):
+class AssignQuestion(PermissionRequiredMixin, View):
     template_name = "questionnaires/assign_questions.html"
+    permission_required = 'auth.can_edit_questionnaire'
 
     def get(self, request, *args, **kwargs):
         subsection = SubSection.objects.select_related('section').get(id=kwargs['subsection_id'])
@@ -29,3 +30,17 @@ class AssignQuestion(View):
         context= {'assign_question_form': form,
                   'btn_label': 'Done', 'questions': form.fields['questions'].queryset }
         return render(request, self.template_name, context)
+
+
+class UnAssignQuestion(PermissionRequiredMixin, View):
+    permission_required = 'auth.can_edit_questionnaire'
+
+    def post(self, request, *args, **kwargs):
+        referer_url = request.META.get('HTTP_REFERER', None)
+        subsection = SubSection.objects.get(id=kwargs['subsection_id'])
+        question = Question.objects.get(id=kwargs['question_id'])
+        groups_in_subsection = subsection.question_group.all()
+        question.question_group.remove(*groups_in_subsection)
+        question.orders.filter(question_group__in=groups_in_subsection).delete()
+        messages.success(request, "Question successfully unassigned from questionnaire.")
+        return HttpResponseRedirect(referer_url)

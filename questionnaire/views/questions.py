@@ -54,7 +54,7 @@ class CreateQuestion(CreateView):
 class DeleteQuestion(DeleteView):
     model = Question
 
-    def get(self, *args, **kwargs):
+    def post(self, *args, **kwargs):
         question = self.model.objects.get(pk=kwargs['question_id'])
         if question.can_be_deleted():
             question.delete()

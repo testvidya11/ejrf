@@ -100,10 +100,10 @@
                                                 {% if field.errors %}
                                                     <div class="field-error">
                                                 {% endif %}
-                                            {{ field }}
-                                            {% if field.errors %}
-                                                </div>
-                                            {% endif %}
+                                                {{ field }}
+                                                {% if field.errors %}
+                                                    </div>
+                                                {% endif %}
                                                 {% if order.question.instructions %}
                                                     <a class="indent instructions" data-toggle="popover" data-html="true"
                                                        data-placement="bottom" data-trigger="hover"
@@ -118,7 +118,17 @@
                                                             class="glyphicon glyphicon-warning-sign red"></i></a>
                                                 {% endif %}
                                             {% endfor %}
+
                                         </div>
+                                        <div class="unassign-question-div">
+                                            {% if perms.auth.can_edit_questionnaire %}
+                                                <a href="" class="unassign-question pull-right red" data-toggle="modal"
+                                                    data-target="#delete-modal-{{ order.question.id }}">
+                                                    <i class="glyphicon glyphicon-remove-circle red"></i>
+                                                </a>
+                                            {% endif %}
+                                        </div>
+
                                     </div>
                                     {% if order.question.group.parent and order.question.is_last_in_group %}
                                         <hr/>
@@ -146,7 +156,16 @@
         </div>
     {% endif %}
     </form>
-    {% for subsection in section.sub_sections.all %}
+    {% if perms.auth.can_edit_questionnaire %}
+        {% load generic_tags %}
+        {% for subsection in section.sub_sections.all %}
             {% include 'questionnaires/assign_questions_modal.html' with subsection=subsection %}
-    {% endfor %}
+            {% for group in subsection.parent_question_groups %}
+                {% for order in group.question_orders %}
+                    {% include 'base/modals/_delete.html' with object_type='Question' title='Confirm Unassign' action="unassign" url=subsection.id|add_string:order.question.id|get_url_with_ids:"unassign_question_page" object=order.question  confirm='Yes'%}
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
 {% endblock %}

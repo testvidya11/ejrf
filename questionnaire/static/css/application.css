@@ -302,6 +302,9 @@ form input[type=file]{
 .submit-btn{
     border: 1px #CC0000 solid;
 }
+.question-form{
+    background-color: #ffefcb;
+}
 
 table #text-td{
     max-width: 400px;
@@ -350,4 +353,8 @@ li.more-toggle a{
 
 #select_survey_wizard-form label{
     width: 196px;
+}
+.unassign-question-div{
+    display: inline-block;
+    float: none;
 }

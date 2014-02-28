@@ -111,7 +111,7 @@ class SectionsViewTest(BaseTest):
                 'instructions': "Enter the total number of cases",
                 'UID': '00001', 'answer_type': 'Number'}
         question = Question.objects.create(**data)
-        response = self.client.get('/questions/%s/delete/' % question.id)
+        response = self.client.post('/questions/%s/delete/' % question.id, {})
         self.assertRedirects(response, self.url)
         self.assertRaises(Question.DoesNotExist, Question.objects.get, **data)
         message = "Question was deleted successfully"
@@ -125,7 +125,7 @@ class SectionsViewTest(BaseTest):
         country = Country.objects.create(name="Peru")
         Answer.objects.create(question=question, country=country, status="Submitted")
 
-        response = self.client.get('/questions/%s/delete/' % question.id)
+        response = self.client.post('/questions/%s/delete/' % question.id, {})
         self.assertRedirects(response, self.url)
         self.failUnless(Question.objects.get(**data))
         message = "Question was not deleted because it has responses"
