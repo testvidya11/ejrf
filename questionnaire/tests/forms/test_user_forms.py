@@ -102,16 +102,14 @@ class EditUserProfileFormTest(BaseTest):
         self.region.countries.add(self.uganda)
         self.form_data = {
             'username': 'user',
-            'email': 'raj@ni.kant',
-            'country': self.uganda.id,
-            'region': self.region.id,
-            'organization': self.organization.id,
-            'groups': self.global_admin.id
-        }
+            'email': 'raj@ni.kant', }
 
     def test_valid(self):
+        saved_user = User.objects.create(username='user1', email='emily@gmail.com')
+        user_profile = UserProfile.objects.create(user=saved_user, region=self.region, country=self.uganda,
+                                                  organization=self.organization)
+        self.global_admin.user_set.add(saved_user)
 
-        saved_user = User.objects.create(username='user1', email= 'emily@gmail.com')
         edit_user_profile_form = EditUserProfileForm(instance=saved_user, data=self.form_data)
         user = edit_user_profile_form.save()
 
@@ -120,8 +118,8 @@ class EditUserProfileFormTest(BaseTest):
         self.assertEqual(1, len(saved_user.groups.all()))
         self.assertIn(self.global_admin, saved_user.groups.all())
 
-        user_profile = UserProfile.objects.filter(user=user)
+        user_profile = UserProfile.objects.get(user=user)
         self.failUnless(user_profile)
-        self.assertEqual(user_profile[0].region, self.region)
-        self.assertEqual(user_profile[0].country, self.uganda)
-        self.assertEqual(user_profile[0].organization, self.organization)
+        self.assertEqual(self.organization, user_profile.organization)
+        self.assertEqual(self.region, user_profile.region)
+        self.assertEqual(self.uganda, user_profile.country)

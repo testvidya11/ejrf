@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
 from django.views.generic import ListView, CreateView, UpdateView
 from questionnaire.forms.filter import UserFilterForm
 from questionnaire.forms.user_profile import UserProfileForm, EditUserProfileForm
@@ -74,24 +76,42 @@ class CreateUser(LoginRequiredMixin, CreateView):
         context.update(context_vars)
         return context
 
+
 class EditUser(LoginRequiredMixin, UpdateView):
 
     def __init__(self, **kwargs):
         super(EditUser, self).__init__(**kwargs)
-        self.model = User
-        self.template_name_suffix = '_update_form'
         self.template_name = 'users/new.html'
+        self.object = User
         self.form_class = EditUserProfileForm
         self.success_url = reverse('list_users_page')
 
+    def get(self, *args, **kwargs):
+        user = User.objects.get(id=kwargs['pk'])
+        context = {'btn_label': "SAVE",
+                   'title': "Edit User",
+                   'request': self.request,
+                   'form': EditUserProfileForm(instance=user)}
+        return self.render_to_response(context)
 
-    def get_context_data(self, **kwargs):
-        context = super(EditUser, self).get_context_data(**kwargs)
-        context_vars = {'btn_label': "SAVE",
-                        'title': "Edit User",
-                        'organizations': Organization.objects.all(),
-                        'regions': Region.objects.all(),
-                        'countries': Country.objects.all(),
-                        }
-        context.update(context_vars)
-        return context
+    def post(self, request, *args, **kwargs):
+        user = User.objects.get(id=kwargs['pk'])
+        self.form =  EditUserProfileForm(instance=user, data=request.POST)
+        if self.form.is_valid():
+            return self._form_valid()
+        return self._form_invalid()
+
+    def _form_valid(self):
+        self.form.save()
+        message = "%s was successfully updated" % self.form.cleaned_data['username']
+        messages.success(self.request, message)
+        return HttpResponseRedirect(reverse("list_users_page"))
+
+    def _form_invalid(self):
+        message = "User was not updated, see errors below"
+        messages.error(self.request, message )
+        context = {'btn_label': "SAVE",
+                   'title': "Edit User",
+                   'request': self.request,
+                   'form': self.form}
+        return self.render_to_response(context)

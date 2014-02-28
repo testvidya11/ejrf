@@ -9,7 +9,6 @@ from questionnaire.tests.base_test import BaseTest
 
 
 class UsersViewTest(BaseTest):
-
     def setUp(self):
         self.client = Client()
         self.user, self.country = self.create_user_with_no_permissions()
@@ -77,9 +76,49 @@ class UsersViewTest(BaseTest):
         self.assertIsInstance(response.context['form'], EditUserProfileForm)
         self.assertIn('SAVE', response.context['btn_label'])
         self.assertIn('Edit User', response.context['title'])
-        self.assertIn(self.organization, response.context['organizations'])
-        self.assertIn(self.afro, response.context['regions'])
-        self.assertIn(self.uganda, response.context['countries'])
+
+    def test_post_update(self):
+        saved_user = User.objects.create(username='user1', email= 'emily@gmail.com')
+        user_profile = UserProfile.objects.create(user=saved_user, region=self.afro, country=self.uganda,
+                                                  organization=self.organization)
+        self.global_admin.user_set.add(saved_user)
+        self.form_data = {
+            'username': 'user1tom',
+            'email': 'raj@ni.kant',}
+        response = self.client.post('/users/%d/edit/' % saved_user.pk, data=self.form_data)
+        self.assertRedirects(response, expected_url='/users/')
+
+        user_profile = UserProfile.objects.get(user=saved_user)
+        self.failUnless(user_profile)
+        self.assertEqual(1, len(saved_user.groups.all()))
+        self.assertEqual(self.organization, user_profile.organization)
+        self.assertEqual(self.uganda, user_profile.country)
+        self.assertEqual(self.afro, user_profile.region)
+        self.assertIn(self.global_admin, saved_user.groups.all())
+        self.assertEqual(1, saved_user.groups.all().count())
+        self.failUnless(User.objects.filter(**self.form_data))
+        self.failIf(User.objects.filter(username='user1', email='emily@gmail.com'))
+        message = "%s was successfully updated" % self.form_data['username']
+        self.assertIn(message, response.cookies['messages'].value)
+
+    def test_post_update_with_errors(self):
+        saved_user = User.objects.create(username='user1', email= 'emily@gmail.com')
+        user_profile = UserProfile.objects.create(user=saved_user, region=self.afro, country=self.uganda,
+                                                  organization=self.organization)
+        self.global_admin.user_set.add(saved_user)
+        self.form_data = {
+            'username': 'user1tom hjdhdh',
+            'email': 'raj@ni.kant',}
+        response = self.client.post('/users/%d/edit/' % saved_user.pk, data=self.form_data)
+        self.assertEqual(200, response.status_code)
+        self.failUnless(User.objects.filter(username='user1', email='emily@gmail.com'))
+        self.failIf(User.objects.filter(**self.form_data))
+        message = "User was not updated, see errors below"
+        self.assertIn(message, response.content)
+        self.assertIsInstance(response.context['form'], EditUserProfileForm)
+        self.assertIn('SAVE', response.context['btn_label'])
+        self.assertIn('Edit User', response.context['title'])
+
 
 
 class FilterUsersViewTest(BaseTest):
@@ -97,8 +136,10 @@ class FilterUsersViewTest(BaseTest):
         self.paho.countries.add(self.peru)
         self.jacinta = User.objects.create(username='Jacinta')
         self.tony = User.objects.create(username='Tony')
-        UserProfile.objects.create(user=self.jacinta, country=self.uganda, region=self.region, organization=self.organization)
-        UserProfile.objects.create(user=self.tony, country=self.rwanda, region=self.region, organization=self.organization)
+        UserProfile.objects.create(user=self.jacinta, country=self.uganda, region=self.region,
+                                   organization=self.organization)
+        UserProfile.objects.create(user=self.tony, country=self.rwanda, region=self.region,
+                                   organization=self.organization)
         self.global_admin = Group.objects.create(name="GROUP")
         self.felix = User.objects.create(username='Felix')
         UserProfile.objects.create(user=self.felix, country=self.peru, region=self.paho, organization=self.organization)
@@ -271,7 +312,6 @@ class FilterUsersViewTest(BaseTest):
 
 
 class GetRegionsForOrganizationTest(BaseTest):
-
     def setUp(self):
         self.client = Client()
         self.user, self.country = self.create_user_with_no_permissions()
@@ -282,7 +322,8 @@ class GetRegionsForOrganizationTest(BaseTest):
         self.paho = Region.objects.create(name="PAHO", organization=self.who)
 
     def test_get_filtered_json_for_organization(self):
-        response = self.client.get('/locations/organization/%s/region/' % self.unicef.id, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.get('/locations/organization/%s/region/' % self.unicef.id,
+                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.failUnlessEqual(response.status_code, 200)
         content = json.loads(response.content)
 
