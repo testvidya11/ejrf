@@ -62,7 +62,7 @@
                     </h4>
                     {% for group in subsection.parent_question_groups %}
                         {% if group.grid and group.display_all %}
-                            {% include 'questionnaires/entry/grid.html' with a_group=group%}
+                            {% include 'questionnaires/entry/grid.html' with a_group=group section=section sub_section=subsection%}
                         {% else %}
                             <div class="question-group indent">
                                 {% for order in group.question_orders %}
