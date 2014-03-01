@@ -3,6 +3,7 @@ from questionnaire.models import Questionnaire, Section, SubSection, Question
 from questionnaire.tests.base_test import BaseTest
 from django.test import Client
 
+
 class AssignQuestionViewTest(BaseTest):
 
     def setUp(self):
@@ -19,7 +20,6 @@ class AssignQuestionViewTest(BaseTest):
 
         self.assign('can_edit_questionnaire', self.user)
         self.client.login(username=self.user.username, password='pass')
-
 
     def test_get_assign_question_page(self):
         response = self.client.get(self.url)
@@ -63,11 +63,24 @@ class AssignQuestionViewTest(BaseTest):
         self.assertRedirects(response, self.url)
 
     def test_successful_post_display_success_message(self):
-        referer_url = '/questionnaire/entry/%d/section/%d/'%(self.questionnaire.id, self.section.id)
+        referer_url = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section.id)
         meta = {'HTTP_REFERER': referer_url}
-        response = self.client.post(self.url, data={'questions':[self.question1.id, self.question2.id]}, **meta)
+        response = self.client.post(self.url, data={'questions': [self.question1.id, self.question2.id]}, **meta)
         message = "Questions successfully assigned to questionnaire."
         self.assertIn(message, response.cookies['messages'].value)
+
+    def test_with_errors_returns_the_form_with_error(self):
+        referer_url = '/questionnaire/entry/%d/section/%d/' % (self.questionnaire.id, self.section.id)
+        meta = {'HTTP_REFERER': referer_url}
+        response = self.client.post(self.url, data={'questions': []}, **meta)
+
+        self.assertIsInstance(response.context['assign_question_form'], AssignQuestionForm)
+        self.assertIn("This field is required.", response.context['assign_question_form'].errors['questions'])
+        self.assertEqual(2, response.context['questions'].count())
+        questions_texts = [question.text for question in list(response.context['questions'])]
+        self.assertIn(self.question1.text, questions_texts)
+        self.assertIn(self.question2.text, questions_texts)
+        self.assertEqual('Done', response.context['btn_label'])
 
     def test_login_required(self):
         self.assert_login_required(self.url)
@@ -96,7 +109,6 @@ class UnAssignQuestionViewTest(BaseTest):
 
         self.assign('can_edit_questionnaire', self.user)
         self.client.login(username=self.user.username, password='pass')
-
 
     def test_post_unassign_question_to_group_and_removes_question_order(self):
         meta = {'HTTP_REFERER': '/questionnaire/entry/%d/section/%d/'%(self.questionnaire.id, self.section.id)}

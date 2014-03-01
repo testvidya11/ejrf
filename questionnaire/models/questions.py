@@ -60,14 +60,6 @@ class Question(BaseModel):
             all_options = self.options.order_by('text')
             return all_options[index - 1]
 
-    def draft_answer(self, parent_group, country):
-        from questionnaire.models import Answer
-        answer = self.answers.filter(answergroup__grouped_question=parent_group,
-                                     status=Answer.DRAFT_STATUS, country=country).select_subclasses()
-        if answer.exists():
-            return answer.latest('modified')
-        return None
-
     def get_initial(self, order, option_index=1, country=None):
         answer = self.latest_answer(order.question_group, country)
         initial = {'question': self, 'group': order.question_group, 'country': country}

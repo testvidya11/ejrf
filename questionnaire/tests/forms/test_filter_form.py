@@ -83,6 +83,15 @@ class QuestionnaireFilterFormTest(BaseTest):
         self.assertFalse(questionnaire_filter.is_valid())
         self.assertIn("This field is required.", questionnaire_filter.errors['name'])
 
+    def test_clean_year(self):
+        questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", status=Questionnaire.FINALIZED, year=date.today().year + 1)
+        form_data = self.form_data.copy()
+        form_data['year'] = questionnaire.year
+        questionnaire_filter = QuestionnaireFilterForm(form_data)
+        self.assertFalse(questionnaire_filter.is_valid())
+        message = "Select a valid choice. %d is not one of the available choices." % questionnaire.year
+        self.assertIn(message, questionnaire_filter.errors['year'])
+
     def test_has_years_choices_exclude_existing_questionnaires_years(self):
         Questionnaire.objects.create(name="JRF 2013 Core English", status=Questionnaire.FINALIZED, year=date.today().year + 1)
         questionnaire_filter = QuestionnaireFilterForm(self.form_data)
