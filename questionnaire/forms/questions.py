@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django import forms
-from questionnaire.models import Question, QuestionOption
+from questionnaire.models import Question, QuestionOption, QuestionTextHistory
 
 
 class QuestionForm(ModelForm):
@@ -28,18 +28,17 @@ class QuestionForm(ModelForm):
         return super(QuestionForm, self).clean()
 
     def _clean_options(self):
-        answer_type = self.data.get('answer_type', [])
+        answer_type = self.cleaned_data.get('answer_type', None)
         options = dict(self.data).get('options', [])
         options = [option for option in options if option]
-        multichoice = 'MultiChoice'
-        if (answer_type and answer_type == multichoice) and len(options) < 1:
+        if (answer_type and answer_type == Question.MULTICHOICE) and len(options) < 1:
             message = "MultiChoice questions must have at least one option"
             self._errors['answer_type'] = self.error_class([message])
             del self.cleaned_data['answer_type']
         return options
 
     def _clean_export_label(self):
-        export_label = self.data.get('export_label', "")
+        export_label = self.cleaned_data.get('export_label', None)
         if not export_label:
             message = "All questions must have export label."
             self._errors['export_label'] = self.error_class([message])
@@ -56,7 +55,7 @@ class QuestionForm(ModelForm):
 
     def _save_options_if_multichoice(self, question):
         options = dict(self.data).get('options', [])
-        if options and question.answer_type == 'MultiChoice':
+        if options and question.answer_type == Question.MULTICHOICE:
             for option in options:
                 QuestionOption.objects.create(text=option, question=question)
 
@@ -64,3 +63,25 @@ class QuestionForm(ModelForm):
         choices = self.fields['answer_type'].choices
         choices[0] = ('', 'Response type', )
         return choices
+
+
+class QuestionHistoryForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(QuestionHistoryForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = QuestionTextHistory
+        fields = ('text', 'export_label', 'question', 'questionnaire')
+
+    def clean(self):
+        self._clean_question()
+        return super(QuestionHistoryForm, self).clean()
+
+    def _clean_question(self):
+        question = self.cleaned_data.get('question', None)
+        questionnaire = self.cleaned_data.get('questionnaire', None)
+        if question and not question.is_assigned_to(questionnaire):
+            message = "The selected question should belong to a the selected questionnaire"
+            self._errors['question'] = self.error_class([message])
+            del self.cleaned_data['question']
+        return question

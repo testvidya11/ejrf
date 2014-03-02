@@ -23,4 +23,3 @@ class QuestionGroupOrderTest(BaseTest):
         self.failUnless(question_group_order.id)
         self.assertEqual(self.question, question_group_order.question)
         self.assertEqual(self.grouped_question, question_group_order.question_group)
-

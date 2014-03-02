@@ -33,6 +33,13 @@ class QuestionTest(BaseTest):
     def test_question_unicode(self):
         self.assertEqual(str(self.question1), 'B. Number of cases tested'.encode('utf8'))
 
+    def test_question_knows_its_in_questionnaire(self):
+        question1 = Question.objects.create(text='B. Number of cases tested', UID='00023', answer_type='Number')
+        self.assertFalse(question1.is_assigned_to(self.questionnaire))
+
+    def test_question_knows_its_not_in_questionnaire(self):
+        self.assertTrue(self.question1.is_assigned_to(self.questionnaire))
+
     def test_question_fields(self):
         question = Question()
         fields = [str(item.attname) for item in question._meta.fields]

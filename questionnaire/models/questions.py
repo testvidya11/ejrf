@@ -6,9 +6,10 @@ from questionnaire.utils.question_util import largest_uid, stringify
 class Question(BaseModel):
 
     NUMBER = "Number"
+    MULTICHOICE = "MultiChoice"
     ANSWER_TYPES = (
         ("Date", "Date"),
-        ("MultiChoice", "MultiChoice"),
+        ("MultiChoice", MULTICHOICE),
         ("Number", NUMBER),
         ("Text", "Text"),
     )
@@ -69,6 +70,9 @@ class Question(BaseModel):
             initial['response'] = self.cast_to_integer(answer)
             initial['answer'] = answer
         return initial
+
+    def is_assigned_to(self, questionnaire):
+        return self.question_group.filter(subsection__section__questionnaire=questionnaire).exists()
 
     def cast_to_integer(self, answer):
         if self.answer_type is Question.NUMBER and answer.response and answer.response.is_integer():
