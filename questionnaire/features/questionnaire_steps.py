@@ -113,17 +113,13 @@ def and_i_have_a_grid_group_with_all_options_of_the_primary_question_showable(st
 @step(u'And I have 3 questions in that group one of which is primary')
 def and_i_have_3_questions_in_that_group_one_of_which_is_primary(step):
     question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice', is_primary=True)
-    question2 = Question.objects.create(text='Total Cases', UID='C00002', answer_type='Number')
+    question2 = Question.objects.create(text='Total Cases', UID='C00002', answer_type='Number',
+                                        instructions="Include only those cases found positive for the infectious.")
 
-    world.question3 = Question.objects.create(text='Number of cases tested', instructions="Enter the total number of",
-                                        UID='C00003', answer_type='Number')
+    world.question3 = Question.objects.create(text='Number of cases tested', UID='C00003', answer_type='Number')
 
-    world.question4 = Question.objects.create(text='Number of cases positive',
-                                        instructions="Include only those cases found positive for the infectious agent.",
-                                        UID='C00004', answer_type='Number')
-    world.question5 = Question.objects.create(text='Number of cases positive',
-                                        instructions="Include only those cases found positive for the infectious agent.",
-                                        UID='004404', answer_type='Number')
+    world.question4 = Question.objects.create(text='Number of cases positive', UID='C00004', answer_type='Number')
+    world.question5 = Question.objects.create(text='Number of cases positive', UID='004404', answer_type='Number')
     world.grid_group.question.add(question1, question2, world.question5)
 
     world.option1 = QuestionOption.objects.create(text="Diphteria", question=question1)
@@ -148,5 +144,6 @@ def then_i_should_see_that_grid_with_all_the_options_of_the_primary_question_sho
 def and_i_have_a_sub_group_in_that_group_with_two_questions(step):
     sub_group = QuestionGroup.objects.create(subsection=world.sub_section, order=2, grid=True,
                                              name="Labaratory Investigation",
-                                             display_all=True, parent=world.grid_group)
+                                             display_all=True, parent=world.grid_group,
+                                             instructions="Include only those cases found positive.")
     sub_group.question.add(world.question3, world.question4)

@@ -361,3 +361,8 @@ table th{
     display: inline-block;
     float: none;
 }
+
+table span.th-instructions{
+    font-weight: normal;
+    font-style: italic;
+}

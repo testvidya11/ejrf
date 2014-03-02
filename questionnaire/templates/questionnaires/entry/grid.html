@@ -7,10 +7,22 @@
             <th rowspan="2">Q NO</th>
             {% for order in a_group.question_orders %}
                 {% if order.question.is_in_subgroup and order.question.is_first_in_group %}
-                    <th colspan="{{ order.question.group.all_questions.count }}">{{ order.question.group.name }}</th>
+                    <th colspan="{{ order.question.group.all_questions.count }}">
+                        {{ order.question.group.name }}
+                        {% if order.question.group.instructions %}
+                             <hr/>
+                             <span class="th-instructions">{{ order.question.group.instructions }}</span>
+                        {% endif %}
+                    </th>
                 {% endif %}
                 {% if not order.question.is_in_subgroup %}
-                    <th rowspan="2">{{ order.question.text }}</th>
+                    <th rowspan="2">{{ order.question.text }}
+                    {% if order.question.instructions %}
+                         <hr/>
+                         <span class="th-instructions">{{ order.question.instructions }}</span>
+                    {% endif %}
+
+                    </th>
                 {% endif %}
             {% endfor %}
         </tr>
