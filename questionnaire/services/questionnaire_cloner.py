@@ -1,5 +1,5 @@
 import copy
-from questionnaire.models import QuestionGroupOrder
+from questionnaire.models import QuestionGroupOrder, Questionnaire
 from questionnaire.utils.cloner_util import create_copies
 
 
@@ -13,8 +13,7 @@ class QuestionnaireClonerService(object):
 
     def clone(self):
         self.questionnaire.pk = None
-        self.questionnaire.finalized = False
-        self.questionnaire.is_open = False
+        self.questionnaire.status = Questionnaire.DRAFT
         self.questionnaire.save()
         self.sections = self._clone_sections()
         self.sub_sections = self._clone_sub_sections()

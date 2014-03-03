@@ -91,11 +91,12 @@
                                     <hr class="group-hr"/>
                                 {% endfor %}
                             {% endfor %}
-                            <div class="alert alert-danger"><span class="red bold">Note:</span> You will not be able to
-                                edit the form after submitting. Any changes thereafter will require submitting a new
-                                version of the form.
-                            </div>
-
+                            {% if perms.auth.can_submit_responses %}
+                                <div class="alert alert-danger"><span class="red bold">Note:</span> You will not be able to
+                                    edit the form after submitting. Any changes thereafter will require submitting a new
+                                    version of the form.
+                                </div>
+                            {% endif %}
                         </div>
                     {% endfor %}
                 </div>

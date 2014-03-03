@@ -1,6 +1,7 @@
 $(function(){
     $('#preview_modal').on('show.bs.modal', function(){
-        var questionnaire_preview_url = "/questionnaire/preview/";
+        var questionnaire_id = $(this).attr('data-attribute-id');
+        var questionnaire_preview_url = "/questionnaire/preview/"+questionnaire_id;
         $.get(questionnaire_preview_url, function( data ) {
             var $holder = $('<div></div>').append(String(data));
             var content =  $holder.find("#preview-content").html()
