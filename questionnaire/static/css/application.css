@@ -369,3 +369,6 @@ table span.th-instructions{
 table td input[type='text'], select{
     width: 100%;
 }
+.button-padding{
+    padding-bottom: 20px;
+}
