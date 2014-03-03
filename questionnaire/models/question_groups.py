@@ -13,6 +13,10 @@ class QuestionGroup(BaseModel):
     grid = models.BooleanField(default=False)
     display_all = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ('order',)
+        app_label = 'questionnaire'
+
     def all_questions(self):
         return self.question.all()
 
@@ -46,12 +50,21 @@ class QuestionGroup(BaseModel):
     def has_subgroups(self):
         return self.sub_group.exists()
 
-    class Meta:
-        ordering = ('order',)
-        app_label = 'questionnaire'
-
     def max_questions_order(self):
         group_orders = self.orders.order_by('-order')
         if group_orders.exists():
             return group_orders[0].order
         return 0
+
+    def get_orders(self):
+        orders = self.orders.order_by('order')
+        if self.primary_question() and self.grid:
+            return self._repeat_orders_for_grid_questions(orders)
+        return orders
+
+    def _repeat_orders_for_grid_questions(self, orders):
+        _orders = []
+        number_of_primary_question_options = self.primary_question()[0].options.all().count()
+        for i in range(0, number_of_primary_question_options):
+            _orders.extend(orders)
+        return _orders

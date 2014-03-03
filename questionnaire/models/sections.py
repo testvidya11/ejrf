@@ -25,22 +25,8 @@ class Section(BaseModel):
         _orders = []
         for subsection in subsections:
             for group in subsection.question_group.order_by('order'):
-                orders = self._get_orders_in(group)
+                orders = group.get_orders()
                 _orders.extend(orders)
-        return _orders
-
-    def _get_orders_in(self, group):
-        orders = group.orders.order_by('order')
-        if group.primary_question() and group.grid:
-            return self._set_orders_for_grid_questions(group, orders)
-        return orders
-
-    @staticmethod
-    def _set_orders_for_grid_questions(group, orders):
-        _orders = []
-        number_of_primary_question_options = group.primary_question()[0].options.all().count()
-        for i in range(0, number_of_primary_question_options):
-            _orders.extend(orders)
         return _orders
 
     class Meta:

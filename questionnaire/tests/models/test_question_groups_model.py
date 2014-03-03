@@ -1,4 +1,4 @@
-from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroupOrder
+from questionnaire.models import Questionnaire, Section, SubSection, Question, QuestionGroupOrder, QuestionOption
 from questionnaire.models.question_groups import QuestionGroup
 from questionnaire.tests.base_test import BaseTest
 
@@ -190,3 +190,44 @@ class QuestionGroupTest(BaseTest):
 
         sub_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1, parent=self.parent_question_group)
         self.assertFalse(sub_group.has_subgroups())
+
+    def test_group_knows_its_questions_orders(self):
+        sub_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1)
+        question = Question.objects.create(text='question', UID='ab3123', answer_type='Text', is_primary=True)
+        question2 = Question.objects.create(text='question2', UID='c00001', answer_type='Text')
+        sub_group.question.add(question, question2)
+
+        order2 = QuestionGroupOrder.objects.create(question=question, question_group=sub_group, order=1)
+        order3 = QuestionGroupOrder.objects.create(question=question2, question_group=sub_group, order=2)
+        self.assertEqual(2, len(sub_group.get_orders()))
+        self.assertIn(order2, sub_group.get_orders())
+        self.assertIn(order3, sub_group.get_orders())
+
+    def test_group_adds_orders_for_its_primary_question_times_its_number_of_its_options(self):
+        question_group = QuestionGroup.objects.create(subsection=self.sub_section, order=1, grid=True, display_all=True)
+
+        question1 = Question.objects.create(text='Favorite beer 1', UID='C00001', answer_type='MultiChoice', is_primary=True)
+        option1 = QuestionOption.objects.create(text='tusker lager', question=question1)
+        option2 = QuestionOption.objects.create(text='tusker lager1', question=question1)
+        option3 = QuestionOption.objects.create(text='tusker lager2', question=question1)
+
+        question2 = Question.objects.create(text='question 2', instructions="instruction 2",
+                                            UID='C00002', answer_type='Text')
+
+        question3 = Question.objects.create(text='question 3', instructions="instruction 3",
+                                            UID='C00003', answer_type='Number')
+
+        question4 = Question.objects.create(text='question 4', instructions="instruction 2",
+                                            UID='C00005', answer_type='Date')
+        question_group.question.add(question1, question3, question2, question4)
+
+        order1 = QuestionGroupOrder.objects.create(question=question1, question_group=question_group, order=1)
+        order2 = QuestionGroupOrder.objects.create(question=question2, question_group=question_group, order=2)
+        order3 = QuestionGroupOrder.objects.create(question=question3, question_group=question_group, order=3)
+        order4 = QuestionGroupOrder.objects.create(question=question4, question_group=question_group, order=4)
+
+        self.assertEqual(12, len(question_group.get_orders()))
+        self.assertIn(order1, question_group.get_orders())
+        self.assertIn(order2, question_group.get_orders())
+        self.assertIn(order3, question_group.get_orders())
+        self.assertIn(order4, question_group.get_orders())
