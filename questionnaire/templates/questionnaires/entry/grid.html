@@ -1,67 +1,68 @@
 {% load questionnaire_entry_tags %}
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered" id="grid-table">
+        <thead>
+        {% if a_group.has_subgroups %}
+            <tr>
+                <th rowspan="2">Q NO</th>
+                {% for order in a_group.question_orders %}
+                    {% if order.question.is_in_subgroup and order.question.is_first_in_group %}
+                        <th colspan="{{ order.question.group.all_questions.count }}">
+                            {{ order.question.group.name }}
+                            {% if order.question.group.instructions %}
+                                 <hr/>
+                                 <span class="th-instructions">{{ order.question.group.instructions }}</span>
+                            {% endif %}
+                        </th>
+                    {% endif %}
+                    {% if not order.question.is_in_subgroup %}
+                        <th rowspan="2">{{ order.question.text }}
+                        {% if order.question.instructions %}
+                             <hr/>
+                             <span class="th-instructions">{{ order.question.instructions }}</span>
+                        {% endif %}
 
-<table class="table table-hover table-striped table-bordered">
-    <thead>
-    {% if a_group.has_subgroups %}
-        <tr>
+                        </th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for order in a_group.question_orders %}
+                    {% if  order.question.is_in_subgroup %}
+                        <th>{{ order.question.text }}</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% else %}
+            <tr>
             <th rowspan="2">Q NO</th>
             {% for order in a_group.question_orders %}
-                {% if order.question.is_in_subgroup and order.question.is_first_in_group %}
-                    <th colspan="{{ order.question.group.all_questions.count }}">
-                        {{ order.question.group.name }}
-                        {% if order.question.group.instructions %}
-                             <hr/>
-                             <span class="th-instructions">{{ order.question.group.instructions }}</span>
-                        {% endif %}
-                    </th>
-                {% endif %}
-                {% if not order.question.is_in_subgroup %}
-                    <th rowspan="2">{{ order.question.text }}
-                    {% if order.question.instructions %}
-                         <hr/>
-                         <span class="th-instructions">{{ order.question.instructions }}</span>
-                    {% endif %}
+                <th>{{ order.question.text }}</th>
+            {% endfor %}
+            </tr>
+        {% endif %}
 
-                    </th>
-                {% endif %}
-            {% endfor %}
-        </tr>
-        <tr>
-            {% for order in a_group.question_orders %}
-                {% if  order.question.is_in_subgroup %}
-                    <th>{{ order.question.text }}</th>
-                {% endif %}
-            {% endfor %}
-        </tr>
-    {% else %}
-        <tr>
-        <th rowspan="2">Q NO</th>
+        </thead>
+        <tbody>
         {% for order in a_group.question_orders %}
-            <th>{{ order.question.text }}</th>
-        {% endfor %}
-        </tr>
-    {% endif %}
-
-    </thead>
-    <tbody>
-    {% for order in a_group.question_orders %}
-        {% if  order.question.is_primary %}
-            {% for option in order.question.options.all %}
-                <tr>
-                 <td>
-                    {{ section.order }}.{{ subsection.order }}.{{ a_group.order }}.{{forloop.counter0}}
-                </td>
-                {% for field in order.question|get_form:formsets %}
-                    <td>{{ field }}</td>
-                {% endfor %}
-                {% for question in a_group.all_non_primary_questions %}
-                    {% for field in question|get_form:formsets %}
+            {% if  order.question.is_primary %}
+                {% for option in order.question.options.all %}
+                    <tr>
+                     <td>
+                        {{ section.order }}.{{ subsection.order }}.{{ a_group.order }}.{{forloop.counter0}}
+                    </td>
+                    {% for field in order.question|get_form:formsets %}
                         <td>{{ field }}</td>
                     {% endfor %}
+                    {% for question in a_group.all_non_primary_questions %}
+                        {% for field in question|get_form:formsets %}
+                            <td>{{ field }}</td>
+                        {% endfor %}
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-        {% endif %}
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

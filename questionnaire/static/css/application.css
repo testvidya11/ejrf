@@ -366,3 +366,6 @@ table span.th-instructions{
     font-weight: normal;
     font-style: italic;
 }
+table td input[type='text'], select{
+    width: 100%;
+}
