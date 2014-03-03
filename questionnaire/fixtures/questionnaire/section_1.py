@@ -20,9 +20,8 @@ section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Pre
                                    questionnaire=questionnaire, name="Reported Cases")
 sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1, section=section_1)
 
-question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice', primary=True)
-question2 = Question.objects.create(text='Total Cases', short_instruction="Include clinically, epidemiologically, and"
-" laboratory-confirmed cases. Do not include suspect cases.",
+question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice', is_primary=True)
+question2 = Question.objects.create(text='Total Cases',
 instructions="""<strong>Column A</strong> refers only to <strong>CONFIRMED</strong> cases, including those confirmed clinically, epidemiologically, or by laboratory investigation.&nbsp;<br />
 <br />
 <strong>Clinically-confirmed case:</strong> a case that meets the clinical case definition of the country<br />
