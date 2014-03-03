@@ -9,8 +9,9 @@ QuestionGroup.objects.all().delete()
 QuestionOption.objects.all().delete()
 QuestionGroupOrder.objects.all().delete()
 
-questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", description="From dropbox as given by Rouslan",
-                                             year=2013, status="published")
+questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English",
+                                             description="From dropbox as given by Rouslan",
+                                             year=2013, status=Questionnaire.PUBLISHED)
 
 ########################################################################################################
 # SECTION: Reported Cases of Selected Vaccine Preventable Diseases (VPDs)
@@ -19,7 +20,7 @@ section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Pre
                                    questionnaire=questionnaire, name="Reported Cases")
 sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1, section=section_1)
 
-question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice')
+question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice', primary=True)
 question2 = Question.objects.create(text='Total Cases', short_instruction="Include clinically, epidemiologically, and"
 " laboratory-confirmed cases. Do not include suspect cases.",
 instructions="""<strong>Column A</strong> refers only to <strong>CONFIRMED</strong> cases, including those confirmed clinically, epidemiologically, or by laboratory investigation.&nbsp;<br />
@@ -42,7 +43,7 @@ question4 = Question.objects.create(text='Number of cases positive',
                                     instructions="Include only those cases found positive for the infectious agent.",
                                     UID='C00004', answer_type='Number')
 
-parent = QuestionGroup.objects.create(subsection=sub_section, order=1, allow_multiples=True)
+parent = QuestionGroup.objects.create(subsection=sub_section, order=1, allow_multiples=False, grid=True, display_all=True)
 parent.question.add(question1, question2)
 
 sub_group = QuestionGroup.objects.create(subsection=sub_section, parent=parent, name="Laboratory Investigation")
@@ -75,8 +76,7 @@ QuestionOption.objects.create(text="NR", question=question5)
 
 question6 = Question.objects.create(text="""Is there a surveillance system in place for rotavirus diarrhoea, in which suspected cases are confirmed
  by laboratory and surveillance data could provide information to allow evaluation of the impact of vaccination against rotavirus?""",
-                                      UID='C00006',
-                                      answer_type='MultiChoice')
+                                    UID='C00006', answer_type='MultiChoice')
 
 question_6_group = QuestionGroup.objects.create(subsection=sub_section_2, order=2)
 question_6_group.question.add(question6)

@@ -430,3 +430,20 @@ class GridQuestionGroupEntryServiceTest(BaseTest):
         self.failUnless(DateAnswer.objects.filter(response=data['Date-0-response'], question=self.question4))
         self.failUnless(DateAnswer.objects.filter(response=data['Date-1-response'], question=self.question4))
         self.failUnless(DateAnswer.objects.filter(response=data['Date-2-response'], question=self.question4))
+
+    def test_returns_multiple_forms_in_formsets_for_all_questions_given_several_groups(self):
+        question = Question.objects.create(text='Favorite beer 1', UID='C00033', answer_type='MultiChoice')
+        yes = QuestionOption.objects.create(text='Yes', question=question)
+        no = QuestionOption.objects.create(text='No', question=question)
+
+        question_group = QuestionGroup.objects.create(subsection=self.sub_section, order=2)
+        question_group.question.add(question)
+        QuestionGroupOrder.objects.create(question=question, question_group=question_group, order=1)
+
+        questionnaire_entry_form = QuestionnaireEntryFormService(self.section1, initial=self.initial)
+        formsets = questionnaire_entry_form._formsets()
+
+        self.assertEqual(3, len(formsets['Number']))
+        self.assertEqual(3, len(formsets['Text']))
+        self.assertEqual(3, len(formsets['Date']))
+        self.assertEqual(4, len(formsets['MultiChoice']))
