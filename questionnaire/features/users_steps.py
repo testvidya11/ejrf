@@ -57,7 +57,7 @@ def and_i_fill_in_invalid_user_credentials(step):
 
 @step(u'Then I should see an error message')
 def then_i_should_see_an_error_message(step):
-    world.page.is_text_present("Username, password mismatch. Please try again.")
+    world.page.is_text_present("Please enter a correct username and password.")
 
 @step(u'When I click the logout link')
 def when_i_click_the_logout_link(step):
