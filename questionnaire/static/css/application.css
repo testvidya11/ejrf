@@ -371,4 +371,5 @@ table td input[type='text'], select{
 }
 .button-padding{
     padding-bottom: 20px;
+    margin-bottom: 20px;
 }
