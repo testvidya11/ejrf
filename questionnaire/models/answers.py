@@ -26,14 +26,28 @@ class Answer(BaseModel):
 class NumericalAnswer(Answer):
     response = models.DecimalField(max_digits=9, decimal_places=2, null=True)
 
+    def format_response(self):
+        if self.response and float(self.response).is_integer():
+            return int(self.response)
+        return self.response
+
 
 class TextAnswer(Answer):
     response = models.CharField(max_length=100, null=True)
+
+    def format_response(self):
+        return self.response
 
 
 class DateAnswer(Answer):
     response = models.DateField(null=True)
 
+    def format_response(self):
+        return self.response
+
 
 class MultiChoiceAnswer(Answer):
     response = models.ForeignKey(QuestionOption, null=True)
+
+    def format_response(self):
+        return self.response

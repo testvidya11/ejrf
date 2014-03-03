@@ -52,7 +52,9 @@ class NumericalAnswerTest(TestCase):
         self.failUnless(answer.id)
         self.assertEqual(self.question, answer.question)
         self.assertEqual(self.country, answer.country)
-        self.assertEqual(11.2, answer.response)
+        self.assertEqual(11.2, answer.format_response())
+        int_answer = NumericalAnswer.objects.create(question=self.question, country=self.country, response=11.00)
+        self.assertEqual(11, int_answer.format_response())
 
     def test_numerical_answer_cannot_be_text(self):
         answer = NumericalAnswer(question=self.question, country=self.country, response='not a decimal number')
@@ -77,6 +79,12 @@ class TextAnswerTest(TestCase):
         self.assertEqual(country, answer.country)
         self.assertEqual("this is a text repsonse", answer.response)
 
+    def test_format_returns_response_text(self):
+        question = Question.objects.create(text='Uganda Revision 2014 what what?', UID='abc123', answer_type='Text')
+        country = Country.objects.create(name="Peru")
+        answer = TextAnswer.objects.create(question=question, country=country, response="this is a text repsonse")
+        self.assertEqual("this is a text repsonse", answer.format_response())
+
 
 class DateAnswerTest(TestCase):
 
@@ -98,6 +106,7 @@ class DateAnswerTest(TestCase):
         self.assertEqual(self.question, answer.question)
         self.assertEqual(self.country, answer.country)
         self.assertEqual(some_date, answer.response)
+        self.assertEqual(some_date, answer.format_response())
 
     def test_date_answer_can_only_be_date(self):
         not_date = 'hahaha'
@@ -124,3 +133,4 @@ class MultiChoiceAnswerTest(TestCase):
         self.assertEqual(question, answer.question)
         self.assertEqual(country, answer.country)
         self.assertEqual(option, answer.response)
+        self.assertEqual(option, answer.format_response())

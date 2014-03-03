@@ -26,7 +26,7 @@ class QuestionnaireEntryFormService(object):
         next_question_type_count = self.ANSWER_FORM_COUNTER[question.answer_type]
         self.ANSWER_FORM_COUNTER[question.answer_type] += 1
         formset = self.formsets[question.answer_type][next_question_type_count]
-        if question.is_primary:
+        if question.is_primary and question.group().grid:
             formset.initial['response'] = question.get_option_at(self.ANSWER_FORM_COUNTER[question.answer_type])
         return formset
 

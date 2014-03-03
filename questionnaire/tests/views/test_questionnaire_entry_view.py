@@ -18,7 +18,7 @@ class QuestionnaireEntrySaveDraftTest(BaseTest):
         self.sub_section = SubSection.objects.create(title="Reported cases for the year 2013", order=1,
                                                      section=self.section_1)
 
-        self.question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice')
+        self.question1 = Question.objects.create(text='Disease', UID='C00001', answer_type='MultiChoice', is_primary=True)
         self.question2 = Question.objects.create(text='B. Number of cases tested',
                                                  instructions="Enter the total number of cases for which specimens were collected, and tested in laboratory",
                                                  UID='C00003', answer_type='Number')

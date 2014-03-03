@@ -208,7 +208,6 @@ class QuestionTest(BaseTest):
 
         initial = {'question': question1, 'response': option1, 'group': parent_group, 'country': self.country}
         self.assertEqual(initial, question1.get_initial(order=order, country=self.country))
-
         initial = {'question': question1, 'response': option1, 'group': parent_group, 'country': self.country}
         self.assertEqual(initial, question1.get_initial(order=order,  option_index=1, country=self.country))
 
@@ -217,29 +216,6 @@ class QuestionTest(BaseTest):
 
         initial = {'question': question1, 'response': option3, 'group': parent_group, 'country': self.country}
         self.assertEqual(initial, question1.get_initial(order=order,  option_index=3, country=self.country))
-
-    def test_question_casts_answer_to_integer_if_response_is_int(self):
-        questionnaire = Questionnaire.objects.create(name="JRF 2013 Core English", year=2013, status=Questionnaire.FINALIZED)
-        section_1 = Section.objects.create(title="Reported Cases of Selected Vaccine Preventable Diseases (VPDs)", order=1,
-                                           questionnaire=questionnaire, name="Reported Cases")
-        sub_section = SubSection.objects.create(title="Another", order=2, section=section_1)
-        question1 = Question.objects.create(text='B. Number of cases tested', UID='C00030', answer_type='Number',
-                                            is_primary=True)
-        parent_group = QuestionGroup.objects.create(subsection=sub_section, name="Laboratory Investigation")
-        parent_group.question.add(question1)
-        question1_answer = NumericalAnswer.objects.create(question=question1, country=self.country,
-                                                          status=Answer.DRAFT_STATUS, response=11.00)
-
-        answer_group_2 = AnswerGroup.objects.create(grouped_question=parent_group, row=1)
-        answer_group_2.answer.add(question1_answer)
-        self.assertEqual(11, self.question1.cast_to_integer(question1_answer))
-
-        question1_answer = NumericalAnswer.objects.create(question=question1, country=self.country,
-                                                          status=Answer.DRAFT_STATUS, response=11.05)
-
-        self.assertEqual(11.05, self.question1.cast_to_integer(question1_answer))
-        answer_group_2 = AnswerGroup.objects.create(grouped_question=parent_group, row=2)
-        answer_group_2.answer.add(question1_answer)
 
 
 class QuestionOptionTest(BaseTest):

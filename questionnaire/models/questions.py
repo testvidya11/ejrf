@@ -67,17 +67,12 @@ class Question(BaseModel):
         if self.is_primary and order.question_group.grid and order.question_group.display_all:
             initial['response'] = self.get_option_at(option_index)
         if answer and answer.is_draft():
-            initial['response'] = self.cast_to_integer(answer)
             initial['answer'] = answer
+            initial['response'] = answer.format_response()
         return initial
 
     def is_assigned_to(self, questionnaire):
         return self.question_group.filter(subsection__section__questionnaire=questionnaire).exists()
-
-    def cast_to_integer(self, answer):
-        if self.answer_type is Question.NUMBER and answer.response and answer.response.is_integer():
-            return int(answer.response)
-        return answer.response if answer else 0
 
     @classmethod
     def next_uid(cls):
